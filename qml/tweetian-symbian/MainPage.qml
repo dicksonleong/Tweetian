@@ -74,6 +74,20 @@ Page {
 
     ListView{
         id: mainView
+
+        function moveToColumn(index){
+            columnMovingAnimation.to = index * mainView.width
+            columnMovingAnimation.restart()
+        }
+
+        NumberAnimation{
+            id: columnMovingAnimation
+            target: mainView
+            property: "contentX"
+            duration: 500
+            easing.type: Easing.InOutExpo
+        }
+
         anchors { top: header.bottom; left: parent.left; right: parent.right; bottom: parent.bottom }
         highlightRangeMode: ListView.StrictlyEnforceRange
         model: VisualItemModel{
@@ -103,7 +117,7 @@ Page {
         }
     }
 
-    MainPageHeader{ id: header; listView: mainView }
+    MainPageHeader{ id: header }
 
     UserStream{
         id: userStream

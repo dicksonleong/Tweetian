@@ -10,7 +10,7 @@ void TweetianIf::mention()
     mView->activateWindow();
     if(!qmlMainView)
         qmlMainView = mView->rootObject()->findChild<QDeclarativeItem*>("mainView");
-    qmlMainView->setProperty("currentIndex", 1);
+    QMetaObject::invokeMethod(qmlMainView, "moveToColumn", Q_ARG(QVariant, 1));
 }
 
 void TweetianIf::message()
@@ -18,5 +18,5 @@ void TweetianIf::message()
     mView->activateWindow();
     if(!qmlMainView)
         qmlMainView = mView->rootObject()->findChild<QDeclarativeItem*>("mainView");
-    qmlMainView->setProperty("currentIndex", 2);
+    QMetaObject::invokeMethod(qmlMainView, "moveToColumn", Q_ARG(QVariant, 2));
 }

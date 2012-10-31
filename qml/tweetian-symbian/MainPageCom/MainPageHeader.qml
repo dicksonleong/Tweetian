@@ -4,9 +4,6 @@ import "../Component"
 
 Item{
     id: mainPageHeader
-
-    property ListView listView
-
     anchors { top: parent.top; left: parent.left; right: parent.right }
     height: constant.headerHeight
 
@@ -31,7 +28,7 @@ Item{
 
         Repeater{
             id: sectionRepeater
-            model: listView.count
+            model: mainView.count
             delegate: Item{
                 width: mainPageHeader.width / sectionRepeater.count
                 height: mainPageHeader.height
@@ -52,12 +49,12 @@ Item{
                         topMargin: constant.paddingSmall
                     }
                     visible: value > 0
-                    value: listView.model.children[index].unreadCount
+                    value: mainView.model.children[index].unreadCount
                 }
 
                 Loader{
                     anchors.fill: parent
-                    sourceComponent: listView.model.children[index].busy
+                    sourceComponent: mainView.model.children[index].busy
                                      ? busyIndicator : (sectionMouseArea.pressed ? pressingIndicator : undefined)
                     Component{
                         id: busyIndicator
@@ -93,8 +90,8 @@ Item{
                 MouseArea{
                     id: sectionMouseArea
                     anchors.fill: parent
-                    onClicked: listView.currentIndex === index ? listView.currentItem.positionAtTop()
-                                                               : listView.currentIndex = index
+                    onClicked: mainView.currentIndex === index ? mainView.currentItem.positionAtTop()
+                                                               : mainView.moveToColumn(index)
                     onPressed: basicHapticEffect.play()
                     onReleased: basicHapticEffect.play()
                 }
@@ -107,7 +104,7 @@ Item{
         anchors.bottom: parent.bottom
         color: "white"
         height: constant.paddingSmall
-        width: listView.visibleArea.widthRatio * parent.width
-        x: listView.visibleArea.xPosition * parent.width
+        width: mainView.visibleArea.widthRatio * parent.width
+        x: mainView.visibleArea.xPosition * parent.width
     }
 }

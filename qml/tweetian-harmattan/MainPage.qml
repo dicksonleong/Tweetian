@@ -64,6 +64,20 @@ Page {
 
     ListView{
         id: mainView
+
+        function moveToColumn(index){
+            columnMovingAnimation.to = index * mainView.width
+            columnMovingAnimation.restart()
+        }
+
+        NumberAnimation{
+            id: columnMovingAnimation
+            target: mainView
+            property: "contentX"
+            duration: 500
+            easing.type: Easing.InOutExpo
+        }
+
         objectName: "mainView"
         anchors { top: mainPageHeader.bottom; bottom: parent.bottom; left: parent.left; right: parent.right }
         highlightRangeMode: ListView.StrictlyEnforceRange
@@ -94,7 +108,7 @@ Page {
         }
     }
 
-    MainPageHeader{ id: mainPageHeader; listView: mainView }
+    MainPageHeader{ id: mainPageHeader }
 
     UserStream{
         id: userStream
