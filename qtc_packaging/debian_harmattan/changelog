@@ -1,0 +1,118 @@
+tweetian (1.6.0) stable; urgency=low
+  * New features: Mute, Nearby Tweets
+  * Huge improvement to the app backend
+  * Streaming now much more stable
+  * Added setting for small/large font size
+  * Improve settigs UI
+  * Pinch-to-zoom image
+  * Lot of bugs fixed
+
+ -- Dickson <dicksonleong8@gmail.com>  Fri, 28 Oct 2012 21:38:30 +0800
+
+tweetian (1.5.0) stable; urgency=high
+  * Twitter User Stream
+  * Thumbnails caching
+  * Notifications from mentions and direct messages
+  * Added some white theme icons
+
+ -- Dickson <dicksonleong8@gmail.com>  Sat, 08 Sep 2012 21:35:22 +0800
+
+tweetian (1.3.2) stable; urgency=normal
+  * Mainly focus on bugs/crash fix
+  * Instapaper support
+
+ -- Dickson <dicksonleong8@gmail.com>  Wed, 22 Aug 2012 13:30:07 +0800
+
+tweetian (1.3.0) stable; urgency=high
+  * Redesigned the header
+  * Image saving
+  * Advanced search
+  * Quick tweet - #NowPlaying
+  * Timeline/Mentions will not jump to top when new tweets are loaded
+  * Faster preview of splashscreen
+  * Tweet permalink
+  * Preview of YouTube video thumbnail
+  * Bugs fixed
+
+ -- Dickson <dicksonleong8@gmail.com>  Thu, 09 Aug 2012 15:09:22 +0800
+
+tweetian (1.2.1) stable; urgency=normal
+  * Added privacy policy & terms of services
+  * Added suggested users
+  * Added fast scroll & setting to disable it
+
+ -- Dickson <dicksonleong8@gmail.com>  Sun, 08 Jul 2012 17:42:42 +0800
+
+tweetian (1.2.0) stable; urgency=high
+  * Bugs fixed
+  * Submitted to Nokia Store
+
+ -- Dickson <dicksonleong8@gmail.com>  Thu, 05 Jul 2012 15:39:03 +0800
+
+tweetian (1.1.7) unstable; urgency=low
+  * Fixed some bugs
+  * Added SipAttributes on some TextField
+  * Added last update for trends
+
+ -- Dickson <dicksonleong8@gmail.com>  Thu, 05 Jul 2012 13:35:43 +0800
+
+tweetian (1.1.6) unstable; urgency=normal
+  * Some visual bugs fixed in white theme
+  * Wrong DM profile pic fixed
+  * Parser fixed (on media entities)
+
+ -- Dickson <dicksonleong8@gmail.com>  Wed, 04 Jul 2012 21:50:20 +0800
+
+tweetian (1.1.4) unstable; urgency=normal
+  * A lot of UI improvements
+  * Changed source image for highlighted ListItem
+  * Some bugs fixed
+
+ -- Dickson <dicksonleong8@gmail.com>  Wed, 04 Jul 2012 12:52:55 +0800
+
+tweetian (1.1.3) unstable; urgency=high
+  * Changes from Symbian (1.2) ported to MeeGo
+  * Fixed image upload
+  * UI improvments
+  * Bugs fixed
+
+ -- Dickson <dicksonleong8@gmail.com>  Mon, 02 Jul 2012 13:10:21 +0800
+
+tweetian (1.1.0) unstable; urgency=low
+  * Minor UI improvment
+  * Bugs fixed
+  * Submit to Nokia Store
+
+ -- Dickson <dicksonleong8@gmail.com>  Sun, 17 Jun 2012 13:59:41 +0800
+
+tweetian (0.2.1) unstable; urgency=normal
+  * Able to click on link in DM
+  * New saved searches is show instantly
+  * Show a comfirm dialog before removing a saved search
+
+ -- Dickson <dicksonleong8@gmail.com>  Sat, 16 Jun 2012 16:57:20 +0800
+
+tweetian (0.2.0) unstable; urgency=low
+  * Added threaded conversation DMs
+  * Pull to refresh
+  * View list timeline, member and subscribers
+
+ -- Dickson <dicksonleong8@gmail.com>  Thu, 14 Jun 2012 18:41:18 +0800
+
+tweetian (0.1.1) unstable; urgency=low
+  * Smaller launcher icon fixed
+  * Used new Twitter bird icon
+  * Slightly increase font size
+
+ -- Dickson <dicksonleong8@gmail.com>  Thu, 07 Jun 2012 13:39:34 +0800
+
+tweetian (0.1.0) unstable; urgency=low
+  * Finished porting from Symbian
+
+ -- Dickson <dicksonleong8@gmail.com>  Wed, 06 Jun 2012 19:49:53 +0800
+
+tweetian (0.0.1) unstable; urgency=low
+
+  * Initial Release.
+
+ -- Dickson <dicksonleong8@gmail.com>  Sun, 03 Jun 2012 22:52:13 +0800
