@@ -32,7 +32,7 @@ Item{
         anchors { left: parent.left; top: accountNameText.bottom; leftMargin: constant.paddingMedium }
         color: signedIn ? "Green" : "Red"
         font.pixelSize: constant.fontSizeSmall
-        text: signedIn ? "Signed In" : "Not Signed In"
+        text: signedIn ? "Signed in" : "Not signed in"
         font.italic: true
     }
 

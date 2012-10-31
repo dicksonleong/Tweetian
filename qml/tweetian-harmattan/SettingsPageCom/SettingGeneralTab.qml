@@ -47,7 +47,7 @@ Page{
                 width: parent.width - 2 * constant.paddingMedium
                 font.pixelSize: constant.fontSizeLarge
                 color: constant.colorLight
-                text: "Font Size"
+                text: "Font size"
             }
 
             ButtonRow{

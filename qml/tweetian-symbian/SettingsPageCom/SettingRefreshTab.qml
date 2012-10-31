@@ -18,7 +18,7 @@ Page{
 
             SettingSwitch{
                 id: streamingSwitch
-                text: "Enable Streaming"
+                text: "Enable streaming"
                 checked: settings.enableStreaming
                 infoButtonVisible: true
                 onCheckedChanged: settings.enableStreaming = checked
@@ -47,7 +47,7 @@ Page{
 
             SettingSlider{
                 enabled: !streamingSwitch.checked
-                text: "Direct Mesaages: " + (enabled ? (value === 0 ? "Off" : value + " min") : "Disabled")
+                text: "Direct messages: " + (enabled ? (value === 0 ? "Off" : value + " min") : "Disabled")
                 maximumValue: 30
                 stepSize: 1
                 value: settings.directMsgRefreshFreq
