@@ -31,30 +31,32 @@ function commonOnFailure(status, statusText){
 }
 
 function getAllMentions(text){
-    var mentionsText = ""
+    var mentionsText = "@" + currentTweet.screenName + " "
+
+    if(currentTweet.screenName !== currentTweet.displayScreenName)
+        mentionsText += "@" + currentTweet.displayScreenName + " "
+
     var mentionsArray = text.match(/href="@\w+/g)
     if(mentionsArray != null){
         for(var i=0; i<mentionsArray.length; i++){
             var name = mentionsArray[i].substring(6)
-            if(name !== "@" + settings.userScreenName) mentionsText += name + " "
+            if(name.toLowerCase() !== "@" + settings.userScreenName.toLowerCase()) mentionsText += name + " "
         }
     }
-    mentionsText = currentTweet.screenName === currentTweet.displayScreenName
-            ? "@" + currentTweet.screenName + " " + mentionsText
-            : "@" + currentTweet.screenName + " @" + currentTweet.displayScreenName + " " + mentionsText
+
     return mentionsText
 }
 
 function getAllHashtags(text){
-    if(settings.hashtagsInReply){
-        var hashtags = ""
-        var hashtagsArray = text.match(/href="#[^"\s]+/g)
-        if(hashtagsArray != null){
-            for(var i=0; i<hashtagsArray.length; i++) hashtags += hashtagsArray[i].substring(6) + " "
-        }
-        return hashtags
-    }
-    else return ""
+    if(!settings.hashtagsInReply)
+        return ""
+
+    var hashtags = ""
+    var hashtagsArray = text.match(/href="#[^"\s]+/g)
+    if(hashtagsArray != null)
+        for(var i=0; i<hashtagsArray.length; i++) hashtags += hashtagsArray[i].substring(6) + " "
+
+    return hashtags
 }
 
 function conversationOnSuccess(data){
