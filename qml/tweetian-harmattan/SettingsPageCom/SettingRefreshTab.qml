@@ -18,7 +18,7 @@ Page{
 
             SettingSwitch{
                 id: streamingSwitch
-                text: "Enable Streaming"
+                text: "Enable streaming"
                 checked: settings.enableStreaming
                 infoButtonVisible: true
                 onCheckedChanged: settings.enableStreaming = checked
