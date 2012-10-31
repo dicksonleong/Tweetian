@@ -78,8 +78,7 @@ By signing in, you agree to Instapaper privacy policy:<br>\
         property string mute: "Mute allow you to mute tweets from your timeline with some specific keywords. \
 Separate the keywords by space to mute tweet when ALL of the keywords are matched or separate by newline \
 to mute tweet when ANY of the keywords are matched.\n\
-Keywords format: @user, #hashtag, source:Tweet_Button or plain words.\n\
-Note: All keywords are matched in case-sensitive."
+Keywords format: @user, #hashtag, source:Tweet_Button or plain words."
 
         property string streaming: "Streaming enable Tweetian to deliver real time update of timeline, mentions \
 and direct messages without the needs of refreshing periodically. Auto refresh and manual refresh will be disabled \

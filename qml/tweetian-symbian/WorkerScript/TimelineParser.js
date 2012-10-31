@@ -137,22 +137,18 @@ function isMuted(muteString, tweetObject){
 
     function checkMute(muteKeyword){
         if(muteKeyword.indexOf("@") === 0){ // @user
-            if(tweetObject.user.screen_name === muteKeyword.substring(1)){
+            if(tweetObject.user.screen_name.toLowerCase() === muteKeyword.substring(1).toLowerCase())
                 return true
-            }
-            else if(new RegExp(muteKeyword.concat("(\\s|$)")).test(tweetObject.text)){
+            else if(new RegExp(muteKeyword.toLowerCase().concat("(\\s|$)")).test(tweetObject.text.toLowerCase()))
                 return true
-            }
         }
         else if(muteKeyword.indexOf("source:") === 0){ // source:Tweet_Button
-            if(tweetObject.source === muteKeyword.substring(7).replace(/_/g, " ")){
+            if(tweetObject.source.toLowerCase() === muteKeyword.substring(7).toLowerCase().replace(/_/g, " "))
                 return true
-            }
         }
         else{ // plain words
-            if(new RegExp(muteKeyword.concat("(\\s|$)")).test(tweetObject.text)){
+            if(new RegExp(muteKeyword.toLowerCase().concat("(\\s|$)")).test(tweetObject.text.toLowerCase()))
                 return true
-            }
         }
         return false
     }
