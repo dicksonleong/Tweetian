@@ -26,7 +26,7 @@ var __signInDialog = null
 
 function createPocketSignInDialog(){
     if(!__signInDialog) __signInDialog = Qt.createComponent("../Dialog/SignInDialog.qml")
-    var dialog = __signInDialog.createObject(settingPage, { titleText: "Sign In to Pocket" })
+    var dialog = __signInDialog.createObject(settingPage, { titleText: "Sign in to Pocket" })
     dialog.signIn.connect(function(username, password){
         Pocket.authenticate(username, password, Script.pocketSuccessCallback, Script.pocketFailureCallback)
         loadingRect.visible = true
@@ -35,7 +35,7 @@ function createPocketSignInDialog(){
 
 function createInstapaperSignInDialog(){
     if(!__signInDialog) __signInDialog = Qt.createComponent("../Dialog/SignInDialog.qml")
-    var dialog = __signInDialog.createObject(settingPage, { titleText: "Sign In to Instapaper"})
+    var dialog = __signInDialog.createObject(settingPage, { titleText: "Sign in to Instapaper"})
     dialog.signIn.connect(function(username, password){
         Instapaper.getAccessToken(username, password, Script.instapaperSuccessCallback,
                                   Script.instapaperFailureCallback)
