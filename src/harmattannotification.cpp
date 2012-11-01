@@ -6,12 +6,17 @@
 #endif
 
 HarmattanNotification::HarmattanNotification(QObject *parent) :
-    QObject(parent)
+    QObject(parent), colddown(new QTimer(this))
 {
+    colddown->setInterval(5000);
+    colddown->setSingleShot(true);
 }
 
 void HarmattanNotification::publish(const QString &eventType, const QString &summary, const QString &body, const int count)
 {
+    if(colddown->isActive())
+        return;
+
 #ifdef Q_OS_HARMATTAN
     QString identifier = QString(eventType).remove(0,9);
 
@@ -27,6 +32,8 @@ void HarmattanNotification::publish(const QString &eventType, const QString &sum
     Q_UNUSED(body)
     Q_UNUSED(count)
 #endif
+
+    colddown->start();
 }
 
 void HarmattanNotification::clear(const QString &eventType)
