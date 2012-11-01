@@ -101,11 +101,11 @@ function parsePic(text){
         var imgurId = link.substring(19)
         thumbnail = "http://i.imgur.com/" + imgurId.replace(".", "s.")
     }
-//    else if(/http:\/\/sdrv.ms\/[^"]+/.test(text)){
-//        link = text.match(/http:\/\/sdrv.ms\/[^"]+/)[0]
-//        full = "https://apis.live.net/v5.0/skydrive/get_item_preview?type=normal&url=" + encodeURIComponent(link)
-//        thumbnail = "https://apis.live.net/v5.0/skydrive/get_item_preview?type=album&url=" + encodeURIComponent(link)
-//    }
+    else if(/http:\/\/sdrv.ms\/[^"]+/.test(text)){
+        link = text.match(/http:\/\/sdrv.ms\/[^"]+/)[0]
+        full = "https://apis.live.net/v5.0/skydrive/get_item_preview?type=normal&url=" + link
+        thumbnail = "https://apis.live.net/v5.0/skydrive/get_item_preview?type=album&url=" + link
+    }
 
     return [link, full, thumbnail]
 }
