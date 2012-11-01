@@ -47,7 +47,7 @@ Page{
 
             SettingSlider{
                 enabled: !streamingSwitch.checked
-                text: "Direct Messages: " + (enabled ? (value === 0 ? "Off" : value + " min") : "Disabled")
+                text: "Direct messages: " + (enabled ? (value === 0 ? "Off" : value + " min") : "Disabled")
                 maximumValue: 30
                 stepSize: 1
                 value: settings.directMsgRefreshFreq
@@ -63,7 +63,7 @@ Page{
             }
 
             SettingSwitch{
-                text: "Direct Messages"
+                text: "Direct messages"
                 checked: settings.messageNotification
                 onCheckedChanged: settings.messageNotification = checked
             }
