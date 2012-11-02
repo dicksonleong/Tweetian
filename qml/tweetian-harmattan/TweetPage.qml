@@ -37,6 +37,9 @@ Page{
     }
     property bool favouritedTweet: false
 
+    property ListModel ancestorModel: ListModel{}
+    property ListModel descendantModel: ListModel{}
+
     Component.onCompleted: {
         favouritedTweet = currentTweet.favourited
         // Process image thumbnail
@@ -181,13 +184,13 @@ Page{
                 height: childrenRect.height
 
                 Repeater{
-                    model: ListModel{ id: ancestorModel }
+                    id: ancestorRepeater
 
                     TweetDelegate{ width: ancestorColumn.width }
                 }
             }
 
-            Loader{ sourceComponent: ancestorModel.count > 0 ? inReplyToHeading : undefined }
+            Loader{ sourceComponent: ancestorRepeater.count > 0 ? inReplyToHeading : undefined }
 
             Column{
                 id: mainTweetColumn
@@ -330,7 +333,7 @@ Page{
 
             Loader{ id: translatedTweetLoader; height: sourceComponent ? undefined : 0 }
 
-            Loader{ sourceComponent: descendantModel.count > 0 ? replyHeading : undefined }
+            Loader{ sourceComponent: descendantRepeater.count > 0 ? replyHeading : undefined }
 
             Column{
                 id: descendantColumn
@@ -338,7 +341,7 @@ Page{
                 height: childrenRect.height
 
                 Repeater{
-                    model: ListModel{ id: descendantModel }
+                    id: descendantRepeater
 
                     TweetDelegate{ width: descendantColumn.width }
                 }
@@ -360,9 +363,13 @@ Page{
         source: "WorkerScript/ConversationParser.js"
         onMessage: {
             backButton.enabled = true
-            if(messageObject.action === "callAPI" && networkMonitor.online){
-                Twitter.getConversation(currentTweet.tweetId, JS.conversationOnSuccess, JS.conversationOnFailure)
-                header.busy = true
+            if(messageObject.action === "callAPI"){
+                ancestorRepeater.model = ancestorModel
+                descendantRepeater.model = descendantModel
+                if(networkMonitor.online){
+                    Twitter.getConversation(currentTweet.tweetId, JS.conversationOnSuccess, JS.conversationOnFailure)
+                    header.busy = true
+                }
             }
             else header.busy = false
         }

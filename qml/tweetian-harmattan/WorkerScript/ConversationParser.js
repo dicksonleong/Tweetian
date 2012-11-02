@@ -10,56 +10,60 @@ WorkerScript.onMessage = function (msg) {
             skipCurrentLoop = false
             for(var iTimeline=0; iTimeline < msg.timelineModel.count; iTimeline++){
                 if(msg.timelineModel.get(iTimeline).tweetId == replyId){
-                    msg.ancestorModel.insert(0,{"tweetId": msg.timelineModel.get(iTimeline).tweetId,
-                                                 "retweetId": msg.timelineModel.get(iTimeline).retweetId,
-                                                 "displayScreenName": msg.timelineModel.get(iTimeline).displayScreenName,
-                                                 "screenName": msg.timelineModel.get(iTimeline).screenName,
-                                                 "userName": msg.timelineModel.get(iTimeline).userName,
-                                                 "tweetText": msg.timelineModel.get(iTimeline).tweetText,
-                                                 "displayTweetText": msg.timelineModel.get(iTimeline).displayTweetText,
-                                                 "profileImageUrl": msg.timelineModel.get(iTimeline).profileImageUrl,
-                                                 "source": msg.timelineModel.get(iTimeline).source,
-                                                 "createdAt": msg.timelineModel.get(iTimeline).createdAt,
-                                                 "favourited": msg.timelineModel.get(iTimeline).favourited,
-                                                 "inReplyToScreenName": msg.timelineModel.get(iTimeline).inReplyToScreenName,
-                                                 "inReplyToStatusId": msg.timelineModel.get(iTimeline).inReplyToStatusId,
-                                                 "mediaExpandedUrl": msg.timelineModel.get(iTimeline).mediaExpandedUrl,
-                                                 "mediaViewUrl": msg.timelineModel.get(iTimeline).mediaViewUrl,
-                                                 "mediaThumbnail": msg.timelineModel.get(iTimeline).mediaThumbnail,
-                                                 "latitude": msg.timelineModel.get(iTimeline).latitude,
-                                                 "longitude": msg.timelineModel.get(iTimeline).longitude,
-                                                 "timeDiff": timeDiff(msg.timelineModel.get(iTimeline).createdAt)})
+                    var timelineObject = {
+                        "tweetId": msg.timelineModel.get(iTimeline).tweetId,
+                        "retweetId": msg.timelineModel.get(iTimeline).retweetId,
+                        "displayScreenName": msg.timelineModel.get(iTimeline).displayScreenName,
+                        "screenName": msg.timelineModel.get(iTimeline).screenName,
+                        "userName": msg.timelineModel.get(iTimeline).userName,
+                        "tweetText": msg.timelineModel.get(iTimeline).tweetText,
+                        "displayTweetText": msg.timelineModel.get(iTimeline).displayTweetText,
+                        "profileImageUrl": msg.timelineModel.get(iTimeline).profileImageUrl,
+                        "source": msg.timelineModel.get(iTimeline).source,
+                        "createdAt": msg.timelineModel.get(iTimeline).createdAt,
+                        "favourited": msg.timelineModel.get(iTimeline).favourited,
+                        "inReplyToScreenName": msg.timelineModel.get(iTimeline).inReplyToScreenName,
+                        "inReplyToStatusId": msg.timelineModel.get(iTimeline).inReplyToStatusId,
+                        "mediaExpandedUrl": msg.timelineModel.get(iTimeline).mediaExpandedUrl,
+                        "mediaViewUrl": msg.timelineModel.get(iTimeline).mediaViewUrl,
+                        "mediaThumbnail": msg.timelineModel.get(iTimeline).mediaThumbnail,
+                        "latitude": msg.timelineModel.get(iTimeline).latitude,
+                        "longitude": msg.timelineModel.get(iTimeline).longitude,
+                        "timeDiff": timeDiff(msg.timelineModel.get(iTimeline).createdAt)
+                    }
+                    msg.ancestorModel.insert(0, timelineObject)
                     replyId = msg.timelineModel.get(iTimeline).inReplyToStatusId
                     skipCurrentLoop = true
-                    msg.ancestorModel.sync()
                     break
                 }
             }
             if(skipCurrentLoop) continue
             for(var iMentions=0; iMentions < msg.mentionsModel.count; iMentions++){
                 if(msg.mentionsModel.get(iMentions).tweetId == replyId){
-                    msg.ancestorModel.insert(0, {"tweetId": msg.mentionsModel.get(iMentions).tweetId,
-                                                 "retweetId": msg.mentionsModel.get(iMentions).retweetId,
-                                                 "displayScreenName": msg.mentionsModel.get(iMentions).displayScreenName,
-                                                 "screenName": msg.mentionsModel.get(iMentions).screenName,
-                                                 "userName": msg.mentionsModel.get(iMentions).userName,
-                                                 "tweetText": msg.mentionsModel.get(iMentions).tweetText,
-                                                 "displayTweetText": msg.mentionsModel.get(iMentions).displayTweetText,
-                                                 "profileImageUrl": msg.mentionsModel.get(iMentions).profileImageUrl,
-                                                 "source": msg.mentionsModel.get(iMentions).source,
-                                                 "createdAt": msg.mentionsModel.get(iMentions).createdAt,
-                                                 "favourited": msg.mentionsModel.get(iMentions).favourited,
-                                                 "inReplyToScreenName": msg.mentionsModel.get(iMentions).inReplyToScreenName,
-                                                 "inReplyToStatusId": msg.mentionsModel.get(iMentions).inReplyToStatusId,
-                                                 "mediaExpandedUrl": msg.mentionsModel.get(iMentions).mediaExpandedUrl,
-                                                 "mediaViewUrl": msg.mentionsModel.get(iMentions).mediaViewUrl,
-                                                 "mediaThumbnail": msg.mentionsModel.get(iMentions).mediaThumbnail,
-                                                 "latitude": msg.mentionsModel.get(iMentions).latitude,
-                                                 "longitude": msg.mentionsModel.get(iMentions).longitude,
-                                                 "timeDiff": timeDiff(msg.mentionsModel.get(iMentions).createdAt)})
+                    var mentionsObject = {
+                        "tweetId": msg.mentionsModel.get(iMentions).tweetId,
+                        "retweetId": msg.mentionsModel.get(iMentions).retweetId,
+                        "displayScreenName": msg.mentionsModel.get(iMentions).displayScreenName,
+                        "screenName": msg.mentionsModel.get(iMentions).screenName,
+                        "userName": msg.mentionsModel.get(iMentions).userName,
+                        "tweetText": msg.mentionsModel.get(iMentions).tweetText,
+                        "displayTweetText": msg.mentionsModel.get(iMentions).displayTweetText,
+                        "profileImageUrl": msg.mentionsModel.get(iMentions).profileImageUrl,
+                        "source": msg.mentionsModel.get(iMentions).source,
+                        "createdAt": msg.mentionsModel.get(iMentions).createdAt,
+                        "favourited": msg.mentionsModel.get(iMentions).favourited,
+                        "inReplyToScreenName": msg.mentionsModel.get(iMentions).inReplyToScreenName,
+                        "inReplyToStatusId": msg.mentionsModel.get(iMentions).inReplyToStatusId,
+                        "mediaExpandedUrl": msg.mentionsModel.get(iMentions).mediaExpandedUrl,
+                        "mediaViewUrl": msg.mentionsModel.get(iMentions).mediaViewUrl,
+                        "mediaThumbnail": msg.mentionsModel.get(iMentions).mediaThumbnail,
+                        "latitude": msg.mentionsModel.get(iMentions).latitude,
+                        "longitude": msg.mentionsModel.get(iMentions).longitude,
+                        "timeDiff": timeDiff(msg.mentionsModel.get(iMentions).createdAt)
+                    }
+                    msg.ancestorModel.insert(0, mentionsObject)
                     replyId = msg.mentionsModel.get(iMentions).inReplyToStatusId
                     skipCurrentLoop = true
-                    msg.ancestorModel.sync()
                     break
                 }
             }
