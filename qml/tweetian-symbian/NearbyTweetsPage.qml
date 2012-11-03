@@ -106,6 +106,8 @@ Page{
             stop()
             internal.refresh("all")
         }
+
+        Component.onDestruction: stop()
     }
 
     QtObject{
