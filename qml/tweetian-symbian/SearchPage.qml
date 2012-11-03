@@ -88,7 +88,6 @@ Page{
         id: header
         headerIcon: "image://theme/toolbar-search"
         headerText: "Search: \"" + searchName + "\""
-        countBubbleVisible: true
         onClicked: searchListView.positionViewAtBeginning()
     }
 
@@ -97,7 +96,14 @@ Page{
         source: "WorkerScript/SearchParser.js"
         onMessage: {
             backButton.enabled = true
-            if(internal.reloadType === "newer") header.countBubbleValue = messageObject.count
+            if(internal.reloadType === "newer") {
+                header.countBubbleVisible = true
+                header.countBubbleValue = messageObject.count
+            }
+            else{
+                header.countBubbleVisible = false
+                header.countBubbleValue = 0
+            }
             header.busy = false
         }
     }

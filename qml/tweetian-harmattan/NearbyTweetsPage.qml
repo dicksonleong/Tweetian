@@ -76,7 +76,6 @@ Page{
         id: header
         headerIcon: "image://theme/icon-m-common-location-inverse"
         headerText: positionSource.active ? "Getting location..." : "Nearby Tweets"
-        countBubbleVisible: true
         onClicked: searchListView.positionViewAtBeginning()
     }
 
@@ -84,8 +83,15 @@ Page{
         id: searchParser
         source: "WorkerScript/SearchParser.js"
         onMessage: {
-            if(internal.reloadType === "newer") header.countBubbleValue = messageObject.count
             backButton.enabled = true
+            if(internal.reloadType === "newer") {
+                header.countBubbleVisible = true
+                header.countBubbleValue = messageObject.count
+            }
+            else {
+                header.countBubbleVisible = false
+                header.countBubbleValue = 0
+            }
             header.busy = false
         }
     }
