@@ -138,11 +138,15 @@ Item{
                 if(messageObject.count > 0) {
                     if(tweetView.stayAtCurrentPosition || tweetView.indexAt(0, tweetView.contentY) > 0)
                         unreadCount += messageObject.count
-                    if(type === "Mentions" && settings.mentionNotification
-                            && (!platformWindow.active || mainPage.status !== PageStatus.Active)){
-                        notification.clear("tweetian.mention")
+                    if(type === "Mentions" && settings.mentionNotification){
                         var body = unreadCount === 1 ? "1 new mention" : unreadCount + " new mentions"
-                        notification.publish("tweetian.mention", "Tweetian", body, unreadCount)
+                        if(!platformWindow.active){
+                            notification.clear("tweetian.mention")
+                            notification.publish("tweetian.mention", "Tweetian", body, unreadCount)
+                        }
+                        else if(mainPage.status !== PageStatus.Active){
+                            infoBanner.alert(body)
+                        }
                     }
                 }
                 if(messageObject.screenNames.length > 0) cache.screenNames = Database.storeScreenNames(messageObject.screenNames)

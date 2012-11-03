@@ -23,10 +23,15 @@ Item{
         if(type == "insert") {
             if(createNotification){
                 unreadCount += count
-                if(settings.messageNotification && (!platformWindow.active || mainPage.status !== PageStatus.Active)){
-                    notification.clear("tweetian.message")
+                if(settings.messageNotification){
                     var body = unreadCount === 1 ? "1 new message" : unreadCount + " new messages"
-                    notification.publish("tweetian.message", "Tweetian", body, unreadCount)
+                    if(!platformWindow.active){
+                        notification.clear("tweetian.message")
+                        notification.publish("tweetian.message", "Tweetian", body, unreadCount)
+                    }
+                    else if(mainPage.status !== PageStatus.Active){
+                        infoBanner.alert(body)
+                    }
                 }
             }
             busy = false
