@@ -52,7 +52,9 @@ It comes with a simple, native and amazing UI that make you enjoy the Twitter ex
                     anchors{ left: parent.left; right: parent.right; top: parent.top; margins: constant.paddingMedium }
                     font.pixelSize: constant.fontSizeMedium
                     color: constant.colorLight
-                    text: appVersion
+                    wrapMode: Text.Wrap
+                    text: appVersion + " <i>[This is a pre-release version and only use for debug, \
+you are trying at your own risk]</i>"
                 }
             }
 

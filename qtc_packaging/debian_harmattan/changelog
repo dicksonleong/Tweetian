@@ -1,3 +1,8 @@
+tweetian (1.6.1) stable; urgency=low
+  * Pre-release version
+
+ -- Dickson <dicksonleong8@gmail.com>  Sun, 04 Nov 2012 16:32:43 +0800
+
 tweetian (1.6.0) stable; urgency=low
   * New features: Mute, Nearby Tweets
   * Huge improvement to the app backend

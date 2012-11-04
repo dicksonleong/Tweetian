@@ -32,7 +32,7 @@ Q_DECL_EXPORT int main(int argc, char *argv[])
 
     app->setApplicationName("Tweetian");
     app->setOrganizationName("Tweetian");
-    app->setApplicationVersion("1.6.0");
+    app->setApplicationVersion("1.6.1");
 
 #if defined(Q_OS_SYMBIAN) || defined(Q_WS_SIMULATOR)
     QSplashScreen *splash = new QSplashScreen(QPixmap(":/splash/tweetian-splash-symbian.jpg"));

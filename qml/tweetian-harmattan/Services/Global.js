@@ -2,7 +2,7 @@
 
 var Global = {}
 
-Global.USER_AGENT = "Tweetian/1.6.0 (Nokia; Qt; MeeGo Harmattan)"
+Global.USER_AGENT = "Tweetian/1.6.1 (Nokia; Qt; MeeGo Harmattan)"
 
 Global.encodeParameters = function(parameters){
     var encoded = ""

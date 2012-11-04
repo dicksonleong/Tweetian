@@ -68,7 +68,7 @@ symbian{
     ICON = Tweetian.svg
     RESOURCES += qmlsymbian.qrc
 
-    VERSION = 1.6.0
+    VERSION = 1.6.1
 }
 
 QT *= network
