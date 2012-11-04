@@ -133,5 +133,6 @@
         <file>qml/tweetian-harmattan/UserPageCom/UserSubscribedListsPage.qml</file>
         <file>qml/tweetian-harmattan/UserPageCom/UserTweetsPage.qml</file>
         <file>qml/tweetian-harmattan/Services/Global.js</file>
+        <file>qml/tweetian-harmattan/Image/banner_empty.jpg</file>
     </qresource>
 </RCC>

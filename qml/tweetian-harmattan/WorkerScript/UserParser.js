@@ -16,18 +16,19 @@ WorkerScript.onMessage = function(msg){
                     var userObject = {
                         userName: msg.data[iData].name,
                         screenName: msg.data[iData].screen_name,
-                        location: (msg.data[iData].location ? msg.data[iData].location : ""),
+                        bio: msg.data[iData].description || "",
+                        location: msg.data[iData].location || "",
                         profileImageUrl: msg.data[iData].profile_image_url,
+                        profileBannerUrl: msg.data[iData].profile_banner_url || "",
                         createdAt: msg.data[iData].created_at,
                         favouritesCount: msg.data[iData].favourites_count,
                         website: msg.data[iData].url,
                         followersCount: msg.data[iData].followers_count,
-                        bio: (msg.data[iData].description ? msg.data[iData].description : ""),
                         followingCount: msg.data[iData].friends_count,
                         tweetsCount: msg.data[iData].statuses_count,
+                        listedCount: msg.data[iData].listed_count,
                         followingUser: msg.data[iData].following,
-                        protectedUser: msg.data[iData].protected,
-                        listedCount: msg.data[iData].listed_count
+                        protectedUser: msg.data[iData].protected
                     }
                     msg.model.append(userObject)
                     screenNames.push(msg.data[iData].screen_name)
@@ -41,18 +42,19 @@ WorkerScript.onMessage = function(msg){
             var userObject2 = {
                 userName: msg.data[iData2].name,
                 screenName: msg.data[iData2].screen_name,
-                location: (msg.data[iData2].location ? msg.data[iData2].location : ""),
+                bio: msg.data[iData2].description || "",
+                location: msg.data[iData2].location || "",
                 profileImageUrl: msg.data[iData2].profile_image_url,
+                profileBannerUrl: msg.data[iData2].profile_banner_url || "",
                 createdAt: msg.data[iData2].created_at,
                 favouritesCount: msg.data[iData2].favourites_count,
                 website: msg.data[iData2].url,
                 followersCount: msg.data[iData2].followers_count,
-                bio: (msg.data[iData2].description ? msg.data[iData2].description : ""),
                 followingCount: msg.data[iData2].friends_count,
                 tweetsCount: msg.data[iData2].statuses_count,
+                listedCount: msg.data[iData2].listed_count,
                 followingUser: msg.data[iData2].following,
-                protectedUser: msg.data[iData2].protected,
-                listedCount: msg.data[iData2].listed_count
+                protectedUser: msg.data[iData2].protected
             }
             msg.model.append(userObject2)
         }

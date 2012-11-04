@@ -13,7 +13,8 @@ Page{
     QtObject{
         id: userInfoData
 
-        property url profileImageUrl: ""
+        property string profileImageUrl: ""
+        property string bannerImageUrl: ""
         property string screenName: ""
         property bool protectedUser: false
         property string userName: ""
@@ -26,6 +27,7 @@ Page{
 
         function setData(){
             profileImageUrl = userInfoRawData.profile_image_url
+            if(userInfoRawData.profile_banner_url) bannerImageUrl = userInfoRawData.profile_banner_url
             screenName = userInfoRawData.screen_name
             protectedUser = userInfoRawData.protected
             userName = userInfoRawData.name
@@ -65,6 +67,12 @@ Page{
             onClicked: pageStack.push(Qt.resolvedUrl("NewTweetPage.qml"), {type: "DM", screenName: screenName})
         }
         ToolButtonWithTip{
+            iconSource: "toolbar-refresh"
+            enabled: !loadingRect.visible
+            toolTipText: "Refresh"
+            onClicked: internal.refresh()
+        }
+        ToolButtonWithTip{
             iconSource: "toolbar-menu"
             toolTipText: "Menu"
             onClicked: userPageMenu.open()
@@ -91,84 +99,194 @@ Page{
         }
     }
 
-    AbstractListView{
-        id: userPageListView
-        anchors{ top: pageHeader.bottom; bottom: parent.bottom; left: parent.left; right: parent.right }
-        model: ListModel{}
-        clip: true
-        delegate: ListItem{
-            id: listItem
-            subItemIndicator: (/(Website|Tweets|Following|Followers|Favourites|Subscribed Lists|Listed)/).test(title)
-            enabled: (!subItemIndicator || title === "Website")
-                     || !userInfoData.protectedUser
-                     || userInfoData.following
-                     || userPage.screenName === settings.userScreenName
-            width: ListView.view.width
-            height: Math.max(listItemColumn.height + 2 * constant.paddingMedium, implicitHeight)
-            platformInverted: settings.invertedTheme
-            onClicked: {
-                switch(title){
-                case "Website": dialog.createOpenLinkDialog(subtitle); break;
-                case "Tweets": internal.pushUserPage("UserPageCom/UserTweetsPage.qml"); break;
-                case "Following": internal.pushUserPage("UserPageCom/UserFollowingPage.qml"); break;
-                case "Followers": internal.pushUserPage("UserPageCom/UserFollowersPage.qml"); break;
-                case "Favourites": internal.pushUserPage("UserPageCom/UserFavouritesPage.qml"); break;
-                case "Subscribed Lists": internal.pushUserPage("UserPageCom/UserSubscribedListsPage.qml"); break;
-                case "Listed": internal.pushUserPage("UserPageCom/UserListedPage.qml"); break;
+    Flickable{
+        id: userFlickable
+        anchors.fill: parent
+        flickableDirection: Flickable.VerticalFlick
+        contentHeight: userColumn.height
+
+        Column{
+            id: userColumn
+            anchors{ left: parent.left; right: parent.right }
+
+            Item{
+                id: headerItem
+                anchors{ left: parent.left; right: parent.right }
+                height: inPortrait ? width / 2 : width / 4
+
+                Image{
+                    id: headerImage
+                    anchors.fill: parent
+                    cache: false
+                    fillMode: Image.PreserveAspectCrop
+                    clip: true
+                    source: {
+                        if(userInfoData.bannerImageUrl)
+                            return userInfoData.bannerImageUrl.concat(inPortrait ? "/web" : "/mobile_retina")
+                        else
+                            return "Image/banner_empty.jpg"
+                    }
+
+                    onStatusChanged: if(status === Image.Error) source = "Image/banner_empty.jpg"
+                }
+
+                Item{
+                    id: headerTopItem
+                    anchors{ left: parent.left; right: parent.right }
+                    height: childrenRect.height
+
+                    Rectangle{
+                        id: profileImageContainer
+                        anchors{ left: parent.left; top: parent.top; margins: constant.paddingMedium }
+                        width: profileImage.width + (border.width / 2); height: width
+                        color: "black"
+                        border.width: 2
+                        border.color: profileImageMouseArea.pressed ? constant.colorTextSelection : constant.colorMid
+
+                        Image{
+                            id: profileImage
+                            anchors.centerIn: parent
+                            height: userNameText.height + screenNameText.height; width: height
+                            cache: false
+                            fillMode: Image.PreserveAspectCrop
+                            source: userInfoData.profileImageUrl.replace("_normal", "_bigger")
+                        }
+
+                        MouseArea{
+                            id: profileImageMouseArea
+                            anchors.fill: parent
+                            onClicked: {
+                                var prop = { imageUrl: userInfoData.profileImageUrl.replace("_normal", "") }
+                                pageStack.push(Qt.resolvedUrl("TweetImage.qml"), prop)
+                            }
+                        }
+                    }
+
+                    Text{
+                        id: userNameText
+                        anchors{
+                            top: parent.top
+                            left: profileImageContainer.right
+                            right: parent.right
+                            margins: constant.paddingMedium
+                        }
+                        font.bold: true
+                        font.pixelSize: constant.fontSizeXLarge
+                        color: "white"
+                        style: Text.Outline
+                        styleColor: "black"
+                        text: userInfoData.userName
+                    }
+
+                    Text{
+                        id: screenNameText
+                        anchors{
+                            top: userNameText.bottom
+                            left: profileImageContainer.right; leftMargin: constant.paddingMedium
+                            right: parent.right; rightMargin: constant.paddingMedium
+                        }
+                        font.pixelSize: constant.fontSizeLarge
+                        color: "white"
+                        style: Text.Outline
+                        styleColor: "black"
+                        text: userInfoData.screenName ? "@" + userInfoData.screenName : ""
+                    }
+                }
+
+                Text{
+                    id: descriptionText
+                    anchors{
+                        left: parent.left
+                        right: parent.right
+                        top: headerTopItem.bottom
+                        bottom: parent.bottom
+                        margins: constant.paddingMedium
+                    }
+                    wrapMode: Text.Wrap
+                    elide: Text.ElideRight
+                    maximumLineCount: inPortrait ? 4 : 3 // TODO: remove hardcoded value
+                    font.pixelSize: constant.fontSizeSmall
+                    verticalAlignment: Text.AlignBottom
+                    color: "white"
+                    style: Text.Outline
+                    styleColor: "black"
                 }
             }
 
-            Column{
-                id: listItemColumn
-                anchors{
-                    verticalCenter: parent.verticalCenter
-                    left: parent.paddingItem.left
-                    right: parent.paddingItem.right
-                }
-                height: childrenRect.height
+            Rectangle{
+                anchors{ left: parent.left; right: parent.right }
+                height: 1
+                color: constant.colorMarginLine
+            }
 
-                ListItemText{
-                    id: titleText
-                    width: parent.width
-                    mode: listItem.mode
-                    role: "Title"
-                    text: title
-                    wrapMode: Text.Wrap
-                    platformInverted: listItem.platformInverted
-                }
-                ListItemText{
-                    id: subTitleText
-                    width: parent.width
-                    role: "SubTitle"
-                    mode: listItem.mode
-                    text: subtitle
-                    visible: text !== ""
-                    wrapMode: Text.Wrap
-                    elide: Text.ElideNone
-                    font.pixelSize: constant.fontSizeMedium
-                    platformInverted: listItem.platformInverted
+            Repeater{
+                id: userInfoRepeater
+                width: parent.width
+                model: ListModel{}
+                delegate: ListItem{
+                    id: listItem
+                    height: Math.max(listItemColumn.height + 2 * constant.paddingMedium, implicitHeight)
+                    subItemIndicator: (/(Website|Tweets|Following|Followers|Favourites|Subscribed Lists|Listed)/).test(title)
+                    enabled: (!subItemIndicator || title === "Website")
+                             || !userInfoData.protectedUser
+                             || userInfoData.following
+                             || userPage.screenName === settings.userScreenName
+                    platformInverted: settings.invertedTheme
+                    onClicked: {
+                        switch(title){
+                        case "Website": dialog.createOpenLinkDialog(subtitle); break;
+                        case "Tweets": internal.pushUserPage("UserPageCom/UserTweetsPage.qml"); break;
+                        case "Following": internal.pushUserPage("UserPageCom/UserFollowingPage.qml"); break;
+                        case "Followers": internal.pushUserPage("UserPageCom/UserFollowersPage.qml"); break;
+                        case "Favourites": internal.pushUserPage("UserPageCom/UserFavouritesPage.qml"); break;
+                        case "Subscribed Lists": internal.pushUserPage("UserPageCom/UserSubscribedListsPage.qml"); break;
+                        case "Listed": internal.pushUserPage("UserPageCom/UserListedPage.qml"); break;
+                        }
+                    }
+
+                    Column{
+                        id: listItemColumn
+                        anchors{
+                            verticalCenter: parent.verticalCenter
+                            left: parent.paddingItem.left
+                            right: parent.paddingItem.right
+                        }
+                        height: childrenRect.height
+
+                        ListItemText{
+                            id: titleText
+                            width: parent.width
+                            mode: listItem.mode
+                            role: "Title"
+                            text: title
+                            wrapMode: Text.Wrap
+                            platformInverted: listItem.platformInverted
+                        }
+                        ListItemText{
+                            id: subTitleText
+                            width: parent.width
+                            role: "SubTitle"
+                            mode: listItem.mode
+                            text: subtitle
+                            visible: text !== ""
+                            wrapMode: Text.Wrap
+                            elide: Text.ElideNone
+                            font.pixelSize: constant.fontSizeMedium
+                            platformInverted: listItem.platformInverted
+                        }
+                    }
                 }
             }
         }
-        onPullDownRefresh: internal.refresh()
     }
 
-    ScrollDecorator{ platformInverted: settings.invertedTheme; flickableItem: userPageListView }
-
-    LargePageHeader{
-        id: pageHeader
-        primaryText: userInfoData.userName
-        secondaryText: userInfoData.screenName ? "@" + userInfoData.screenName : ""
-        imageSource: userInfoData.profileImageUrl
-        showProtectedIcon: userInfoData.protectedUser
-        onClicked: userPageListView.positionViewAtBeginning()
-    }
+    ScrollDecorator{ platformInverted: settings.invertedTheme; flickableItem: userFlickable }
 
     QtObject{
         id: internal
 
         function refresh(){
-            userPageListView.model.clear()
+            userInfoRepeater.model.clear()
             Twitter.getUserInfo(userPage.screenName, userInfoOnSuccess, userInfoOnFailure)
             loadingRect.visible = true
         }
@@ -177,16 +295,16 @@ Page{
             if(userPage.screenName === settings.userScreenName) cache.userInfo = data
             userInfoRawData = data
             userInfoData.setData()
-            if(data.description) userPageListView.model.append({"title": "Bio", "subtitle": data.description})
-            if(data.url) userPageListView.model.append({"title": "Website", "subtitle": data.url})
-            if(data.location) userPageListView.model.append({"title": "Location", "subtitle": data.location})
-            userPageListView.model.append({"title": "Joined", "subtitle": Qt.formatDateTime(new Date(data.created_at), "d MMMM yyyy")})
-            userPageListView.model.append({"title": "Tweets", "subtitle": data.statuses_count + " | " + Calculate.tweetsFrequency(data.created_at,data.statuses_count)})
-            userPageListView.model.append({"title": "Following", "subtitle": data.friends_count})
-            userPageListView.model.append({"title": "Followers", "subtitle": data.followers_count})
-            userPageListView.model.append({"title": "Favourites", "subtitle": data.favourites_count})
-            userPageListView.model.append({"title": "Subscribed Lists", "subtitle": ""})
-            userPageListView.model.append({"title": "Listed", "subtitle": data.listed_count})
+            if(data.url) userInfoRepeater.model.append({"title": "Website", "subtitle": data.url})
+            if(data.location) userInfoRepeater.model.append({"title": "Location", "subtitle": data.location})
+            if(data.description) descriptionText.text = data.description
+            userInfoRepeater.model.append({"title": "Joined", "subtitle": Qt.formatDateTime(new Date(data.created_at), "d MMMM yyyy")})
+            userInfoRepeater.model.append({"title": "Tweets", "subtitle": data.statuses_count + " | " + Calculate.tweetsFrequency(data.created_at,data.statuses_count)})
+            userInfoRepeater.model.append({"title": "Following", "subtitle": data.friends_count})
+            userInfoRepeater.model.append({"title": "Followers", "subtitle": data.followers_count})
+            userInfoRepeater.model.append({"title": "Favourites", "subtitle": data.favourites_count})
+            userInfoRepeater.model.append({"title": "Subscribed Lists", "subtitle": ""})
+            userInfoRepeater.model.append({"title": "Listed", "subtitle": data.listed_count})
             loadingRect.visible = false
         }
 

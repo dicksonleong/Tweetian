@@ -85,6 +85,7 @@ AbstractDelegate{
         pageStack.push(Qt.resolvedUrl("../UserPage.qml"), {
                            userInfoRawData: {
                                "profile_image_url": profileImageUrl,
+                               "profile_banner_url": profileBannerUrl,
                                "screen_name": screenName,
                                "name": userName,
                                "protected": protectedUser,

@@ -162,5 +162,6 @@
         <file>qml/tweetian-symbian/UserPageCom/UserSubscribedListsPage.qml</file>
         <file>qml/tweetian-symbian/UserPageCom/UserTweetsPage.qml</file>
         <file>qml/tweetian-symbian/Services/Global.js</file>
+        <file>qml/tweetian-symbian/Image/banner_empty.jpg</file>
     </qresource>
 </RCC>

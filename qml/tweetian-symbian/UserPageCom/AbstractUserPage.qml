@@ -36,15 +36,8 @@ Page{
 
     AbstractListView{
         id: listView
-        anchors{ top: pageHeader.bottom; bottom: parent.bottom; left: parent.left; right: parent.right }
+        anchors{ top: header.bottom; bottom: parent.bottom; left: parent.left; right: parent.right }
         model: ListModel{}
-        header: PullToRefreshHeader{
-            height: sectionHeader.height
-            SectionHeader{
-                id: sectionHeader
-                text: root.headerText + (headerNumber ? " (" + headerNumber + ")" : "")
-            }
-        }
         footer: LoadMoreButton{
             visible: loadMoreButtonVisible
             enabled: !loadingRect.visible
@@ -69,12 +62,12 @@ Page{
 
     ScrollDecorator{ flickableItem: listView }
 
-    LargePageHeader{
-        id: pageHeader
-        primaryText: userInfoData.userName
-        secondaryText: userInfoData.screenName ? "@" + userInfoData.screenName : ""
-        imageSource: userInfoData.profileImageUrl
-        showProtectedIcon: userInfoData.protectedUser
+    PageHeader{
+        id: header
+        headerIcon: userInfoData.profileImageUrl
+        headerText: "<b>@" + userInfoData.screenName + "</b>: " + root.headerText
+        countBubbleVisible: true
+        countBubbleValue: root.headerNumber
         onClicked: listView.positionViewAtBeginning()
     }
 }

@@ -36,6 +36,7 @@ Item{
         id: icon
         source: headerIcon
         anchors { verticalCenter: parent.verticalCenter; left: parent.left; margins: constant.paddingMedium }
+        height: sourceSize.height; width: sourceSize.width
         sourceSize { height: constant.graphicSizeSmall; width: constant.graphicSizeSmall }
     }
 
