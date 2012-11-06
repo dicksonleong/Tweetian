@@ -34,8 +34,9 @@ Page{
                     wrapMode: Text.Wrap
                     font.pixelSize: constant.fontSizeMedium
                     color: constant.colorLight
-                    text: "Tweetian is a feature-rich Twitter app for your smartphone, developed using Qt and QML. \
-It comes with a simple, native and amazing UI that make you enjoy the Twitter experience on your smartphone."
+                    text: "Tweetian is a feature-rich Twitter app for smartphones, powered by Qt and QML. \
+It has a simple, native and easy-to-use UI that will surely make you enjoy the Twitter experience on your \
+smartphone. Tweetian is open source and licensed under GPL v3."
                 }
             }
 

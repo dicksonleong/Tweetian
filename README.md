@@ -1,7 +1,7 @@
 Tweetian
 ========
 
-Tweeitan is a feature-rich Twitter app developed using Qt and QML.
+Tweetian is a feature-rich Twitter app for smartphones, developed using Qt and QML.
 The backend of Tweetian is mostly coded in JavaScript (database handling, API calls, parsing JSON)
 but I hope to move the backend to C++ for better performance & less buggy. The UI is coded purely in QML
 and use a lot of components from Qt Quick Component for Symbian/MeeGo.
@@ -11,17 +11,17 @@ Tweetian currently available for Symbian^3 and MeeGo Harmattan.
 ToDo
 ----
 
-* Migrate to Twitter API v1.1 (**before March 2013**)
+* Migrate to Twitter API v1.1 (__before March 2013__)
 * Port to Nemo/Jolla
 * Move the whole app backend to C++
 * Harmattan: event feed integration
-* Multi-language support
+* Internationalization support
 
 Build for testing
 -----------------
 
 If you wanna build Tweetian from source, please make sure you filled in the API key/secret
-for respective service in *qml/tweetian-{platform}/Services/Global.js*. A default Twitter
+for respective service in __qml/tweetian-{platform}/Services/Global.js__. A default Twitter
 OAuth comsumer key/secret is provided for testing.
 
 You can build the binary for Symbian/Harmattan using the latest QtSDK.
@@ -36,7 +36,7 @@ You can download the latest stable version for Symbian/Harmattan (binary) at
 License
 -------
 
-    Tweetian - A feature-rich Twitter app developed using Qt and QML
+    Tweetian - A feature-rich Twitter app for smartphones developed using Qt and QML
     Copyright (C) 2012  Dickson Leong
 
     This program is free software: you can redistribute it and/or modify
