@@ -32,8 +32,8 @@ Page{
             enabled: tweetImagePreview.status == Image.Ready
             onClicked: {
                 var filePath = imageSaver.save(tweetImagePreview)
-                if(filePath) infoBanner.alert("Image saved in " + filePath)
-                else infoBanner.alert("Failed to save image")
+                if(filePath) infoBanner.alert(qsTr("Image saved in %1").arg(filePath))
+                else infoBanner.alert(qsTr("Failed to save image"))
             }
         }
     }
@@ -166,7 +166,7 @@ Page{
                     anchors.topMargin: constant.paddingXLarge
                     font.pixelSize: constant.fontSizeLarge
                     color: constant.colorLight
-                    text: "Loading image..." + Math.round(tweetImagePreview.progress*100) + "%"
+                    text: qsTr("Loading image...%1").arg(Math.round(tweetImagePreview.progress*100) + "%")
                 }
             }
         }
@@ -174,9 +174,9 @@ Page{
         Component{
             id: failedLoading
             Text{
-                text: "Error loading image"
                 font.pixelSize: constant.fontSizeLarge
                 color: constant.colorLight
+                text: qsTr("Error loading image")
             }
         }
     }

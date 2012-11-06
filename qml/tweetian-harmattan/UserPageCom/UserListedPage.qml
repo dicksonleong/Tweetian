@@ -8,9 +8,9 @@ AbstractUserPage{
 
     property string nextCursor: ""
 
-    headerText: "Listed"
+    headerText: qsTr("Listed")
     headerNumber: userInfoData.listedCount
-    emptyText: "No list"
+    emptyText: qsTr("No list")
     loadMoreButtonVisible: listView.count > 0 && listView.count % 20 === 0
     delegate: ListDelegate{}
 
@@ -35,8 +35,7 @@ AbstractUserPage{
             nextCursor = data.next_cursor_str
             loadingRect.visible = false
         }, function(status, statusText){
-            if(status === 0) infoBanner.alert("Connection error.")
-            else infoBanner.alert("Error: " + status + " " + statusText)
+            infoBanner.showHttpError(status, statusText)
             loadingRect.visible = false
         })
         loadingRect.visible = true

@@ -31,7 +31,7 @@ Page{
     PageHeader{
         id: header
         headerIcon: "image://theme/icon-m-toolbar-people-white-selected"
-        headerText: "Suggested Users"
+        headerText: qsTr("Suggested Users")
         countBubbleValue: suggestedUserView.count
         countBubbleVisible: countBubbleValue != 0
         onClicked: suggestedUserView.positionViewAtBeginning()
@@ -66,8 +66,7 @@ Page{
         }
 
         function onFailure(status, statusText){
-            if(status === 0) infoBanner.alert("Connection error.")
-            else infoBanner.alert("Error: " + status + " " + statusText)
+            infoBanner.showHttpError(status, statusText)
             header.busy = false
         }
     }

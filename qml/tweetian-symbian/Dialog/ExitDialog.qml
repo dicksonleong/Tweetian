@@ -7,11 +7,11 @@ CommonDialog{
     property bool __isClosing: false
 
     platformInverted: settings.invertedTheme
-    titleText: "Exit Tweetian"
-    buttonTexts: ["Exit", "Hide", "Cancel"]
+    titleText: qsTr("Exit Tweetian")
+    buttonTexts: [qsTr("Exit"), qsTr("Hide"), qsTr("Cancel")]
     content: Text {
         anchors { top: parent.top; left: parent.left; right: parent.right; margins: constant.paddingMedium }
-        text: "Do you want to hide or exit Tweetian?"
+        text: qsTr("Do you want to hide or exit Tweetian?")
         font.pixelSize: constant.fontSizeMedium
         color: constant.colorLight
         wrapMode: Text.Wrap

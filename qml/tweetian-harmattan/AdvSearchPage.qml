@@ -54,11 +54,11 @@ Page{
             spacing: constant.paddingMedium
 
             ToolButton{
-                text: "Search"
+                text: qsTr("Search")
                 onClicked: pageStack.push(Qt.resolvedUrl("SearchPage.qml"), {searchName: __contructQuery()})
             }
             ToolButton{
-                text: "Cancel"
+                text: qsTr("Cancel")
                 onClicked: pageStack.pop()
             }
         }
@@ -77,35 +77,35 @@ Page{
             height: childrenRect.height
             spacing: constant.paddingLarge
 
-            SectionHeader{ text: "Words" }
+            SectionHeader{ text: qsTr("Words") }
 
             SettingTextField{
                 id: allOfTheseWordsField
-                settingText: "All of these words"
+                settingText: qsTr("All of these words")
                 textFieldText: searchQuery
                 validator: RegExpValidator{ regExp: /(^$|^\S$|^\S.*\S$)/ }
-                placeHolderText: "eg. Tweetian Symbian MeeGo"
+                placeHolderText: qsTr("eg. %1").arg("Tweetian Symbian Harmattan")
             }
 
             SettingTextField{
                 id: exactPhraseField
-                settingText: "Exact phrase"
+                settingText: qsTr("Exact phrase")
                 validator: RegExpValidator{ regExp: /(^$|^\S$|^\S.*\S$)/ }
-                placeHolderText: "eg. Tweetian is amazing"
+                placeHolderText: qsTr("eg. %1").arg("Tweetian is amazing")
             }
 
             SettingTextField{
                 id: anyOfTheseWordsField
-                settingText: "Any of these words"
+                settingText: qsTr("Any of these words")
                 validator: RegExpValidator{ regExp: /(^$|^\S$|^\S.*\S$)/ }
-                placeHolderText: "eg. Symbian MeeGo"
+                placeHolderText: qsTr("eg. %1").arg("Symbian Harmattan")
             }
 
             SettingTextField{
                 id: noneOfTheseWordsField
-                settingText: "None of these words"
+                settingText: qsTr("None of these words")
                 validator: RegExpValidator{ regExp: /(^$|^\S$|^\S.*\S$)/ }
-                placeHolderText: "eg. iPhone Android"
+                placeHolderText: qsTr("eg. %1").arg("iPhone Android")
             }
 
             ListItem{
@@ -118,7 +118,7 @@ Page{
                     anchors { left: parent.left; right: parent.right; top: parent.top; margins: constant.paddingLarge }
 
                     Text{
-                        text: "Language"
+                        text: qsTr("Language")
                         font.pixelSize: constant.fontSizeMedium
                         color: constant.colorLight
                     }
@@ -144,73 +144,73 @@ Page{
                 onClicked: languageSelectionDialog.open()
             }
 
-            SectionHeader{ text: "Users" }
+            SectionHeader{ text: qsTr("Users") }
 
             SettingTextField{
                 id: fromTheseUsersField
-                settingText: "From any of these users"
+                settingText: qsTr("From any of these users")
                 validator: RegExpValidator{ regExp: /(^$|^\S$|^\S.*\S$)/ }
-                placeHolderText: "eg. user1 user2 user3"
+                placeHolderText: qsTr("eg. %1").arg("user1 user2 user3")
             }
 
             SettingTextField{
                 id: toTheseUsersField
-                settingText: "To any of these users"
+                settingText: qsTr("To any of these users")
                 validator: RegExpValidator{ regExp: /(^$|^\S$|^\S.*\S$)/ }
-                placeHolderText: "eg. user1 user2 user3"
+                placeHolderText: qsTr("eg. %1").arg("user1 user2 user3")
             }
 
             SettingTextField{
                 id: mentioningTheseUsersField
-                settingText: "Mentioning any of these users"
+                settingText: qsTr("Mentioning any of these users")
                 validator: RegExpValidator{ regExp: /(^$|^\S$|^\S.*\S$)/ }
-                placeHolderText: "eg. user1 user2 user3"
+                placeHolderText: qsTr("eg. %1").arg("user1 user2 user3")
             }
 
-            SectionHeader{ text: "Filters" }
+            SectionHeader{ text: qsTr("Filters") }
 
             SettingSwitch{
                 id: linkFilterSwitch
-                text: "Contain links"
+                text: qsTr("Contain links")
             }
 
             SettingSwitch{
                 id: imageFilterSwitch
-                text: "Contain images"
+                text: qsTr("Contain images")
             }
 
             SettingSwitch{
                 id: videoFilterSwitch
-                text: "Contain videos"
+                text: qsTr("Contain videos")
             }
 
-            SectionHeader{ text: "Other" }
+            SectionHeader{ text: qsTr("Other") }
 
             SettingTextField{
                 id: tweetSourceField
-                settingText: "From any of these sources"
+                settingText: qsTr("From any of these sources")
                 validator: RegExpValidator{ regExp: /(^$|^\S$|^\S.*\S$)/ }
-                placeHolderText: "eg. Tweetian QNeptunea_for_Nokia_N9"
+                placeHolderText: qsTr("eg. %1").arg("Tweetian_for_Harmattan")
             }
 
             SettingSwitch{
                 id: positiveAttitudeSwitch
-                text: "Position Attitude :)"
+                text: qsTr("Position attitude :)")
             }
 
             SettingSwitch{
                 id: negativeAttitudeSwitch
-                text: "Negative Attitude :("
+                text: qsTr("Negative attitude :(")
             }
 
             SettingSwitch{
                 id: questionSwitch
-                text: "Question ?"
+                text: qsTr("Question ?")
             }
 
             SettingSwitch{
                 id: includeRetweetsSwitch
-                text: "Include retweets"
+                text: qsTr("Include retweets")
             }
         }
     }
@@ -220,13 +220,13 @@ Page{
     PageHeader{
         id: header
         headerIcon: "image://theme/icon-m-toolbar-search-white-selected"
-        headerText: "Advanced Search"
+        headerText: qsTr("Advanced Search")
         onClicked: mainFlickable.contentY = 0
     }
 
     SelectionDialog{
         id: languageSelectionDialog
-        titleText: "Language"
+        titleText: qsTr("Language")
         model: languageModel
         selectedIndex: 0
     }

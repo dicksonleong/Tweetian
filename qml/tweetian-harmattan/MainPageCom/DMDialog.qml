@@ -13,11 +13,11 @@ ContextMenu{
     MenuLayout{
         id: menuLayout
         MenuItem{
-            text: "Delete"
+            text: qsTr("Delete")
             onClicked: internal.createDeleteDMDialog(tweetId)
         }
         MenuItem{
-            text: "<font color=\"LightSeaGreen\">@" + screenName + "</font> Profile"
+            text: qsTr("%1 Profile").arg("<font color=\"LightSeaGreen\">@" + screenName + "</font>")
             visible: screenName != ""
             onClicked: pageStack.push(Qt.resolvedUrl("../UserPage.qml"), {screenName: screenName})
             platformStyle: MenuItemStyle{ position: linksRepeater.count > 0 ? "vertical-center" : "vertical-bottom" }

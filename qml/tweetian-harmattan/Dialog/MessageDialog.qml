@@ -7,7 +7,7 @@ CommonDialog{
     property string message: ""
     property bool __isClosing: false
 
-    buttonTexts: ["Close"]
+    buttonTexts: [qsTr("Close")]
     content: Item{
         anchors {
             left: parent.left

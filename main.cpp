@@ -37,7 +37,7 @@ Q_DECL_EXPORT int main(int argc, char *argv[])
 #if defined(Q_OS_SYMBIAN) || defined(Q_WS_SIMULATOR)
     QSplashScreen *splash = new QSplashScreen(QPixmap(":/splash/tweetian-splash-symbian.jpg"));
     splash->show();
-    splash->showMessage("Loading...", Qt::AlignHCenter | Qt::AlignBottom, Qt::white);
+    splash->showMessage(QSplashScreen::tr("Loading..."), Qt::AlignHCenter | Qt::AlignBottom, Qt::white);
 #endif
 
     QDeclarativeView view;

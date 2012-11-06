@@ -6,9 +6,9 @@ import "../twitter.js" as Twitter
 AbstractUserPage{
     id: userTweetsPage
 
-    headerText: "Tweets"
+    headerText: qsTr("Tweets")
     headerNumber: userInfoData.statusesCount
-    emptyText: "No tweet"
+    emptyText: qsTr("No tweet")
     loadMoreButtonVisible: listView.count > 0 && listView.count % 50 === 0
     delegate: TweetDelegate{}
 
@@ -23,8 +23,7 @@ AbstractUserPage{
             userTweetsParser.sendMessage({'model': listView.model, 'data': data, 'reloadType': reloadType})
         },
         function(status, statusText){
-            if(status === 0) infoBanner.alert("Connection error.")
-            else infoBanner.alert("Error: " + status + " " + statusText)
+            infoBanner.showHttpError(status, statusText)
             loadingRect.visible = false
         })
         loadingRect.visible = true

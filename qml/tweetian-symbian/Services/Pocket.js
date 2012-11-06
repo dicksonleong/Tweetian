@@ -18,7 +18,7 @@ function authenticate(username, password, onSuccess, onFailure){
     request.onreadystatechange = function (){
         if(request.readyState === XMLHttpRequest.DONE){
             if(request.status === 200) onSuccess(username, password)
-            else onFailure(__getErrorText(request.status) + " (" + request.status + ")")
+            else onFailure(request.status)
         }
     }
 
@@ -43,36 +43,11 @@ function addPage(username, password, url, title, ref_id, onSuccess, onFailure) {
     request.onreadystatechange = function (){
         if(request.readyState === XMLHttpRequest.DONE){
             if(request.status === 200) onSuccess()
-            else onFailure(__getErrorText(request.status) + " (" + request.status + ")")
+            else onFailure(request.status)
         }
     }
 
     request.setRequestHeader("Content-Type", "application/x-www-form-urlencoded")
     request.setRequestHeader("User-Agent", Global.USER_AGENT)
     request.send(body)
-}
-
-function __getErrorText(status){
-    var errorText = ""
-    switch(status){
-    case 0:
-        errorText = "Connection error."
-        break
-    case 400:
-        errorText = "Invalid request. Please contact the developer."
-        break
-    case 401:
-        errorText = "Your username and/or password is incorrect."
-        break
-    case 403:
-        errorText = "Rate limit exceeded. Please try again later."
-        break
-    case 503:
-        errorText = "Pocket's server is currently down. Please try again later."
-        break
-    default:
-        errorText = "Unknown error."
-        break
-    }
-    return errorText
 }

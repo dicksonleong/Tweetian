@@ -32,7 +32,7 @@ Item{
         anchors { left: parent.left; top: accountNameText.bottom; leftMargin: constant.paddingMedium }
         color: signedIn ? "Green" : "Red"
         font.pixelSize: constant.fontSizeSmall
-        text: signedIn ? "Signed in" : "Not signed in"
+        text: signedIn ? qsTr("Signed in") : qsTr("Not signed in")
         font.italic: true
     }
 
@@ -67,7 +67,7 @@ Item{
         anchors.rightMargin: constant.paddingMedium
         anchors.verticalCenter: parent.verticalCenter
         width: parent.width / 3
-        text: signedIn ? "Sign Out" : "Sign In"
+        text: signedIn ? qsTr("Sign Out") : qsTr("Sign In")
         onClicked: root.buttonClicked()
     }
 }

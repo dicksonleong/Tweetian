@@ -20,18 +20,18 @@ Page{
         ToolButtonWithTip{
             id: backButton
             iconSource: "toolbar-back"
-            toolTipText: "Back"
+            toolTipText: qsTr("Back")
             onClicked: pageStack.pop()
         }
         ToolButtonWithTip{
             iconSource: platformInverted ? "../Image/edit_inverse.svg" : "../Image/edit.svg"
-            toolTipText: "New DM"
+            toolTipText: qsTr("New DM")
             onClicked: pageStack.push(Qt.resolvedUrl("../NewTweetPage.qml"),
                                       {type: "DM", screenName: screenName})
         }
         ToolButtonWithTip{
             iconSource: "toolbar-refresh"
-            toolTipText: "Refresh"
+            toolTipText: qsTr("Refresh")
             opacity: enabled ? 1 : 0.25
             enabled: userStream.status === 0
             onClicked: mainPage.directMsg.refresh("newer")
@@ -51,7 +51,7 @@ Page{
 
     PageHeader{
         id: header
-        headerText: "DM > @" + screenName
+        headerText: qsTr("DM: %1").arg("@" + screenName)
         headerIcon: "../Image/inbox.svg"
         busy: mainPage.directMsg.busy
         onClicked: dMConversationView.positionViewAtBeginning()
@@ -99,13 +99,12 @@ Page{
         function deleteDMOnSuccess(data){
             mainPage.directMsg.parser.remove(data.id_str)
             parser.remove(data.id_str)
-            infoBanner.alert("Direct message deleted.")
+            infoBanner.alert(qsTr("Direct message deleted successfully"))
             header.busy = false
         }
 
         function deleteDMOnFailure(status, statusText){
-            if(status === 0) infoBanner.alert("Connection error.")
-            else infoBanner.alert("Error: " + status + " " + statusText)
+            infoBanner.showHttpError(status, statusText)
             header.busy = false
         }
 
@@ -132,8 +131,8 @@ Page{
 
         function createDeleteDMDialog(tweetId){
             var icon = platformInverted ? "image://theme/toolbar-delete_inverse" : "image://theme/toolbar-delete"
-            var message = "Do you want to delete this direct message?"
-            dialog.createQueryDialog("Delete Message", icon, message, function(){
+            var message = qsTr("Do you want to delete this direct message?")
+            dialog.createQueryDialog(qsTr("Delete Message"), icon, message, function(){
                 Twitter.postDeleteDirectMsg(tweetId, deleteDMOnSuccess, deleteDMOnFailure)
                 header.busy = true
             })

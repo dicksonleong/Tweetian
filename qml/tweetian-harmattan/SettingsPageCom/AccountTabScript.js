@@ -2,31 +2,31 @@ function pocketSuccessCallback(username, password){
     settings.pocketUsername = username
     settings.pocketPassword = password
     loadingRect.visible = false
-    infoBanner.alert("Signed in to Pocket successfully.")
+    infoBanner.alert(qsTr("Signed in to Pocket successfully"))
 }
 
-function pocketFailureCallback(errorText){
+function pocketFailureCallback(errorCode){
     loadingRect.visible = false
-    infoBanner.alert("Error: " + errorText)
+    infoBanner.alert(qsTr("Error signing in to Pocket (%1)").arg(errorCode))
 }
 
 function instapaperSuccessCallback(oauthToken, oauthTokenSecret){
     settings.instapaperToken = oauthToken
     settings.instapaperTokenSecret = oauthTokenSecret
     loadingRect.visible = false
-    infoBanner.alert("Signed in to Instapaper successfully.")
+    infoBanner.alert(qsTr("Signed in to Instapaper successfully"))
 }
 
-function instapaperFailureCallback(errorText){
+function instapaperFailureCallback(errorCode){
     loadingRect.visible = false
-    infoBanner.alert("Error: " + errorText)
+    infoBanner.alert(qsTr("Error signing in to Instapaper (%1)").arg(errorCode))
 }
 
 var __signInDialog = null
 
 function createPocketSignInDialog(){
     if(!__signInDialog) __signInDialog = Qt.createComponent("../Dialog/SignInDialog.qml")
-    var dialog = __signInDialog.createObject(settingPage, { titleText: "Sign in to Pocket" })
+    var dialog = __signInDialog.createObject(settingPage, { titleText: qsTr("Sign in to Pocket") })
     dialog.signIn.connect(function(username, password){
         Pocket.authenticate(username, password, Script.pocketSuccessCallback, Script.pocketFailureCallback)
         loadingRect.visible = true
@@ -35,7 +35,7 @@ function createPocketSignInDialog(){
 
 function createInstapaperSignInDialog(){
     if(!__signInDialog) __signInDialog = Qt.createComponent("../Dialog/SignInDialog.qml")
-    var dialog = __signInDialog.createObject(settingPage, { titleText: "Sign in to Instapaper"})
+    var dialog = __signInDialog.createObject(settingPage, { titleText: qsTr("Sign in to Instapaper")})
     dialog.signIn.connect(function(username, password){
         Instapaper.getAccessToken(username, password, Script.instapaperSuccessCallback,
                                   Script.instapaperFailureCallback)
@@ -44,9 +44,8 @@ function createInstapaperSignInDialog(){
 }
 
 function createTwitterSignOutDialog(){
-    var message = "Do you want to sign out from your Twitter account? All other accounts will also automatically \
-sign out. All settings will be reset."
-    dialog.createQueryDialog("Twitter Sign Out", "", message, function(){
+    var message = qsTr("Do you want to sign out from your Twitter account? All other accounts will also automatically sign out. All settings will be reset.")
+    dialog.createQueryDialog(qsTr("Twitter Sign Out"), "", message, function(){
         Storage.clearTable("Timeline")
         mainPage.timeline.parseData("all", [])
         Storage.clearTable("Mentions")
@@ -61,19 +60,19 @@ sign out. All settings will be reset."
 }
 
 function createPocketSignOutDialog(){
-    var message = "Do you want to sign out from your Pocket account?"
-    dialog.createQueryDialog("Pocket Sign Out", "", message, function(){
+    var message = qsTr("Do you want to sign out from your Pocket account?")
+    dialog.createQueryDialog(qsTr("Pocket Sign Out"), "", message, function(){
         settings.pocketUsername = ""
         settings.pocketPassword = ""
-        infoBanner.alert("Signed out from your Pocket account successfully.")
+        infoBanner.alert(qsTr("Signed out from your Pocket account successfully"))
     })
 }
 
 function createInstapaperSignOutDialog(){
-    var message = "Do you want to sign out from your Instapaper account?"
-    dialog.createQueryDialog("Instapaper Sign Out", "", message, function(){
+    var message = qsTr("Do you want to sign out from your Instapaper account?")
+    dialog.createQueryDialog(qsTr("Instapaper Sign Out"), "", message, function(){
         settings.instapaperToken = ""
         settings.instapaperTokenSecret = ""
-        infoBanner.alert("Signed out from your Instapaper account successfully.")
+        infoBanner.alert(qsTr("Signed out from your Instapaper account successfully"))
     })
 }

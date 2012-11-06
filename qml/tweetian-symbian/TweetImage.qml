@@ -11,13 +11,13 @@ Page{
     tools: ToolBarLayout{
         ToolButtonWithTip{
             iconSource: "toolbar-back"
-            toolTipText: "Back"
+            toolTipText: qsTr("Back")
             onClicked: pageStack.pop()
         }
         ToolButtonWithTip{
             iconSource: platformInverted ? "Image/undo_inverse.svg" : "Image/undo.svg"
             enabled: tweetImagePreview.scale !== pinchArea.minScale
-            toolTipText: "Reset Zoom"
+            toolTipText: qsTr("Reset Zoom")
             onClicked: {
                 imageFlickable.returnToBounds()
                 bounceBackAnimation.to = pinchArea.minScale
@@ -27,17 +27,17 @@ Page{
         ToolButtonWithTip{
             iconSource: platformInverted ? "Image/internet_inverse.svg" : "Image/internet.svg"
             enabled: imageLink != ""
-            toolTipText: "Open Link"
+            toolTipText: qsTr("Open Link")
             onClicked: dialog.createOpenLinkDialog(imageLink)
         }
         ToolButtonWithTip{
             iconSource: platformInverted ? "Image/save_inverse.svg" : "Image/save.svg"
-            toolTipText: "Save Image"
+            toolTipText: qsTr("Save Image")
             enabled: tweetImagePreview.status == Image.Ready
             onClicked: {
                 var filePath = imageSaver.save(tweetImagePreview)
-                if(filePath) infoBanner.alert("Image saved in " + filePath)
-                else infoBanner.alert("Failed to save image")
+                if(filePath) infoBanner.alert(qsTr("Image saved in %1").arg(filePath))
+                else infoBanner.alert(qsTr("Failed to save image"))
             }
         }
     }
@@ -170,7 +170,7 @@ Page{
                     anchors.topMargin: constant.paddingXLarge
                     font.pixelSize: constant.fontSizeLarge
                     color: constant.colorLight
-                    text: "Loading image..." + Math.round(tweetImagePreview.progress*100) + "%"
+                    text: qsTr("Loading image...%1").arg(Math.round(tweetImagePreview.progress*100) + "%")
                 }
             }
         }
@@ -180,7 +180,7 @@ Page{
             Text{
                 font.pixelSize: constant.fontSizeLarge
                 color: constant.colorLight
-                text: "Error loading image"
+                text: qsTr("Error loading image")
             }
         }
     }

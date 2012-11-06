@@ -47,16 +47,16 @@ Page {
 
         MenuLayout{
             MenuItem{
-                text: "Refresh cache"
+                text: qsTr("Refresh cache")
                 enabled: !mainView.currentItem.busy
                 onClicked: mainView.currentItem.refresh("all")
             }
             MenuItem{
-                text: "Settings"
+                text: qsTr("Settings")
                 onClicked: pageStack.push(Qt.resolvedUrl("SettingPage.qml"))
             }
             MenuItem{
-                text: "About"
+                text: qsTr("About")
                 onClicked: pageStack.push(Qt.resolvedUrl("AboutPage.qml"))
             }
         }

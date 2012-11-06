@@ -13,9 +13,9 @@ AbstractUserPage{
     // order. Will be set to undefined once used to free memory.
     property variant currentRequestUserIds
 
-    headerText: "Followers"
+    headerText: qsTr("Followers")
     headerNumber: userInfoData.followersCount
-    emptyText: "No follower"
+    emptyText: qsTr("No follower")
     loadMoreButtonVisible: listView.count > 0 && listView.count % 50 === 0
     delegate: UserDelegate{}
 
@@ -41,7 +41,7 @@ AbstractUserPage{
                 loadingRect.visible = true
             }
             else {
-                infoBanner.alert("Error: No user to load!")
+                infoBanner.alert(qsTr("Error: No user to load?!"))
                 loadingRect.visible = false
             }
         }
@@ -60,8 +60,7 @@ AbstractUserPage{
     }
 
     function __failureCallback(status, statusText){
-        if(status === 0) infoBanner.alert("Connection error.")
-        else infoBanner.alert("Error: " + status + " " + statusText)
+        infoBanner.showHttpError(status, statusText)
         loadingRect.visible = false
     }
 }

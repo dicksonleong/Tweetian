@@ -8,7 +8,7 @@ CommonDialog{
     property bool __isClosing: false
 
     platformInverted: settings.invertedTheme
-    buttonTexts: ["Close"]
+    buttonTexts: [qsTr("Close")]
     content: Item{
         anchors { left: parent.left; right: parent.right; top: parent.top }
         height: messageText.paintedHeight + messageText.anchors.margins * 2

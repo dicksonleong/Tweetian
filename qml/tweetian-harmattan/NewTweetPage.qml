@@ -25,8 +25,8 @@ Page{
     HarmattanMusic{
         id: harmattanMusic
         onMediaReceived: {
-            if(mediaName) tweetTextArea.text = "#NowPlaying " + mediaName
-            else infoBanner.alert("No music is playing currently or music player is not running.")
+            if(mediaName) tweetTextArea.text = mediaName
+            else infoBanner.alert(qsTr("No music is playing currently or music player is not running"))
         }
     }
 
@@ -41,9 +41,12 @@ Page{
             ToolButton{
                 id: tweetButton
                 text: {
-                    if(type == "New") return "Tweet"
-                    else if(type == "RT") return "Retweet"
-                    else return type
+                    switch(type){
+                    case "New": return qsTr("Tweet")
+                    case "Reply": return qsTr("Reply")
+                    case "RT": return qsTr("Retweet")
+                    case "DM": return qsTr("DM")
+                    }
                 }
                 enabled: (tweetTextArea.text.length != 0 || addImageButton.checked)
                          && ((settings.enableTwitLonger && !addImageButton.checked) || !tweetTextArea.errorHighlight)
@@ -71,7 +74,7 @@ Page{
             }
             ToolButton{
                 id: cancelButton
-                text: "Cancel"
+                text: qsTr("Cancel")
                 onClicked: pageStack.pop()
             }
         }
@@ -83,7 +86,7 @@ Page{
         readOnly: header.busy
         textFormat: TextEdit.PlainText
         errorHighlight: wordCountText.text < 0 && type != "RT"
-        placeholderText: "Tap to write..."
+        placeholderText: qsTr("Tap to write...")
         font.pixelSize: constant.fontSizeXXLarge
         text: placedText
         states: [
@@ -136,7 +139,7 @@ Page{
                 color: "black"
                 anchors.centerIn: parent
                 font.pixelSize: tweetTextArea.font.pixelSize * 1.25
-                text: "Tap to Edit"
+                text: qsTr("Tap to Edit")
             }
 
             MouseArea{
@@ -188,14 +191,14 @@ Page{
                 id: locationButton
                 iconSource: settings.invertedTheme ? "Image/add_my_location_inverse.svg" : "Image/add_my_location.svg"
                 width: (parent.width - constant.paddingMedium) / 2
-                text: "Add"
+                text: qsTr("Add")
                 enabled: !header.busy
                 states: [
                     State {
                         name: "loading"
                         PropertyChanges {
                             target: locationButton
-                            text: "Updating..."
+                            text: qsTr("Updating...")
                             checked: false
                         }
                     },
@@ -203,7 +206,7 @@ Page{
                         name: "done"
                         PropertyChanges {
                             target: locationButton
-                            text: "View/Remove"
+                            text: qsTr("View/Remove")
                             iconSource: settings.invertedTheme ? "Image/location_mark_inverse.svg"
                                                                : "Image/location_mark.svg"
                             checked: true
@@ -223,7 +226,7 @@ Page{
                 id: addImageButton
                 iconSource: settings.invertedTheme ? "Image/photos_inverse.svg" : "Image/photos.svg"
                 width: (parent.width - constant.paddingMedium) / 2
-                text: checked ? "Remove" : "Add"
+                text: checked ? qsTr("Remove") : qsTr("Add")
                 enabled: !header.busy
                 checked: imageURL != ""
                 onClicked: {
@@ -233,13 +236,13 @@ Page{
             }
         }
 
-        SectionHeader{ text: "Quick Tweet"; visible: newTweetButtonRow.visible }
+        SectionHeader{ text: qsTr("Quick Tweet"); visible: newTweetButtonRow.visible }
 
         Button{
             width: parent.width
             visible: newTweetButtonRow.visible
             enabled: !header.busy
-            text: "#NowPlaying"
+            text: qsTr("Music Player: Now Playing")
             onClicked: harmattanMusic.requestCurrentMedia()
         }
     }
@@ -248,10 +251,12 @@ Page{
         id: header
         headerIcon: type == "DM" ? "Image/create_message.svg" : "image://theme/icon-m-toolbar-edit-white-selected"
         headerText: {
-            if(type == "New") return "New Tweet"
-            else if(type == "Reply") return "Reply to " + placedText.substring(0, placedText.indexOf(" "))
-            else if(type == "RT") return "Retweet"
-            else if(type == "DM") return "DM to @" + screenName
+            switch(type){
+            case "New": return qsTr("New Tweet")
+            case "Reply": return qsTr("Reply to %1").arg(placedText.substring(0, placedText.indexOf(" ")))
+            case "RT": return qsTr("Retweet")
+            case "DM": return qsTr("DM to %1").arg("@" + screenName)
+            }
         }
         visible: inPortrait || !inputContext.softwareInputPanelVisible
         height: visible ? undefined : 0
@@ -262,14 +267,14 @@ Page{
         id: locationDialog
         MenuLayout{
             MenuItem{
-                text: "View location"
+                text: qsTr("View location")
                 onClicked: {
                     preventTouch.enabled = true
                     pageStack.push(Qt.resolvedUrl("MapPage.qml"), {"latitude": latitude, "longitude": longitude})
                 }
             }
             MenuItem{
-                text: "Remove location"
+                text: qsTr("Remove location")
                 onClicked: {
                     latitude = 0
                     longitude = 0
@@ -352,10 +357,10 @@ Page{
 
         function postStatusOnSuccess(data){
             switch(type){
-            case "New": infoBanner.alert("Tweet sent."); break;
-            case "Reply": infoBanner.alert("Reply sent."); break;
-            case "DM":infoBanner.alert("Direct message sent."); break;
-            case "RT": infoBanner.alert("Retweet sent."); break;
+            case "New": infoBanner.alert(qsTr("Tweet sent successfully")); break;
+            case "Reply": infoBanner.alert(qsTr("Reply sent successfully")); break;
+            case "DM":infoBanner.alert(qsTr("Direct message sent successfully")); break;
+            case "RT": infoBanner.alert(qsTr("Retweet sent successfully")); break;
             }
             pageStack.pop()
         }
@@ -368,22 +373,22 @@ Page{
         function postTwitLongerStatusOnSuccess(data){
             TwitLonger.postIDCallback(twitLongerId, data.id_str)
             switch(type){
-            case "New": infoBanner.alert("Tweet sent."); break;
-            case "Reply": infoBanner.alert("Reply sent."); break;
+            case "New": infoBanner.alert(qsTr("Tweet sent successfully")); break;
+            case "Reply": infoBanner.alert(qsTr("Reply sent successfully")); break;
             }
             pageStack.pop()
         }
 
         function commonOnFailure(status, statusText){
-            if(status === 0) infoBanner.alert("Connection error.")
-            else infoBanner.alert("Error: " + status + " " + statusText)
+            infoBanner.showHttpError(status, statusText)
             header.busy = false
         }
 
         function createUseTwitLongerDialog(){
-            var message = "Your tweet is more than 140 characters. Do you want to use TwitLonger to post your tweet?\n\
-Note: The tweet content will be publicly visible even your tweet is private."
-            dialog.createQueryDialog("Use TwitLonger?", "", message, function(){
+            var message = qsTr("Your tweet is more than 140 characters. \
+Do you want to use TwitLonger to post your tweet?\n\
+Note: The tweet content will be publicly visible even your tweet is private.")
+            dialog.createQueryDialog(qsTr("Use TwitLonger?"), "", message, function(){
                 var replyScreenName = placedText ? placedText.substring(1, placedText.indexOf(" ")) : ""
                 TwitLonger.postTweet(settings.userScreenName, tweetTextArea.text, tweetId, replyScreenName,
                                      twitLongerOnSuccess, commonOnFailure)

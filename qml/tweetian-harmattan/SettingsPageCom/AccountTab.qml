@@ -23,7 +23,7 @@ Page{
             accountName: "Pocket"
             signedIn: settings.pocketUsername && settings.pocketPassword
             infoButtonVisible: true
-            onInfoClicked: dialog.createMessageDialog("About Pocket", infoText.pocket)
+            onInfoClicked: dialog.createMessageDialog(qsTr("About Pocket"), infoText.pocket)
             onButtonClicked: signedIn ? Script.createPocketSignOutDialog() : Script.createPocketSignInDialog()
         }
 
@@ -31,7 +31,7 @@ Page{
             accountName: "Instapaper"
             signedIn: settings.instapaperToken && settings.instapaperTokenSecret
             infoButtonVisible: true
-            onInfoClicked: dialog.createMessageDialog("About Instapaper", infoText.instapaper)
+            onInfoClicked: dialog.createMessageDialog(qsTr("About Instapaper"), infoText.instapaper)
             onButtonClicked: signedIn ? Script.createInstapaperSignOutDialog() : Script.createInstapaperSignInDialog()
         }
     }

@@ -27,11 +27,11 @@ Page{
 
         MenuLayout{
             MenuItem{
-                text: "View coordinate"
+                text: qsTr("View coordinate")
                 onClicked: coordinateDialogComponent.createObject(mapPage)
             }
             MenuItem{
-                text: "Open in Nokia Maps"
+                text: qsTr("Open in Nokia Maps")
                 onClicked: Qt.openUrlExternally("geo:" + latitude + "," + longitude)
             }
         }
@@ -163,9 +163,9 @@ Page{
         CommonDialog{
             id: coordinateDialog
             property bool __isClosing: false
-            titleText: "Location Coordinate"
+            titleText: qsTr("Location Coordinate")
             titleIcon: "image://theme/icon-l-location-test"
-            buttonTexts: ["Copy", "Close"]
+            buttonTexts: [qsTr("Copy"), qsTr("Close")]
             content: Column{
                 anchors{ left: parent.left; right: parent.right; top: parent.top; margins: constant.paddingMedium}
                 anchors.topMargin: coordinateDialog.platformStyle.contentMargin
@@ -176,11 +176,11 @@ Page{
                     width: parent.width
                     Button{
                         id: degree
-                        text: "Degree"
+                        text: qsTr("Degree")
                     }
                     Button{
                         id: decimal
-                        text: "Decimal"
+                        text: qsTr("Decimal")
                     }
                 }
                 TextField{
@@ -193,7 +193,7 @@ Page{
             onButtonClicked: {
                 if(index == 0){
                     clipboard.setText(coordinateTextField.text)
-                    infoBanner.alert("Coordinate copied to clipboard.")
+                    infoBanner.alert(qsTr("Coordinate copied to clipboard"))
                 }
             }
             Component.onCompleted: open()

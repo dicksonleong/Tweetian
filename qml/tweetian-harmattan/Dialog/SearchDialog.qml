@@ -6,8 +6,8 @@ CommonDialog{
 
     property bool __isClosing: false
 
-    buttonTexts: ["Search", "Advanced Search", "Cancel"]
-    titleText: "Search Twitter"
+    buttonTexts: [qsTr("Search"), qsTr("Advanced"), qsTr("Cancel")]
+    titleText: qsTr("Search Twitter")
     titleIcon: "image://theme/icon-l-search"
     content: Item{
         id: dialogContent
@@ -23,13 +23,13 @@ CommonDialog{
         TextField{
             id: searchTextField
             width: parent.width
-            placeholderText: "Enter your search query..."
+            placeholderText: qsTr("Enter your search query...")
             font.pixelSize: constant.fontSizeLarge
             inputMethodHints: Qt.ImhNoPredictiveText
             platformSipAttributes: SipAttributes{
                 actionKeyEnabled: searchTextField.text.length > 0
                 actionKeyHighlighted: true
-                actionKeyLabel: "Search"
+                actionKeyLabel: qsTr("Search")
             }
             Keys.onReturnPressed: {
                 searchTextField.platformCloseSoftwareInputPanel()
@@ -42,7 +42,7 @@ CommonDialog{
             anchors.verticalCenter: searchTypeRow.verticalCenter
             font.pixelSize: constant.fontSizeMedium
             color: "white"
-            text: "Search for:"
+            text: qsTr("Search for:")
         }
 
         ButtonRow{
@@ -56,11 +56,11 @@ CommonDialog{
 
             Button{
                 id: tweetType
-                text: "Tweet"
+                text: qsTr("Tweet")
             }
             Button{
                 id: userType
-                text: "User"
+                text: qsTr("User")
             }
         }
     }

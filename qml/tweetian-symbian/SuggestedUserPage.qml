@@ -15,7 +15,7 @@ Page{
         ToolButtonWithTip{
             id: backButton
             iconSource: "toolbar-back"
-            toolTipText: "Back"
+            toolTipText: qsTr("Back")
             onClicked: pageStack.pop()
         }
     }
@@ -32,7 +32,7 @@ Page{
     PageHeader{
         id: header
         headerIcon: "Image/people.svg"
-        headerText: "Suggested Users"
+        headerText: qsTr("Suggested Users")
         countBubbleValue: suggestedUserView.count
         countBubbleVisible: countBubbleValue != 0
         onClicked: suggestedUserView.positionViewAtBeginning()
@@ -67,8 +67,7 @@ Page{
         }
 
         function onFailure(status, statusText){
-            if(status === 0) infoBanner.alert("Connection error.")
-            else infoBanner.alert("Error: " + status + " " + statusText)
+            infoBanner.showHttpError(status, statusText)
             header.busy = false
         }
     }

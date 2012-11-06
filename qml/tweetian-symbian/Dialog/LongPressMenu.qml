@@ -25,7 +25,7 @@ ContextMenu{
     MenuLayout{
         MenuItemWithIcon{
             iconSource: platformInverted ? "../Image/reply_inverse.png" : "../Image/reply.png"
-            text: "Reply"
+            text: qsTr("Reply")
             platformInverted: root.platformInverted
             onClicked: {
                 var prop = {type: "Reply", tweetId: model.tweetId, placedText: "@"+model.screenName+" "+getAllHashtags(model.displayTweetText)}
@@ -34,7 +34,7 @@ ContextMenu{
         }
         MenuItemWithIcon{
             iconSource: platformInverted ? "../Image/retweet_inverse.png" : "../Image/retweet.png"
-            text: "Retweet"
+            text: qsTr("Retweet")
             platformInverted: root.platformInverted
             onClicked: {
                 var text = model.retweetId == model.tweetId ? "RT @"+model.screenName+": "+model.tweetText
@@ -44,13 +44,13 @@ ContextMenu{
         }
         MenuItemWithIcon{
             iconSource: platformInverted ? "../Image/contacts_inverse.svg" : "../Image/contacts.svg"
-            text: "<font color=\"LightSeaGreen\">@"+ model.screenName + "</font> Profile"
+            text: qsTr("%1 Profile").arg("<font color=\"LightSeaGreen\">@" + model.screenName + "</font>")
             platformInverted: root.platformInverted
             onClicked: pageStack.push(Qt.resolvedUrl("../UserPage.qml"), {screenName: model.screenName})
         }
         MenuItemWithIcon{
             iconSource: platformInverted ? "../Image/contacts_inverse.svg" : "../Image/contacts.svg"
-            text: "<font color=\"LightSeaGreen\">@"+ model.displayScreenName + "</font> Profile"
+            text: qsTr("%1 Profile").arg("<font color=\"LightSeaGreen\">@" + model.displayScreenName + "</font>")
             visible: model.displayScreenName != model.screenName
             platformInverted: root.platformInverted
             onClicked: pageStack.push(Qt.resolvedUrl("../UserPage.qml"), {screenName: model.displayScreenName})

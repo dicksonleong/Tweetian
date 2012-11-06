@@ -36,11 +36,11 @@ Page{
 
         MenuLayout{
             MenuItem{
-                text: "Nearby Tweets"
+                text: qsTr("Nearby Tweets")
                 onClicked: pageStack.push(Qt.resolvedUrl("NearbyTweetsPage.qml"))
             }
             MenuItem{
-                text: "Change trends location"
+                text: qsTr("Change trends location")
                 onClicked: {
                     if(trendsLocationModel.count == 0) {
                         Twitter.getTrendsAvailable(internal.trendsLocationOnSuccess, internal.trendsLocationOnFailure)
@@ -73,11 +73,11 @@ Page{
             }
 
             onClicked: {
-                var prop = { searchName: title, isSavedSearch: type === "Saved Searches", savedSearchId: id }
+                var prop = { searchName: title, isSavedSearch: type === qsTr("Saved Searches"), savedSearchId: id }
                 pageStack.push(Qt.resolvedUrl("SearchPage.qml"), prop)
             }
             onPressAndHold: {
-                if(type === "Saved Searches")
+                if(type === qsTr("Saved Searches"))
                     savedSearchMenuComponent.createObject(trendsPage, { id: id, searchName: title })
             }
         }
@@ -89,7 +89,7 @@ Page{
     PageHeader{
         id: header
         headerIcon: "image://theme/icon-m-toolbar-search-white-selected"
-        headerText: "Trends & Search"
+        headerText: qsTr("Trends & Search")
         busy: savedSearchLoading || trendingLoading
         onClicked: trendsPageListView.positionViewAtBeginning()
     }
@@ -107,13 +107,12 @@ Page{
                     break
                 }
             }
-            infoBanner.alert("The saved search \"" + data.name + "\" is removed.")
+            infoBanner.alert(qsTr("The saved search %1 is removed successfully").arg("\""+data.name+"\""))
             savedSearchLoading = false
         }
 
         function removeSearchOnFailure(status, statusText){
-            if(status === 0) infoBanner.alert("Connection error.")
-            else infoBanner.alert("Error: " + status + " " + statusText)
+            infoBanner.showHttpError(status, statusText)
             savedSearchLoading = false
         }
 
@@ -125,7 +124,7 @@ Page{
                     "id": "",
                     "title": data[0].trends[i].name,
                     "query":data[0].trends[i].query,
-                    "type": "Trends (" + data[0].locations[0].name + ")"
+                    "type": qsTr("Trends (%1)").arg(data[0].locations[0].name)
                 }
                 trendsPageListView.model.append(obj)
                 if(data[0].trends[i].name.indexOf('#') == 0) hashtagsArray.push(data[0].trends[i].name.substring(1))
@@ -135,9 +134,8 @@ Page{
         }
 
         function trendsOnFailure(status, statusText){
-            if(status === 0) infoBanner.alert("Connection error.")
-            else infoBanner.alert("Error: " + status + " " + statusText)
-            trendsPageListView.model.append({"title": "Unable to retrieve trends", "type": "Trends"})
+            infoBanner.showHttpError(status, statusText)
+            trendsPageListView.model.append({"title": qsTr("Unable to retrieve trends"), "type": qsTr("Trends")})
             trendingLoading = false
         }
 
@@ -147,7 +145,7 @@ Page{
                     "id": data[i].id,
                     "title": data[i].name,
                     "query": data[i].query,
-                    "type": "Saved Searches"
+                    "type": qsTr("Saved Searches")
                 }
                 trendsPageListView.model.insert(i, obj)
             }
@@ -155,14 +153,13 @@ Page{
         }
 
         function savedSearchOnFailure(status, statusText){
-            if(status === 0) infoBanner.alert("Connection error.")
-            else infoBanner.alert("Error: " + status + " " + statusText)
-            trendsPageListView.model.insert(0,{"title": "Unabled to retrieve saved search", "type": "Saved Searches"})
+            infoBanner.showHttpError(status, statusText)
+            trendsPageListView.model.insert(0,{"title": qsTr("Unabled to retrieve saved search"), "type": qsTr("Saved Searches")})
             savedSearchLoading = false
         }
 
         function trendsLocationOnSuccess(data){
-            trendsLocationModel.append({name: "Worldwide", woeid: 1})
+            trendsLocationModel.append({name: qsTr("Worldwide"), woeid: 1})
             for(var i=0; i < data.length; i++){
                 if(data[i].placeType.name === "Country"){
                     var obj = {
@@ -177,8 +174,7 @@ Page{
         }
 
         function trendsLocationOnFailure(status, statusText){
-            if(status === 0) infoBanner.alert("Connection error.")
-            else infoBanner.alert("Error: " + status + " " + statusText)
+            infoBanner.showHttpError(status, statusText)
             loadingRect.visible = false
         }
 
@@ -191,8 +187,8 @@ Page{
         }
 
         function createRemoveSavedSearchDialog(id, searchName){
-            var message = "Do you want to remove the saved search \"" + searchName + "\"?"
-            dialog.createQueryDialog("Remove Saved Search", "", message, function(){
+            var message = qsTr("Do you want to remove the saved search %1?").arg("\""+searchName+"\"")
+            dialog.createQueryDialog(qsTr("Remove Saved Search"), "", message, function(){
                 Twitter.postRemoveSavedSearch(id, removeSearchOnSuccess, removeSearchOnFailure)
                 savedSearchLoading = true
             })
@@ -225,7 +221,7 @@ Page{
 
             MenuLayout{
                 MenuItem{
-                    text: "Remove saved search"
+                    text: qsTr("Remove saved search")
                     onClicked: internal.createRemoveSavedSearchDialog(savedSearchMenu.id, savedSearchMenu.searchName)
                 }
             }

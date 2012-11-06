@@ -7,8 +7,8 @@ QueryDialog{
     property bool __isClosing: false
 
     platformInverted: settings.invertedTheme
-    acceptButtonText: "Yes"
-    rejectButtonText: "No"
+    acceptButtonText: qsTr("Yes")
+    rejectButtonText: qsTr("No")
 
     Component.onCompleted: open()
 

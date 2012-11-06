@@ -10,12 +10,12 @@ Page{
 
     tools: ToolBarLayout{
         ToolButtonWithTip{
-            toolTipText: "Back"
+            toolTipText: qsTr("Back")
             iconSource: "toolbar-back"
             onClicked: pageStack.pop()
         }
         ToolButton{
-            text: "Service"
+            text: qsTr("Service")
             platformInverted: settings.invertedTheme
             onClicked: chooseServiceDialogComponent.createObject(selectImagePage)
         }
@@ -31,7 +31,7 @@ Page{
         platformInverted: settings.invertedTheme
         content: MenuLayout{
             MenuItem{
-                text: "Select image"
+                text: qsTr("Select image")
                 platformInverted: imageMenu.platformInverted
                 onClicked: {
                     newTweetPage.imageURL = imageMenu.selectedImagePath
@@ -39,7 +39,7 @@ Page{
                 }
             }
             MenuItem{
-                text: "Preview"
+                text: qsTr("Preview")
                 platformInverted: imageMenu.platformInverted
                 onClicked: Qt.openUrlExternally(imageMenu.selectedImageURL)
             }
@@ -59,7 +59,7 @@ Page{
         anchors.centerIn: parent
         font.pixelSize: constant.fontSizeXXLarge
         color: constant.colorMid
-        text: "No image"
+        text: qsTr("No image")
         visible: galleryModel.ready && galleryModel.count == 0
     }
 
@@ -70,7 +70,7 @@ Page{
 
     PageHeader{
         id: header
-        headerText: "Select Image"
+        headerText: qsTr("Select Image")
         headerIcon: "Image/photos.svg"
         onClicked: galleryGridView.positionViewAtBeginning()
     }
@@ -91,7 +91,7 @@ Page{
             if(status === DocumentGalleryModel.Active) header.busy = true
             else if(status === DocumentGalleryModel.Error){
                 header.busy = false
-                infoBanner.alert("Error loading image from gallery")
+                infoBanner.alert(qsTr("Error loading image from gallery"))
             }
             else header.busy = false
         }
@@ -173,7 +173,7 @@ Page{
             id: chooseServiceDialog
             property bool __isClosing: false
             platformInverted: settings.invertedTheme
-            titleText: "Image Upload Service"
+            titleText: qsTr("Image Upload Service")
             model: ListModel{
                 ListElement{ name: "Twitter"}
                 ListElement{ name: "TwitPic"}

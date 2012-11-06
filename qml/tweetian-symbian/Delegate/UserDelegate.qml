@@ -75,7 +75,7 @@ AbstractDelegate{
 
         Text{
             width: parent.width
-            text: followingCount + " following | " + followersCount + " followers"
+            text: qsTr("%1 following | %2 followers").arg(followingCount).arg(followersCount)
             font.pixelSize: settings.largeFontSize ? constant.fontSizeMedium : constant.fontSizeSmall
             color: highlighted ? constant.colorHighlighted : constant.colorMid
         }

@@ -12,7 +12,7 @@ Page{
     tools: ToolBarLayout{
         ToolButtonWithTip{
             iconSource: "toolbar-back"
-            toolTipText: "Back"
+            toolTipText: qsTr("Back")
             onClicked: pageStack.pop()
         }
     }

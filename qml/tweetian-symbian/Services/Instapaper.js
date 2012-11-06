@@ -40,7 +40,7 @@ function getAccessToken(username, password, onSuccess, onFailure) {
                 }
                 onSuccess(oauthToken, oauthTokenSecret)
             }
-            else onFailure(__getErrorText(request.status) + " (" + request.status + ")")
+            else onFailure(request.status)
         }
     }
 
@@ -80,7 +80,7 @@ function addBookmark(accessToken, accessTokenSecret, url, description, onSuccess
     request.onreadystatechange = function(){
         if(request.readyState === XMLHttpRequest.DONE){
             if(request.status === 200) onSuccess()
-            else onFailure(__getErrorText(request.status) + " (" + request.status + ")")
+            else onFailure(request.status)
         }
     }
 
@@ -88,47 +88,4 @@ function addBookmark(accessToken, accessTokenSecret, url, description, onSuccess
     request.setRequestHeader("Content-Type", "application/x-www-form-urlencoded")
     request.setRequestHeader("User-Agent", Global.USER_AGENT)
     request.send(body)
-}
-
-function __getErrorText(status){
-    var errorText
-    switch(status){
-    case 0:
-        errorText = "Connection error."
-        break
-    case 401:
-        errorText = "Invalid login credential."
-        break
-    case 1040:
-        errorText = "Rate limit exceeded. Please try again later."
-        break
-    case 1041:
-        errorText = "Subscription account required."
-        break
-    case 1042:
-        errorText = "Application is suspended. Please contact the developer ASAP."
-        break
-    case 1220:
-        errorText = "This site needs to be viewed in a browser before saving to Instapaper."
-        break
-    case 1221:
-        errorText = "The publisher of the site do not permit Instapaper usage."
-        break
-    case 1240:
-        errorText = "Invalid URL specified."
-        break
-    case 1250:
-        errorText = "Unexpected error when saving bookmark."
-        break
-    case 1500:
-        errorText = "Unexpected service error."
-        break
-    case 1550:
-        errorText = "Error generating text version of this URL."
-        break
-    default:
-        errorText = "Unknown error."
-        break
-    }
-    return errorText
 }

@@ -17,12 +17,12 @@ ContextMenu{
         id: menuLayout
         MenuItemWithIcon{
             iconSource: platformInverted ? "image://theme/toolbar-delete_inverse" : "image://theme/toolbar-delete"
-            text: "Delete"
+            text: qsTr("Delete")
             onClicked: internal.createDeleteDMDialog(tweetId)
         }
         MenuItemWithIcon{
             iconSource: platformInverted ? "../Image/contacts_inverse.svg" : "../Image/contacts.svg"
-            text: "<font color=\"LightSeaGreen\">@" + screenName + "</font> Profile"
+            text: qsTr("%1 Profile").arg("<font color=\"LightSeaGreen\">@" + screenName + "</font>")
             visible: screenName != ""
             onClicked: pageStack.push(Qt.resolvedUrl("../UserPage.qml"), {screenName: screenName})
         }

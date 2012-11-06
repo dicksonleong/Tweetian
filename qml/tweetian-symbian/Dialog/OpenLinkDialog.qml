@@ -29,32 +29,32 @@ ContextMenu{
         }
         MenuItemWithIcon{
             iconSource: platformInverted ? "../Image/internet_inverse.svg" : "../Image/internet.svg"
-            text: "Open link in web browser"
+            text: qsTr("Open link in web browser")
             platformInverted: root.platformInverted
             onClicked: {
                 Qt.openUrlExternally(link)
-                infoBanner.alert("Launching web browser...")
+                infoBanner.alert(qsTr("Launching web browser..."))
             }
         }
         MenuItemWithIcon{
             iconSource: "image://theme/qtg_toolbar_copy" + (platformInverted ? "_inverse" : "" )
-            text: "Copy link"
+            text: qsTr("Copy link")
             platformInverted: root.platformInverted
             onClicked: {
                 clipboard.setText(link)
-                infoBanner.alert("Link copied to clipboard.")
+                infoBanner.alert(qsTr("Link copied to clipboard"))
             }
         }
         MenuItemWithIcon{
             visible: showAddPageServices
             iconSource: platformInverted ? "../Image/web_page_inverse.svg" : "../Image/web_page.svg"
-            text: "Send to Pocket"
+            text: qsTr("Send to Pocket")
             onClicked: addToPocketClicked(link)
         }
         MenuItemWithIcon{
             visible: showAddPageServices
             iconSource: platformInverted ? "../Image/web_page_inverse.svg" : "../Image/web_page.svg"
-            text: "Send to Instapaper"
+            text: qsTr("Send to Instapaper")
             onClicked: addToInstapaperClicked(link)
         }
     }

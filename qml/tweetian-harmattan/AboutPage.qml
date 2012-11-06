@@ -22,7 +22,7 @@ Page{
             width: parent.width
             height: childrenRect.height
 
-            SectionHeader{ text: "About Tweetian" }
+            SectionHeader{ text: qsTr("About Tweetian") }
 
             Item{
                 width: parent.width
@@ -34,13 +34,13 @@ Page{
                     wrapMode: Text.Wrap
                     font.pixelSize: constant.fontSizeMedium
                     color: constant.colorLight
-                    text: "Tweetian is a feature-rich Twitter app for smartphones, powered by Qt and QML. \
+                    text: qsTr("Tweetian is a feature-rich Twitter app for smartphones, powered by Qt and QML. \
 It has a simple, native and easy-to-use UI that will surely make you enjoy the Twitter experience on your \
-smartphone. Tweetian is open source and licensed under GPL v3."
+smartphone. Tweetian is open source and licensed under GPL v3.")
                 }
             }
 
-            SectionHeader{ text: "Version" }
+            SectionHeader{ text: qsTr("Version") }
 
             Item{
                 width: parent.width
@@ -57,7 +57,7 @@ you are trying at your own risk]</i>"
                 }
             }
 
-            SectionHeader{ text: "Developed By" }
+            SectionHeader{ text: qsTr("Developed By") }
 
             AboutPageItem{
                 imageSource: "Image/DicksonBetaDP.png"
@@ -65,7 +65,7 @@ you are trying at your own risk]</i>"
                 onClicked: pageStack.push(Qt.resolvedUrl("UserPage.qml"), {screenName: "DicksonBeta"})
             }
 
-            SectionHeader{ text: "Special Thanks" }
+            SectionHeader{ text: qsTr("Special Thanks") }
 
             AboutPageItem{
                 imageSource: "Image/knobtvikerDP.jpg"
@@ -79,7 +79,7 @@ you are trying at your own risk]</i>"
                 onClicked: pageStack.push(Qt.resolvedUrl("UserPage.qml"), {screenName: "Mandeep_Themes"})
             }
 
-            SectionHeader{ text: "Powered By" }
+            SectionHeader{ text: qsTr("Powered By") }
 
             AboutPageItem{
                 imageSource: "Image/twitter-bird-white-on-blue.png"
@@ -99,12 +99,12 @@ you are trying at your own risk]</i>"
                 onClicked: pageStack.push(Qt.resolvedUrl("UserPage.qml"), {screenName: "qtproject"})
             }
 
-            SectionHeader{ text: "Legal" }
+            SectionHeader{ text: qsTr("Legal") }
 
             AboutPageItem{
                 id: privacyButton
                 imageSource: "Image/twitter-bird-white-on-blue.png"
-                text: "Twitter Privacy Policy"
+                text: qsTr("Twitter Privacy Policy")
                 onClicked: {
                     Twitter.getPrivacyPolicy(callback.privacyOnSuccess, callback.onFailure)
                     loadingRect.visible = true
@@ -114,7 +114,7 @@ you are trying at your own risk]</i>"
             AboutPageItem{
                 id: tosButton
                 imageSource: "Image/twitter-bird-white-on-blue.png"
-                text: "Twitter Terms of Service"
+                text: qsTr("Twitter Terms of Service")
                 onClicked: {
                     Twitter.getTermsOfService(callback.tosOnSuccess, callback.onFailure)
                     loadingRect.visible = true
@@ -128,7 +128,7 @@ you are trying at your own risk]</i>"
     PageHeader{
         id: header
         headerIcon: "Image/information_userguide.svg"
-        headerText: "About Tweetian"
+        headerText: qsTr("About Tweetian")
         onClicked: aboutPageFlickable.contentY = 0
     }
 
@@ -148,8 +148,7 @@ you are trying at your own risk]</i>"
         }
 
         function onFailure(status, statusText){
-            if(status === 0) infoBanner.alert("Connection error.")
-            else infoBanner.alert("Error:" + status + " " + statusText)
+            infoBanner.showHttpError(status, statusText)
             loadingRect.visible = false
         }
     }

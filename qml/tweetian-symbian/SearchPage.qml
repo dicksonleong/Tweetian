@@ -21,17 +21,17 @@ Page{
         ToolButtonWithTip{
             id: backButton
             iconSource: "toolbar-back"
-            toolTipText: "Back"
+            toolTipText: qsTr("Back")
             onClicked: pageStack.pop()
         }
         ToolButtonWithTip{
             iconSource: isSavedSearch ? "toolbar-delete" : "toolbar-add"
-            toolTipText: isSavedSearch ? "Delete saved search" : "Add to saved search"
+            toolTipText: isSavedSearch ? qsTr("Remove saved search") : qsTr("Add to saved search")
             onClicked: isSavedSearch ? internal.createRemoveSavedSearchDialog() : internal.createSaveSearchDialog()
         }
         ToolButtonWithTip{
             iconSource: "toolbar-menu"
-            toolTipText: "Menu"
+            toolTipText: qsTr("Menu")
             onClicked: menu.open()
         }
     }
@@ -42,7 +42,7 @@ Page{
 
         MenuLayout{
             MenuItem{
-                text: "Refresh cache"
+                text: qsTr("Refresh cache")
                 platformInverted: menu.platformInverted
                 enabled: !header.busy
                 onClicked: internal.refresh("all")
@@ -78,7 +78,7 @@ Page{
         anchors.centerIn: parent
         font.pixelSize: constant.fontSizeXXLarge
         color: constant.colorMid
-        text: "No search result"
+        text: qsTr("No search result")
         visible: searchListView.count == 0 && !header.busy
     }
 
@@ -87,7 +87,7 @@ Page{
     PageHeader{
         id: header
         headerIcon: "image://theme/toolbar-search"
-        headerText: "Search: \"" + searchName + "\""
+        headerText: qsTr("Search: %1").arg("\"" + searchName + "\"")
         onClicked: searchListView.positionViewAtBeginning()
     }
 
@@ -133,23 +133,22 @@ Page{
         }
 
         function searchOnFailure(status, statusText){
-            if(status === 0) infoBanner.alert("Connection error.")
-            else infoBanner.alert("Error:" +status+" "+statusText)
+            infoBanner.showHttpError(status, statusText)
             header.busy = false
         }
 
+
         function savedSearchOnSuccess(data){
             if(cache.trendsModel.count > 0)
-                cache.trendsModel.insert(0,{"title": data.name, "query": data.query, "id": data.id, "type": "Saved Searches"})
+                cache.trendsModel.insert(0,{"title": data.name, "query": data.query, "id": data.id, "type": qsTr("Saved Searches")})
             isSavedSearch = true
             savedSearchId = data.id
             loadingRect.visible = false
-            infoBanner.alert("The search \"" + data.name + "\" is saved.")
+            infoBanner.alert(qsTr("The search %1 is saved successfully").arg("\""+data.name+"\""))
         }
 
         function savedSearchOnFailure(status, statusText){
-            if(status === 0) infoBanner.alert("Connection error.")
-            else infoBanner.alert("Error: " + status + " " + statusText)
+            infoBanner.showHttpError(status, statusText)
             loadingRect.visible = false
         }
 
@@ -163,18 +162,17 @@ Page{
             isSavedSearch = false
             savedSearchId = ""
             loadingRect.visible = false
-            infoBanner.alert("The saved search \"" + data.name + "\" is removed.")
+            infoBanner.alert(qsTr("The saved search %1 is removed successfully").arg("\""+data.name+"\""))
         }
 
         function removeSearchOnFailure(status, statusText){
-            if(status === 0) infoBanner.alert("Connection error.")
-            else infoBanner.alert("Error: " + status + " " + statusText)
+            infoBanner.showHttpError(status, statusText)
             loadingRect.visible = false
         }
 
         function checkIsSavedSearch(){
             for(var i=0; i<cache.trendsModel.count; i++){
-                if(cache.trendsModel.get(i).type !== "Saved Searches")
+                if(cache.trendsModel.get(i).type !== qsTr("Saved Searches"))
                     break
                 if(cache.trendsModel.get(i).title === searchName){
                     isSavedSearch = true
@@ -186,8 +184,8 @@ Page{
 
         function createSaveSearchDialog(){
             var icon = settings.invertedTheme ? "Image/save_inverse.svg" : "Image/save.svg"
-            var message = "Do you want to save the search \""+searchName+"\"?"
-            dialog.createQueryDialog("Save Search", icon, message, function(){
+            var message = qsTr("Do you want to save the search %1?").arg("\""+searchName+"\"")
+            dialog.createQueryDialog(qsTr("Save Search"), icon, message, function(){
                 Twitter.postSavedSearches(searchName, savedSearchOnSuccess, savedSearchOnFailure)
                 loadingRect.visible = true
             })
@@ -196,8 +194,8 @@ Page{
         function createRemoveSavedSearchDialog(){
             var icon = settings.invertedTheme ? "image://theme/toolbar-delete_inverse"
                                               : "image://theme/toolbar-delete"
-            var message = "Do you want to remove the saved search \"" + searchName + "\"?"
-            dialog.createQueryDialog("Remove Saved Search", icon, message, function(){
+            var message = qsTr("Do you want to remove the saved search %1?").arg("\""+searchName+"\"")
+            dialog.createQueryDialog(qsTr("Remove Saved Search"), icon, message, function(){
                 Twitter.postRemoveSavedSearch(searchPage.savedSearchId, removeSearchOnSuccess, removeSearchOnFailure)
                 loadingRect.visible = true
             })

@@ -19,12 +19,12 @@ Page{
             id: backButton
             iconSource: "toolbar-back"
             opacity: enabled ? 1 : 0.25
-            toolTipText: "Back"
+            toolTipText: qsTr("Back")
             onClicked: pageStack.pop()
         }
         ToolButtonWithTip{
             iconSource: "toolbar-menu"
-            toolTipText: "Menu"
+            toolTipText: qsTr("Menu")
             onClicked: menu.open()
         }
     }
@@ -35,7 +35,7 @@ Page{
 
         MenuLayout{
             MenuItem{
-                text: "Refresh Cache & Location"
+                text: qsTr("Refresh Cache & Location")
                 platformInverted: menu.platformInverted
                 enabled: !header.busy
                 onClicked: positionSource.start()
@@ -71,7 +71,7 @@ Page{
         anchors.centerIn: parent
         font.pixelSize: constant.fontSizeXXLarge
         color: constant.colorMid
-        text: "No tweet"
+        text: qsTr("No tweet")
         visible: searchListView.count == 0 && !header.busy
     }
 
@@ -80,7 +80,7 @@ Page{
     PageHeader{
         id: header
         headerIcon: "Image/location_mark" + (settings.invertedTheme ? "_inverse.svg" : ".svg")
-        headerText: positionSource.active ? "Getting location..." : "Nearby Tweets"
+        headerText: positionSource.active ? qsTr("Getting location...") : qsTr("Nearby Tweets")
         onClicked: searchListView.positionViewAtBeginning()
     }
 
@@ -141,8 +141,7 @@ Page{
         }
 
         function onFailure(status, statusText){
-            if(status === 0) infoBanner.alert("Connection error.")
-            else infoBanner.alert("Error:" + status + " " + statusText)
+            infoBanner.showHttpError(status, statusText)
             header.busy = false
         }
     }

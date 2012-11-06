@@ -6,9 +6,9 @@ import "../twitter.js" as Twitter
 AbstractUserPage{
     id: userSubscribedListsPage
 
-    headerText: "Subscribed Lists"
+    headerText: qsTr("Subscribed Lists")
     headerNumber: listView.count
-    emptyText: "No list"
+    emptyText: qsTr("No list")
     loadMoreButtonVisible: listView.count > 0 && listView.count % 50 === 0
     delegate: ListDelegate{}
 
@@ -31,8 +31,7 @@ AbstractUserPage{
             }
             loadingRect.visible = false
         }, function(status, statusText){
-            if(status === 0) infoBanner.alert("Connection error.")
-            else infoBanner.alert("Error: " + status + " " + statusText)
+            infoBanner.showHttpError(status, statusText)
             loadingRect.visible = false
         })
         loadingRect.visible = true

@@ -80,7 +80,7 @@ AbstractDelegate{
 
         Text{
             width: parent.width
-            text: "Retweeted by @"+screenName
+            text: qsTr("Retweeted by %1").arg("@" + screenName)
             font.pixelSize: settings.largeFontSize ? constant.fontSizeMedium : constant.fontSizeSmall
             wrapMode: Text.Wrap
             color: highlighted ? constant.colorHighlighted : constant.colorMid

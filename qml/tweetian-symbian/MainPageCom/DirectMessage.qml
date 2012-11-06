@@ -24,7 +24,7 @@ Item{
             if(createNotification) {
                 unreadCount += count
                 if(symbian.foreground && mainPage.status !== PageStatus.Active)
-                    infoBanner.alert(unreadCount === 1 ? "1 new message" : unreadCount + " new messages")
+                    infoBanner.alert(qsTr("%n new message(s)", "", unreadCount))
             }
             busy = false
         }
@@ -80,7 +80,7 @@ Item{
         anchors.centerIn: parent
         font.pixelSize: constant.fontSizeXXLarge
         color: constant.colorMid
-        text: "No message"
+        text: qsTr("No message")
         visible: directMsgView.count == 0 && !busy
     }
 
@@ -171,10 +171,9 @@ Item{
         }
 
         function failureCallback(status, statusText){
-            if(status === 0) infoBanner.alert("Connection error.")
-            else infoBanner.alert("Error: " + status + " " + statusText)
+            infoBanner.showHttpError(status, statusText)
             busy = false
-        }        
+        }
     }
 
     Component.onDestruction: {

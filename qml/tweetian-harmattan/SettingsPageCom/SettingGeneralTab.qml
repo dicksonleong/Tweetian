@@ -19,7 +19,7 @@ Page{
                 width: parent.width - 2 * constant.paddingMedium
                 font.pixelSize: constant.fontSizeLarge
                 color: constant.colorLight
-                text: "Theme"
+                text: qsTr("Theme")
             }
 
             ButtonRow{
@@ -31,13 +31,13 @@ Page{
 
                 Button{
                     id: darkThemeButton
-                    text: "Dark"
+                    text: qsTr("Dark")
                     onClicked: settings.invertedTheme = false
                 }
 
                 Button{
                     id: lightThemeButton
-                    text: "Light"
+                    text: qsTr("Light")
                     onClicked: settings.invertedTheme = true
                 }
             }
@@ -47,7 +47,7 @@ Page{
                 width: parent.width - 2 * constant.paddingMedium
                 font.pixelSize: constant.fontSizeLarge
                 color: constant.colorLight
-                text: "Font size"
+                text: qsTr("Font size")
             }
 
             ButtonRow{
@@ -59,28 +59,28 @@ Page{
 
                 Button{
                     id: smallFontSizeButton
-                    text: "Small"
+                    text: qsTr("Small")
                     onClicked: settings.largeFontSize = false
                 }
 
                 Button{
                     id: largeFontSizeButton
-                    text: "Large"
+                    text: qsTr("Large")
                     onClicked: settings.largeFontSize = true
                 }
             }
 
             SettingSwitch{
-                text: "Include #hashtags in reply"
+                text: qsTr("Include #hashtags in reply")
                 checked: settings.hashtagsInReply
                 onCheckedChanged: settings.hashtagsInReply = checked
             }
 
             SettingSwitch{
-                text: "Enable TwitLonger"
+                text: qsTr("Enable TwitLonger")
                 checked: settings.enableTwitLonger
                 infoButtonVisible: true
-                onInfoClicked: dialog.createMessageDialog("About TwitLonger", infoText.twitLonger)
+                onInfoClicked: dialog.createMessageDialog(qsTr("About TwitLonger"), infoText.twitLonger)
                 onCheckedChanged: settings.enableTwitLonger = checked
             }
         }

@@ -14,7 +14,7 @@ Page{
             onClicked: pageStack.pop()
         }
         ToolButton{
-            text: "Service"
+            text: qsTr("Service")
             onClicked: chooseServiceDialogComponent.createObject(selectImagePage)
         }
         Item{ width: 80; height: 64 }
@@ -28,14 +28,14 @@ Page{
 
         MenuLayout{
             MenuItem{
-                text: "Select image"
+                text: qsTr("Select image")
                 onClicked: {
                     newTweetPage.imageURL = imageMenu.selectedImagePath
                     pageStack.pop()
                 }
             }
             MenuItem{
-                text: "Preview"
+                text: qsTr("Preview")
                 onClicked: Qt.openUrlExternally(imageMenu.selectedImageURL)
             }
         }
@@ -54,7 +54,7 @@ Page{
         anchors.centerIn: parent
         font.pixelSize: constant.fontSizeXXLarge
         color: constant.colorMid
-        text: "No image"
+        text: qsTr("No image")
         visible: galleryModel.ready && galleryModel.count == 0
     }
 
@@ -62,7 +62,7 @@ Page{
 
     PageHeader{
         id: header
-        headerText: "Select Image"
+        headerText: qsTr("Select Image")
         headerIcon: "Image/photos.svg"
         onClicked: galleryGridView.positionViewAtBeginning()
     }
@@ -80,7 +80,7 @@ Page{
             if(status === DocumentGalleryModel.Active) header.busy = true
             else if(status === DocumentGalleryModel.Error){
                 header.busy = false
-                infoBanner.alert("Error loading image from gallery")
+                infoBanner.alert(qsTr("Error loading image from gallery"))
             }
             else header.busy = false
         }
@@ -160,7 +160,7 @@ Page{
         SelectionDialog{
             id: chooseServiceDialog
             property bool __isClosing: false
-            titleText: "Image Upload Service"
+            titleText: qsTr("Image Upload Service")
             model: ListModel{
                 ListElement{ name: "Twitter"}
                 ListElement{ name: "TwitPic"}

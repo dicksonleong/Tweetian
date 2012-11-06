@@ -7,7 +7,7 @@ SelectionDialog{
     property bool __isClosing: false
 
     platformInverted: settings.invertedTheme
-    titleText: "Trends Location"
+    titleText: qsTr("Trends Location")
     delegate: MenuItem{
         platformInverted: root.platformInverted
         text: model.name

@@ -98,12 +98,12 @@ Page{
         ToolButtonWithTip{
             id: backButton
             iconSource: "toolbar-back"
-            toolTipText: "Back"
+            toolTipText: qsTr("Back")
             onClicked: pageStack.pop()
         }
         ToolButtonWithTip{
             iconSource: platformInverted ? "Image/reply_inverse.png" : "Image/reply.png"
-            toolTipText: "Reply All"
+            toolTipText: qsTr("Reply All")
             onClicked: {
                 var prop = {
                     type: "Reply",
@@ -116,7 +116,7 @@ Page{
         }
         ToolButtonWithTip{
             iconSource: platformInverted ? "Image/retweet_inverse.png" : "Image/retweet.png"
-            toolTipText: "Retweet"
+            toolTipText: qsTr("Retweet")
             onClicked: {
                 var text
                 if(currentTweet.retweetId === currentTweet.tweetId)
@@ -129,7 +129,7 @@ Page{
         ToolButtonWithTip{
             iconSource: favouritedTweet ? "Image/unfavourite.png"
                                         : (platformInverted ? "Image/favourite_inverse.svg" : "Image/favourite.svg")
-            toolTipText: favouritedTweet ? "Unfavourite" : "Favourite"
+            toolTipText: favouritedTweet ? qsTr("Unfavourite") : qsTr("Favourite")
             onClicked: {
                 if(favouritedTweet) Twitter.postUnfavourite(currentTweet.tweetId, JS.favouriteOnSuccess, JS.commonOnFailure)
                 else Twitter.postFavourite(currentTweet.tweetId, JS.favouriteOnSuccess, JS.commonOnFailure)
@@ -138,7 +138,7 @@ Page{
         }
         ToolButtonWithTip{
             iconSource: "toolbar-menu"
-            toolTipText: "Menu"
+            toolTipText: qsTr("Menu")
             onClicked: tweetMenu.open()
         }
     }
@@ -149,30 +149,30 @@ Page{
 
         MenuLayout{
             MenuItem{
-                text: "Copy tweet"
+                text: qsTr("Copy tweet")
                 platformInverted: tweetMenu.platformInverted
                 onClicked: {
                     clipboard.setText("@" + currentTweet.screenName + ": " + currentTweet.tweetText)
-                    infoBanner.alert("Tweet copied to clipboard.")
+                    infoBanner.alert(qsTr("Tweet copied to clipboard"))
                 }
             }
             MenuItem{
-                text: translatedTweetLoader.sourceComponent ? "Hide translated tweet" : "Translate tweet"
+                text: translatedTweetLoader.sourceComponent ? qsTr("Hide translated tweet") : qsTr("Translate tweet")
                 platformInverted: tweetMenu.platformInverted
                 onClicked: {
                     if(translatedTweetLoader.sourceComponent) translatedTweetLoader.sourceComponent = undefined
                     else if(cache.translationToken && JS.checkExpire(cache.translationToken)){
-                        Translate.translate(cache.translationToken, currentTweet.tweetText, JS.translateOnSuccess, JS.translateOnFailure)
+                        Translate.translate(cache.translationToken, currentTweet.tweetText, JS.translateOnSuccess, JS.commonOnFailure)
                         header.busy = true
                     }
                     else{
-                        Translate.requestToken(JS.translateTokenOnSuccess, JS.translateOnFailure)
+                        Translate.requestToken(JS.translateTokenOnSuccess, JS.commonOnFailure)
                         header.busy = true
                     }
                 }
             }
             MenuItem{
-                text: "Tweet permalink"
+                text: qsTr("Tweet permalink")
                 platformInverted: tweetMenu.platformInverted
                 onClicked: {
                     var permalink = "http://twitter.com/" + currentTweet.screenName + "/status/" + currentTweet.tweetId
@@ -180,7 +180,7 @@ Page{
                 }
             }
             MenuItem{
-                text: "Delete tweet"
+                text: qsTr("Delete tweet")
                 platformInverted: tweetMenu.platformInverted
                 visible: currentTweet.screenName === settings.userScreenName
                 onClicked: JS.createDeleteTweetDialog()
@@ -287,7 +287,7 @@ Page{
                 Text{
                     font.pixelSize: settings.largeFontSize ? constant.fontSizeLarge : constant.fontSizeMedium
                     color: constant.colorMid
-                    text: "Retweeted by @"+currentTweet.screenName
+                    text: qsTr("Retweeted by %1").arg("@" + currentTweet.screenName)
                     visible: currentTweet.retweetId !== currentTweet.tweetId
                     height: visible ? undefined : 0
                     width: parent.width
@@ -352,9 +352,9 @@ Page{
                                 else { // model.type === "video"
                                     if(model.link){
                                         var success = Qt.openUrlExternally(model.link)
-                                        if(!success) infoBanner.alert("Error opening link: " + model.link)
+                                        if(!success) infoBanner.alert(qsTr("Error opening link: %1").arg(model.link))
                                     }
-                                    else infoBanner.alert("Streaming link is not available.")
+                                    else infoBanner.alert(qsTr("Streaming link is not available"))
                                 }
                             }
                         }
@@ -385,7 +385,7 @@ Page{
     PageHeader{
         id: header
         headerIcon: "Image/chat.png"
-        headerText: "Tweet"
+        headerText: qsTr("Tweet")
         onClicked: tweetPageFlickable.contentY = 0
     }
 
@@ -398,7 +398,7 @@ Page{
                 ancestorRepeater.model = ancestorModel
                 descendantRepeater.model = descendantModel
                 if(networkMonitor.online){
-                    Twitter.getConversation(currentTweet.tweetId, JS.conversationOnSuccess, JS.conversationOnFailure)
+                    Twitter.getConversation(currentTweet.tweetId, JS.conversationOnSuccess, JS.commonOnFailure)
                     header.busy = true
                 }
             }
@@ -409,13 +409,13 @@ Page{
     Component{
         id: inReplyToHeading
 
-        SectionHeader{ text: "In-reply-to ↑" }
+        SectionHeader{ text: qsTr("In-reply-to ↑") }
     }
 
     Component{
         id: replyHeading
 
-        SectionHeader{ text: "Reply ↓" }
+        SectionHeader{ text: qsTr("Reply ↓") }
     }
 
     Component{
@@ -428,7 +428,7 @@ Page{
 
             SectionHeader{
                 id: translateHeader
-                text: "Translated Tweet"
+                text: qsTr("Translated Tweet")
             }
 
             Text{

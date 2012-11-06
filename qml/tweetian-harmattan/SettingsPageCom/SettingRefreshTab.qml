@@ -14,22 +14,23 @@ Page{
             width: parent.width
             height: childrenRect.height
 
-            SectionHeader{ text: "Streaming" }
+            SectionHeader{ text: qsTr("Streaming") }
 
             SettingSwitch{
                 id: streamingSwitch
-                text: "Enable streaming"
+                text: qsTr("Enable streaming")
                 checked: settings.enableStreaming
                 infoButtonVisible: true
                 onCheckedChanged: settings.enableStreaming = checked
-                onInfoClicked: dialog.createMessageDialog("Streaming", infoText.streaming)
+                onInfoClicked: dialog.createMessageDialog(qsTr("Streaming"), infoText.streaming)
             }
 
-            SectionHeader{ text: "Auto Refresh Frequency" }
+            SectionHeader{ text: qsTr("Auto Refresh Frequency") }
 
             SettingSlider{
                 enabled: !streamingSwitch.checked
-                text: "Timeline: " + (enabled ? (value === 0 ? "Off" : value + " min") : "Disabled")
+                text: qsTr("Timeline") + ": " +
+                      (enabled ? (value === 0 ? qsTr("Off") : qsTr("%n min(s)", "", value)) : qsTr("Disabled"))
                 maximumValue: 30
                 stepSize: 1
                 value: settings.timelineRefreshFreq
@@ -38,7 +39,8 @@ Page{
 
             SettingSlider{
                 enabled: !streamingSwitch.checked
-                text: "Mentions: " + (enabled ? (value === 0 ? "Off" : value + " min") : "Disabled")
+                text: qsTr("Mentions") + ": " +
+                      (enabled ? (value === 0 ? qsTr("Off") : qsTr("%n min(s)", "", value)) : qsTr("Disabled"))
                 maximumValue: 30
                 stepSize: 1
                 value: settings.mentionsRefreshFreq
@@ -47,23 +49,24 @@ Page{
 
             SettingSlider{
                 enabled: !streamingSwitch.checked
-                text: "Direct messages: " + (enabled ? (value === 0 ? "Off" : value + " min") : "Disabled")
+                text: qsTr("Direct messages") + ": " +
+                      (enabled ? (value === 0 ? qsTr("Off") : qsTr("%n min(s)", "", value)) : qsTr("Disabled"))
                 maximumValue: 30
                 stepSize: 1
                 value: settings.directMsgRefreshFreq
                 onReleased: settings.directMsgRefreshFreq = value
             }
 
-            SectionHeader{ text: "Notifications" }
+            SectionHeader{ text: qsTr("Notifications") }
 
             SettingSwitch{
-                text: "Mentions"
+                text: qsTr("Mentions")
                 checked: settings.mentionNotification
                 onCheckedChanged: settings.mentionNotification = checked
             }
 
             SettingSwitch{
-                text: "Direct messages"
+                text: qsTr("Direct messages")
                 checked: settings.messageNotification
                 onCheckedChanged: settings.messageNotification = checked
             }

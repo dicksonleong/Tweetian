@@ -81,12 +81,13 @@ Page{
 
         MenuLayout{
             MenuItem{
-                text: userInfoData.following ? "Unfollow @" + screenName : "Follow @" + screenName
+                text: userInfoData.following ? qsTr("Unfollow %1").arg("@" + screenName)
+                                             : qsTr("Follow %1").arg("@" + screenName)
                 enabled: screenName !== settings.userScreenName
                 onClicked: internal.createFollowUserDialog()
             }
             MenuItem{
-                text: "Report user as spammer"
+                text: qsTr("Report user as spammer")
                 enabled: screenName !== settings.userScreenName
                 onClicked: internal.createReportSpamDialog()
             }
@@ -221,22 +222,13 @@ Page{
                     id: listItem
                     parent: userInfoRepeater
                     height: Math.max(listItemColumn.height + 2 * constant.paddingMedium, 80)
-                    subItemIndicator: (/(Website|Tweets|Following|Followers|Favourites|Subscribed Lists|Listed)/).test(title)
+                    subItemIndicator: model.clickedString
                     enabled: (!subItemIndicator || title === "Website")
                              || !userInfoData.protectedUser
                              || userInfoData.following
                              || userPage.screenName === settings.userScreenName
-                    onClicked: {
-                        switch(title){
-                        case "Website": dialog.createOpenLinkDialog(subtitle); break;
-                        case "Tweets": internal.pushUserPage("UserPageCom/UserTweetsPage.qml"); break;
-                        case "Following": internal.pushUserPage("UserPageCom/UserFollowingPage.qml"); break;
-                        case "Followers": internal.pushUserPage("UserPageCom/UserFollowersPage.qml"); break;
-                        case "Favourites": internal.pushUserPage("UserPageCom/UserFavouritesPage.qml"); break;
-                        case "Subscribed Lists": internal.pushUserPage("UserPageCom/UserSubscribedListsPage.qml"); break;
-                        case "Listed": internal.pushUserPage("UserPageCom/UserListedPage.qml"); break;
-                        }
-                    }
+                    onClicked: if(model.clickedString) eval(model.clickedString)
+                    // TODO: Remove eval() if possible
 
                     Column{
                         id: listItemColumn
@@ -289,62 +281,74 @@ Page{
             if(userPage.screenName === settings.userScreenName) cache.userInfo = data
             userInfoRawData = data
             userInfoData.setData()
-            if(data.url) userInfoRepeater.model.append({"title": "Website", "subtitle": data.url})
-            if(data.location) userInfoRepeater.model.append({"title": "Location", "subtitle": data.location})
             if(data.description) descriptionText.text = data.description
-            userInfoRepeater.model.append({"title": "Joined", "subtitle": Qt.formatDateTime(new Date(data.created_at), "d MMMM yyyy")})
-            userInfoRepeater.model.append({"title": "Tweets", "subtitle": data.statuses_count + " | " + Calculate.tweetsFrequency(data.created_at,data.statuses_count)})
-            userInfoRepeater.model.append({"title": "Following", "subtitle": data.friends_count})
-            userInfoRepeater.model.append({"title": "Followers", "subtitle": data.followers_count})
-            userInfoRepeater.model.append({"title": "Favourites", "subtitle": data.favourites_count})
-            userInfoRepeater.model.append({"title": "Subscribed Lists", "subtitle": ""})
-            userInfoRepeater.model.append({"title": "Listed", "subtitle": data.listed_count})
+            if(data.url) __addToUserInfo(qsTr("Website"), data.url, "dialog.createOpenLinkDialog(subtitle)")
+            if(data.location) __addToUserInfo(qsTr("Location"), data.location)
+            __addToUserInfo(qsTr("Joined"), Qt.formatDateTime(new Date(data.created_at), "d MMMM yyyy"))
+            __addToUserInfo(qsTr("Tweets"), data.statuses_count + " | " + Calculate.tweetsFrequency(data.created_at,data.statuses_count),
+                            "internal.pushUserPage(\"UserPageCom/UserTweetsPage.qml\")")
+            __addToUserInfo(qsTr("Following"), data.friends_count,
+                            "internal.pushUserPage(\"UserPageCom/UserFollowingPage.qml\")")
+            __addToUserInfo(qsTr("Followers"), data.followers_count,
+                            "internal.pushUserPage(\"UserPageCom/UserFollowersPage.qml\")")
+            __addToUserInfo(qsTr("Favourites"), data.favourites_count,
+                            "internal.pushUserPage(\"UserPageCom/UserFavouritesPage.qml\")")
+            __addToUserInfo(qsTr("Subscribed List"), "",
+                            "internal.pushUserPage(\"UserPageCom/UserSubscribedListsPage.qml\")")
+            __addToUserInfo(qsTr("Listed"), data.listed_count,
+                            "internal.pushUserPage(\"UserPageCom/UserListedPage.qml\")")
             loadingRect.visible = false
         }
 
+        function __addToUserInfo(title, subtitle, clickedString){
+            var item = {
+                title: title,
+                subtitle: subtitle,
+                clickedString: clickedString || ""
+            }
+            userInfoRepeater.model.append(item)
+        }
+
         function userInfoOnFailure(status, statusText){
-            if(status === 0) infoBanner.alert("Connection error.")
-            else if(status === 404) infoBanner.alert("The user @" + userPage.screenName + " does not exist.")
-            else infoBanner.alert("Error: " + status + " " + statusText)
+            if(status === 404) infoBanner.alert(qsTr("The user %1 does not exist").arg("@" + userPage.screenName))
+            else infoBanner.showHttpError(status, statusText)
             loadingRect.visible = false
         }
 
         function followOnSuccess(data, isFollowing){
             userInfoData.following = isFollowing
-            if(isFollowing) infoBanner.alert("Followed the user @" + data.screen_name + ".")
-            else infoBanner.alert("Unfollowed the user @" + data.screen_name + ".")
+            if(isFollowing) infoBanner.alert(qsTr("Followed the user %1 successfully").arg("@" + data.screen_name))
+            else infoBanner.alert(qsTr("Unfollowed the user %1 successfully").arg("@" + data.screen_name))
             loadingRect.visible = false
         }
 
         function followOnFailure(status, statusText){
-            if(status === 0) infoBanner.alert("Connection error.")
-            else infoBanner.alert("Error: " + status + " " + statusText)
+            infoBanner.showHttpError(status, statusText)
             loadingRect.visible = false
         }
 
         function reportSpamOnSuccess(data){
-            infoBanner.alert("Reported and blocked the user @" + data.screen_name +".")
+            infoBanner.alert(qsTr("Reported and blocked the user %1 successfully").arg("@" + data.screen_name))
             loadingRect.visible = false
         }
 
         function reportSpamOnFailure(status, statusText){
-            if(status === 0) infoBanner.alert("Connection error.")
-            else infoBanner.alert("Error: " + status + " " + statusText)
+            infoBanner.showHttpError(status, statusText)
             loadingRect.visible = false
         }
 
         function createReportSpamDialog(){
-            var message = "Do you want to report and block the user @"+ screenName + "?"
-            dialog.createQueryDialog("Report Spammer", "", message, function(){
+            var message = qsTr("Do you want to report and block the user %1 ?").arg("@" + screenName)
+            dialog.createQueryDialog(qsTr("Report Spammer"), "", message, function(){
                 Twitter.postReportSpam(screenName, reportSpamOnSuccess, reportSpamOnFailure)
                 loadingRect.visible = true
             })
         }
 
         function createFollowUserDialog(){
-            var title = userInfoData.following ? "Unfollow user" : "Follow user"
-            var message = userInfoData.following ? "Do you want to unfollow the user @"+ screenName + "?"
-                                                 : "Do you want to follow the user @"+ screenName + "?"
+            var title = userInfoData.following ? qsTr("Unfollow user") : qsTr("Follow user")
+            var message = userInfoData.following ? qsTr("Do you want to unfollow the user %1 ?").arg("@" + screenName)
+                                                 : qsTr("Do you want to follow the user %1 ?").arg("@" + screenName)
             dialog.createQueryDialog(title, "", message, function(){
                 if(userInfoData.following)
                     Twitter.postUnfollow(screenName, followOnSuccess, followOnFailure)

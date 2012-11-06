@@ -22,14 +22,14 @@ ContextMenu{
 
     content: MenuLayout{
         MenuItem{
-            text: "Reply"
+            text: qsTr("Reply")
             onClicked: {
                 var prop = {type: "Reply", tweetId: model.tweetId, placedText: "@"+model.screenName+" "+getAllHashtags(model.displayTweetText)}
                 pageStack.push(Qt.resolvedUrl("../NewTweetPage.qml"), prop)
             }
         }
         MenuItem{
-            text: "Retweet"
+            text: qsTr("Retweet")
             onClicked: {
                 var text = model.retweetId == model.tweetId ? "RT @"+model.screenName+": "+model.tweetText
                                                 : "RT @"+model.screenName+": RT @"+model.displayScreenName+": "+model.tweetText
@@ -37,13 +37,13 @@ ContextMenu{
             }
         }
         MenuItem{
-            text: "<font color=\"LightSeaGreen\">@"+ model.screenName + "</font> Profile"
+            text: qsTr("%1 Profile").arg("<font color=\"LightSeaGreen\">@" + model.screenName + "</font>")
             onClicked: pageStack.push(Qt.resolvedUrl("../UserPage.qml"), {screenName: model.screenName})
             platformStyle: MenuItemStyle{ position: rtScreenName.visible ? "vertical-center" : "vertical-bottom" }
         }
         MenuItem{
             id: rtScreenName
-            text: "<font color=\"LightSeaGreen\">@"+ model.displayScreenName + "</font> Profile"
+            text: qsTr("%1 Profile").arg("<font color=\"LightSeaGreen\">@" + model.displayScreenName + "</font>")
             visible: model.displayScreenName != model.screenName
             onClicked: pageStack.push(Qt.resolvedUrl("../UserPage.qml"), {screenName: model.displayScreenName})
         }

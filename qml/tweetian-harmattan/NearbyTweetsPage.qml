@@ -31,7 +31,7 @@ Page{
 
         MenuLayout{
             MenuItem{
-                text: "Refresh Cache & Location"
+                text: qsTr("Refresh Cache & Location")
                 enabled: !header.busy
                 onClicked: positionSource.start()
             }
@@ -66,7 +66,7 @@ Page{
         anchors.centerIn: parent
         font.pixelSize: constant.fontSizeXXLarge
         color: constant.colorMid
-        text: "No tweet"
+        text: qsTr("No tweet")
         visible: searchListView.count == 0 && !header.busy
     }
 
@@ -75,7 +75,7 @@ Page{
     PageHeader{
         id: header
         headerIcon: "image://theme/icon-m-common-location-inverse"
-        headerText: positionSource.active ? "Getting location..." : "Nearby Tweets"
+        headerText: positionSource.active ? qsTr("Getting location...") : qsTr("Nearby Tweets")
         onClicked: searchListView.positionViewAtBeginning()
     }
 
@@ -136,8 +136,7 @@ Page{
         }
 
         function onFailure(status, statusText){
-            if(status === 0) infoBanner.alert("Connection error.")
-            else infoBanner.alert("Error:" + status + " " + statusText)
+            infoBanner.showHttpError(status, statusText)
             header.busy = false
         }
     }

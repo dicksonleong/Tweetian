@@ -19,7 +19,7 @@ Item{
         id: loadMoreButton
 
         Button{
-            text: "Load more"
+            text: qsTr("Load more")
             width: root.width * 0.75
             onClicked: root.clicked()
         }

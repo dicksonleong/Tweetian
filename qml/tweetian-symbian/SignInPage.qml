@@ -13,12 +13,12 @@ Page{
     tools: ToolBarLayout{
         ToolButtonWithTip{
             iconSource: platformInverted ? "Image/close_stop_inverse.svg" : "Image/close_stop.svg"
-            toolTipText: "Exit"
+            toolTipText: qsTr("Exit")
             onClicked: Qt.quit()
         }
         ToolButtonWithTip{
             iconSource: "toolbar-refresh"
-            toolTipText: "Refresh"
+            toolTipText: qsTr("Refresh")
             onClicked: {
                 Twitter.postRequestToken(script.requestTokenOnSuccess, script.onFailure)
                 header.busy = true
@@ -62,7 +62,7 @@ Page{
 
     PageHeader{
         id: header
-        headerText: "Sign In to Twitter"
+        headerText: qsTr("Sign In to Twitter")
         headerIcon: "Image/sign_in.svg"
     }
 
@@ -79,13 +79,15 @@ Page{
             settings.oauthToken = token
             settings.oauthTokenSecret = tokenSecret
             settings.userScreenName = screenName
-            infoBanner.alert("Signed in successfully.")
+            infoBanner.alert(qsTr("Signed in successfully"))
             pageStack.pop(null)
         }
 
         function onFailure(status, statusText){
-            if(status === 0) infoBanner.alert("Connection error. Click the refresh button to try again.")
-            else infoBanner.alert("Error: " + status + " " + statusText + ". Make sure the time/date of your phone is set correctly.")
+            if(status === 0)
+                infoBanner.alert(qsTr("Server or connection error. Click the refresh button to try again."))
+            else
+                infoBanner.alert(qsTr("Error: %1. Make sure the time/date of your phone is set correctly.").arg(statusText + "(" + status + ")"))
             header.busy = false
         }
     }

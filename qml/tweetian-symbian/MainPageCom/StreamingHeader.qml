@@ -23,8 +23,8 @@ Item{
         Text{
             font.pixelSize: constant.fontSizeMedium
             color: constant.colorLight
-            text: networkMonitor.online ? (userStream.status === 2 ? "Streaming..." : "Connecting to streaming")
-                                        : "Offline"
+            text: networkMonitor.online ? (userStream.status === 2 ? qsTr("Streaming...") : qsTr("Connecting to streaming"))
+                                        : qsTr("Offline")
         }
     }
 

@@ -9,7 +9,7 @@ CommonDialog{
     signal signIn(string username, string password)
 
     platformInverted: settings.invertedTheme
-    buttonTexts: ["Sign In", "Cancel"]
+    buttonTexts: [qsTr("Sign In"), qsTr("Cancel")]
     content: Item{
         id: contentItem
         anchors { left: parent.left; right: parent.right; top: parent.top }
@@ -30,7 +30,7 @@ CommonDialog{
                 id: usernameTextField
                 width: parent.width
                 platformInverted: root.platformInverted
-                placeholderText: "Username"
+                placeholderText: qsTr("Username")
                 inputMethodHints: Qt.ImhNoPredictiveText | Qt.ImhNoAutoUppercase
             }
 
@@ -38,7 +38,7 @@ CommonDialog{
                 id: passwordTextField
                 width: parent.width
                 platformInverted: root.platformInverted
-                placeholderText: "Password"
+                placeholderText: qsTr("Password")
                 inputMethodHints: Qt.ImhNoPredictiveText | Qt.ImhNoAutoUppercase
                 echoMode: TextInput.Password
             }

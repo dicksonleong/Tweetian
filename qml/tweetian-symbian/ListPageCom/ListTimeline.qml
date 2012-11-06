@@ -9,8 +9,8 @@ AbstractListPageItem{
     width: listPageListView.width
     height: listPageListView.height
     workerScriptSource: "../WorkerScript/TimelineParser.js"
-    headerText: "List Timeline"
-    emptyText: "No tweet"
+    headerText: qsTr("List Timeline")
+    emptyText: qsTr("No tweet")
     delegate: TweetDelegate{}
     onRefresh: {
         var sinceId = "", maxId = "", mType = type

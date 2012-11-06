@@ -39,7 +39,7 @@ Item{
                 font.pixelSize: constant.fontSizeMedium
                 color: constant.colorLight
                 text: visible && root.ListView.view.__initialContentY - root.ListView.view.contentY > 100 ?
-                          "Release to refresh" : "Pull down to refresh"
+                          qsTr("Release to refresh") : qsTr("Pull down to refresh")
             }
 
             Text{
@@ -48,7 +48,7 @@ Item{
                 color: constant.colorMid
                 visible: container.visible && root.ListView.view.lastUpdate
                 onVisibleChanged: {
-                    if(visible) text = "Last update: " + Calculate.timeDiff(root.ListView.view.lastUpdate)
+                    if(visible) text = qsTr("Last update: %1").arg(Calculate.timeDiff(root.ListView.view.lastUpdate))
                 }
             }
         }

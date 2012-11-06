@@ -28,22 +28,22 @@ Page {
         }
         ToolButtonWithTip{
             iconSource: platformInverted ? "Image/edit_inverse.svg" : "Image/edit.svg"
-            toolTipText: "New Tweet"
+            toolTipText: qsTr("New Tweet")
             onClicked: pageStack.push(Qt.resolvedUrl("NewTweetPage.qml"), {type: "New"})
         }
         ToolButtonWithTip{
             iconSource: "toolbar-search"
-            toolTipText: "Trends & Search"
+            toolTipText: qsTr("Trends & Search")
             onClicked: pageStack.push(Qt.resolvedUrl("TrendsPage.qml"))
         }
         ToolButtonWithTip{
             iconSource: platformInverted ? "Image/contacts_inverse.svg" : "Image/contacts.svg"
-            toolTipText: "My profile"
+            toolTipText: qsTr("My profile")
             onClicked: pageStack.push(Qt.resolvedUrl("UserPage.qml"), {screenName: settings.userScreenName})
         }
         ToolButtonWithTip{
             iconSource: "toolbar-menu"
-            toolTipText: "Menu"
+            toolTipText: qsTr("Menu")
             onClicked: mainMenu.open()
         }
     }
@@ -54,18 +54,18 @@ Page {
 
         MenuLayout{
             MenuItem{
-                text: "Refresh cache"
+                text: qsTr("Refresh cache")
                 enabled: !mainView.currentItem.busy
                 platformInverted: mainMenu.platformInverted
                 onClicked: mainView.currentItem.refresh("all")
             }
             MenuItem{
-                text: "Settings"
+                text: qsTr("Settings")
                 platformInverted: mainMenu.platformInverted
                 onClicked: pageStack.push(Qt.resolvedUrl("SettingPage.qml"))
             }
             MenuItem{
-                text: "About"
+                text: qsTr("About")
                 platformInverted: mainMenu.platformInverted
                 onClicked: pageStack.push(Qt.resolvedUrl("AboutPage.qml"))
             }

@@ -105,8 +105,7 @@ Item{
         }
 
         function failureCallback(status, statusText){
-            if(status == 0) infoBanner.alert("Connection error.")
-            else infoBanner.alert("Error: " +status+" "+statusText)
+            infoBanner.showHttpError(status, statusText)
             busy = false
         }
     }
@@ -139,7 +138,7 @@ Item{
                     if(tweetView.stayAtCurrentPosition || tweetView.indexAt(0, tweetView.contentY) > 0)
                         unreadCount += messageObject.count
                     if(type === "Mentions" && settings.mentionNotification){
-                        var body = unreadCount === 1 ? "1 new mention" : unreadCount + " new mentions"
+                        var body = qsTr("%n new mention(s)", "", unreadCount)
                         if(!platformWindow.active){
                             notification.clear("tweetian.mention")
                             notification.publish("tweetian.mention", "Tweetian", body, unreadCount)

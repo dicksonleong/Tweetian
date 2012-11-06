@@ -6,8 +6,8 @@ QueryDialog{
 
     property bool __isClosing: false
 
-    acceptButtonText: "Yes"
-    rejectButtonText: "No"
+    acceptButtonText: qsTr("Yes")
+    rejectButtonText: qsTr("No")
 
     Component.onCompleted: open()
 

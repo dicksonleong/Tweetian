@@ -32,7 +32,7 @@ AbstractDelegate{
                 anchors{ left: listNameText.right; leftMargin: constant.paddingMedium; right: parent.right }
                 font.pixelSize: settings.largeFontSize ? constant.fontSizeMedium : constant.fontSizeSmall
                 color: highlighted ? constant.colorHighlighted : constant.colorMid
-                text: "By " + ownerUserName
+                text: qsTr("By %1").arg(ownerUserName)
                 elide: Text.ElideRight
             }
         }
@@ -50,7 +50,7 @@ AbstractDelegate{
             width: parent.width
             font.pixelSize: settings.largeFontSize ? constant.fontSizeMedium : constant.fontSizeSmall
             color: highlighted ? constant.colorHighlighted : constant.colorMid
-            text: memberCount + " members | "+ subscriberCount + " subscribers"
+            text: qsTr("%1 members | %2 subscribers").arg(memberCount).arg(subscriberCount)
         }
     }
 

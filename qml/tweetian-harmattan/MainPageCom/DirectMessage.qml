@@ -24,7 +24,7 @@ Item{
             if(createNotification){
                 unreadCount += count
                 if(settings.messageNotification){
-                    var body = unreadCount === 1 ? "1 new message" : unreadCount + " new messages"
+                    var body = qsTr("%n new message(s)", "", unreadCount)
                     if(!platformWindow.active){
                         notification.clear("tweetian.message")
                         notification.publish("tweetian.message", "Tweetian", body, unreadCount)
@@ -90,7 +90,7 @@ Item{
         anchors.centerIn: parent
         font.pixelSize: constant.fontSizeXXLarge
         color: constant.colorMid
-        text: "No message"
+        text: qsTr("No message")
         visible: directMsgView.count == 0 && !busy
     }
 
@@ -181,8 +181,7 @@ Item{
         }
 
         function failureCallback(status, statusText){
-            if(status === 0) infoBanner.alert("Connection error.")
-            else infoBanner.alert("Error: " + status + " " + statusText)
+            infoBanner.showHttpError(status, statusText)
             busy = false
         }
     }

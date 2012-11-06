@@ -16,8 +16,7 @@ Page{
     }
 
     function userSearchOnFailure(status, statusText){
-        if(status === 0) infoBanner.alert("Connection error.")
-        else infoBanner.alert("Error:" + status + " " + statusText)
+        infoBanner.showHttpError(status, statusText)
         header.busy = false
     }
 
@@ -30,7 +29,7 @@ Page{
         ToolButtonWithTip{
             id: backButton
             iconSource: "toolbar-back"
-            toolTipText: "Back"
+            toolTipText: qsTr("Back")
             onClicked: pageStack.pop()
         }
     }
@@ -56,7 +55,7 @@ Page{
         anchors.centerIn: parent
         font.pixelSize: constant.fontSizeXXLarge
         color: constant.colorMid
-        text: "No search result"
+        text: qsTr("No search result")
         visible: userSearchListView.count == 0 && !header.busy
     }
 
@@ -65,7 +64,7 @@ Page{
     PageHeader{
         id: header
         headerIcon: "image://theme/toolbar-search"
-        headerText: "User Search: \"" + userSearchQuery + "\""
+        headerText: qsTr("User Search: %1").arg("\"" + userSearchQuery + "\"")
         onClicked: userSearchListView.positionViewAtBeginning()
     }
 

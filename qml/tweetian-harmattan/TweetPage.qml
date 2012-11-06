@@ -131,28 +131,28 @@ Page{
 
         MenuLayout{
             MenuItem{
-                text: "Copy tweet"
+                text: qsTr("Copy tweet")
                 onClicked: {
                     clipboard.setText("@" + currentTweet.screenName + ": " + currentTweet.tweetText)
-                    infoBanner.alert("Tweet copied to clipboard.")
+                    infoBanner.alert(qsTr("Tweet copied to clipboard"))
                 }
             }
             MenuItem{
-                text: translatedTweetLoader.sourceComponent ? "Hide translated tweet" : "Translate tweet"
+                text: translatedTweetLoader.sourceComponent ? qsTr("Hide translated tweet") : qsTr("Translate tweet")
                 onClicked: {
                     if(translatedTweetLoader.sourceComponent) translatedTweetLoader.sourceComponent = undefined
                     else if(cache.translationToken && JS.checkExpire(cache.translationToken)){
-                        Translate.translate(cache.translationToken, currentTweet.tweetText, JS.translateOnSuccess, JS.translateOnFailure)
+                        Translate.translate(cache.translationToken, currentTweet.tweetText, JS.translateOnSuccess, JS.commonOnFailure)
                         header.busy = true
                     }
                     else{
-                        Translate.requestToken(JS.translateTokenOnSuccess, JS.translateOnFailure)
+                        Translate.requestToken(JS.translateTokenOnSuccess, JS.commonOnFailure)
                         header.busy = true
                     }
                 }
             }
             MenuItem{
-                text: "Tweet permalink"
+                text: qsTr("Tweet permalink")
                 onClicked: {
                     var permalink = "http://twitter.com/" + currentTweet.screenName + "/status/" + currentTweet.tweetId
                     dialog.createOpenLinkDialog(permalink)
@@ -161,7 +161,7 @@ Page{
             }
             MenuItem{
                 id: deleteTweetButton
-                text: "Delete tweet"
+                text: qsTr("Delete tweet")
                 visible: currentTweet.screenName === settings.userScreenName
                 onClicked: JS.createDeleteTweetDialog()
             }
@@ -257,7 +257,7 @@ Page{
                     width: parent.width
                     font.pixelSize: settings.largeFontSize ? constant.fontSizeLarge : constant.fontSizeMedium
                     color: constant.colorMid
-                    text: "Retweeted by @" + currentTweet.screenName
+                    text: qsTr("Retweeted by %1").arg("@" + currentTweet.screenName)
                     visible: currentTweet.retweetId !== currentTweet.tweetId
                 }
 
@@ -321,9 +321,9 @@ Page{
                                 else {
                                     if(model.link){
                                         var success = Qt.openUrlExternally(model.link)
-                                        if(!success) infoBanner.alert("Error opening link: " + model.link)
+                                        if(!success) infoBanner.alert(qsTr("Error opening link: %1").arg(model.link))
                                     }
-                                    else infoBanner.alert("Streaming link is not available.")
+                                    else infoBanner.alert(qsTr("Streaming link is not available"))
                                 }
                             }
                         }
@@ -354,7 +354,7 @@ Page{
     PageHeader{
         id: header
         headerIcon: "Image/chat.png"
-        headerText: "Tweet"
+        headerText: qsTr("Tweet")
         onClicked: tweetPageFlickable.contentY = 0
     }
 
@@ -367,7 +367,7 @@ Page{
                 ancestorRepeater.model = ancestorModel
                 descendantRepeater.model = descendantModel
                 if(networkMonitor.online){
-                    Twitter.getConversation(currentTweet.tweetId, JS.conversationOnSuccess, JS.conversationOnFailure)
+                    Twitter.getConversation(currentTweet.tweetId, JS.conversationOnSuccess, JS.commonOnFailure)
                     header.busy = true
                 }
             }
@@ -378,32 +378,26 @@ Page{
     Component{
         id: inReplyToHeading
 
-        SectionHeader{
-            width: mainColumn.width
-            text: "In-reply-to ↑"
-        }
+        SectionHeader{ width: mainColumn.width; text: qsTr("In-reply-to ↑") }
     }
 
     Component{
         id: replyHeading
 
-        SectionHeader{
-            width: mainColumn.width
-            text: "Reply ↓"
-        }
+        SectionHeader{ width: mainColumn.width; text: qsTr("Reply ↓") }
     }
 
     Component{
         id: translatedTweet
         Item{
             id: root
+            property string text
             width: mainColumn.width
             height: childrenRect.height + constant.paddingMedium
-            property string text
 
             SectionHeader{
                 id: translateHeader
-                text: "Translated Tweet"
+                text: qsTr("Translated Tweet")
             }
 
             Text{

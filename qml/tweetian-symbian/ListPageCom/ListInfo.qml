@@ -9,11 +9,18 @@ Item{
     height: listPageListView.height
 
     function initialize(){
-        listInfoListView.model.append({title: "List Name", subtitle: listName})
-        listInfoListView.model.append({title: "List Owner", subtitle: "@" + ownerScreenName})
-        if(listDescription) listInfoListView.model.append({title: "Description", subtitle: listDescription})
-        listInfoListView.model.append({title: "Member", subtitle: memberCount})
-        listInfoListView.model.append({title: "Subscriber", subtitle: subscriberCount})
+
+        function addToListInfo(title, subtitle, clickedString){
+            var item = { title: title, subtitle: subtitle, clickedString: clickedString || "" }
+            listInfoListView.model.append(item)
+        }
+
+        addToListInfo(qsTr("List Name"), listName)
+        addToListInfo(qsTr("List Owner"), "@" + ownerScreenName,
+                      "pageStack.push(Qt.resolvedUrl(\"../UserPage.qml\"), {screenName: subtitle.substring(1)})")
+        if(listDescription) addToListInfo(qsTr("Description"), listDescription)
+        addToListInfo(qsTr("Member"), memberCount, "listPageListView.currentIndex = 2")
+        addToListInfo(qsTr("Subscriber"), subscriberCount, "listPageListView.currentIndex = 3")
     }
 
     function positionAtTop(){
@@ -26,21 +33,15 @@ Item{
         model: ListModel{}
         header: SectionHeader{
             id: sectionHeader
-            text: "List Info"
+            text: qsTr("List Info")
         }
         delegate: ListItem{
             id: listItem
             height: listItemColumn.height + 2 * constant.paddingMedium
             platformInverted: settings.invertedTheme
-            subItemIndicator: title === "List Owner" || title === "Member" || title === "Subscriber"
-            onClicked: {
-                if(title == "List Owner")
-                    pageStack.push(Qt.resolvedUrl("../UserPage.qml"), {screenName: subtitle.substring(1)})
-                else if(title == "Member")
-                    listPageListView.currentIndex = 2
-                else if(title == "Subscriber")
-                    listPageListView.currentIndex = 3
-            }
+            subItemIndicator: model.clickedString
+            onClicked: if(model.clickedString) eval(model.clickedString)
+
             Column{
                 id: listItemColumn
                 anchors {top: parent.paddingItem.top; left: parent.paddingItem.left; right: parent.paddingItem.right}

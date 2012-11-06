@@ -6,7 +6,7 @@ SelectionDialog{
 
     property bool __isClosing: false
 
-    titleText: "Trends Location"
+    titleText: qsTr("Trends Location")
     model: trendsLocationModel
     onSelectedIndexChanged: settings.trendsLocationWoeid = trendsLocationModel.get(selectedIndex).woeid
 

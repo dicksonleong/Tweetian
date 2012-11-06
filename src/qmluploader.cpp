@@ -36,7 +36,7 @@ void QMLUploader::send()
     QFileInfo fileInfo(mFileName);
 
     if(!fileInfo.exists()){
-        emit failure(-1, "The file " + mFileName + " does not exists");
+        emit failure(-1, tr("The file %1 does not exists").arg(mFileName));
         bodyData.clear();
         return;
     }
@@ -54,7 +54,7 @@ void QMLUploader::send()
     bool opened = file.open(QIODevice::ReadOnly);
 
     if(!opened){
-        emit failure(-1, "Unable to open the file " + file.fileName());
+        emit failure(-1, tr("Unable to open the file %1").arg(file.fileName()));
         bodyData.clear();
         return;
     }

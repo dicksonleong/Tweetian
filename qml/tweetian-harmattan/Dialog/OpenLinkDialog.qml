@@ -28,35 +28,35 @@ ContextMenu{
 
     MenuLayout{
         MenuItem{
-            text: "Open link in web browser"
+            text: qsTr("Open link in web browser")
             onClicked: {
                 Qt.openUrlExternally(link)
-                infoBanner.alert("Launching web browser...")
+                infoBanner.alert(qsTr("Launching web browser..."))
             }
         }
         MenuItem{
-            text: "Share link"
+            text: qsTr("Share link")
             onClicked: shareUI.shareLink(link)
         }
 
         MenuItem{
-            text: "Copy link"
+            text: qsTr("Copy link")
             onClicked: {
                 clipboard.setText(link)
-                infoBanner.alert("Link copied to clipboard.")
+                infoBanner.alert(qsTr("Link copied to clipboard"))
             }
             platformStyle: MenuItemStyle{ position: sendToPocketButton.visible ? "vertical-center" : "vertical-bottom" }
         }
         MenuItem{
             id: sendToPocketButton
             visible: showAddPageServices
-            text: "Send to Pocket"
+            text: qsTr("Send to Pocket")
             onClicked: addToPocketClicked(link)
         }
         MenuItem{
             id: sendToInstapaperButton
             visible: showAddPageServices
-            text: "Send to Instapaper"
+            text: qsTr("Send to Instapaper")
             onClicked: addToInstapaperClicked(link)
         }
     }

@@ -27,8 +27,7 @@ Item{
     }
 
     function failureCallback(status, statusText){
-        if(status === 0) infoBanner.alert("Connection error.")
-        else infoBanner.alert("Error: " + status + " " + statusText)
+        infoBanner.showHttpError(status, statusText)
         loadingRect.visible = false
     }
 

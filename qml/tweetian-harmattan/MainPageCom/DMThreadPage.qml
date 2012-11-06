@@ -45,7 +45,7 @@ Page{
 
     PageHeader{
         id: header
-        headerText: "DM > @" + screenName
+        headerText: qsTr("DM: %1").arg("@" + screenName)
         headerIcon: "../Image/inbox.svg"
         busy: mainPage.directMsg.busy
         onClicked: dMConversationView.positionViewAtBeginning()
@@ -93,13 +93,12 @@ Page{
         function deleteDMOnSuccess(data){
             mainPage.directMsg.parser.remove(data.id_str)
             parser.remove(data.id_str)
-            infoBanner.alert("Direct message deleted.")
+            infoBanner.alert(qsTr("Direct message deleted successfully"))
             header.busy = false
         }
 
         function deleteDMOnFailure(status, statusText){
-            if(status == 0) infoBanner.alert("Connection error.")
-            else infoBanner.alert("Error: " + status + " " + statusText)
+            infoBanner.showHttpError(status, statusText)
             header.busy = false
         }
 
@@ -125,8 +124,8 @@ Page{
         }
 
         function createDeleteDMDialog(tweetId){
-            var message = "Do you want to delete this direct message?"
-            dialog.createQueryDialog("Delete Message", "", message, function(){
+            var message = qsTr("Do you want to delete this direct message?")
+            dialog.createQueryDialog(qsTr("Delete Message"), "", message, function(){
                 Twitter.postDeleteDirectMsg(tweetId, deleteDMOnSuccess, deleteDMOnFailure)
                 header.busy = true
             })

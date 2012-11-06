@@ -25,10 +25,10 @@ Page{
             onClicked: pageStack.pop()
         }
         ToolButton{
-            text: ownerScreenName === settings.userScreenName ? "Delete"
-                                                              : followingList ? "Unsubscribe" : "Subscribe"
+            text: ownerScreenName === settings.userScreenName ? qsTr("Delete")
+                                                              : followingList ? qsTr("Unsubscribe") : qsTr("Subscribe")
             onClicked: ownerScreenName === settings.userScreenName ? internal.createDeleteListDialogDialog()
-                                                                  : internal.createSubscribeDialog()
+                                                                   : internal.createSubscribeDialog()
         }
         Item{ width: 80; height: 64 }
     }
@@ -59,7 +59,7 @@ Page{
     LargePageHeader{
         id: pageHeader
         primaryText: listName
-        secondaryText: "By @" + ownerScreenName
+        secondaryText: qsTr("By %1").arg("@" + ownerScreenName)
         imageSource: ownerProfileImageUrl
         showProtectedIcon: protectedList
         onClicked: listPageListView.currentItem.positionAtTop()
@@ -70,32 +70,31 @@ Page{
 
         function subscribeOnSuccess(data){
             followingList = true
-            infoBanner.alert("You have subscribed to the list <b>" + data.name + "</b> successfully.")
+            infoBanner.alert(qsTr("You have subscribed to the list %1 successfully").arg("<b>"+data.name+"</b>"))
             loadingRect.visible = false
         }
 
         function unsubscribeOnSuccess(data){
             followingList = false
-            infoBanner.alert("You have unsubscribed from the list <b>" + data.name + "</b> successfully.")
+            infoBanner.alert(qsTr("You have unsubscribed from the list %1 successfully").arg("<b>"+data.name+"</b>"))
             loadingRect.visible = false
         }
 
         function deleteListOnSuccess(data){
-            infoBanner.alert("You have deleted the list <b>" + data.name + "</b> successfully.")
+            infoBanner.alert(qsTr("You have deleted the list %1 successfully").arg("<b>"+data.name+"</b>"))
             loadingRect.visible = false
             pageStack.pop()
         }
 
         function onFailure(status, statusText){
-            if(status === 0) infoBanner.alert("Connection error.")
-            else infoBanner.alert("Error: " + status + " " + statusText)
+            infoBanner.showHttpError(status, statusText)
             loadingRect.visible = false
         }
 
         function createSubscribeDialog(){
-            var title = followingList ? "Unsubscribe List" : "Subscribe List"
-            var message = followingList ? "Do you want to unsubscribe from the list \"" + listName + "\"?"
-                                        : "Do you want to subscribe to the list \"" + listName + "\"?"
+            var title = followingList ? qsTr("Unsubscribe List") : qsTr("Subscribe List")
+            var message = followingList ? qsTr("Do you want to unsubscribe from the list %1?").arg("\""+listName+"\"")
+                                        : qsTr("Do you want to subscribe to the list %1?").arg("\""+listName+"\"")
             dialog.createQueryDialog(title, "", message, function(){
                 if(followingList) Twitter.postUnsubscribeList(listId, unsubscribeOnSuccess, onFailure)
                 else Twitter.postSubscribeList(listId, subscribeOnSuccess, onFailure)
@@ -104,8 +103,8 @@ Page{
         }
 
         function createDeleteListDialogDialog(){
-            var message = "Do you want to delete the list \"" + listName + "\"?"
-            dialog.createQueryDialog("Delete List", "", message, function(){
+            var message = qsTr("Do you want to delete the list %1?").arg("\""+listName+"\"")
+            dialog.createQueryDialog(qsTr("Delete List"), "", message, function(){
                 Twitter.postDeleteList(listId, deleteListOnSuccess, onFailure)
                 loadingRect.visible = true
             })

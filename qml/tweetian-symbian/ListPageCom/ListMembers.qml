@@ -11,8 +11,8 @@ AbstractListPageItem{
     width: listPageListView.width
     height: listPageListView.height
     workerScriptSource: "../WorkerScript/UserParser.js"
-    headerText: "Members (" + memberCount + ")"
-    emptyText: "No member"
+    headerText: qsTr("Members (%1)").arg(memberCount)
+    emptyText: qsTr("No member")
     showLoadMoreButton: nextCursor != "0"
     refreshTimeStamp: false
     delegate: UserDelegate{}

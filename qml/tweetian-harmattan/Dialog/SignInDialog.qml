@@ -8,7 +8,7 @@ CommonDialog{
 
     signal signIn(string username, string password)
 
-    buttonTexts: ["Sign In", "Cancel"]
+    buttonTexts: [qsTr("Sign In"), qsTr("Cancel")]
     content: Item{
         id: contentItem
         anchors { left: parent.left; right: parent.right; top: parent.top }
@@ -28,12 +28,12 @@ CommonDialog{
             TextField{
                 id: usernameTextField
                 width: parent.width
-                placeholderText: "Username"
+                placeholderText: qsTr("Username")
                 inputMethodHints: Qt.ImhNoPredictiveText | Qt.ImhNoAutoUppercase
                 platformSipAttributes: SipAttributes {
                     actionKeyEnabled: usernameTextField.text.length > 0
                     actionKeyHighlighted: true
-                    actionKeyLabel: "Next"
+                    actionKeyLabel: qsTr("Next")
                 }
                 Keys.onReturnPressed: passwordTextField.forceActiveFocus()
             }
@@ -41,13 +41,13 @@ CommonDialog{
             TextField{
                 id: passwordTextField
                 width: parent.width
-                placeholderText: "Password"
+                placeholderText: qsTr("Password")
                 inputMethodHints: Qt.ImhNoPredictiveText | Qt.ImhNoAutoUppercase
                 echoMode: TextInput.Password
                 platformSipAttributes: SipAttributes {
                     actionKeyEnabled: passwordTextField.text.length > 0
                     actionKeyHighlighted: true
-                    actionKeyLabel: "Sign In"
+                    actionKeyLabel: qsTr("Sign In")
                 }
                 Keys.onReturnPressed: {
                     passwordTextField.platformCloseSoftwareInputPanel()

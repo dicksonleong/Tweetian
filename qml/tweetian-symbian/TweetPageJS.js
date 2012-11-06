@@ -1,31 +1,31 @@
 function deleteTweetOnSuccess(data){
     mainPage.timeline.parseData("delete", data)
     loadingRect.visible = false
-    infoBanner.alert("Tweet deleted.")
+    infoBanner.alert(qsTr("Tweet deleted successfully"))
     pageStack.pop()
 }
 
 function favouriteOnSuccess(data, isFavourite){
     mainPage.timeline.parseData("favourite", data)
     favouritedTweet = isFavourite
-    if(favouritedTweet) infoBanner.alert("Tweet favourited.")
-    else infoBanner.alert("Tweet unfavourited.")
+    if(favouritedTweet) infoBanner.alert(qsTr("Tweet favourited succesfully"))
+    else infoBanner.alert(qsTr("Tweet unfavourited successfully"))
     header.busy = false
 }
 
 function reportSpamOnSuccess(data){
-    infoBanner.alert("Reported and blocked the user @" + data.screen_name +".")
+    infoBanner.alert(qsTr("Reported and blocked the user %1 successfully").arg("@" + data.screen_name))
     loadingRect.visible = false
 }
 
 function getTwitLongerTextOnSuccess(fullTweetText, link){
-    tweetTextText.text = fullTweetText + "<br><i>(Expanded from TwitLonger - " + link.parseURL(link, link.substring(7), link) + ")</i>"
+    tweetTextText.text = fullTweetText + "<br><i>(" + qsTr("Expanded from TwitLonger") + " - "
+            + link.parseURL(link, link.substring(7), link) + ")</i>"
     header.busy = false
 }
 
 function commonOnFailure(status, statusText){
-    if(status === 0) infoBanner.alert("Connection error.")
-    else infoBanner.alert("Error: " + status + " " + statusText)
+    infoBanner.showHttpError(status, statusText)
     header.busy = false
     loadingRect.visible = false
 }
@@ -66,31 +66,19 @@ function conversationOnSuccess(data){
     }
 }
 
-function conversationOnFailure(status, statusText){
-    if(status === 0) infoBanner.alert("Connection error.")
-    else infoBanner.alert("Error: " + status + " " + statusText)
-    header.busy = false
-}
-
 function translateTokenOnSuccess(token){
     cache.translationToken = token
-    Translate.translate(cache.translationToken, currentTweet.tweetText, translateOnSuccess, translateOnFailure)
+    Translate.translate(cache.translationToken, currentTweet.tweetText, translateOnSuccess, commonOnFailure)
 }
 
 function translateOnSuccess(data){
-    if(data.indexOf("ArgumentOutOfRangeException") == 0){
-        infoBanner.alert("Unable to translate tweet.")
+    if(data.indexOf("ArgumentOutOfRangeException") === 0){
+        infoBanner.alert(qsTr("Unable to translate tweet"))
+        return
     }
-    else{
-        translatedTweetLoader.sourceComponent = translatedTweet
-        translatedTweetLoader.item.text = data
-    }
-    header.busy = false
-}
 
-function translateOnFailure(status, statusText){
-    if(status === 0) infoBanner.alert("Connection error.")
-    else infoBanner.alert("Error translating tweet: " + status + " " + statusText)
+    translatedTweetLoader.sourceComponent = translatedTweet
+    translatedTweetLoader.item.text = data
     header.busy = false
 }
 
@@ -102,49 +90,47 @@ function checkExpire(translateToken){
 }
 
 function addToPocket(link){
-    if(settings.pocketUsername && settings.pocketPassword){
-        Pocket.addPage(settings.pocketUsername, settings.pocketPassword, link, currentTweet.tweetText,
-                       currentTweet.tweetId, pocketSuccessCallback, pocketFailureCallback)
-        loadingRect.visible = true
+    if(!settings.pocketUsername || !settings.pocketPassword){
+        var message = qsTr("You are not sign in to your Pocket account. Please sign in to your Pocket account first under the \"Account\" tab in the Settings.")
+        dialog.createMessageDialog(qsTr("Pocket - Not Signed In"), message)
+        return
     }
-    else{
-        var message = "You are not sign in to your Pocket account. \
-Please sign in to your Pocket account first under the \"Account\" tab in the Settings."
-        dialog.createMessageDialog("Pocket - Not Signed In", message)
-    }
+
+    Pocket.addPage(settings.pocketUsername, settings.pocketPassword, link, currentTweet.tweetText,
+                   currentTweet.tweetId, pocketSuccessCallback, pocketFailureCallback)
+    loadingRect.visible = true
 }
 
 function addToInstapaper(link){
-    if(settings.instapaperToken, settings.instapaperTokenSecret){
-        Instapaper.addBookmark(settings.instapaperToken, settings.instapaperTokenSecret, link,
-                               currentTweet.tweetText, instapaperSuccessCallback, instapaperFailureCallback)
-        loadingRect.visible = true
+    if(!settings.instapaperToken || !settings.instapaperTokenSecret){
+        var message = qsTr("You are not sign in to your Instapaper account. Please sign in to your Instapaper account first under the \"Account\" tab in the Settings.")
+        dialog.createMessageDialog(qsTr("Instapaper - Not Signed In"), message)
+        return
     }
-    else{
-        var message = "You are not sign in to your Instapaper account. \
-Please sign in to your Instapaper account first under the \"Account\" tab in the Settings."
-        dialog.createMessageDialog("Instapaper - Not Signed In", message)
-    }
+
+    Instapaper.addBookmark(settings.instapaperToken, settings.instapaperTokenSecret, link,
+                           currentTweet.tweetText, instapaperSuccessCallback, instapaperFailureCallback)
+    loadingRect.visible = true
 }
 
 function pocketSuccessCallback(){
     loadingRect.visible = false
-    infoBanner.alert("The link has been sent to Pocket successfully.")
+    infoBanner.alert(qsTr("The link has been sent to Pocket successfully"))
 }
 
-function pocketFailureCallback(errorText){
+function pocketFailureCallback(errorCode){
     loadingRect.visible = false
-    infoBanner.alert("Error: " + errorText)
+    infoBanner.alert(qsTr("Error sending link to Pocket (%1)").arg(errorCode))
 }
 
 function instapaperSuccessCallback(){
     loadingRect.visible = false
-    infoBanner.alert("The link has been sent to Instapaper successfully.")
+    infoBanner.alert(qsTr("The link has been sent to Instapaper successfully"))
 }
 
-function instapaperFailureCallback(errorText){
+function instapaperFailureCallback(errorCode){
     loadingRect.visible = false
-    infoBanner.alert("Error: " + errorText)
+    infoBanner.alert(qsTr("Error sending link to Instapaper (%1)").arg(errorCode))
 }
 
 function getYouTubeVideoId(link){
@@ -169,8 +155,8 @@ function getYouTubeVideoId(link){
 
 function createDeleteTweetDialog(){
     var icon = platformInverted ? "image://theme/toolbar-delete_inverse" : "image://theme/toolbar-delete"
-    var message = "Do you want to delete this tweet?"
-    dialog.createQueryDialog("Delete Tweet", icon, message, function(){
+    var message = qsTr("Do you want to delete this tweet?")
+    dialog.createQueryDialog(qsTr("Delete Tweet"), icon, message, function(){
         Twitter.postDeleteStatus(currentTweet.tweetId, deleteTweetOnSuccess, commonOnFailure)
         loadingRect.visible = true
     })

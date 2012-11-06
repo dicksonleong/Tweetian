@@ -6,9 +6,9 @@ import "../twitter.js" as Twitter
 AbstractUserPage{
     id: userFavouritesPage
 
-    headerText: "Favourites"
+    headerText: qsTr("Favourites")
     headerNumber: userInfoData.favouritesCount
-    emptyText: "No favourite"
+    emptyText: qsTr("No favourite")
     loadMoreButtonVisible: listView.count > 0 && listView.count % 50 === 0
     delegate: TweetDelegate{}
 
@@ -23,8 +23,7 @@ AbstractUserPage{
             userFavouritesParser.sendMessage({'model': listView.model, 'data': data, 'reloadType': reloadType})
         },
         function(status, statusText){
-            if(status === 0) infoBanner.alert("Connection error.")
-            else infoBanner.alert("Error: " + status + " " + statusText)
+            infoBanner.showHttpError(status, statusText)
             loadingRect.visible = false
         })
         loadingRect.visible = true

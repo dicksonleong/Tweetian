@@ -103,8 +103,7 @@ Item{
         }
 
         function failureCallback(status, statusText){
-            if(status == 0) infoBanner.alert("Connection error.")
-            else infoBanner.alert("Error: " +status+" "+statusText)
+            infoBanner.showHttpError(status, statusText)
             busy = false
         }
     }
@@ -137,7 +136,7 @@ Item{
                     if(tweetView.stayAtCurrentPosition || tweetView.indexAt(0, tweetView.contentY) > 0)
                         unreadCount += messageObject.count
                     if(type === "Mentions" && symbian.foreground && mainPage.status !== PageStatus.Active)
-                        infoBanner.alert(unreadCount === 1 ? "1 new mention" : unreadCount + " new mentions")
+                        infoBanner.alert(qsTr("%n new mention(s)", "", unreadCount))
                 }
                 if(messageObject.screenNames.length > 0) cache.screenNames = Database.storeScreenNames(messageObject.screenNames)
                 busy = false

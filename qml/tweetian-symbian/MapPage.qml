@@ -14,12 +14,12 @@ Page{
     tools: ToolBarLayout{
         ToolButtonWithTip{
             iconSource: "toolbar-back"
-            toolTipText: "Back"
+            toolTipText: qsTr("Back")
             onClicked: pageStack.pop()
         }
         ToolButtonWithTip{
             iconSource: "toolbar-menu"
-            toolTipText: "Menu"
+            toolTipText: qsTr("Menu")
             onClicked: menu.open()
         }
     }
@@ -30,12 +30,12 @@ Page{
 
         MenuLayout{
             MenuItem{
-                text: "View coordinate"
+                text: qsTr("View coordinate")
                 platformInverted: menu.platformInverted
                 onClicked: coordinateDialogComponent.createObject(mapPage)
             }
             MenuItem{
-                text: "Open in Nokia Maps"
+                text: qsTr("Open in Nokia Maps")
                 platformInverted: menu.platformInverted
                 onClicked: Qt.openUrlExternally("http://m.ovi.me/?c="+latitude+","+longitude)
             }
@@ -172,9 +172,9 @@ Page{
         CommonDialog{
             id: coordinateDialog
             property bool __isClosing: false
-            titleText: "Location Coordinate"
+            titleText: qsTr("Location Coordinate")
             titleIcon: platformInverted ? "Image/location_mark_inverse.svg" : "Image/location_mark.svg"
-            buttonTexts: ["Copy", "Close"]
+            buttonTexts: [qsTr("Copy"), qsTr("Close")]
             platformInverted: settings.invertedTheme
             content: Column{
                 anchors{ left: parent.left; right: parent.right; top: parent.top; margins: constant.paddingMedium}
@@ -185,12 +185,12 @@ Page{
                     width: parent.width
                     Button{
                         id: degree
-                        text: "Degree"
+                        text: qsTr("Degree")
                         platformInverted: coordinateDialog.platformInverted
                     }
                     Button{
                         id: decimal
-                        text: "Decimal"
+                        text: qsTr("Decimal")
                         platformInverted: coordinateDialog.platformInverted
                     }
                 }
@@ -205,7 +205,7 @@ Page{
             onButtonClicked: {
                 if(index == 0){
                     clipboard.setText(coordinateTextField.text)
-                    infoBanner.alert("Coordinate copied to clipboard.")
+                    infoBanner.alert(qsTr("Coordinate copied to clipboard"))
                 }
             }
             Component.onCompleted: open()

@@ -7,8 +7,8 @@ CommonDialog{
     property bool __isClosing: false
 
     platformInverted: settings.invertedTheme
-    buttonTexts: ["Search", "Advanced", "Cancel"]
-    titleText: "Search Twitter"
+    buttonTexts: [qsTr("Search"), qsTr("Advanced"), qsTr("Cancel")]
+    titleText: qsTr("Search Twitter")
     titleIcon: platformInverted ? "image://theme/toolbar-search_inverse"
                                 : "image://theme/toolbar-search"
     content: Item{
@@ -24,7 +24,7 @@ CommonDialog{
         TextField{
             id: searchTextField
             anchors{ top: parent.top; left: parent.left; right: parent.right }
-            placeholderText: "Enter your search query..."
+            placeholderText: qsTr("Enter your search query...")
             font.pixelSize: constant.fontSizeLarge
             platformInverted: root.platformInverted
             inputMethodHints: Qt.ImhNoPredictiveText
@@ -35,7 +35,7 @@ CommonDialog{
             anchors.verticalCenter: searchTypeRow.verticalCenter
             font.pixelSize: constant.fontSizeMedium
             color: constant.colorLight
-            text: "Search for:"
+            text: qsTr("Search for:")
         }
 
         ButtonRow{
@@ -49,12 +49,12 @@ CommonDialog{
 
             Button{
                 id: tweetType
-                text: "Tweet"
+                text: qsTr("Tweet")
                 platformInverted: root.platformInverted
             }
             Button{
                 id: userType
-                text: "User"
+                text: qsTr("User")
                 platformInverted: root.platformInverted
             }
         }
