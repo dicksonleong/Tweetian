@@ -3,6 +3,10 @@
 #include <QDeclarativeView>
 #include "qmlapplicationviewer.h"
 
+#include <QTranslator>
+#include <QLocale>
+#include <QFile>
+
 #include "src/qmlclipboard.h"
 #include "src/qmlimagesaver.h"
 #include "src/qmluploader.h"
@@ -29,6 +33,19 @@
 Q_DECL_EXPORT int main(int argc, char *argv[])
 {
     QScopedPointer<QApplication> app(createApplication(argc, argv));
+
+    QString lang = QLocale::system().name();
+    lang.truncate(2); // ignore the country code
+    QTranslator translator;
+    if(QFile::exists(":/i18n/tweetian_" + lang + ".qm")){
+        qDebug("Translation language exists for \"%s\"", qPrintable(lang));
+        translator.load("tweetian_" + lang, ":/i18n");
+    }
+    else {
+        qDebug("Translation language \"%s\" not exists, using the default language (en)", qPrintable(lang));
+        translator.load("tweetian_en", ":/i18n");
+    }
+    app->installTranslator(&translator);
 
     app->setApplicationName("Tweetian");
     app->setOrganizationName("Tweetian");

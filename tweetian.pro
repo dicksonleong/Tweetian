@@ -88,7 +88,11 @@ QML_IMPORT_PATH =
 CONFIG += mobility
 MOBILITY += feedback location gallery
 
+TRANSLATIONS += i18n/tweetian_en.ts \
+                i18n/tweetian_zh.ts
+
 OTHER_FILES += qtc_packaging/debian_harmattan/* \
+    i18n/tweetian_*.ts \
     tweetian_harmattan.desktop \
     README.md
 
