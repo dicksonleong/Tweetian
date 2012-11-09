@@ -13,11 +13,6 @@ function favouriteOnSuccess(data, isFavourite){
     header.busy = false
 }
 
-function reportSpamOnSuccess(data){
-    infoBanner.alert(qsTr("Reported and blocked the user %1 successfully").arg("@" + data.screen_name))
-    loadingRect.visible = false
-}
-
 function getTwitLongerTextOnSuccess(fullTweetText, link){
     tweetTextText.text = fullTweetText + "<br><i>(" + qsTr("Expanded from TwitLonger") + " - "
             + link.parseURL(link, link.substring(7), link) + ")</i>"

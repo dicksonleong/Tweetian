@@ -30,9 +30,9 @@ function timeDiff(tweetTimeStr) {
 
     var secondsDiff = Math.floor(diff/1000)
 
-    if(daysDiff >= 7) return Qt.formatDateTime(tweetTime, "d MMM yy").toString()
-    else if(daysDiff > 1) return Qt.formatDateTime(tweetTime, "ddd d MMM").toString()
-    else if(daysDiff == 1) return qsTr("Yesterday %1").arg(Qt.formatDateTime(tweetTime, "h:mm AP").toString())
+    if(daysDiff >= 7) return Qt.formatDate(tweetTime, Qt.SystemLocaleShortDate).toString()
+    else if(daysDiff > 1) return Qt.formatDate(tweetTime, "ddd d MMM").toString()
+    else if(daysDiff == 1) return qsTr("Yesterday %1").arg(Qt.formatTime(tweetTime, "h:mm AP").toString())
     else if(hoursDiff >= 1) return qsTr("%n hr(s)", "", hoursDiff)
     else if(minutesDiff >= 1) return qsTr("%n min(s)", "", minutesDiff)
     else return qsTr("Just now")

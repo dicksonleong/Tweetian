@@ -46,7 +46,7 @@ PageStackWindow {
 
         function showHttpError(errorCode, errorMessage){
             if(errorCode === 0) alert(qsTr("Server or connection error"))
-            else alert(qsTr("Error: %1").arg(errorMessage + "(" + errorCode + ")"))
+            else alert(qsTr("Error: %1").arg(errorMessage + " (" + errorCode + ")"))
         }
 
         ThemeEffect{ id: infoBannerHapticEffect; effect: ThemeEffect.NeutralTacticon }

@@ -284,7 +284,7 @@ Page{
             if(data.description) descriptionText.text = data.description
             if(data.url) __addToUserInfo(qsTr("Website"), data.url, "dialog.createOpenLinkDialog(subtitle)")
             if(data.location) __addToUserInfo(qsTr("Location"), data.location)
-            __addToUserInfo(qsTr("Joined"), Qt.formatDateTime(new Date(data.created_at), "d MMMM yyyy"))
+            __addToUserInfo(qsTr("Joined"), Qt.formatDate(new Date(data.created_at), Qt.SystemLocaleShortDate))
             __addToUserInfo(qsTr("Tweets"), data.statuses_count + " | " + Calculate.tweetsFrequency(data.created_at,data.statuses_count),
                             "internal.pushUserPage(\"UserPageCom/UserTweetsPage.qml\")")
             __addToUserInfo(qsTr("Following"), data.friends_count,

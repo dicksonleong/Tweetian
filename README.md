@@ -16,7 +16,7 @@ ToDo
 * Move the whole app backend to C++
 * Harmattan: event feed integration
 * Internationalization support (You can help by translating Tweetian to your native language in
-[Transifex](https://www.transifex.com/projects/p/tweetian/)
+[Transifex](https://www.transifex.com/projects/p/tweetian/))
 
 Build for testing
 -----------------

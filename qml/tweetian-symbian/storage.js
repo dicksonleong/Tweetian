@@ -1,11 +1,8 @@
 .pragma library
 
-function __getDatabase() {
-    return openDatabaseSync("Tweetian", "1.0", "Tweetian Database", 1000000);
-}
+var db = openDatabaseSync("Tweetian", "1.0", "Tweetian Database", 1000000);
 
 function initializeSettings() {
-    var db = __getDatabase()
     db.transaction(function(tx) {
         tx.executeSql('CREATE TABLE IF NOT EXISTS settings(setting TEXT UNIQUE, value TEXT)');
     })
@@ -13,7 +10,6 @@ function initializeSettings() {
 
 //"settings" must be a double dimensional array, eg. [["setting1", "value1"], ["setting2", "value2"], ...]
 function setSetting(settings) {
-    var db = __getDatabase()
     db.transaction(function(tx) {
         for(var i=0; i<settings.length; i++){
             var rs = tx.executeSql('INSERT OR REPLACE INTO settings VALUES (?,?);', [settings[i][0],settings[i][1]])
@@ -23,9 +19,8 @@ function setSetting(settings) {
 
 //"setting" can be a string or array of settings
 function getSetting(setting) {
-    var db = __getDatabase()
     var res
-    db.transaction(function(tx) {
+    db.readTransaction(function(tx) {
         if(setting instanceof Array){
             res = []
             for(var i=0; i<setting.length; i++){
@@ -42,7 +37,6 @@ function getSetting(setting) {
 }
 
 function initializeTweetsTable(tableName){
-    var db = __getDatabase()
     db.transaction(function(tx){
         tx.executeSql('CREATE TABLE IF NOT EXISTS '+ tableName +'(' +
                       'createdAt TEXT,' +
@@ -67,7 +61,6 @@ function initializeTweetsTable(tableName){
 }
 
 function storeTweets(tableName, tweets){
-    var db = __getDatabase()
     db.transaction(function(tx){
         tx.executeSql('DELETE FROM ' + tableName)
         for(var i=0; i<tweets.length; i++){
@@ -96,8 +89,7 @@ function storeTweets(tableName, tweets){
 
 function getTweets(tableName){
     var tweets = []
-    var db = __getDatabase()
-    db.transaction(function(tx){
+    db.readTransaction(function(tx){
         var rs = tx.executeSql('SELECT * FROM '+ tableName +' ORDER BY tweetId DESC')
         for(var i=0; i<rs.rows.length; i++){
             tweets[i] = new Object(rs.rows.item(i))
@@ -107,7 +99,6 @@ function getTweets(tableName){
 }
 
 function initializeDirectMsg(){
-    var db = __getDatabase()
     db.transaction(function(tx){
         tx.executeSql('CREATE TABLE IF NOT EXISTS DirectMsg(' +
                       'tweetId TEXT UNIQUE,' +
@@ -121,7 +112,6 @@ function initializeDirectMsg(){
 }
 
 function storeDM(dm){
-    var db = __getDatabase()
     db.transaction(function(tx){
         tx.executeSql('DELETE FROM DirectMsg')
         for(var i=0;i<dm.length;i++){
@@ -139,8 +129,7 @@ function storeDM(dm){
 
 function getDM(){
     var dm = []
-    var db = __getDatabase()
-    db.transaction(function(tx){
+    db.readTransaction(function(tx){
         var rs = tx.executeSql('SELECT * FROM DirectMsg ORDER BY tweetId DESC')
         for(var i=0; i<rs.rows.length; i++){
             dm[i] = rs.rows.item(i)
@@ -150,14 +139,12 @@ function getDM(){
 }
 
 function initializeScreenNames(){
-    var db = __getDatabase()
     db.transaction(function(tx){
         tx.executeSql('CREATE TABLE IF NOT EXISTS ScreenNames(screenNames TEXT UNIQUE)')
     })
 }
 
 function storeScreenNames(screenNames){
-    var db = __getDatabase()
     var totalScreenNames = []
     db.transaction(function(tx){
         for(var i=0;i<screenNames.length;i++){
@@ -172,26 +159,23 @@ function storeScreenNames(screenNames){
 }
 
 function getScreenNames(){
-    var db = __getDatabase()
     var screenNames = []
-    db.transaction(function(tx){
+    db.readTransaction(function(tx){
         var rs = tx.executeSql('SELECT * FROM ScreenNames ORDER BY screenNames ASC')
         for(var i=0; i<rs.rows.length; i++){
             screenNames[i] = rs.rows.item(i).screenNames
         }
     })
-    return (screenNames ? [] : screenNames)
+    return screenNames
 }
 
 function clearTable(tableName){
-    var db = __getDatabase()
     db.transaction(function(tx){
         tx.executeSql('DELETE FROM ' + tableName)
     })
 }
 
 function dropTable(tableName){
-    var db = __getDatabase()
     db.transaction(function(tx){
         tx.executeSql('DROP TABLE ' + tableName)
     })
