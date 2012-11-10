@@ -85,7 +85,7 @@ Page{
         anchors { left: parent.left; top: header.bottom; right: parent.right; margins: constant.paddingMedium }
         readOnly: header.busy
         textFormat: TextEdit.PlainText
-        errorHighlight: wordCountText.text < 0 && type != "RT"
+        errorHighlight: charLeftText.text < 0 && type != "RT"
         placeholderText: qsTr("Tap to write...")
         font.pixelSize: constant.fontSizeXXLarge
         text: placedText
@@ -103,25 +103,31 @@ Page{
             }
         ]
         onTextChanged: {
-            var lastWord = text.substring(text.lastIndexOf(" ") + 1, cursorPosition)
+            var word = script.getWordAt(tweetTextArea.text, tweetTextArea.cursorPosition)
             autoCompleter.model.clear()
-            if(/^(@|#)\w*$/.test(lastWord) && newTweetPage.status === PageStatus.Active){
+            if(/^(@|#)\w*$/.test(word) && newTweetPage.status === PageStatus.Active){
                 inputMethodHints = Qt.ImhNoPredictiveText
-                screenNamesMatcher.sendMessage({"word": lastWord, "model": autoCompleter.model,
-                                                   "screenNames": cache.screenNames, "hashtags": cache.hashtags})
+                autoCompleterWorkerScript.run(word)
             }
             else inputMethodHints = Qt.ImhNone
         }
 
         Text{
-            id: wordCountText
+            id: charLeftText
+            property string shortenText: tweetTextArea.text.replace(/https?:\/\/\S+/g, __replaceLink)
+
+            function __replaceLink(w){
+                if(w.indexOf("https://") === 0)
+                    return "https://t.co/xxxxxxxx"
+                else return "http://t.co/xxxxxxxx"
+            }
+
             font.pixelSize: constant.fontSizeLarge
             anchors.right: parent.right
             anchors.bottom: parent.bottom
             anchors.margins: constant.paddingMedium
             color: constant.colorMid
-            text: addImageButton.checked ? 140 - constant.charReservedPerMedia - tweetTextArea.text.length
-                                         : 140 - tweetTextArea.text.length
+            text: 140 - shortenText.length - (addImageButton.checked ? constant.charReservedPerMedia : 0)
         }
     }
 
@@ -168,10 +174,14 @@ Page{
                 height: ListView.view.height
                 text: buttonText
                 onClicked: {
-                    // FIXME
-                    var lastWord = tweetTextArea.text.substring(tweetTextArea.text.lastIndexOf(" ") + 1, tweetTextArea.cursorPosition)
-                    tweetTextArea.text = tweetTextArea.text.replace(lastWord, buttonText + " ")
-                    tweetTextArea.cursorPosition = tweetTextArea.text.indexOf(buttonText) + buttonText.length + 1
+                    // TODO
+                    var leftIndex = tweetTextArea.text.slice(0, tweetTextArea.cursorPosition).search(/\S+$/)
+                    if(leftIndex < 0) leftIndex = tweetTextArea.cursorPosition
+                    var rightIndex = tweetTextArea.text.slice(tweetTextArea.cursorPosition).search(/\s/)
+                    if(rightIndex < 0) rightIndex = 0
+                    tweetTextArea.text = tweetTextArea.text.slice(0, leftIndex) + buttonText
+                            + tweetTextArea.text.slice(rightIndex + tweetTextArea.cursorPosition)
+                    tweetTextArea.cursorPosition = leftIndex + buttonText.length
                     tweetTextArea.forceActiveFocus()
                 }
             }
@@ -293,7 +303,18 @@ Page{
     }
 
     WorkerScript{
-        id: screenNamesMatcher
+        id: autoCompleterWorkerScript
+
+        function run(str){
+            var obj = {
+                word: str,
+                model: autoCompleter.model,
+                screenNames: cache.screenNames,
+                hashtags: cache.hashtags
+            }
+            sendMessage(obj)
+        }
+
         source: "WorkerScript/AutoCompleter.js"
     }
 
@@ -354,6 +375,17 @@ Page{
         id: script
 
         property string twitLongerId: ""
+
+        function getWordAt(str, pos){
+            var left = str.slice(0, pos).search(/\S+$/)
+            if(left < 0) left = pos
+            var right = str.slice(pos).search(/\s/)
+
+            if(right < 0)
+                return str.slice(left)
+
+            return str.slice(left, right + pos)
+        }
 
         function postStatusOnSuccess(data){
             switch(type){
