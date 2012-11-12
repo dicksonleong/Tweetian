@@ -22,7 +22,7 @@
         <file>qml/tweetian-symbian/TweetImage.qml</file>
         <file>qml/tweetian-symbian/TweetPage.qml</file>
         <file>qml/tweetian-symbian/TweetPageJS.js</file>
-        <file>qml/tweetian-symbian/twitter.js</file>
+        <file>qml/tweetian-symbian/Services/Twitter.js</file>
         <file>qml/tweetian-symbian/UserCategoryPage.qml</file>
         <file>qml/tweetian-symbian/UserPage.qml</file>
         <file>qml/tweetian-symbian/UserSearchPage.qml</file>

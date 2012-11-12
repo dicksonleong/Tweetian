@@ -21,7 +21,7 @@
         <file>qml/tweetian-harmattan/TweetImage.qml</file>
         <file>qml/tweetian-harmattan/TweetPage.qml</file>
         <file>qml/tweetian-harmattan/TweetPageJS.js</file>
-        <file>qml/tweetian-harmattan/twitter.js</file>
+        <file>qml/tweetian-harmattan/Services/Twitter.js</file>
         <file>qml/tweetian-harmattan/UserCategoryPage.qml</file>
         <file>qml/tweetian-harmattan/UserPage.qml</file>
         <file>qml/tweetian-harmattan/UserSearchPage.qml</file>

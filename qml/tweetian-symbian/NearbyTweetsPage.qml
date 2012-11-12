@@ -1,7 +1,7 @@
 import QtQuick 1.1
 import com.nokia.symbian 1.1
 import QtMobility.location 1.2
-import "twitter.js" as Twitter
+import "Services/Twitter.js" as Twitter
 import "Utils/Calculations.js" as Calculate
 import "Component"
 import "Delegate"

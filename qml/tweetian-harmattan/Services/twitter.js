@@ -1,12 +1,7 @@
-// TODO: Move this file to Services folder
-
 .pragma library
 
-Qt.include("Services/Global.js")
-Qt.include("lib/oauth.js")
-
-if(!Global.Twitter.OAUTH_CONSUMER_KEY || !Global.Twitter.OAUTH_CONSUMER_SECRET)
-    throw new Error("Twitter OAUTH_CONSUMER_KEY and/or OAUTH_CONSUMER_SECRET is not set!")
+Qt.include("Global.js")
+Qt.include("../lib/oauth.js")
 
 var OAUTH_TOKEN
 var OAUTH_TOKEN_SECRET

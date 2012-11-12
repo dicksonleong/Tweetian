@@ -3,7 +3,7 @@ import com.nokia.meego 1.0
 import "../Component"
 import "../Delegate"
 import "../storage.js" as Database
-import "../twitter.js" as Twitter
+import "../Services/Twitter.js" as Twitter
 
 Item{
     id: root

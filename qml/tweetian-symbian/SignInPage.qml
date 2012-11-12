@@ -1,7 +1,7 @@
 import QtQuick 1.1
 import QtWebKit 1.0
 import com.nokia.symbian 1.1
-import "twitter.js" as Twitter
+import "Services/Twitter.js" as Twitter
 import "Component"
 
 Page{

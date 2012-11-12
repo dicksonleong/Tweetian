@@ -1,7 +1,7 @@
 import QtQuick 1.1
 import com.nokia.symbian 1.1
 import "../Delegate"
-import "../twitter.js" as Twitter
+import "../Services/Twitter.js" as Twitter
 import "../Utils/Calculations.js" as Calculate
 
 AbstractListPageItem{

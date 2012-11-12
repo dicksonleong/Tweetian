@@ -1,6 +1,6 @@
 import QtQuick 1.1
 import com.nokia.symbian 1.1
-import "twitter.js" as Twitter
+import "Services/Twitter.js" as Twitter
 import "storage.js" as Storage
 import "Component"
 import "MainPageCom"

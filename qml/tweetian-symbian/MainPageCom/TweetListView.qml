@@ -4,7 +4,7 @@ import "../Utils/Calculations.js" as Calculate
 import "../storage.js" as Database
 import "../Component"
 import "../Delegate"
-import "../twitter.js" as Twitter
+import "../Services/Twitter.js" as Twitter
 
 Item{
     id: root

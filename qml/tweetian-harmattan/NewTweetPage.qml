@@ -2,7 +2,7 @@ import QtQuick 1.1
 import com.nokia.meego 1.0
 import com.nokia.extras 1.1
 import QtMobility.location 1.2
-import "twitter.js" as Twitter
+import "Services/Twitter.js" as Twitter
 import "Services/TwitLonger.js" as TwitLonger
 import "Services/Global.js" as G
 import "Component"

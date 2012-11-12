@@ -1,7 +1,7 @@
 import QtQuick 1.1
 import com.nokia.symbian 1.1
 import "Component"
-import "twitter.js" as Twitter
+import "Services/Twitter.js" as Twitter
 
 Page{
     id: userCategoryPage
