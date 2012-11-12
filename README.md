@@ -37,8 +37,8 @@ You can download the latest stable version for Symbian/Harmattan (binary) at
 License
 -------
 
-    Tweetian - A feature-rich Twitter app for smartphones developed using Qt and QML
-    Copyright (C) 2012  Dickson Leong
+    Tweetian - A feature-rich Twitter app for smartphones developed using Qt/QML
+    Copyright (C) 2012 Dickson Leong
 
     This program is free software: you can redistribute it and/or modify
     it under the terms of the GNU General Public License as published by
@@ -47,7 +47,7 @@ License
 
     This program is distributed in the hope that it will be useful,
     but WITHOUT ANY WARRANTY; without even the implied warranty of
-    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
     GNU General Public License for more details.
 
     You should have received a copy of the GNU General Public License
