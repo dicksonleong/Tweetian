@@ -36,7 +36,8 @@ QtObject{
     property int graphicSizeSmall: platformStyle.graphicSizeSmall
     property int graphicSizeMedium: platformStyle.graphicSizeMedium
     property int graphicSizeLarge: platformStyle.graphicSizeLarge
-    property int graphicSizeXLarge: platformStyle.graphicSizeLarge * 1.5
+
+    property int thumbnailSize: platformStyle.graphicSizeLarge * 1.5
 
     // other
     property int borderSizeMedium: platformStyle.borderSizeMedium

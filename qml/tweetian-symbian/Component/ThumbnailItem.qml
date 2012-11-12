@@ -9,8 +9,8 @@ Item{
     property bool showLoading: false
     signal clicked
 
-    width: constant.graphicSizeXLarge
-    height: constant.graphicSizeXLarge
+    width: constant.thumbnailSize
+    height: constant.thumbnailSize
     clip: true
 
     Image{

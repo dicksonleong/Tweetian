@@ -8,8 +8,8 @@ Item{
     property url iconSource: ""
     signal clicked
 
-    width: constant.graphicSizeXXLarge
-    height: constant.graphicSizeXXLarge
+    width: constant.thumbnailSize
+    height: constant.thumbnailSize
     clip: true
 
     Image{

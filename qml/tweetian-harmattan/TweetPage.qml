@@ -54,7 +54,7 @@ Page{
         }
         // Process location thumbnail
         if(currentTweet.latitude && currentTweet.longitude){
-            var thumbnailURL = Maps.getMaps(currentTweet.latitude, currentTweet.longitude, constant.graphicSizeXXLarge, constant.graphicSizeXXLarge)
+            var thumbnailURL = Maps.getMaps(currentTweet.latitude, currentTweet.longitude, constant.thumbnailSize, constant.thumbnailSize)
             thumbnailModel.append({"type": "map", "thumb": thumbnailURL, "full": "", "link": ""})
         }
         // Process Youtube thumbnail
