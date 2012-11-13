@@ -102,7 +102,7 @@ WorkerScript.onMessage = function (msg) {
                         skipCurrentTweet = true
                         break
                     }
-                    else if(msg.ancestorModel.get(iAncestor).tweetId > msg.data[0].results[i].value.id_str){
+                    else if(new Date(msg.ancestorModel.get(iAncestor).createdAt) > new Date(msg.data[0].results[i].value.created_at)){
                         insertIndex = iAncestor
                         break
                     }
@@ -168,7 +168,7 @@ WorkerScript.onMessage = function (msg) {
                 tweetObject.longitude = ""
             }
 
-            if(typeof insertIndex == "number") model.insert(insertIndex, tweetObject)
+            if(typeof insertIndex === "number") model.insert(insertIndex, tweetObject)
             else model.append(tweetObject)
         }
     }

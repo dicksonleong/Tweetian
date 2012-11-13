@@ -59,7 +59,7 @@ WorkerScript.onMessage = function(msg){
         // Parse sent DM
         for(var i2=0; i2<msg.sentMsg.length; i2++){
             for(var index=0; index<msg.model.count; index++){
-                if(msg.sentMsg[i2].id_str > msg.model.get(index).tweetId){
+                if(new Date(msg.sentMsg[i2].created_at) > new Date(msg.model.get(index).createdAt)){
                     var sentDMObject = {
                         tweetId: msg.sentMsg[i2].id_str,
                         userName: msg.sentMsg[i2].recipient.name,
@@ -90,7 +90,7 @@ WorkerScript.onMessage = function(msg){
                 // Loop through each to see the thread is added or not
                 for(var iThread=0; iThread < msg.threadModel.count; iThread++){
                     if(msg.threadModel.get(iThread).screenName === msg.model.get(i3).screenName){
-                        if(msg.threadModel.get(iThread).tweetId < msg.model.get(i3).tweetId){
+                        if(new Date(msg.model.get(i3).createdAt) > new Date(msg.threadModel.get(iThread).createdAt)){
                             var setThreadObj = {
                                 tweetId: msg.model.get(i3).tweetId,
                                 tweetText: msg.model.get(i3).tweetText,

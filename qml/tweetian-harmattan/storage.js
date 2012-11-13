@@ -72,7 +72,7 @@ function initializeTweetsTable(tableName){
                       'retweetId TEXT,' +
                       'screenName TEXT,' +
                       'source TEXT,' +
-                      'tweetId TEXT UNIQUE,' +
+                      'tweetId INTEGER UNIQUE,' +
                       'tweetText TEXT,' +
                       'userName TEXT);')}
     )
@@ -119,7 +119,7 @@ function getTweets(tableName){
 function initializeDirectMsg(){
     db.transaction(function(tx){
         tx.executeSql('CREATE TABLE IF NOT EXISTS DirectMsg(' +
-                      'tweetId TEXT UNIQUE,' +
+                      'tweetId INTEGER UNIQUE,' +
                       'userName TEXT,' +
                       'screenName TEXT,' +
                       'tweetText TEXT,' +
