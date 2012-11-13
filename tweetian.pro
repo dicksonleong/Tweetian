@@ -1,3 +1,17 @@
+TEMPLATE = app
+TARGET = tweetian
+
+# Application version
+VERSION = 1.6.1
+DEFINES += APP_VERSION=\\\"$$VERSION\\\"
+
+# Qt Library
+QT += network
+
+# Qt Mobility Library
+CONFIG += mobility
+MOBILITY += feedback location gallery
+
 HEADERS += \
     src/qmlclipboard.h \
     src/qmlimagesaver.h \
@@ -29,10 +43,7 @@ simulator|contains(MEEGO_EDITION,harmattan){
     splash.files = splash/tweetian-splash-portrait.jpg splash/tweetian-splash-landscape.jpg
     splash.path = /opt/tweetian/splash
 
-    icon64.files = tweetian64.png
-    icon64.path = /usr/share/icons/hicolor/64x64/apps
-
-    INSTALLS += splash icon64
+    INSTALLS += splash
 
     HEADERS += \
         src/harmattanmusic.h \
@@ -46,19 +57,19 @@ simulator|contains(MEEGO_EDITION,harmattan){
 }
 
 contains(MEEGO_EDITION,harmattan){
-    QT *= dbus
-    CONFIG *= shareuiinterface-maemo-meegotouch share-ui-plugin share-ui-common mdatauri qdeclarative-boostable
+    QT += dbus
+    CONFIG += qdeclarative-boostable shareuiinterface-maemo-meegotouch share-ui-plugin share-ui-common mdatauri
     DEFINES += Q_OS_HARMATTAN
     RESOURCES += qmlharmattan.qrc
 
-    SOURCES += src/tweetianif.cpp
     HEADERS += src/tweetianif.h
+    SOURCES += src/tweetianif.cpp
 }
 
 symbian{
     TARGET.UID3 = 0x2005e90a
     TARGET.CAPABILITY += NetworkServices Location LocalServices ReadUserData WriteUserData
-    TARGET.EPOCHEAPSIZE = 0x40000 0x2000000 # 256KB 32MB
+    TARGET.EPOCHEAPSIZE = 0x40000 0x4000000
 
     CONFIG += qt-components
     vendorinfo += "%{\"Dickson\"}" ":\"Dickson\""
@@ -68,25 +79,10 @@ symbian{
     ICON = Tweetian.svg
     RESOURCES += qmlsymbian.qrc
 
-    VERSION = 1.6.1
+    # Symbian have a different syntax
+    DEFINES -= APP_VERSION=\\\"$$VERSION\\\"
+    DEFINES += APP_VERSION=\"$$VERSION\"
 }
-
-QT *= network
-
-# Additional import path used to resolve QML modules in Creator's code model
-QML_IMPORT_PATH =
-
-# Smart Installer package's UID
-# This UID is from the protected range and therefore the package will
-# fail to install if self-signed. By default qmake uses the unprotected
-# range value if unprotected UID is defined for the application and
-# 0x2002CCCF value if protected UID is given to the application
-#symbian:DEPLOYMENT.installer_header = 0x2002CCCF
-
-# If your application uses the Qt Mobility libraries, uncomment the following
-# lines and add the respective components to the MOBILITY variable.
-CONFIG += mobility
-MOBILITY += feedback location gallery
 
 TRANSLATIONS += i18n/tweetian_en.ts \
                 i18n/tweetian_zh.ts

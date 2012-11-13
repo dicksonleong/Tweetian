@@ -67,7 +67,7 @@ Q_DECL_EXPORT int main(int argc, char *argv[])
 
     app->setApplicationName("Tweetian");
     app->setOrganizationName("Tweetian");
-    app->setApplicationVersion("1.6.1");
+    app->setApplicationVersion(APP_VERSION);
 
 #if defined(Q_OS_SYMBIAN) || defined(Q_WS_SIMULATOR)
     QSplashScreen *splash = new QSplashScreen(QPixmap(":/splash/tweetian-splash-symbian.jpg"));
@@ -92,7 +92,7 @@ Q_DECL_EXPORT int main(int argc, char *argv[])
     view.rootContext()->setContextProperty("thumbnailCacher", &thumbnailCacher);
     NetworkMonitor networkMonitor;
     view.rootContext()->setContextProperty("networkMonitor", &networkMonitor);
-    view.rootContext()->setContextProperty("appVersion", app->applicationVersion());
+    view.rootContext()->setContextProperty("APP_VERSION", APP_VERSION);
 
 #if defined(Q_OS_HARMATTAN) || defined(Q_WS_SIMULATOR)
     HarmattanNotification notification;

@@ -20,7 +20,6 @@
 
 #include <QFile>
 #include <QFileInfo>
-#include <QApplication>
 
 const QByteArray QMLUploader::boundary = "-----------485984513665493";
 
@@ -102,11 +101,11 @@ void QMLUploader::send()
 
     QString userAgent;
 #if defined(Q_OS_HARMATTAN)
-    userAgent = "Tweetian/" + QApplication::applicationVersion() + " (Nokia; Qt; MeeGo Harmattan)";
+    userAgent = "Tweetian/" + QString(APP_VERSION) + " (Nokia; Qt; MeeGo Harmattan)";
 #elif defined(Q_OS_SYMBIAN)
-    userAgent = "Tweetian/" + QApplication::applicationVersion() + " (Nokia; Qt; Symbian)";
+    userAgent = "Tweetian/" + QString(APP_VERSION) + " (Nokia; Qt; Symbian)";
 #else
-    userAgent = "Tweetian/" + QApplication::applicationVersion() + " (Nokia; Qt; QtSimulator)";
+    userAgent = "Tweetian/" + QString(APP_VERSION) + " (Nokia; Qt; QtSimulator)";
 #endif
     request.setRawHeader("User-Agent", userAgent.toAscii());
 
