@@ -54,13 +54,22 @@ Q_DECL_EXPORT int main(int argc, char *argv[])
 
     QString lang = QLocale::system().name();
     lang.truncate(2); // ignore the country code
+
+    QStringList appArg = app->arguments();
+    for(int argIndex = 0; argIndex < appArg.length(); argIndex++){
+        if(appArg.at(argIndex).startsWith("--lang=")) {
+            lang = appArg.at(argIndex).mid(7);
+            break;
+        }
+    }
+
     QTranslator translator;
     if(QFile::exists(":/i18n/tweetian_" + lang + ".qm")){
-        qDebug("Translation language exists for \"%s\"", qPrintable(lang));
+        qDebug("Translation for \"%s\" exists", qPrintable(lang));
         translator.load("tweetian_" + lang, ":/i18n");
     }
     else {
-        qDebug("Translation language \"%s\" not exists, using the default language (en)", qPrintable(lang));
+        qDebug("Translation for \"%s\" not exists, using the default language (en)", qPrintable(lang));
         translator.load("tweetian_en", ":/i18n");
     }
     app->installTranslator(&translator);
