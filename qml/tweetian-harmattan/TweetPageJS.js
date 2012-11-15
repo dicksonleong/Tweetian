@@ -87,11 +87,11 @@ function translateTokenOnSuccess(token){
 function translateOnSuccess(data){
     if(data.indexOf("ArgumentOutOfRangeException") === 0){
         infoBanner.alert(qsTr("Unable to translate tweet"))
-        return
     }
-
-    translatedTweetLoader.sourceComponent = translatedTweet
-    translatedTweetLoader.item.text = data
+    else{
+        translatedTweetLoader.sourceComponent = translatedTweet
+        translatedTweetLoader.item.text = data
+    }
     header.busy = false
 }
 

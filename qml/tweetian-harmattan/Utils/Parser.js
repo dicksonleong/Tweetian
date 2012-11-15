@@ -45,6 +45,7 @@ function unlink(source){
     else return source
 }
 
+// TODO: improve algorithm and performance
 function parsePic(text){
     var thumbnail = ""
     var full = ""
@@ -56,9 +57,9 @@ function parsePic(text){
         full = "http://twitpic.com/show/full/" + twitpicId
         thumbnail = "http://twitpic.com/show/thumb/" + twitpicId //150x150
     }
-    else if(/http:\/\/yfrog.com\/\w+/.test(text)){
-        link = text.match(/http:\/\/yfrog.com\/\w+/)[0]
-        var yfrogId = link.substring(17)
+    else if(/http:\/\/(twitter.)?yfrog.com\/\w+/.test(text)){
+        link = text.match(/http:\/\/(twitter.)?yfrog.com\/\w+/)[0]
+        var yfrogId = link.substring(link.indexOf("yfrog.com/") + 10)
         full = "http://yfrog.com/" + yfrogId + ":medium" //640x480
         thumbnail = "http://yfrog.com/" + yfrogId + ":small" //100x100
     }
@@ -73,19 +74,13 @@ function parsePic(text){
         full = "http://img.ly/show/full/"+ imglyId
         thumbnail = "http://img.ly/show/thumb/"+ imglyId //150x150
     }
-    else if(/http:\/\/9gag.com\/gag\/[^"]+/.test(text)){
-        link = text.match(/http:\/\/9gag.com\/gag\/[^"]+/)[0]
+    else if(/http:\/\/(m.)?9gag.com\/gag\/[^"]+/.test(text)){
+        link = text.match(/http:\/\/(m.)?9gag.com\/gag\/[^"]+/)[0]
+        var gagIdPos = link.indexOf("9gag.com/gag/") + 13
         var questionMark = link.indexOf('?')
-        var gagNumber = questionMark === -1 ? link.substring(20) : link.substring(20, questionMark)
-        full = "http://d24w6bsrhbeh9d.cloudfront.net/photo/"+ gagNumber +"_460s.jpg"
-        thumbnail = "http://d24w6bsrhbeh9d.cloudfront.net/photo/"+ gagNumber +"_220x145.jpg"
-    }
-    else if(/http:\/\/m.9gag.com\/gag\/[^"]+/.test(text)){
-        link = text.match(/http:\/\/m.9gag.com\/gag\/[^"]+/)[0]
-        var questionMarkM = link.indexOf('?')
-        var gagNumberM = questionMarkM === -1 ? link.substring(22) : link.substring(22, questionMarkM)
-        full = "http://d24w6bsrhbeh9d.cloudfront.net/photo/"+ gagNumberM +"_460s.jpg"
-        thumbnail = "http://d24w6bsrhbeh9d.cloudfront.net/photo/"+ gagNumberM +"_220x145.jpg"
+        var gagId = questionMark === -1 ? link.substring(gagIdPos) : link.substring(gagIdPos, questionMark)
+        full = "http://d24w6bsrhbeh9d.cloudfront.net/photo/"+ gagId +"_460s.jpg"
+        thumbnail = "http://d24w6bsrhbeh9d.cloudfront.net/photo/"+ gagId +"_220x145.jpg"
     }
     else if(/http:\/\/moby.to\/\w+/.test(text)){
         link = text.match(/http:\/\/moby.to\/\w+/)[0]
@@ -113,7 +108,7 @@ function parsePic(text){
         full = link.concat("/img")
         thumbnail = link.concat("/thumb")
     }
-    else if(/http:\/\/i.imgur.com\/[^"]/.test(text)){
+    else if(/http:\/\/i.imgur.com\/[^"]+/.test(text)){
         link = text.match(/http:\/\/i.imgur.com\/[^"]+/)[0]
         full = link
         var imgurId = link.substring(19)
