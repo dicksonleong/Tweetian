@@ -22,14 +22,22 @@ import com.nokia.meego 1.0
 ContextMenu{
     id: root
 
-    property string screenName: ""
+    property string screenName
     property string tweetId
-    property variant linksArray: []
+    property string dmText
 
     property bool __isClosing: false
 
     MenuLayout{
         id: menuLayout
+        MenuItem{
+            text: qsTr("Copy DM")
+            onClicked: {
+                // TODO: Remove html for links
+                clipboard.setText("@" + screenName + ": " + dmText)
+                infoBanner.alert(qsTr("DM copied to clipboard"))
+            }
+        }
         MenuItem{
             text: qsTr("Delete")
             onClicked: internal.createDeleteDMDialog(tweetId)
@@ -42,7 +50,6 @@ ContextMenu{
         }
         Repeater{
             id: linksRepeater
-            model: root.linksArray
 
             MenuItem{
                 width: menuLayout.width
@@ -53,7 +60,16 @@ ContextMenu{
         }
     }
 
-    Component.onCompleted: open()
+    Component.onCompleted: {
+        var linksArray = dmText.match(/href="http[^"]+"/g)
+        if(linksArray != null){
+            for(var i=0; i < linksArray.length; i++){
+                linksArray[i] = linksArray[i].substring(6, linksArray[i].length - 1)
+            }
+            linksRepeater.model = linksArray
+        }
+        open()
+    }
 
     onStatusChanged: {
         if(status === DialogStatus.Closing) __isClosing = true

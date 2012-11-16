@@ -31,6 +31,9 @@ public:
     }
 
     Q_INVOKABLE void setText(const QString text){
+#ifdef Q_WS_SIMULATOR
+        qDebug("Text copied to clipboard: %s", qPrintable(text));
+#endif
         clipboard->setText(text, QClipboard::Clipboard);
         clipboard->setText(text, QClipboard::Selection);
     }

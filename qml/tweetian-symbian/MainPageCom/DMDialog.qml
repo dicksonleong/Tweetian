@@ -23,9 +23,9 @@ import "../Component"
 ContextMenu{
     id: root
 
-    property string screenName: ""
+    property string screenName
     property string tweetId
-    property variant linksArray: []
+    property string dmText
 
     property bool __isClosing: false
 
@@ -33,6 +33,15 @@ ContextMenu{
 
     MenuLayout{
         id: menuLayout
+        MenuItemWithIcon{
+            iconSource: "image://theme/qtg_toolbar_copy" + (platformInverted ? "_inverse" : "" )
+            text: qsTr("Copy DM")
+            onClicked: {
+                // TODO: Remove html for links
+                clipboard.setText("@" + screenName + ": " + dmText)
+                infoBanner.alert(qsTr("DM copied to clipboard"))
+            }
+        }
         MenuItemWithIcon{
             iconSource: platformInverted ? "image://theme/toolbar-delete_inverse" : "image://theme/toolbar-delete"
             text: qsTr("Delete")
@@ -45,7 +54,7 @@ ContextMenu{
             onClicked: pageStack.push(Qt.resolvedUrl("../UserPage.qml"), {screenName: screenName})
         }
         Repeater{
-            model: root.linksArray
+            id: linksRepeater
 
             MenuItemWithIcon{
                 width: menuLayout.width
@@ -56,7 +65,16 @@ ContextMenu{
         }
     }
 
-    Component.onCompleted: open()
+    Component.onCompleted: {
+        var linksArray = dmText.match(/href="http[^"]+"/g)
+        if(linksArray != null){
+            for(var i=0; i < linksArray.length; i++){
+                linksArray[i] = linksArray[i].substring(6, linksArray[i].length - 1)
+            }
+            linksRepeater.model = linksArray
+        }
+        open()
+    }
 
     onStatusChanged: {
         if(status === DialogStatus.Closing) __isClosing = true

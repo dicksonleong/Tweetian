@@ -120,22 +120,11 @@ Page{
             header.busy = false
         }
 
-        function getAllLinks(text){
-            var linksArray = text.match(/href="http[^"]+"/g)
-            if(linksArray != null){
-                for(var i=0; i < linksArray.length; i++){
-                    linksArray[i] = linksArray[i].substring(6, linksArray[i].length - 1)
-                }
-                return linksArray
-            }
-            else return []
-        }
-
         function createDMDialog(model){
             var prop = {
                 tweetId: model.tweetId,
                 screenName: (model.sentMsg ? settings.userScreenName : model.screenName),
-                linksArray: getAllLinks(model.tweetText)
+                dmText: model.tweetText
             }
             if(!__dmDialog) __dmDialog = Qt.createComponent("DMDialog.qml")
             __dmDialog.createObject(dMThreadPage, prop)
