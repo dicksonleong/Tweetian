@@ -34,7 +34,9 @@ Page{
     property string placedText: ""
     property double latitude: 0
     property double longitude: 0
-    property string imageURL: ""
+
+    property string imageUrl: ""
+    property string imagePath: ""
 
     onStatusChanged: if(status === PageStatus.Activating) preventTouch.enabled = false
 
@@ -240,12 +242,12 @@ Page{
                 id: addImageButton
                 iconSource: platformInverted ? "Image/photos_inverse.svg" : "Image/photos.svg"
                 width: (parent.width - constant.paddingMedium) / 2
-                text: checked ? qsTr("Remove") : qsTr("Add")
+                text: checked ? qsTr("View/Remove") : qsTr("Add")
                 platformInverted: settings.invertedTheme
                 enabled: !header.busy
-                checked: imageURL != ""
+                checked: imagePath != ""
                 onClicked: {
-                    if(checked) imageURL = ""
+                    if(checked) imageDialogComponent.createObject(newTweetPage)
                     else pageStack.push(Qt.resolvedUrl("SelectImagePage.qml"), {newTweetPage: newTweetPage})
                 }
             }
@@ -265,6 +267,72 @@ Page{
         }
         visible: !inputContext.visible
         height: visible ? undefined : 0
+    }
+
+    Component{
+        id: locationDialogComponent
+
+        ContextMenu{
+            id: locationDialog
+            property bool __isClosing: false
+            platformInverted: settings.invertedTheme
+
+            MenuLayout{
+                MenuItemWithIcon{
+                    iconSource: platformInverted ? "Image/location_mark_inverse.svg" : "Image/location_mark.svg"
+                    text: qsTr("View location")
+                    onClicked: {
+                        preventTouch.enabled = true
+                        pageStack.push(Qt.resolvedUrl("MapPage.qml"), {"latitude": latitude, "longitude": longitude})
+                    }
+                }
+                MenuItemWithIcon{
+                    iconSource: platformInverted ? "image://theme/toolbar-delete_inverse" : "image://theme/toolbar-delete"
+                    text: qsTr("Remove location")
+                    onClicked: {
+                        latitude = 0
+                        longitude = 0
+                        locationButton.state = ""
+                    }
+                }
+            }
+            Component.onCompleted: open()
+            onStatusChanged: {
+                if(status === DialogStatus.Closing) __isClosing = true
+                else if(status === DialogStatus.Closed && __isClosing) locationDialog.destroy()
+            }
+        }
+    }
+
+    Component{
+        id: imageDialogComponent
+
+        ContextMenu{
+            id: imageDialog
+            property bool __isClosing: false
+            platformInverted: settings.invertedTheme
+
+            MenuLayout{
+                MenuItemWithIcon{
+                    iconSource: platformInverted ? "Image/photos_inverse.svg" : "Image/photos.svg"
+                    text: qsTr("View image")
+                    onClicked: Qt.openUrlExternally(imageUrl)
+                }
+                MenuItemWithIcon{
+                    iconSource: platformInverted ? "image://theme/toolbar-delete_inverse" : "image://theme/toolbar-delete"
+                    text: qsTr("Remove image")
+                    onClicked: {
+                        imageUrl = ""
+                        imagePath = ""
+                    }
+                }
+            }
+            Component.onCompleted: open()
+            onStatusChanged: {
+                if(status === DialogStatus.Closing) __isClosing = true
+                else if(status === DialogStatus.Closed && __isClosing) imageDialog.destroy()
+            }
+        }
     }
 
     MouseArea{
@@ -322,7 +390,7 @@ Page{
         onProgressChanged: header.headerText = "Uploading..." + progress + "%"
 
         function run(){
-            imageUploader.setFile(imageURL)
+            imageUploader.setFile(imagePath)
             if(service == ImageUploader.Twitter){
                 imageUploader.setParameter("status", tweetTextArea.text)
                 if(tweetId) imageUploader.setParameter("in_reply_to_status_id", tweetId)
@@ -340,41 +408,6 @@ Page{
             }
             header.busy = true
             imageUploader.send()
-        }
-    }
-
-    Component{
-        id: locationDialogComponent
-
-        ContextMenu{
-            id: locationDialog
-            property bool __isClosing: false
-            platformInverted: settings.invertedTheme
-
-            MenuLayout{
-                MenuItemWithIcon{
-                    iconSource: platformInverted ? "Image/location_mark_inverse.svg" : "Image/location_mark.svg"
-                    text: qsTr("View location")
-                    onClicked: {
-                        preventTouch.enabled = true
-                        pageStack.push(Qt.resolvedUrl("MapPage.qml"), {"latitude": latitude, "longitude": longitude})
-                    }
-                }
-                MenuItemWithIcon{
-                    iconSource: platformInverted ? "image://theme/toolbar-delete_inverse" : "image://theme/toolbar-delete"
-                    text: qsTr("Remove location")
-                    onClicked: {
-                        latitude = 0
-                        longitude = 0
-                        locationButton.state = ""
-                    }
-                }
-            }
-            Component.onCompleted: open()
-            onStatusChanged: {
-                if(status === DialogStatus.Closing) __isClosing = true
-                else if(status === DialogStatus.Closed && __isClosing) locationDialog.destroy()
-            }
         }
     }
 

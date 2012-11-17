@@ -36,17 +36,11 @@ Page{
     property string placedText: ""
     property double latitude: 0
     property double longitude: 0
-    property string imageURL: ""
+
+    property string imageUrl: ""
+    property string imagePath: ""
 
     onStatusChanged: if(status === PageStatus.Activating) preventTouch.enabled = false
-
-    HarmattanMusic{
-        id: harmattanMusic
-        onMediaReceived: {
-            if(mediaName) tweetTextArea.text = mediaName
-            else infoBanner.alert(qsTr("No music is playing currently or music player is not running"))
-        }
-    }
 
     tools: ToolBarLayout{
         parent: newTweetPage
@@ -254,11 +248,11 @@ Page{
                 id: addImageButton
                 iconSource: settings.invertedTheme ? "Image/photos_inverse.svg" : "Image/photos.svg"
                 width: (parent.width - constant.paddingMedium) / 2
-                text: checked ? qsTr("Remove") : qsTr("Add")
+                text: checked ? qsTr("View/Remove") : qsTr("Add")
                 enabled: !header.busy
-                checked: imageURL != ""
+                checked: imagePath != ""
                 onClicked: {
-                    if(checked) imageURL = ""
+                    if(checked) imageDialogComponent.createObject(newTweetPage)
                     else pageStack.push(Qt.resolvedUrl("SelectImagePage.qml"), {newTweetPage: newTweetPage})
                 }
             }
@@ -312,12 +306,46 @@ Page{
         }
     }
 
+    Component{
+        id: imageDialogComponent
+        Menu{
+            id: imageDialog
+            property bool __isClosing: false
+            MenuLayout{
+                MenuItem{
+                    text: qsTr("View image")
+                    onClicked: Qt.openUrlExternally(imageUrl)
+                }
+                MenuItem{
+                    text: qsTr("Remove image")
+                    onClicked: {
+                        imageUrl = ""
+                        imagePath = ""
+                    }
+                }
+            }
+            Component.onCompleted: open()
+            onStatusChanged: {
+                if(status === DialogStatus.Closing) __isClosing = true
+                else if(status === DialogStatus.Closed && __isClosing) imageDialog.destroy(250)
+            }
+        }
+    }
+
     // this is to prevent any interaction in this page when loading the MapPage
     MouseArea{
         id: preventTouch
         anchors.fill: parent
         z: 1
         enabled: false
+    }
+
+    HarmattanMusic{
+        id: harmattanMusic
+        onMediaReceived: {
+            if(mediaName) tweetTextArea.text = mediaName
+            else infoBanner.alert(qsTr("No music is playing currently or music player is not running"))
+        }
     }
 
     WorkerScript{
@@ -368,7 +396,7 @@ Page{
         onProgressChanged: header.headerText = "Uploading..." + progress + "%"
 
         function run(){
-            imageUploader.setFile(imageURL)
+            imageUploader.setFile(imagePath)
             if(service == ImageUploader.Twitter){
                 imageUploader.setParameter("status", tweetTextArea.text)
                 if(tweetId) imageUploader.setParameter("in_reply_to_status_id", tweetId)

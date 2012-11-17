@@ -41,20 +41,21 @@ Page{
     ContextMenu{
         id: imageMenu
 
-        property string selectedImageURL: ""
+        property string selectedImageUrl: ""
         property string selectedImagePath: ""
 
         MenuLayout{
             MenuItem{
                 text: qsTr("Select image")
                 onClicked: {
-                    newTweetPage.imageURL = imageMenu.selectedImagePath
+                    newTweetPage.imageUrl = imageMenu.selectedImageUrl
+                    newTweetPage.imagePath = imageMenu.selectedImagePath
                     pageStack.pop()
                 }
             }
             MenuItem{
                 text: qsTr("Preview")
-                onClicked: Qt.openUrlExternally(imageMenu.selectedImageURL)
+                onClicked: Qt.openUrlExternally(imageMenu.selectedImageUrl)
             }
         }
     }
@@ -164,7 +165,7 @@ Page{
                 id: mouseArea
                 anchors.fill: parent
                 onClicked: {
-                    imageMenu.selectedImageURL = url
+                    imageMenu.selectedImageUrl = url
                     imageMenu.selectedImagePath = filePath
                     imageMenu.open()
                 }
