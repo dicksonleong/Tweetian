@@ -1,21 +1,21 @@
 Tweetian
 ========
 
-Tweetian is a feature-rich Twitter app for smartphones, developed using Qt and QML.
-The backend of Tweetian is mostly coded in JavaScript (database handling, API calls, parsing JSON)
-but I hope to move the backend to C++ for better performance & less buggy. The UI is coded purely in QML
-and use a lot of components from Qt Quick Component for Symbian/MeeGo.
+Tweetian is a feature-rich Twitter app for smartphones, developed using Qt/QML.
+The backend of Tweetian is mostly written in JavaScript (database handling, API calls, parsing JSON)
+but I hope to move the backend to C++ for better performance & less buggy. The UI is written purely in QML
+and use a lot of components from Qt Quick Component for Symbian/MeeGo to provide native UI for each platform.
 
-Tweetian currently available for Symbian^3 and MeeGo Harmattan.
+Tweetian currently support Symbian^3 and MeeGo Harmattan (Qt 4.7.4 or higher).
 
 ToDo
 ----
 
-* Migrate to Twitter API v1.1 (__before March 2013__)
+* Migrate to Twitter API v1.1 (before March 2013)
 * Port to Nemo/Jolla
 * Move the whole app backend to C++
 * Harmattan: event feed integration
-* Internationalization support (You can help by translating Tweetian to your native language in
+* Internationalization support (You can contribute by translating Tweetian to your native language in
 [Transifex](https://www.transifex.com/projects/p/tweetian/))
 
 Build for testing
@@ -25,14 +25,10 @@ If you wanna build Tweetian from source, please make sure you filled in the API 
 for respective service in __qml/tweetian-{platform}/Services/Global.js__. A default Twitter
 OAuth comsumer key/secret is provided for testing.
 
-You can build the binary for Symbian/Harmattan using the latest QtSDK.
-You can also use QtSimulator (comes with QtSDK) to test.
-
 Downloads
 ---------
 
-You can download the latest stable version for Symbian/Harmattan (binary) at
-[Nokia Store](http://store.ovi.com/content/280255).
+Latest stable release for Symbian/Harmattan: [Nokia Store](http://store.ovi.com/content/280255)
 
 License
 -------
