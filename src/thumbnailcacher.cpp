@@ -20,11 +20,11 @@
 
 #include <QCryptographicHash>
 #include <QFile>
+#include <QDir>
 #include <QImage>
 #include <QPainter>
 #include <QStyleOptionGraphicsItem>
 #include <QDesktopServices>
-#include <QDir>
 
 ThumbnailCacher::ThumbnailCacher(QObject *parent) :
     QObject(parent)
@@ -37,11 +37,8 @@ ThumbnailCacher::ThumbnailCacher(QObject *parent) :
     cachePath = cacheDir.absolutePath();
 #elif defined (Q_OS_LINUX) // On Linux, cachePath should be /home/user/.thumbnails/tweetian
     QDir cacheDir = QDir::homePath();
-    if(!cacheDir.exists(".thumbnails")) cacheDir.mkdir(".thumbnails");
-    cacheDir.cd(".thumbnails");
-
-    if(!cacheDir.exists("tweetian")) cacheDir.mkdir("tweetian");
-    cacheDir.cd("tweetian");
+    if(!cacheDir.exists(".thumbnails/tweetian")) cacheDir.mkpath(".thumbnails/tweetian");
+    cacheDir.cd(".thumbnails/tweetian");
 
     cachePath = cacheDir.absolutePath();
 #elif defined (Q_WS_SIMULATOR)
@@ -59,23 +56,25 @@ ThumbnailCacher::ThumbnailCacher(QObject *parent) :
         clearAll();
 }
 
-QString ThumbnailCacher::get(const QString thumbUrl)
+QString ThumbnailCacher::get(const QString &id)
 {
-    QString thumbFile = cachePath + "/" + QCryptographicHash::hash(thumbUrl.toUtf8(), QCryptographicHash::Md5).toHex() + ".png";
+    QString thumbFile = getThumbFilePath(id);
 
-    if(QFile::exists(thumbFile))
-        return thumbFile.prepend("file:///");
+    if(QFile::exists(thumbFile)){
+        QUrl thumbUrl = QUrl::fromLocalFile(thumbFile);
+        thumbUrl.setScheme("file");
+        return thumbUrl.toString();
+    }
     else
         return "";
 }
 
-void ThumbnailCacher::cache(const QString thumbUrl, QDeclarativeItem *imageObj)
+void ThumbnailCacher::cache(const QString &id, QDeclarativeItem *imageObj)
 {
-    QString thumbFile = cachePath + "/" + QCryptographicHash::hash(thumbUrl.toUtf8(), QCryptographicHash::Md5).toHex() + ".png";
+    QString thumbFile = getThumbFilePath(id);
 
-    if(QFile::exists(thumbFile)){
+    if(QFile::exists(thumbFile))
         return;
-    }
 
     QImage thumb(imageObj->boundingRect().size().toSize(), QImage::Format_ARGB32);
     thumb.fill(QColor(0,0,0,0).rgba());
@@ -99,4 +98,9 @@ int ThumbnailCacher::clearAll()
     }
 
     return deleteCount;
+}
+
+inline QString ThumbnailCacher::getThumbFilePath(const QString &id)
+{
+    return cachePath + "/" + QCryptographicHash::hash(id.toUtf8(), QCryptographicHash::Md5).toHex() + ".png";
 }

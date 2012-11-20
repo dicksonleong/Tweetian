@@ -248,10 +248,9 @@ Page{
                     Image{
                         id: profileImage
                         anchors { top: parent.top; left: parent.left; margins: constant.paddingMedium }
-                        height: 50
-                        width: 50
-                        sourceSize.height: height
-                        sourceSize.width: width
+                        height: 50; width: 50
+                        sourceSize{ height: height; width: width }
+                        asynchronous: true
 
                         function loadImage(imageURL){
                             source = thumbnailCacher.get(imageURL)

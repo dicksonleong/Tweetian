@@ -71,29 +71,39 @@ Item{
     MaskedItem{
         id: profileImageItem
         anchors { left: parent.left; top: parent.top; margins: constant.paddingMedium }
-        width: constant.graphicSizeMedium
-        height: constant.graphicSizeMedium
+        width: constant.graphicSizeMedium; height: constant.graphicSizeMedium
         mask: Image{ source: "../Image/pic_mask.png"}
 
         Image{
             id: profileImage
             anchors.fill: parent
-            sourceSize.width: parent.width
-            sourceSize.height: parent.height
-
-            function loadImage(){
-                if(source == "" || source == constant.twitterBirdIcon){
-                    profileImage.source = thumbnailCacher.get(root.imageSource)
-                            || (networkMonitor.online ? root.imageSource : constant.twitterBirdIcon)
-                }
-            }
+            sourceSize{ width: parent.width; height: parent.height }
+            asynchronous: true
 
             NumberAnimation {
                 id: imageLoadedEffect
                 target: profileImage
                 property: "opacity"
                 from: 0; to: 1
-                duration: 300
+                duration: 250
+            }
+
+            Binding{
+                id: imageSourceBinding
+                target: profileImage
+                property: "source"
+                value: thumbnailCacher.get(root.imageSource)
+                       || (networkMonitor.online ? root.imageSource : constant.twitterBirdIcon)
+                when: false
+            }
+
+            Connections{
+                id: movementEndedSignal
+                target: null
+                onMovementEnded: {
+                    imageSourceBinding.when = true
+                    movementEndedSignal.target = null
+                }
             }
 
             onStatusChanged: {
@@ -105,17 +115,8 @@ Item{
             }
 
             Component.onCompleted: {
-                if(!root.ListView.view || !root.ListView.view.moving) profileImage.loadImage()
-            }
-
-            Connections{
-                target: root.ListView.view ? networkMonitor : null
-                onOnlineChanged: if(networkMonitor.online && !root.ListView.view.moving) profileImage.loadImage()
-            }
-
-            Connections{
-                target: root.ListView.view
-                onMovingChanged: if(!root.ListView.view.moving) profileImage.loadImage()
+                if(!root.ListView.view || !root.ListView.view.moving) imageSourceBinding.when = true
+                else movementEndedSignal.target = root.ListView.view
             }
         }
     }

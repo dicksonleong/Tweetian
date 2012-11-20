@@ -81,16 +81,15 @@ Item{
 
         MaskedItem{
             id: pic
-            width: constant.graphicSizeMedium
-            height: constant.graphicSizeMedium
+            width: constant.graphicSizeMedium; height: constant.graphicSizeMedium
             mask: Image{ source: "../Image/pic_mask.png"}
 
             Image{
                 id: profileImage
                 anchors.fill: parent
+                sourceSize{ width: parent.width; height: parent.height }
+                asynchronous: true
                 source: root.imageSource
-                sourceSize.width: parent.width
-                sourceSize.height: parent.height
             }
         }
     }
