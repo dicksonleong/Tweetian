@@ -23,6 +23,9 @@
 #include <QtDBus/QDBusInterface>
 #include <QtDBus/QDBusConnectionInterface>
 #include <QtDBus/QDBusReply>
+
+#define MUSIC_SUITE_SERVICE "com.nokia.music-suite"
+#define MUSIC_SUITE_INTERFACE "com.nokia.maemo.meegotouch.MusicSuiteInterface"
 #endif
 
 HarmattanMusic::HarmattanMusic(QObject *parent) :
@@ -40,9 +43,9 @@ void HarmattanMusic::requestCurrentMedia()
         return;
     }
 
-    QDBusConnection::sessionBus().connect("com.nokia.music-suite", "/", "com.nokia.maemo.meegotouch.MusicSuiteInterface", "mediaChanged", this, SLOT(processMediaChanged(QStringList)));
+    QDBusConnection::sessionBus().connect(MUSIC_SUITE_SERVICE, "/", MUSIC_SUITE_INTERFACE, "mediaChanged", this, SLOT(processMediaChanged(QStringList)));
 
-    QDBusInterface musicInterface("com.nokia.music-suite", "/", "com.nokia.maemo.meegotouch.MusicSuiteInterface");
+    QDBusInterface musicInterface(MUSIC_SUITE_SERVICE, "/", MUSIC_SUITE_INTERFACE);
     musicInterface.call("currentMedia");
 #else
     emit mediaReceived("");
@@ -56,7 +59,7 @@ void HarmattanMusic::processMediaChanged(const QStringList &media)
     if(media.length() >= 3)
         mediaName = media.at(2) + " - " + media.at(1);
     emit mediaReceived(mediaName);
-    QDBusConnection::sessionBus().disconnect("com.nokia.music-suite", "/", "com.nokia.maemo.meegotouch.MusicSuiteInterface", "mediaChanged", this, SLOT(processMediaChanged(QStringList)));
+    QDBusConnection::sessionBus().disconnect(MUSIC_SUITE_SERVICE, "/", MUSIC_SUITE_INTERFACE, "mediaChanged", this, SLOT(processMediaChanged(QStringList)));
 #else
     Q_UNUSED(media)
 #endif
@@ -66,7 +69,7 @@ bool HarmattanMusic::isMusicSuiteRunning()
 {
 #ifdef Q_OS_HARMATTAN
     QDBusConnectionInterface *interface = QDBusConnection::sessionBus().interface();
-    QDBusReply<bool> reply = interface->isServiceRegistered("com.nokia.music-suite");
+    QDBusReply<bool> reply = interface->isServiceRegistered(MUSIC_SUITE_SERVICE);
     if (reply.isValid())
         return reply.value();
     else

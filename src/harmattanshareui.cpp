@@ -21,6 +21,8 @@
 #ifdef Q_OS_HARMATTAN
 #include <MDataUri>
 #include <maemo-meegotouch-interfaces/shareuiinterface.h>
+
+#define SHARE_UI_SERVICE "com.nokia.ShareUi"
 #endif
 
 HarmattanShareUI::HarmattanShareUI(QObject *parent) :
@@ -35,23 +37,22 @@ void HarmattanShareUI::shareLink(const QString &link, const QString &title)
     uri.setMimeType("text/x-url");
     uri.setTextData(link);
 
-    if(!title.isEmpty()){
+    if(!title.isEmpty())
         uri.setAttribute("title", title);
-    }
 
     if(!uri.isValid()){
-        qCritical("Invalid URI");
+        qWarning("HarmattanShareUI::shareLink: Invalid URI");
         return;
     }
 
-    ShareUiInterface shareIf("com.nokia.ShareUi");
+    ShareUiInterface shareIf(SHARE_UI_SERVICE);
 
     if(!shareIf.isValid()){
-        qCritical("Invalid Share UI interface");
+        qCritical("HarmattanShareUI::shareLink: Invalid Share UI interface");
         return;
     }
 
-    shareIf.share(QStringList() << uri.toString());
+    shareIf.share(QStringList(uri.toString()));
 #else
     Q_UNUSED(title)
     Q_UNUSED(link)

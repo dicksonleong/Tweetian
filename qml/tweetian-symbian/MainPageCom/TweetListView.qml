@@ -112,7 +112,7 @@ Item{
         id: internal
 
         function successCallback(data){
-            networkMonitor.appIsOnline()
+            networkMonitor.setToOnline()
             if(reloadType == "newer" || reloadType == "all") {
                 parseData(reloadType, data, true)
                 if(autoRefreshTimer.running) autoRefreshTimer.restart()

@@ -55,7 +55,7 @@ void NetworkMonitor::checkIsOnline()
   Following function is to solve this issue. It will be called when Timeline/Mentions return 200 from server.
   The following function should NOT be used in any other situation.
 */
-void NetworkMonitor::appIsOnline()
+void NetworkMonitor::setToOnline()
 {
     if(online == false){
         online = true;

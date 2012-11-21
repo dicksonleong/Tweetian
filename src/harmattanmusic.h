@@ -29,7 +29,7 @@ public:
 
     Q_INVOKABLE void requestCurrentMedia();
 signals:
-    void mediaReceived(const QString mediaName);
+    void mediaReceived(const QString &mediaName);
 
 private slots:
     void processMediaChanged(const QStringList &media);

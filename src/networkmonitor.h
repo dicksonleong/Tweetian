@@ -28,7 +28,7 @@ class NetworkMonitor : public QObject
 public:
     explicit NetworkMonitor(QObject *parent = 0);
 
-    Q_INVOKABLE void appIsOnline();
+    Q_INVOKABLE void setToOnline();
     bool isOnline() const;
 signals:
     void onlineChanged();

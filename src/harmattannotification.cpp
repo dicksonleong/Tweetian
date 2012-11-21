@@ -23,10 +23,12 @@
 #include <MRemoteAction>
 #endif
 
+#define COLDDOWN_TIMER_INVERVAL 5000
+
 HarmattanNotification::HarmattanNotification(QObject *parent) :
     QObject(parent), colddown(new QTimer(this))
 {
-    colddown->setInterval(5000);
+    colddown->setInterval(COLDDOWN_TIMER_INVERVAL);
     colddown->setSingleShot(true);
 }
 
@@ -36,7 +38,7 @@ void HarmattanNotification::publish(const QString &eventType, const QString &sum
         return;
 
 #ifdef Q_OS_HARMATTAN
-    QString identifier = QString(eventType).remove(0,9);
+    QString identifier = eventType.mid(9);
 
     MNotification notification(eventType, summary, body);
     notification.setCount(count);

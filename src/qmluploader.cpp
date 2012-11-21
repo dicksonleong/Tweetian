@@ -99,13 +99,13 @@ void QMLUploader::send()
 
     request.setRawHeader("Content-Type", "multipart/form-data; boundary=" + boundary);
 
-    QString userAgent;
+    QString userAgent = "Tweetian/" + QString(APP_VERSION);
 #if defined(Q_OS_HARMATTAN)
-    userAgent = "Tweetian/" + QString(APP_VERSION) + " (Nokia; Qt; MeeGo Harmattan)";
+    userAgent += " (Nokia; Qt; MeeGo Harmattan)";
 #elif defined(Q_OS_SYMBIAN)
-    userAgent = "Tweetian/" + QString(APP_VERSION) + " (Nokia; Qt; Symbian)";
+    userAgent += " (Nokia; Qt; Symbian)";
 #else
-    userAgent = "Tweetian/" + QString(APP_VERSION) + " (Nokia; Qt; QtSimulator)";
+    userAgent += " (Qt; Unknown)";
 #endif
     request.setRawHeader("User-Agent", userAgent.toAscii());
 
