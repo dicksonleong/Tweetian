@@ -27,7 +27,7 @@ AbstractUserPage{
     headerText: qsTr("Subscribed Lists")
     headerNumber: listView.count
     emptyText: qsTr("No list")
-    loadMoreButtonVisible: listView.count > 0 && listView.count % 50 === 0
+    loadMoreButtonVisible: false
     delegate: ListDelegate{}
 
     onReload: {

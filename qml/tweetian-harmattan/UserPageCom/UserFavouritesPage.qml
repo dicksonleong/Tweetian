@@ -27,7 +27,7 @@ AbstractUserPage{
     headerText: qsTr("Favourites")
     headerNumber: userInfoData.favouritesCount
     emptyText: qsTr("No favourite")
-    loadMoreButtonVisible: listView.count > 0 && listView.count % 50 === 0
+    loadMoreButtonVisible: listView.count > 0 && listView.count < userInfoData.favouritesCount
     delegate: TweetDelegate{}
 
     onReload: {

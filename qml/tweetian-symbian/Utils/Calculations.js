@@ -74,11 +74,13 @@ function toDegree(latitude, longitude){
 }
 
 function minusOne(numberStr){
-    if(numberStr){
-        var lastNumber = parseInt(numberStr.substring(numberStr.length - 2))
-        if(lastNumber === 0) return numberStr
-        lastNumber--
-        return (numberStr.substring(0, numberStr.length - 2) + lastNumber.toString())
-    }
-    else return ""
+    numberStr += "" // cast to string
+    if(!numberStr) return ""
+
+    var lastNumber = parseInt(numberStr.substring(numberStr.length - 2), 10)
+    if(lastNumber === 0) return numberStr
+
+    lastNumber--
+    var lastNumberStr = lastNumber < 10 ? "0" + lastNumber.toString() : lastNumber.toString()
+    return numberStr.substring(0, numberStr.length - 2).concat(lastNumberStr)
 }

@@ -34,7 +34,7 @@ AbstractUserPage{
     headerText: qsTr("Following")
     headerNumber: userInfoData.friendsCount
     emptyText: qsTr("No following")
-    loadMoreButtonVisible: listView.count > 0 && listView.count % 50 === 0
+    loadMoreButtonVisible: listView.count > 0 && listView.count < userInfoData.friendsCount
     delegate: UserDelegate{}
 
     onReload: {

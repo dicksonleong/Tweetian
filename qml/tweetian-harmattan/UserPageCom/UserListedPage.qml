@@ -29,7 +29,7 @@ AbstractUserPage{
     headerText: qsTr("Listed")
     headerNumber: userInfoData.listedCount
     emptyText: qsTr("No list")
-    loadMoreButtonVisible: listView.count > 0 && listView.count % 20 === 0
+    loadMoreButtonVisible: listView.count > 0 && listView.count < userInfoData.listedCount
     delegate: ListDelegate{}
 
     onReload: {

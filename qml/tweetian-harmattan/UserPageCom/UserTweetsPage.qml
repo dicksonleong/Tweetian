@@ -27,7 +27,7 @@ AbstractUserPage{
     headerText: qsTr("Tweets")
     headerNumber: userInfoData.statusesCount
     emptyText: qsTr("No tweet")
-    loadMoreButtonVisible: listView.count > 0 && listView.count % 50 === 0
+    loadMoreButtonVisible: listView.count > 0 && listView.count < userInfoData.statusesCount
     delegate: TweetDelegate{}
 
     onReload: {
