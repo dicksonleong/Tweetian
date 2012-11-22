@@ -71,8 +71,6 @@
    Another option is to call OAuth.correctTimestamp with a Unix timestamp.
  */
 
-.pragma library
-
 Qt.include("sha1.js")
 
 var OAuth; if (OAuth == null) OAuth = {};
