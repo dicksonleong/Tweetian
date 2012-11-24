@@ -178,7 +178,7 @@ Item{
         Database.setSetting([[type == "Timeline" ? "timelineLastUpdate" : "mentionsLastUpdate", tweetView.lastUpdate]])
         var tweets = []
         for(var i=0; i<Math.min(tweetView.count, 100); i++){
-            tweets[i] = {
+            var tweetObj = {
                 "tweetId": tweetView.model.get(i).tweetId,
                 "retweetId": tweetView.model.get(i).retweetId,
                 "displayScreenName": tweetView.model.get(i).displayScreenName,
@@ -198,6 +198,7 @@ Item{
                 "latitude": tweetView.model.get(i).latitude,
                 "longitude": tweetView.model.get(i).longitude
             }
+            tweets.push(tweetObj)
         }
         Database.storeTweets(type, tweets)
     }

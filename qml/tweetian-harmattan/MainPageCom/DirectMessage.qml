@@ -44,8 +44,8 @@ Item{
                 if(settings.messageNotification){
                     var body = qsTr("%n new message(s)", "", unreadCount)
                     if(!platformWindow.active){
-                        notification.clear("tweetian.message")
-                        notification.publish("tweetian.message", "Tweetian", body, unreadCount)
+                        harmattanUtils.clearNotification("tweetian.message")
+                        harmattanUtils.publishNotification("tweetian.message", "Tweetian", body, unreadCount)
                     }
                     else if(mainPage.status !== PageStatus.Active){
                         infoBanner.alert(body)
@@ -90,7 +90,7 @@ Item{
         busy = true
     }
 
-    onUnreadCountChanged: if(unreadCount === 0) notification.clear("tweetian.message")
+    onUnreadCountChanged: if(unreadCount === 0) harmattanUtils.clearNotification("tweetian.message")
 
     AbstractListView{
         id: directMsgView
@@ -206,9 +206,9 @@ Item{
 
     Component.onDestruction: {
         Database.setSetting([["directMsgLastUpdate", directMsgView.lastUpdate]])
-        var directMsg = []
+        var directMsgs = []
         for(var i=0; i<Math.min(100, fullModel.count); i++){
-            directMsg[i] = {
+            var directMsgObj = {
                 "tweetId": fullModel.get(i).tweetId,
                 "userName": fullModel.get(i).userName,
                 "screenName": fullModel.get(i).screenName,
@@ -217,7 +217,8 @@ Item{
                 "createdAt": fullModel.get(i).createdAt,
                 "sentMsg": fullModel.get(i).sentMsg ? 1 : 0
             }
+            directMsgs.push(directMsgObj)
         }
-        Database.storeDM(directMsg)
+        Database.storeDM(directMsgs)
     }
 }

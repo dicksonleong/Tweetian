@@ -76,7 +76,9 @@ Item{
         if(updateLastRefreshTime) tweetView.lastUpdate = new Date().toString()
     }
 
-    onUnreadCountChanged: if(unreadCount === 0 && type === "Mentions") notification.clear("tweetian.mention")
+    onUnreadCountChanged: {
+        if(unreadCount === 0 && type === "Mentions") harmattanUtils.clearNotification("tweetian.mention")
+    }
 
     AbstractListView{
         id: tweetView
@@ -158,8 +160,8 @@ Item{
                     if(type === "Mentions" && settings.mentionNotification){
                         var body = qsTr("%n new mention(s)", "", unreadCount)
                         if(!platformWindow.active){
-                            notification.clear("tweetian.mention")
-                            notification.publish("tweetian.mention", "Tweetian", body, unreadCount)
+                            harmattanUtils.clearNotification("tweetian.mention")
+                            harmattanUtils.publishNotification("tweetian.mention", "Tweetian", body, unreadCount)
                         }
                         else if(mainPage.status !== PageStatus.Active){
                             infoBanner.alert(body)
@@ -189,7 +191,7 @@ Item{
                              [type == "Timeline" ? "timelineLastUpdate" : "mentionsLastUpdate", tweetView.lastUpdate]])
         var tweets = []
         for(var i=0; i<Math.min(100, tweetView.count); i++){
-            tweets[i] = {
+            var tweetObj = {
                 "tweetId": tweetView.model.get(i).tweetId,
                 "retweetId": tweetView.model.get(i).retweetId,
                 "displayScreenName": tweetView.model.get(i).displayScreenName,
@@ -209,6 +211,7 @@ Item{
                 "latitude": tweetView.model.get(i).latitude,
                 "longitude": tweetView.model.get(i).longitude
             }
+            tweets.push(tweetObj)
         }
         Database.storeTweets(type,tweets)
     }

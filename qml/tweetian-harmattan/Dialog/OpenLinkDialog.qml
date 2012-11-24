@@ -54,7 +54,7 @@ ContextMenu{
         }
         MenuItem{
             text: qsTr("Share link")
-            onClicked: shareUI.shareLink(link)
+            onClicked: harmattanUtils.shareLink(link)
         }
 
         MenuItem{

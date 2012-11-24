@@ -33,9 +33,7 @@
 #include "src/networkmonitor.h"
 
 #if defined(Q_OS_HARMATTAN) || defined(Q_WS_SIMULATOR)
-#include "src/harmattanmusic.h"
-#include "src/harmattannotification.h"
-#include "src/harmattanshareui.h"
+#include "src/harmattanutils.h"
 #endif
 
 #if defined(Q_OS_SYMBIAN) || defined(Q_WS_SIMULATOR)
@@ -104,11 +102,8 @@ Q_DECL_EXPORT int main(int argc, char *argv[])
     view.rootContext()->setContextProperty("APP_VERSION", APP_VERSION);
 
 #if defined(Q_OS_HARMATTAN) || defined(Q_WS_SIMULATOR)
-    HarmattanNotification notification;
-    view.rootContext()->setContextProperty("notification", &notification);
-    HarmattanShareUI shareUI;
-    view.rootContext()->setContextProperty("shareUI", &shareUI);
-    qmlRegisterType<HarmattanMusic>("Harmattan", 1, 0, "HarmattanMusic");
+    HarmattanUtils harmattanUtils;
+    view.rootContext()->setContextProperty("harmattanUtils", &harmattanUtils);
 #endif
 
     qmlRegisterType<QMLUploader>("Uploader", 1, 0, "ImageUploader");

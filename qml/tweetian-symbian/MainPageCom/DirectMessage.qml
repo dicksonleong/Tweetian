@@ -196,9 +196,9 @@ Item{
 
     Component.onDestruction: {
         Database.setSetting([["directMsgLastUpdate", directMsgView.lastUpdate]])
-        var directMsg = []
+        var directMsgs = []
         for(var i=0; i<Math.min(100, fullModel.count); i++){
-            directMsg[i] = {
+            var directMsgObj = {
                 "tweetId": fullModel.get(i).tweetId,
                 "userName": fullModel.get(i).userName,
                 "screenName": fullModel.get(i).screenName,
@@ -207,7 +207,8 @@ Item{
                 "createdAt": fullModel.get(i).createdAt,
                 "sentMsg": fullModel.get(i).sentMsg ? 1 : 0
             }
+            directMsgs.push(directMsgObj)
         }
-        Database.storeDM(directMsg)
+        Database.storeDM(directMsgs)
     }
 }

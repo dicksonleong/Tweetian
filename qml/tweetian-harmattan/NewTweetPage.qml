@@ -25,7 +25,6 @@ import "Services/TwitLonger.js" as TwitLonger
 import "Services/Global.js" as G
 import "Component"
 import Uploader 1.0
-import Harmattan 1.0
 
 Page{
     id: newTweetPage
@@ -265,7 +264,7 @@ Page{
             visible: newTweetButtonRow.visible
             enabled: !header.busy
             text: qsTr("Music Player: Now Playing")
-            onClicked: harmattanMusic.requestCurrentMedia()
+            onClicked: harmattanUtils.getNowPlayingMedia()
         }
     }
 
@@ -340,8 +339,8 @@ Page{
         enabled: false
     }
 
-    HarmattanMusic{
-        id: harmattanMusic
+    Connections{
+        target: harmattanUtils
         onMediaReceived: {
             if(mediaName) tweetTextArea.text = mediaName
             else infoBanner.alert(qsTr("No music is playing currently or music player is not running"))

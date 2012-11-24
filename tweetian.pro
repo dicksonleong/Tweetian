@@ -45,15 +45,8 @@ simulator|contains(MEEGO_EDITION,harmattan){
 
     INSTALLS += splash
 
-    HEADERS += \
-        src/harmattanmusic.h \
-        src/harmattannotification.h \
-        src/harmattanshareui.h
-
-    SOURCES += \
-        src/harmattanmusic.cpp \
-        src/harmattannotification.cpp \
-        src/harmattanshareui.cpp
+    HEADERS += src/harmattanutils.h
+    SOURCES += src/harmattanutils.cpp
 }
 
 contains(MEEGO_EDITION,harmattan){
