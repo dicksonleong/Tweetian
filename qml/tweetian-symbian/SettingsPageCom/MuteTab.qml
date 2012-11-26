@@ -22,42 +22,53 @@ import com.nokia.symbian 1.1
 Page{
     id: muteTab
 
-    Column{
-        id: muteTabColumn
-        anchors{ fill: parent; margins: constant.paddingMedium }
-        spacing: constant.paddingMedium
-
-        TextArea{
-            id: muteTextArea
-            platformInverted: settings.invertedTheme
-            width: parent.width
-            height: inputContext.visible ? parent.height : parent.height / 2
-            textFormat: TextEdit.PlainText
-            font.pixelSize: constant.fontSizeXLarge
-            placeholderText: qsTr("Example:\n%1").arg("@nokia #SwitchtoLumia\nsource:Tweet_Button\niPhone")
-            text: settings.muteString
+    TextArea{
+        id: muteTextArea
+        anchors {
+            fill: parent
+            margins: constant.paddingMedium
+            bottomMargin: inputContext.visible ? anchors.margins
+                                               : buttonContainer.height + 2 * buttonContainer.anchors.margins
         }
+        platformInverted: settings.invertedTheme
+        textFormat: TextEdit.PlainText
+        font.pixelSize: constant.fontSizeXLarge
+        placeholderText: qsTr("Example:\n%1").arg("@nokia #SwitchtoLumia\nsource:Tweet_Button\niPhone")
+        text: settings.muteString
+    }
+
+    Item{
+        id: buttonContainer
+        anchors{ top: muteTextArea.bottom; left: parent.left; right: parent.right; margins: constant.paddingMedium }
+        height: helpButton.height + (saveText.visible ? saveText.anchors.topMargin + saveText.height : 0)
 
         Button{
-            anchors.horizontalCenter: parent.horizontalCenter
+            id: helpButton
+            anchors { top: parent.top; left: parent.left }
             platformInverted: settings.invertedTheme
-            width: parent.width * 0.75
+            width: (parent.width - saveButton.anchors.leftMargin) / 2
             text: qsTr("Help")
             onClicked: dialog.createMessageDialog(qsTr("Mute"), infoText.mute)
         }
 
         Button{
             id: saveButton
-            anchors.horizontalCenter: parent.horizontalCenter
+            anchors {
+                top: parent.top; right: parent.right
+                left: helpButton.right; leftMargin: constant.paddingMedium
+            }
             platformInverted: settings.invertedTheme
-            width: parent.width * 0.75
             text: qsTr("Save")
             enabled: settings.muteString !== muteTextArea.text
             onClicked: settings.muteString = muteTextArea.text
         }
 
         Text{
-            width: parent.width
+            id: saveText
+            anchors {
+                top: helpButton.bottom; topMargin: constant.paddingMedium
+                left: parent.left; right: parent.right
+            }
             visible: saveButton.enabled
             wrapMode: Text.Wrap
             text: qsTr("Changes will not be save until you press the save button")
