@@ -87,27 +87,29 @@ Page{
 
     TextArea{
         id: tweetTextArea
-        anchors { left: parent.left; top: header.bottom; right: parent.right; margins: constant.paddingMedium }
+        anchors {
+            top: header.bottom; left: parent.left; right: parent.right
+            bottomMargin: autoCompleter.height + 2 * buttonColumn.anchors.margins
+            margins: constant.paddingMedium
+        }
         platformInverted: settings.invertedTheme
         readOnly: header.busy
         textFormat: Text.PlainText
         errorHighlight: charLeftText.text < 0 && type != "RT"
-        placeholderText: qsTr("Tap to write...")
         font.pixelSize: constant.fontSizeXXLarge
+        placeholderText: qsTr("Tap to write...")
         text: placedText
         states: [
             State{
-                name: "FitKeyboard"
                 when: inputContext.visible
-                AnchorChanges{ target: tweetTextArea; anchors.bottom: parent.bottom}
-                PropertyChanges{ target: tweetTextArea; anchors.bottomMargin: autoCompleter.height + 2 * constant.paddingMedium }
+                AnchorChanges { target: tweetTextArea; anchors.bottom: newTweetPage.bottom }
             },
             State{
-                name: "FitText"
                 when: !inputContext.visible
-                PropertyChanges{ target: tweetTextArea; height: implicitHeight < 120 ? 120 : undefined }
+                PropertyChanges { target: tweetTextArea; height: Math.max(implicitHeight, 120) }
             }
         ]
+
         onTextChanged: {
             var word = script.getWordAt(tweetTextArea.text, tweetTextArea.cursorPosition)
             autoCompleter.model.clear()
@@ -166,28 +168,31 @@ Page{
    }
 
     Column{
+        id: buttonColumn
         anchors { left: parent.left; right: parent.right; top: tweetTextArea.bottom; margins: constant.paddingMedium }
         height: childrenRect.height
         spacing: constant.paddingMedium
 
         ListView{
             id: autoCompleter
-            height: inputContext.visible ? 42 : 0
-            width: parent.width
-            clip: true
+            height: 42; width: parent.width
+            visible: inputContext.visible
             delegate: Button{
                 platformInverted: settings.invertedTheme
                 height: ListView.view.height
                 text: buttonText
                 onClicked: {
-                    // TODO
+                    var completeText = buttonText
                     var leftIndex = tweetTextArea.text.slice(0, tweetTextArea.cursorPosition).search(/\S+$/)
                     if(leftIndex < 0) leftIndex = tweetTextArea.cursorPosition
                     var rightIndex = tweetTextArea.text.slice(tweetTextArea.cursorPosition).search(/\s/)
-                    if(rightIndex < 0) rightIndex = 0
-                    tweetTextArea.text = tweetTextArea.text.slice(0, leftIndex) + buttonText
+                    if(rightIndex < 0) {
+                        rightIndex = 0
+                        completeText += " "
+                    }
+                    tweetTextArea.text = tweetTextArea.text.slice(0, leftIndex) + completeText
                             + tweetTextArea.text.slice(rightIndex + tweetTextArea.cursorPosition)
-                    tweetTextArea.cursorPosition = leftIndex + buttonText.length
+                    tweetTextArea.cursorPosition = leftIndex + completeText.length
                     tweetTextArea.forceActiveFocus()
                 }
             }
@@ -416,11 +421,24 @@ Page{
 
         property string twitLongerId: ""
 
+        /**
+          Extract a word from str at the specificed pos.
+          Example:
+          var text = "Hello world"
+          var word = getWordAt(text, n)
+
+          n = 0; word = ""
+          n = 1/2/3/4/5; word = "Hello"
+          n = 6; word = ""
+          n = 7/8/9/10/11; word = "world"
+          n > text.length; unexpected behaviour
+        */
         function getWordAt(str, pos){
             var left = str.slice(0, pos).search(/\S+$/)
-            if(left < 0) left = pos
-            var right = str.slice(pos).search(/\s/)
+            if(left < 0)
+                return ""
 
+            var right = str.slice(pos).search(/\s/)
             if(right < 0)
                 return str.slice(left)
 
