@@ -222,7 +222,7 @@ Page{
             }
             onButtonClicked: {
                 if(index == 0){
-                    clipboard.setText(coordinateTextField.text)
+                    QMLUtils.copyToClipboard(coordinateTextField.text)
                     infoBanner.alert(qsTr("Coordinate copied to clipboard"))
                 }
             }

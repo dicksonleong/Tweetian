@@ -49,7 +49,7 @@ Page{
             platformIconId: enabled ? "toolbar-directory-move-to" : "toolbar-directory-move-to-dimmed"
             enabled: tweetImagePreview.status == Image.Ready
             onClicked: {
-                var filePath = imageSaver.save(tweetImagePreview)
+                var filePath = QMLUtils.saveImage(tweetImagePreview)
                 if(filePath) infoBanner.alert(qsTr("Image saved in %1").arg(filePath))
                 else infoBanner.alert(qsTr("Failed to save image"))
             }

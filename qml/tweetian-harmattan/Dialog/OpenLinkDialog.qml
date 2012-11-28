@@ -60,7 +60,7 @@ ContextMenu{
         MenuItem{
             text: qsTr("Copy link")
             onClicked: {
-                clipboard.setText(link)
+                QMLUtils.copyToClipboard(link)
                 infoBanner.alert(qsTr("Link copied to clipboard"))
             }
             platformStyle: MenuItemStyle{ position: sendToPocketButton.visible ? "vertical-center" : "vertical-bottom" }

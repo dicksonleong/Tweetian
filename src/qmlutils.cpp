@@ -16,35 +16,47 @@
     along with this program. If not, see <http://www.gnu.org/licenses/>.
 */
 
-#include "qmlimagesaver.h"
+#include "qmlutils.h"
 
+#include <QApplication>
 #include <QImage>
 #include <QStyleOptionGraphicsItem>
 #include <QPainter>
 #include <QDesktopServices>
 #include <QDateTime>
 
-QMLImageSaver::QMLImageSaver(QObject *parent) :
-    QObject(parent)
+const QString QMLUtils::imageSavingPath = QDesktopServices::storageLocation(QDesktopServices::PicturesLocation);
+
+QMLUtils::QMLUtils(QObject *parent) :
+    QObject(parent), clipboard(QApplication::clipboard())
 {
 }
 
-QString QMLImageSaver::save(QDeclarativeItem *imageObject)
+void QMLUtils::copyToClipboard(const QString &text)
+{
+#ifdef Q_WS_SIMULATOR
+    qDebug("Text copied to clipboard: %s", qPrintable(text));
+#endif
+    clipboard->setText(text, QClipboard::Clipboard);
+    clipboard->setText(text, QClipboard::Selection);
+}
+
+QString QMLUtils::saveImage(QDeclarativeItem *imageObject)
 {
     QString fileName = "tweetian_" + QDateTime::currentDateTime().toString("d-M-yy_h-m-s") + ".png";
-    QString savingFilePath = QDesktopServices::storageLocation(QDesktopServices::PicturesLocation).append("/").append(fileName);
+    QString filePath = imageSavingPath + "/" + fileName;
 
     QImage img(imageObject->boundingRect().size().toSize(), QImage::Format_ARGB32);
     img.fill(QColor(0,0,0,0).rgba());
     QPainter painter(&img);
     QStyleOptionGraphicsItem styleOption;
     imageObject->paint(&painter, &styleOption, 0);
-    bool saved = img.save(savingFilePath, "PNG");
+    bool saved = img.save(filePath, "PNG");
 
     if(!saved){
-        qWarning("QMLImageSaver::save(): Failed to save image to %s", qPrintable(savingFilePath));
+        qWarning("QMLUtils::saveImage: Failed to save image to %s", qPrintable(filePath));
         return "";
     }
 
-    return savingFilePath;
+    return filePath;
 }

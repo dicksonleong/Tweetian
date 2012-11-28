@@ -59,7 +59,7 @@ ContextMenu{
             text: qsTr("Copy link")
             platformInverted: root.platformInverted
             onClicked: {
-                clipboard.setText(link)
+                QMLUtils.copyToClipboard(link)
                 infoBanner.alert(qsTr("Link copied to clipboard"))
             }
         }

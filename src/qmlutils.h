@@ -16,18 +16,28 @@
     along with this program. If not, see <http://www.gnu.org/licenses/>.
 */
 
-#ifndef QMLIMAGESAVER_H
-#define QMLIMAGESAVER_H
+#ifndef QMLUTILS_H
+#define QMLUTILS_H
 
+#include <QClipboard>
 #include <QDeclarativeItem>
 
-class QMLImageSaver : public QObject
+class QMLUtils : public QObject
 {
     Q_OBJECT
 public:
-    explicit QMLImageSaver(QObject *parent = 0);
+    explicit QMLUtils(QObject *parent = 0);
 
-    Q_INVOKABLE QString save(QDeclarativeItem *imageObject);
+    // Copy text to system clipboard
+    Q_INVOKABLE void copyToClipboard(const QString &text);
+
+    // Save image from QML Image element as local file
+    // Return the image path if save successfully or empty string if failed
+    Q_INVOKABLE QString saveImage(QDeclarativeItem *imageObject);
+
+private:
+    QClipboard *clipboard;
+    static const QString imageSavingPath;
 };
 
-#endif // QMLIMAGESAVER_H
+#endif // QMLUTILS_H

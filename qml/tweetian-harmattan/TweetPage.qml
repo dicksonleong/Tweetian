@@ -151,7 +151,7 @@ Page{
             MenuItem{
                 text: qsTr("Copy tweet")
                 onClicked: {
-                    clipboard.setText("@" + currentTweet.screenName + ": " + currentTweet.tweetText)
+                    QMLUtils.copyToClipboard("@" + currentTweet.screenName + ": " + currentTweet.tweetText)
                     infoBanner.alert(qsTr("Tweet copied to clipboard"))
                 }
             }

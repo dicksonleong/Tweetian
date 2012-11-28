@@ -170,7 +170,7 @@ Page{
                 text: qsTr("Copy tweet")
                 platformInverted: tweetMenu.platformInverted
                 onClicked: {
-                    clipboard.setText("@" + currentTweet.screenName + ": " + currentTweet.tweetText)
+                    QMLUtils.copyToClipboard("@" + currentTweet.screenName + ": " + currentTweet.tweetText)
                     infoBanner.alert(qsTr("Tweet copied to clipboard"))
                 }
             }

@@ -34,7 +34,7 @@ ContextMenu{
             text: qsTr("Copy DM")
             onClicked: {
                 // TODO: Remove html for links
-                clipboard.setText("@" + screenName + ": " + dmText)
+                QMLUtils.copyToClipboard("@" + screenName + ": " + dmText)
                 infoBanner.alert(qsTr("DM copied to clipboard"))
             }
         }

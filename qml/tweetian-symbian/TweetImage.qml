@@ -53,7 +53,7 @@ Page{
             toolTipText: qsTr("Save Image")
             enabled: tweetImagePreview.status == Image.Ready
             onClicked: {
-                var filePath = imageSaver.save(tweetImagePreview)
+                var filePath = QMLUtils.saveImage(tweetImagePreview)
                 if(filePath) infoBanner.alert(qsTr("Image saved in %1").arg(filePath))
                 else infoBanner.alert(qsTr("Failed to save image"))
             }

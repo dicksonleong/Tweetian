@@ -13,15 +13,14 @@ CONFIG += mobility
 MOBILITY += feedback location gallery
 
 HEADERS += \
-    src/qmlclipboard.h \
-    src/qmlimagesaver.h \
+    src/qmlutils.h \
     src/qmluploader.h \
     src/thumbnailcacher.h \
     src/userstream.h \
     src/networkmonitor.h
 
 SOURCES += main.cpp \
-    src/qmlimagesaver.cpp \
+    src/qmlutils.cpp \
     src/qmluploader.cpp \
     src/thumbnailcacher.cpp \
     src/userstream.cpp \

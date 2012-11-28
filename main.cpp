@@ -25,8 +25,7 @@
 #include <QLocale>
 #include <QFile>
 
-#include "src/qmlclipboard.h"
-#include "src/qmlimagesaver.h"
+#include "src/qmlutils.h"
 #include "src/qmluploader.h"
 #include "src/thumbnailcacher.h"
 #include "src/userstream.h"
@@ -91,10 +90,8 @@ Q_DECL_EXPORT int main(int argc, char *argv[])
     bus.registerObject("/com/tweetian", app.data());
 #endif
 
-    QMLClipboard clipboard;
-    view.rootContext()->setContextProperty("clipboard", &clipboard);
-    QMLImageSaver imageSaver;
-    view.rootContext()->setContextProperty("imageSaver", &imageSaver);
+    QMLUtils qmlUtils;
+    view.rootContext()->setContextProperty("QMLUtils", &qmlUtils);
     ThumbnailCacher thumbnailCacher;
     view.rootContext()->setContextProperty("thumbnailCacher", &thumbnailCacher);
     NetworkMonitor networkMonitor;
