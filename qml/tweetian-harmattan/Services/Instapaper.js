@@ -18,22 +18,15 @@
 
 .pragma library
 
-Qt.include("Global.js")
 Qt.include("../lib/oauth.js")
 
 var ACCESS_TOKEN_URL = "https://www.instapaper.com/api/1/oauth/access_token"
 var ADD_BOOKMARK_URL = "https://www.instapaper.com/api/1/bookmarks/add"
 
-/* @param string username
- * @param string password
- * @param function onSuccess(oauth_token, oauth_token_secret)
- * @param function onFailure(errorText)
- */
-
-function getAccessToken(username, password, onSuccess, onFailure) {
+function getAccessToken(constant, username, password, onSuccess, onFailure) {
     var accessor = {
-        consumerKey: Global.Instapaper.CONSUMER_KEY,
-        consumerSecret: Global.Instapaper.CONSUMER_SECRET
+        consumerKey: constant.instapaperConsumerKey,
+        consumerSecret: constant.instapaperConsumerSecret
     }
     var message = {
         action: ACCESS_TOKEN_URL,
@@ -64,22 +57,14 @@ function getAccessToken(username, password, onSuccess, onFailure) {
 
     //request.setRequestHeader("Authorization", authorizationHeader)
     request.setRequestHeader("Content-Type", "application/x-www-form-urlencoded")
-    request.setRequestHeader("User-Agent", Global.USER_AGENT)
+    request.setRequestHeader("User-Agent", constant.userAgent)
     request.send(body)
 }
 
-/* @param string accessToken
- * @param string accessTokenSecret
- * @param string url - url to be add
- * @param string description - the tweet text
- * @param function onSuccess(responseText) - success callback
- * @param function onFailure(errorText) - failure callback
- */
-
-function addBookmark(accessToken, accessTokenSecret, url, description, onSuccess, onFailure){
+function addBookmark(constant, accessToken, accessTokenSecret, url, description, onSuccess, onFailure){
     var accessor = {
-        consumerKey: Global.Instapaper.CONSUMER_KEY,
-        consumerSecret: Global.Instapaper.CONSUMER_SECRET,
+        consumerKey: constant.instapaperConsumerKey,
+        consumerSecret: constant.instapaperConsumerSecret,
         token: accessToken,
         tokenSecret: accessTokenSecret
     }
@@ -104,6 +89,6 @@ function addBookmark(accessToken, accessTokenSecret, url, description, onSuccess
 
     //request.setRequestHeader("Authorization", authorizationHeader)
     request.setRequestHeader("Content-Type", "application/x-www-form-urlencoded")
-    request.setRequestHeader("User-Agent", Global.USER_AGENT)
+    request.setRequestHeader("User-Agent", constant.userAgent)
     request.send(body)
 }

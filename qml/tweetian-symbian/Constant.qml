@@ -61,40 +61,58 @@ QtObject{
     property int borderSizeMedium: platformStyle.borderSizeMedium
     property int headerHeight: inPortrait ? 50 : 45
 
-    // --Twitter--
     property int charReservedPerMedia: 22
     property url twitterBirdIcon: platformInverted ? "Image/twitter-bird-light.png" : "Image/twitter-bird-dark.png"
+
+    property string userAgent: "Tweetian/" + APP_VERSION + " (Nokia; Qt; Symbian)"
+
+    // -------- API Key/Secret ---------- //
+
+    // Fill in the API key/secret below for respective service for certain feature to function
+    // The provided Twitter OAuth cousumer key pair below are only for testing
+    // The release version in Nokia Store have a different key pair
+
+    property string twitterConsumerKey: "0FB4Dd9xsgSHiGiCJ82L1g"
+    property string twitterConsumerSecret: "VgRBngFVKH9Rm2cG9OgJHACpHr6a2IvcKXxh49FvU"
+
+    // Needed for uploading image to TwitPic
+    property string twitpicAPIKey: ""
+
+    // Needed for uploading image to Moby.ly
+    property string mobypictureAPIKey: ""
+
+    // Needed for sign in/add page to Pocket
+    property string pocketAPIKey: ""
+
+    // Needed for sign in/add page to Instapaper
+    property string instapaperConsumerKey: ""
+    property string instapaperConsumerSecret: ""
+
+    // Needed for post to TwitLonger
+    property string twitlongerApp: ""
+    property string twitlongerAPIKey: ""
+
+    // Needed for tweet translation
+    property string msTranslationCliendId: ""
+    property string msTranslationCliendSecret: ""
+
+    // Needed for loading maps for geotagged tweet
+    property string nokiaMapsAppId: ""
+    property string nokiaMapsAppToken: ""
+
+    // Needed for fetching Flickr image preview in tweet
+    property string flickrAPIKey: ""
+
+    // Needed for fetching YouTube thumbnail & streaming link in tweet
+    property string youtubeDevKey: ""
+
+    // TODO: move the following function to a more suitable place
+    function encodeParameters(parameters){
+        var encoded = ""
+        for(var p in parameters){
+            if(encoded) encoded += "&"
+            encoded += p + "=" + encodeURIComponent(parameters[p])
+        }
+        return encoded
+    }
 }
-
-/*
-    ---Value for Symbian's platformStyle---
-
-    platformStyle.borderSizeMedium: 20
-    platformStyle.colorBackground: #000000
-    platformStyle.colorBackgroundInverted: #f1f1f1
-    platformStyle.colorDisabledLight: #666666
-    platformStyle.colorDisabledLightInverted: #a9a9a9
-    platformStyle.colorDisabledMid: #444444
-    platformStyle.colorDisabledMidInverted: #7f7f7f
-    platformStyle.colorHighlighted: #ffffff
-    platformStyle.colorHighlightedInverted: #282828
-    platformStyle.colorNormalLight: #ffffff
-    platformStyle.colorNormalLightInverted: #282828
-    platformStyle.colorNormalLink: #4d8ecc
-    platformStyle.colorNormalLinkInverted: #4d8ecc
-    platformStyle.colorNormalMid: #999999
-    platformStyle.colorNormalMidInverted: #666666
-    platformStyle.colorTextSelection: #0072b2
-    platformStyle.colorTextSelectionInverted: #0072b2
-    platformStyle.fontFamilyRegular: Nokia Sans
-    platformStyle.fontSizeLarge: 22
-    platformStyle.fontSizeMedium: 20
-    platformStyle.fontSizeSmall: 18
-    platformStyle.graphicSizeLarge: 70
-    platformStyle.graphicSizeMedium: 50
-    platformStyle.graphicSizeSmall: 30
-    platformStyle.graphicSizeTiny: 20
-    platformStyle.paddingLarge: 12
-    platformStyle.paddingMedium: 8
-    platformStyle.paddingSmall: 4
-*/

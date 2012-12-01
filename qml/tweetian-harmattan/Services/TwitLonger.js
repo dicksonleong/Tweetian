@@ -18,24 +18,23 @@
 
 .pragma library
 
-Qt.include("Global.js")
 Qt.include("../Utils/Parser.js")
 
 var POST_TWEET_URL = "http://www.twitlonger.com/api_post"
 var ID_CALLBACK_URL = "http://www.twitlonger.com/api_set_id"
 var GET_FULL_TWEET_URL = "http://www.twitlonger.com/api_read/"
 
-function postTweet(username, text, inReplyToStatusId, inReplyToUser, onSuccess, onFailure) {
+function postTweet(constant, username, text, inReplyToStatusId, inReplyToUser, onSuccess, onFailure) {
     var parameters = {
-        application: Global.TwitLonger.APPLICATION,
-        api_key: Global.TwitLonger.API_KEY,
+        application: constant.twitlongerApp,
+        api_key: constant.twitlongerAPIKey,
         username: username,
         message: text
     }
     if(inReplyToStatusId) parameters.in_reply = inReplyToStatusId
     if(inReplyToUser) parameters.in_reply_user = inReplyToUser
 
-    var body = Global.encodeParameters(parameters)
+    var body = constant.encodeParameters(parameters)
     var request = new XMLHttpRequest()
     request.open("POST", POST_TWEET_URL)
 
@@ -65,18 +64,18 @@ function postTweet(username, text, inReplyToStatusId, inReplyToUser, onSuccess, 
     }
 
     request.setRequestHeader("Content-Type", "application/x-www-form-urlencoded")
-    request.setRequestHeader("User-Agent", Global.USER_AGENT)
+    request.setRequestHeader("User-Agent", constant.userAgent)
     request.send(body)
 }
 
-function postIDCallback(messageId, twitterId){
+function postIDCallback(constant, messageId, twitterId){
     var parameters = {
-        application: Global.TwitLonger.APPLICATION,
-        api_key: Global.TwitLonger.API_KEY,
+        application: constant.twitlongerApp,
+        api_key: constant.twitlongerAPIKey,
         message_id: messageId,
         twitter_id: twitterId
     }
-    var body = Global.encodeParameters(parameters)
+    var body = constant.encodeParameters(parameters)
     var request = new XMLHttpRequest()
     request.open("POST", ID_CALLBACK_URL)
 
@@ -87,12 +86,12 @@ function postIDCallback(messageId, twitterId){
     }
 
     request.setRequestHeader("Content-Type", "application/x-www-form-urlencoded")
-    request.setRequestHeader("User-Agent", Global.USER_AGENT)
+    request.setRequestHeader("User-Agent", constant.userAgent)
     request.send(body)
 }
 
 // TwitLonger link should be in the form of http://tl.gd/xxxxxx
-function getFullTweet(twitLongerLink, onSuccess, onFailure){
+function getFullTweet(constant, twitLongerLink, onSuccess, onFailure){
     var url = GET_FULL_TWEET_URL + twitLongerLink.substring(13)
     var request = new XMLHttpRequest()
     request.open("GET", url)
@@ -126,6 +125,6 @@ function getFullTweet(twitLongerLink, onSuccess, onFailure){
     }
 
     request.setRequestHeader("Content-Type", "application/x-www-form-urlencoded")
-    request.setRequestHeader("User-Agent", Global.USER_AGENT)
+    request.setRequestHeader("User-Agent", constant.userAgent)
     request.send()
 }

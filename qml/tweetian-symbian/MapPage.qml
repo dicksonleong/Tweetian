@@ -20,7 +20,6 @@ import QtQuick 1.1
 import com.nokia.symbian 1.1
 import QtMobility.location 1.2
 import "Utils/Calculations.js" as Calculate
-import "Services/Global.js" as G
 import "Component"
 
 Page{
@@ -68,8 +67,8 @@ Page{
         plugin: Plugin{
             name: "nokia"
             parameters: [
-                PluginParameter{ name: "app_id"; value: G.Global.NokiaMaps.APP_ID },
-                PluginParameter{ name: "app_code"; value: G.Global.NokiaMaps.APP_TOKEN }
+                PluginParameter{ name: "app_id"; value: constant.nokiaMapsAppId },
+                PluginParameter{ name: "app_code"; value: constant.nokiaMapsAppToken }
             ]
         }
         anchors.fill: parent

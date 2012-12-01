@@ -18,19 +18,17 @@
 
 .pragma library
 
-Qt.include("Global.js")
-
 var BASE_URL = "http://api.flickr.com/services/rest/"
 
-function getSizes(photoId, onSuccess) {
+function getSizes(constant, photoId, onSuccess) {
     var parameters = {
         method: "flickr.photos.getSizes",
-        api_key: Global.Flickr.APP_KEY,
+        api_key: constant.flickrAPIKey,
         format: "json",
         nojsoncallback: 1,
         photo_id: __base58Decode(photoId)
     }
-    var url = BASE_URL + "?" + Global.encodeParameters(parameters)
+    var url = BASE_URL + "?" + constant.encodeParameters(parameters)
     var request = new XMLHttpRequest()
     request.open("GET", url)
 
@@ -49,7 +47,7 @@ function getSizes(photoId, onSuccess) {
         }
     }
 
-    request.setRequestHeader("User-Agent", Global.USER_AGENT)
+    request.setRequestHeader("User-Agent", constant.userAgent)
     request.send()
 }
 

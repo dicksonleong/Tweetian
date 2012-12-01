@@ -81,7 +81,7 @@ function conversationOnSuccess(data){
 
 function translateTokenOnSuccess(token){
     cache.translationToken = token
-    Translate.translate(cache.translationToken, currentTweet.tweetText, translateOnSuccess, commonOnFailure)
+    Translation.translate(constant, cache.translationToken, currentTweet.tweetText, translateOnSuccess, commonOnFailure)
 }
 
 function translateOnSuccess(data){
@@ -109,7 +109,7 @@ function addToPocket(link){
         return
     }
 
-    Pocket.addPage(settings.pocketUsername, settings.pocketPassword, link, currentTweet.tweetText,
+    Pocket.addPage(constant, settings.pocketUsername, settings.pocketPassword, link, currentTweet.tweetText,
                    currentTweet.tweetId, pocketSuccessCallback, pocketFailureCallback)
     loadingRect.visible = true
 }
@@ -121,7 +121,7 @@ function addToInstapaper(link){
         return
     }
 
-    Instapaper.addBookmark(settings.instapaperToken, settings.instapaperTokenSecret, link,
+    Instapaper.addBookmark(constant, settings.instapaperToken, settings.instapaperTokenSecret, link,
                            currentTweet.tweetText, instapaperSuccessCallback, instapaperFailureCallback)
     loadingRect.visible = true
 }

@@ -21,7 +21,7 @@ import com.nokia.symbian 1.1
 import "Services/Twitter.js" as Twitter
 import "Component"
 import "Delegate"
-import "Services/Translation.js" as Translate
+import "Services/Translation.js" as Translation
 import "Services/Flickr.js" as Flickr
 import "Services/Pocket.js" as Pocket
 import "Services/Instapaper.js" as Instapaper
@@ -65,24 +65,25 @@ Page{
             // Process image thumbnail
             if(currentTweet.mediaViewUrl){
                 if(currentTweet.mediaViewUrl == "flickr"){
-                    Flickr.getSizes(currentTweet.mediaExpandedUrl.substring(17), function(full, thumb){
-                                        thumbnailModel.append({"type": "image", "thumb": thumb,"full": full, "link": currentTweet.mediaExpandedUrl})
-                                    })
+                    Flickr.getSizes(constant, currentTweet.mediaExpandedUrl.substring(17), function(full, thumb){
+                        thumbnailModel.append({"type": "image", "thumb": thumb,"full": full, "link": currentTweet.mediaExpandedUrl})
+                    })
                 }
                 else thumbnailModel.append({"type": "image", "thumb": currentTweet.mediaThumbnail,"full": currentTweet.mediaViewUrl,
                                                "link": currentTweet.mediaExpandedUrl})
             }
             // Process location thumbnail
             if(currentTweet.latitude && currentTweet.longitude){
-                var thumbnailURL = Maps.getMaps(currentTweet.latitude, currentTweet.longitude, constant.thumbnailSize, constant.thumbnailSize)
+                var thumbnailURL = Maps.getMaps(constant, currentTweet.latitude, currentTweet.longitude,
+                                                constant.thumbnailSize, constant.thumbnailSize)
                 thumbnailModel.append({"type": "map", "thumb": thumbnailURL, "full": "", "link": ""})
             }
             // Process Youtube thumbnail
             var youtubeLink = currentTweet.displayTweetText.match(/https?:\/\/(youtu.be\/[\w-]{11,}|www.youtube.com\/watch\?[\w-=&]{11,})/)
             if(youtubeLink != null){
-                YouTube.getVideoThumbnailAndLink(JS.getYouTubeVideoId(youtubeLink[0]), function(thumb, rstpLink){
-                                              thumbnailModel.append({type: "video", thumb: thumb, full: "", link: rstpLink})
-                                          })
+                YouTube.getVideoThumbnailAndLink(constant, JS.getYouTubeVideoId(youtubeLink[0]), function(thumb, rstpLink){
+                    thumbnailModel.append({type: "video", thumb: thumb, full: "", link: rstpLink})
+                })
             }
             // Load conversation
             if(currentTweet.inReplyToStatusId){
@@ -96,7 +97,7 @@ Page{
             // check for TwitLonger
             var twitLongerLink = currentTweet.displayTweetText.match(/http:\/\/tl.gd\/\w+/)
             if(twitLongerLink != null){
-                TwitLonger.getFullTweet(twitLongerLink[0], JS.getTwitLongerTextOnSuccess, JS.commonOnFailure)
+                TwitLonger.getFullTweet(constant, twitLongerLink[0], JS.getTwitLongerTextOnSuccess, JS.commonOnFailure)
                 header.busy = true
             }
         }
@@ -180,11 +181,12 @@ Page{
                 onClicked: {
                     if(translatedTweetLoader.sourceComponent) translatedTweetLoader.sourceComponent = undefined
                     else if(cache.translationToken && JS.checkExpire(cache.translationToken)){
-                        Translate.translate(cache.translationToken, currentTweet.tweetText, JS.translateOnSuccess, JS.commonOnFailure)
+                        Translation.translate(constant, cache.translationToken, currentTweet.tweetText,
+                                              JS.translateOnSuccess, JS.commonOnFailure)
                         header.busy = true
                     }
                     else{
-                        Translate.requestToken(JS.translateTokenOnSuccess, JS.commonOnFailure)
+                        Translation.requestToken(constant, JS.translateTokenOnSuccess, JS.commonOnFailure)
                         header.busy = true
                     }
                 }

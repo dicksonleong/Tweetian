@@ -22,7 +22,7 @@ Build for testing
 -----------------
 
 If you wanna build Tweetian from source, please make sure you filled in the API key/secret
-for respective service in __qml/tweetian-{platform}/Services/Global.js__. A default Twitter
+for respective service in __qml/tweetian-{platform}/Constant.qml__. A default Twitter
 OAuth comsumer key/secret is provided for testing.
 
 Downloads

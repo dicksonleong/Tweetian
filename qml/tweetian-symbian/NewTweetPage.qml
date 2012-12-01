@@ -21,7 +21,6 @@ import com.nokia.symbian 1.1
 import QtMobility.location 1.2
 import "Services/Twitter.js" as Twitter
 import "Services/TwitLonger.js" as TwitLonger
-import "Services/Global.js" as G
 import "Component"
 import Uploader 1.0
 
@@ -406,8 +405,8 @@ Page{
                 imageUploader.setAuthorizationHeader(Twitter.getTwitterImageUploadAuthHeader())
             }
             else{
-                if(service == ImageUploader.TwitPic) imageUploader.setParameter("key", G.Global.TwitPic.API_KEY)
-                else if(service == ImageUploader.MobyPicture) imageUploader.setParameter("key", G.Global.MobyPicture.API_KEY)
+                if(service == ImageUploader.TwitPic) imageUploader.setParameter("key", constant.twitpicAPIKey)
+                else if(service == ImageUploader.MobyPicture) imageUploader.setParameter("key", constant.mobypictureAPIKey)
                 imageUploader.setParameter("message", tweetTextArea.text)
                 imageUploader.setAuthorizationHeader(Twitter.getOAuthEchoAuthHeader())
             }
@@ -461,7 +460,7 @@ Page{
         }
 
         function postTwitLongerStatusOnSuccess(data){
-            TwitLonger.postIDCallback(twitLongerId, data.id_str)
+            TwitLonger.postIDCallback(constant, twitLongerId, data.id_str)
             switch(type){
             case "New": infoBanner.alert(qsTr("Tweet sent successfully")); break;
             case "Reply": infoBanner.alert(qsTr("Reply sent successfully")); break;
@@ -479,7 +478,7 @@ Page{
 Note: The tweet content will be publicly visible even your tweet is private.")
             dialog.createQueryDialog(qsTr("Use TwitLonger?"), "", message, function(){
                 var replyScreenName = placedText ? placedText.substring(1, placedText.indexOf(" ")) : ""
-                TwitLonger.postTweet(settings.userScreenName, tweetTextArea.text, tweetId, replyScreenName,
+                TwitLonger.postTweet(constant, settings.userScreenName, tweetTextArea.text, tweetId, replyScreenName,
                                      twitLongerOnSuccess, commonOnFailure)
                 header.busy = true
             })

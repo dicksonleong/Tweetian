@@ -131,7 +131,6 @@
         <file>qml/tweetian-harmattan/UserPageCom/UserListedPage.qml</file>
         <file>qml/tweetian-harmattan/UserPageCom/UserSubscribedListsPage.qml</file>
         <file>qml/tweetian-harmattan/UserPageCom/UserTweetsPage.qml</file>
-        <file>qml/tweetian-harmattan/Services/Global.js</file>
         <file>qml/tweetian-harmattan/Image/banner_empty.jpg</file>
         <file>i18n/tweetian_en.qm</file>
         <file>i18n/tweetian_zh.qm</file>

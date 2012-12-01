@@ -18,14 +18,12 @@
 
 .pragma library
 
-Qt.include("Global.js")
-
 var URL = "http://m.nok.it/"
 
-function getMaps(latitude, longitude, width, height) {
+function getMaps(constant, latitude, longitude, width, height) {
     var parameters = {
-        app_id: Global.NokiaMaps.APP_ID,
-        token: Global.NokiaMaps.APP_TOKEN,
+        app_id: constant.nokiaMapsAppId,
+        token: constant.nokiaMapsAppToken,
         h: height,
         w: width,
         lat: latitude,

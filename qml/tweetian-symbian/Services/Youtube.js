@@ -18,15 +18,13 @@
 
 .pragma library
 
-Qt.include("Global.js")
-
 var URL = "https://gdata.youtube.com/feeds/api/videos/"
 
-function getVideoThumbnailAndLink(videoId, onSuccess) {
+function getVideoThumbnailAndLink(constant, videoId, onSuccess) {
     var request = new XMLHttpRequest()
     request.open("GET", URL + videoId + "?v=2&alt=json")
-    request.setRequestHeader("X-GData-Key", "key=" + Global.YouTube.DEV_KEY)
-    request.setRequestHeader("User-Agent", Global.USER_AGENT)
+    request.setRequestHeader("X-GData-Key", "key=" + constant.youtubeDevKey)
+    request.setRequestHeader("User-Agent", constant.userAgent)
     request.send()
     request.onreadystatechange = function(){
         if(request.readyState === XMLHttpRequest.DONE){

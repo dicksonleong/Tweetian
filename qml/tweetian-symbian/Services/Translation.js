@@ -18,19 +18,17 @@
 
 .pragma library
 
-Qt.include("Global.js")
-
 var REQUEST_TOKEN_URL = "https://datamarket.accesscontrol.windows.net/v2/OAuth2-13"
 var TRANSLATE_URL = "http://api.microsofttranslator.com/V2/Ajax.svc/Translate"
 
-function requestToken(onSuccess, onFailure) {
+function requestToken(constant, onSuccess, onFailure) {
     var parameters = {
-        client_id: Global.MSTranslation.CLIENT_ID,
-        client_secret: Global.MSTranslation.CLIENT_SECRET,
+        client_id: constant.msTranslationCliendId,
+        client_secret: constant.msTranslationCliendSecret,
         scope: "http://api.microsofttranslator.com",
         grant_type: "client_credentials"
     }
-    var body = Global.encodeParameters(parameters)
+    var body = constant.encodeParameters(parameters)
     var request = new XMLHttpRequest()
     request.open("POST", REQUEST_TOKEN_URL)
 
@@ -42,18 +40,18 @@ function requestToken(onSuccess, onFailure) {
     }
 
     request.setRequestHeader("Content-Type", "application/x-www-form-urlencoded")
-    request.setRequestHeader("User-Agent", Global.USER_AGENT)
+    request.setRequestHeader("User-Agent", constant.userAgent)
     request.send(body)
 }
 
-function translate(accessToken, text, onSuccess, onFailure){
+function translate(constant, accessToken, text, onSuccess, onFailure){
     var parameters = {
         text: text,
         to: "en",
         contentType: "text/plain",
         category: "general"
     }
-    var url = TRANSLATE_URL + "?" + Global.encodeParameters(parameters)
+    var url = TRANSLATE_URL + "?" + constant.encodeParameters(parameters)
     var request = new XMLHttpRequest()
     request.open("GET", url)
 
@@ -65,6 +63,6 @@ function translate(accessToken, text, onSuccess, onFailure){
     }
 
     request.setRequestHeader("Authorization", "Bearer" + " " + accessToken)
-    request.setRequestHeader("User-Agent", Global.USER_AGENT)
+    request.setRequestHeader("User-Agent", constant.userAgent)
     request.send()
 }

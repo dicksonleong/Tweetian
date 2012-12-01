@@ -18,11 +18,13 @@
 
 .pragma library
 
-Qt.include("Global.js")
 Qt.include("../lib/oauth.js")
 
+var OAUTH_CONSUMER_KEY
+var OAUTH_CONSUMER_SECRET
 var OAUTH_TOKEN
 var OAUTH_TOKEN_SECRET
+var USER_AGENT
 
 // OAUTH
 var REQUEST_TOKEN_URL = "https://api.twitter.com/oauth/request_token"
@@ -77,15 +79,18 @@ var POST_UNSUBSCRIBE_LIST_URL = "https://api.twitter.com/1/lists/subscribers/des
 var POST_DELETE_LIST_URL = "https://api.twitter.com/1/lists/destroy.json"
 var TWITTER_IMAGE_UPLOAD_URL = "https://upload.twitter.com/1/statuses/update_with_media.json"
 
-function setToken(token, tokenSecret){
+function init(constant, token, tokenSecret){
+    OAUTH_CONSUMER_KEY = constant.twitterConsumerKey
+    OAUTH_CONSUMER_SECRET = constant.twitterConsumerSecret
     OAUTH_TOKEN = token
     OAUTH_TOKEN_SECRET = tokenSecret
+    USER_AGENT = constant.userAgent
 }
 
 function OAuthRequest(method, url){
     this.accessor = {
-        consumerKey: Global.Twitter.OAUTH_CONSUMER_KEY,
-        consumerSecret: Global.Twitter.OAUTH_CONSUMER_SECRET,
+        consumerKey: OAUTH_CONSUMER_KEY,
+        consumerSecret: OAUTH_CONSUMER_SECRET,
         token: OAUTH_TOKEN,
         tokenSecret: OAUTH_TOKEN_SECRET
     }
@@ -120,7 +125,7 @@ OAuthRequest.prototype.sendRequest = function (onSuccess, onFailure) {
 
     request.setRequestHeader("Authorization", authorizationHeader)
     request.setRequestHeader("Content-Type", "application/x-www-form-urlencoded")
-    request.setRequestHeader("User-Agent", Global.USER_AGENT)
+    request.setRequestHeader("User-Agent", USER_AGENT)
     request.send(encoded)
 }
 
@@ -320,8 +325,8 @@ function getVerifyCredentials(onSuccess, onFailure){
 
 function postRequestToken(onSuccess, onFailure) {
     var accessor = {
-        consumerKey: Global.Twitter.OAUTH_CONSUMER_KEY,
-        consumerSecret: Global.Twitter.OAUTH_CONSUMER_SECRET
+        consumerKey: OAUTH_CONSUMER_KEY,
+        consumerSecret: OAUTH_CONSUMER_SECRET
     }
     var message = {
         action: REQUEST_TOKEN_URL,
@@ -352,14 +357,14 @@ function postRequestToken(onSuccess, onFailure) {
 
     request.setRequestHeader("Authorization", authorizationHeader)
     request.setRequestHeader("Content-Type", "application/x-www-form-urlencoded")
-    request.setRequestHeader("User-Agent", Global.USER_AGENT)
+    request.setRequestHeader("User-Agent", USER_AGENT)
     request.send()
 }
 
 function postAccessToken(token, tokenSecret, oauthVerifier, onSuccess, onFailure) {
     var accessor = {
-        consumerKey: Global.Twitter.OAUTH_CONSUMER_KEY,
-        consumerSecret: Global.Twitter.OAUTH_CONSUMER_SECRET,
+        consumerKey: OAUTH_CONSUMER_KEY,
+        consumerSecret: OAUTH_CONSUMER_SECRET,
         token: token,
         tokenSecret: tokenSecret
     }
@@ -392,7 +397,7 @@ function postAccessToken(token, tokenSecret, oauthVerifier, onSuccess, onFailure
 
     request.setRequestHeader("Authorization", authorizationHeader)
     request.setRequestHeader("Content-Type", "application/x-www-form-urlencoded")
-    request.setRequestHeader("User-Agent", Global.USER_AGENT)
+    request.setRequestHeader("User-Agent", USER_AGENT)
     request.send(body)
 }
 
@@ -490,8 +495,8 @@ function postDeleteList(listId, onSuccess, onFailure){
 // functions for generating header and url for use in C++
 function getTwitterImageUploadAuthHeader(){
     var accessor = {
-        consumerKey: Global.Twitter.OAUTH_CONSUMER_KEY,
-        consumerSecret: Global.Twitter.OAUTH_CONSUMER_SECRET,
+        consumerKey: OAUTH_CONSUMER_KEY,
+        consumerSecret: OAUTH_CONSUMER_SECRET,
         token: OAUTH_TOKEN,
         tokenSecret: OAUTH_TOKEN_SECRET
     }
@@ -505,8 +510,8 @@ function getTwitterImageUploadAuthHeader(){
 
 function getUserStreamURLAndHeader(){
     var accessor = {
-        consumerKey: Global.Twitter.OAUTH_CONSUMER_KEY,
-        consumerSecret: Global.Twitter.OAUTH_CONSUMER_SECRET,
+        consumerKey: OAUTH_CONSUMER_KEY,
+        consumerSecret: OAUTH_CONSUMER_SECRET,
         token: OAUTH_TOKEN,
         tokenSecret: OAUTH_TOKEN_SECRET
     }
@@ -523,8 +528,8 @@ function getUserStreamURLAndHeader(){
 
 function getOAuthEchoAuthHeader(){
     var accessor = {
-        consumerKey: Global.Twitter.OAUTH_CONSUMER_KEY,
-        consumerSecret: Global.Twitter.OAUTH_CONSUMER_SECRET,
+        consumerKey: OAUTH_CONSUMER_KEY,
+        consumerSecret: OAUTH_CONSUMER_SECRET,
         token: OAUTH_TOKEN,
         tokenSecret: OAUTH_TOKEN_SECRET
     }
