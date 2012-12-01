@@ -35,6 +35,9 @@ public:
     // Return the image path if save successfully or empty string if failed
     Q_INVOKABLE QString saveImage(QDeclarativeItem *imageObject);
 
+    // Return the user agent that use for set as User-Agent header when making network request
+    Q_INVOKABLE static QString userAgent();
+
 private:
     QClipboard *clipboard;
     static const QString imageSavingPath;

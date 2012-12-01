@@ -59,7 +59,7 @@ QtObject{
     property int charReservedPerMedia: 22
     property url twitterBirdIcon: settings.invertedTheme ? "Image/twitter-bird-light.png" : "Image/twitter-bird-dark.png"
 
-    property string userAgent: "Tweetian/" + APP_VERSION + " (Nokia; Qt; MeeGo Harmattan)"
+    property string userAgent: QMLUtils.userAgent()
 
     // -------- API Key/Secret ---------- //
 

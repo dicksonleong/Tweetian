@@ -20,6 +20,7 @@
 
 #include <QFile>
 #include <QFileInfo>
+#include "qmlutils.h"
 
 const QByteArray QMLUploader::boundary = "-----------485984513665493";
 
@@ -98,16 +99,7 @@ void QMLUploader::send()
     }
 
     request.setRawHeader("Content-Type", "multipart/form-data; boundary=" + boundary);
-
-    QString userAgent = "Tweetian/" + QString(APP_VERSION);
-#if defined(Q_OS_HARMATTAN)
-    userAgent += " (Nokia; Qt; MeeGo Harmattan)";
-#elif defined(Q_OS_SYMBIAN)
-    userAgent += " (Nokia; Qt; Symbian)";
-#else
-    userAgent += " (Qt; Unknown)";
-#endif
-    request.setRawHeader("User-Agent", userAgent.toAscii());
+    request.setRawHeader("User-Agent", QMLUtils::userAgent().toAscii());
 
     if(!manager) manager = new QNetworkAccessManager(this);
 

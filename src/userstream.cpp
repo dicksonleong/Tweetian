@@ -20,6 +20,7 @@
 
 #include <QNetworkRequest>
 #include <QNetworkReply>
+#include "qmlutils.h"
 
 UserStream::UserStream(QObject *parent) :
     QObject(parent), mStatus(UserStream::Disconnected), mReply(0)
@@ -57,17 +58,7 @@ void UserStream::connectToStream(const QString url, const QString authHeader)
 
     QNetworkRequest request;
     request.setUrl(QUrl(url));
-
-    QString userAgent = "Tweetian/" + QString(APP_VERSION);
-#if defined(Q_OS_HARMATTAN)
-    userAgent += " (Nokia; Qt; MeeGo Harmattan)";
-#elif defined(Q_OS_SYMBIAN)
-    userAgent += " (Nokia; Qt; Symbian)";
-#else
-    userAgent += " (Qt; Unknown)";
-#endif
-
-    request.setRawHeader("User-Agent", userAgent.toAscii());
+    request.setRawHeader("User-Agent", QMLUtils::userAgent().toAscii());
     request.setRawHeader("Content-Type", "application/x-www-form-urlencoded");
     request.setRawHeader("Authorization", authHeader.toUtf8());
     request.setRawHeader("Connection", "close");

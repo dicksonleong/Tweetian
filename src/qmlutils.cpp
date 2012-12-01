@@ -60,3 +60,20 @@ QString QMLUtils::saveImage(QDeclarativeItem *imageObject)
 
     return filePath;
 }
+
+QString QMLUtils::userAgent()
+{
+    QString ua = "Tweetian/" + QLatin1String(APP_VERSION);
+
+#if defined(Q_OS_HARMATTAN)
+    ua += " (Nokia; Qt; MeeGo/1.2; Harmattan)";
+#elif defined(Q_OS_SYMBIAN)
+    ua += " (Nokia; Qt; Symbian/3)";
+#elif defined(Q_WS_SIMULATOR)
+    ua += " (Qt; QtSimulator)";
+#else
+    ua += " (Qt; Unknown)";
+#endif
+
+    return ua;
+}
