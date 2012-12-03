@@ -22,26 +22,33 @@
 #include <QFileInfo>
 #include "qmlutils.h"
 
-const QByteArray QMLUploader::boundary = "-----------485984513665493";
+namespace {
+    const QByteArray BOUNDARY = "-----------485984513665493";
+
+    const QUrl TWITTER_UPLOAD_URL("https://upload.twitter.com/1/statuses/update_with_media.json");
+    const QUrl TWITPIC_UPLOAD_URL("http://api.twitpic.com/2/upload.json");
+    const QUrl MOBYPICTURE_UPLOAD_URL("https://api.mobypicture.com/2.0/upload.json");
+    const QUrl IMGLY_UPLOAD_URL("http://img.ly/api/2/upload.json");
+}
 
 QMLUploader::QMLUploader(QObject *parent) :
-    QObject(parent)
+    QObject(parent), mProgress(0)
 {
 }
 
-void QMLUploader::setFile(const QString fileName)
+void QMLUploader::setFile(const QString &fileName)
 {
     mFileName = fileName;
 }
 
-void QMLUploader::setAuthorizationHeader(const QString authorizationHeader)
+void QMLUploader::setAuthorizationHeader(const QString &authorizationHeader)
 {
     mAuthorizationHeader = authorizationHeader.toUtf8();
 }
 
-void QMLUploader::setParameter(const QString name, const QString value)
+void QMLUploader::setParameter(const QString &name, const QString &value)
 {
-    bodyData.append("--" + boundary + "\r\n");
+    bodyData.append("--" + BOUNDARY + "\r\n");
     bodyData.append("Content-Disposition: form-data; name=\"");
     bodyData.append(name.toUtf8());
     bodyData.append("\"\r\n\r\n");
@@ -59,7 +66,7 @@ void QMLUploader::send()
         return;
     }
 
-    bodyData.append("--" + boundary + "\r\n");
+    bodyData.append("--" + BOUNDARY + "\r\n");
     bodyData.append("Content-Disposition: form-data; name=\"");
     if(mService == QMLUploader::Twitter) bodyData.append("media[]");
     else bodyData.append("media");
@@ -79,26 +86,27 @@ void QMLUploader::send()
 
     bodyData.append(file.readAll());
     bodyData.append("\r\n");
-    bodyData.append("--" + boundary + "--\r\n\r\n");
+    bodyData.append("--" + BOUNDARY + "--\r\n\r\n");
 
     QNetworkRequest request;
 
     if(mService == QMLUploader::Twitter){
-        request.setUrl(QUrl("https://upload.twitter.com/1/statuses/update_with_media.json"));
+        request.setUrl(TWITTER_UPLOAD_URL);
         request.setRawHeader("Authorization", mAuthorizationHeader);
     }
     else{
         if(mService == QMLUploader::TwitPic)
-            request.setUrl(QUrl("http://api.twitpic.com/2/upload.json"));
+            request.setUrl(TWITPIC_UPLOAD_URL);
         else if(mService == QMLUploader::MobyPicture)
-            request.setUrl(QUrl("https://api.mobypicture.com/2.0/upload.json"));
+            request.setUrl(MOBYPICTURE_UPLOAD_URL);
         else if(mService == QMLUploader::Imgly)
-            request.setUrl(QUrl("http://img.ly/api/2/upload.json"));
+            request.setUrl(IMGLY_UPLOAD_URL);
+
         request.setRawHeader("X-Verify-Credentials-Authorization", mAuthorizationHeader);
         request.setRawHeader("X-Auth-Service-Provider", "https://api.twitter.com/1/account/verify_credentials.json");
     }
 
-    request.setRawHeader("Content-Type", "multipart/form-data; boundary=" + boundary);
+    request.setRawHeader("Content-Type", "multipart/form-data; boundary=" + BOUNDARY);
     request.setRawHeader("User-Agent", QMLUtils::userAgent().toAscii());
 
     if(!manager) manager = new QNetworkAccessManager(this);
@@ -124,6 +132,10 @@ void QMLUploader::replyFinished(QNetworkReply *reply)
 
 void QMLUploader::uploadProgress(qint64 bytesSent, qint64 bytesTotal)
 {
-    int progress = qRound( (qreal)bytesSent / (qreal)bytesTotal*100 );
-    emit progressChanged(progress);
+    qreal progress = (qreal)bytesSent / (qreal)bytesTotal;
+
+    if(mProgress != progress){
+        mProgress = progress;
+        emit progressChanged();
+    }
 }

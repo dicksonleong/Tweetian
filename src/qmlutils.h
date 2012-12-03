@@ -39,8 +39,9 @@ public:
     Q_INVOKABLE static QString userAgent();
 
 private:
+    Q_DISABLE_COPY(QMLUtils)
+
     QClipboard *clipboard;
-    static const QString imageSavingPath;
 };
 
 #endif // QMLUTILS_H

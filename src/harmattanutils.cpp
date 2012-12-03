@@ -27,13 +27,17 @@
 #include <QtDBus/QDBusInterface>
 #include <QtDBus/QDBusConnectionInterface>
 #include <QtDBus/QDBusReply>
-
-#define SHARE_UI_SERVICE "com.nokia.ShareUi"
-#define MUSIC_SUITE_SERVICE "com.nokia.music-suite"
-#define MUSIC_SUITE_INTERFACE "com.nokia.maemo.meegotouch.MusicSuiteInterface"
 #endif
 
-#define NOTIFICATION_COLDDOWN_INVERVAL 5000
+namespace {
+#ifdef Q_OS_HARMATTAN
+    const QString SHARE_UI_SERVICE = "com.nokia.ShareUi";
+    const QString MUSIC_SUITE_SERVICE = "com.nokia.music-suite";
+    const QString MUSIC_SUITE_INTERFACE = "com.nokia.maemo.meegotouch.MusicSuiteInterface";
+#endif
+
+    const int NOTIFICATION_COLDDOWN_INVERVAL = 5000;
+}
 
 HarmattanUtils::HarmattanUtils(QObject *parent) :
     QObject(parent), mentionColddown(new QTimer(this)), messageColddown(new QTimer(this))

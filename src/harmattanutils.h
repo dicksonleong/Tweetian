@@ -47,6 +47,8 @@ private slots:
     void processMediaName(const QStringList &media);
 
 private:
+    Q_DISABLE_COPY(HarmattanUtils)
+
     QTimer *mentionColddown;
     QTimer *messageColddown;
 };

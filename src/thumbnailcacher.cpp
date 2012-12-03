@@ -69,7 +69,7 @@ QString ThumbnailCacher::get(const QString &id)
         return "";
 }
 
-void ThumbnailCacher::cache(const QString &id, QDeclarativeItem *imageObj)
+void ThumbnailCacher::store(const QString &id, QDeclarativeItem *imageObj)
 {
     QString thumbFile = getThumbFilePath(id);
 

@@ -31,22 +31,21 @@ class UserStream : public QObject
     Q_PROPERTY(QDeclarativeListProperty<QObject> resources READ resources DESIGNABLE false)
     Q_CLASSINFO("DefaultProperty", "resources")
 public:
-    explicit UserStream(QObject *parent = 0);
-
     enum Status { Disconnected, Connecting, Connected };
 
-    UserStream::Status getStatus() const;
-    void setStatus(UserStream::Status status);
+    explicit UserStream(QObject *parent = 0);
+
+    Q_INVOKABLE void connectToStream(const QString &url, const QString &authHeader);
+    Q_INVOKABLE void disconnectFromStream();
+
+    Status getStatus() const;
+    void setStatus(Status status);
     QDeclarativeListProperty<QObject> resources();
 
 signals:
     void dataRecieved(const QString &rawData);
     void statusChanged();
     void disconnected(const int statusCode, const QString &errorText);
-
-public slots:
-    void connectToStream(const QString url, const QString authHeader);
-    void disconnectFromStream();
 
 private slots:
     void replyRecieved();

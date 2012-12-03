@@ -109,7 +109,7 @@ Item{
             onStatusChanged: {
                 if(status == Image.Ready){
                     imageLoadedEffect.start()
-                    if(source == root.imageSource) thumbnailCacher.cache(root.imageSource, profileImage)
+                    if(source == root.imageSource) thumbnailCacher.store(root.imageSource, profileImage)
                 }
                 else if(status == Image.Error) source = constant.twitterBirdIcon
             }

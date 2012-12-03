@@ -25,7 +25,9 @@
 #include <QDesktopServices>
 #include <QDateTime>
 
-const QString QMLUtils::imageSavingPath = QDesktopServices::storageLocation(QDesktopServices::PicturesLocation);
+namespace {
+    const QString IMAGE_SAVING_PATH = QDesktopServices::storageLocation(QDesktopServices::PicturesLocation);
+}
 
 QMLUtils::QMLUtils(QObject *parent) :
     QObject(parent), clipboard(QApplication::clipboard())
@@ -44,7 +46,7 @@ void QMLUtils::copyToClipboard(const QString &text)
 QString QMLUtils::saveImage(QDeclarativeItem *imageObject)
 {
     QString fileName = "tweetian_" + QDateTime::currentDateTime().toString("d-M-yy_h-m-s") + ".png";
-    QString filePath = imageSavingPath + "/" + fileName;
+    QString filePath = IMAGE_SAVING_PATH + "/" + fileName;
 
     QImage img(imageObject->boundingRect().size().toSize(), QImage::Format_ARGB32);
     img.fill(QColor(0,0,0,0).rgba());

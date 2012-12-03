@@ -262,6 +262,8 @@ Page{
         id: header
         headerIcon: type == "DM" ? "Image/create_message.svg" : "Image/edit.svg"
         headerText: {
+            if(imageUploader.progress > 0) return qsTr("Uploading...") + Math.round(imageUploader.progress * 100) + "%"
+
             switch(type){
             case "New": return qsTr("New Tweet")
             case "Reply": return qsTr("Reply to %1").arg(placedText.substring(0, placedText.indexOf(" ")))
@@ -391,7 +393,6 @@ Page{
             }
         }
         onFailure: script.commonOnFailure(status, statusText)
-        onProgressChanged: header.headerText = "Uploading..." + progress + "%"
 
         function run(){
             imageUploader.setFile(imagePath)

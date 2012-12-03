@@ -45,7 +45,7 @@ QDeclarativeListProperty<QObject> UserStream::resources()
     return QDeclarativeListProperty<QObject>(this, mResources);
 }
 
-void UserStream::connectToStream(const QString url, const QString authHeader)
+void UserStream::connectToStream(const QString &url, const QString &authHeader)
 {
     if(mReply != 0){
         mReply->disconnect();
@@ -99,12 +99,11 @@ void UserStream::replyRecieved()
     int length = replyData.left(replyData.indexOf("\r\n")).toInt();
 
     QByteArray jsonRawData = replyData.mid(replyData.indexOf("{"));
-    if(jsonRawData.length() == length){ // complete JSON
+
+    if(jsonRawData.length() == length) // complete JSON
         emit dataRecieved(jsonRawData);
-    }
-    else if(jsonRawData.length() < length){ // incomplete JSON
+    else if(jsonRawData.length() < length) // incomplete JSON
         mCachedResponse = replyData;
-    }
 }
 
 void UserStream::replyFinished()

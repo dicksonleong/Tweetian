@@ -27,11 +27,20 @@ class ThumbnailCacher : public QObject
 public:
     explicit ThumbnailCacher(QObject *parent = 0);
 
+    // Get a thumbnail url from local thumbnails cache based on id
+    // Return thumbnail local file path and prepended with "file:" scheme if exists
+    // Return empty string if not exists
     Q_INVOKABLE QString get(const QString &id);
-    Q_INVOKABLE void cache(const QString &id, QDeclarativeItem *imageObj);
+
+    // Store a image from imageObj to the thumbnails cache based on id
+    Q_INVOKABLE void store(const QString &id, QDeclarativeItem *imageObj);
+
+    // Clear all thumbnails from the thuubmails cache
     Q_INVOKABLE int clearAll();
 
 private:
+    Q_DISABLE_COPY(ThumbnailCacher)
+
     QString cachePath;
     inline QString getThumbFilePath(const QString &id);
 };

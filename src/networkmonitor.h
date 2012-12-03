@@ -28,7 +28,9 @@ class NetworkMonitor : public QObject
 public:
     explicit NetworkMonitor(QObject *parent = 0);
 
+    // Force set the online status to true. This is only used for workaround of a bug in Symbian.
     Q_INVOKABLE void setToOnline();
+
     bool isOnline() const;
 signals:
     void onlineChanged();
@@ -37,6 +39,8 @@ private slots:
     void checkIsOnline();
 
 private:
+    Q_DISABLE_COPY(NetworkMonitor)
+
     QNetworkConfigurationManager *networkManager;
     bool online;
 };
