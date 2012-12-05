@@ -18,12 +18,14 @@
 
 #include "qmlutils.h"
 
-#include <QApplication>
-#include <QImage>
-#include <QStyleOptionGraphicsItem>
-#include <QPainter>
-#include <QDesktopServices>
-#include <QDateTime>
+#include <QtGui/QApplication>
+#include <QtGui/QClipboard>
+#include <QtDeclarative/QDeclarativeItem>
+#include <QtGui/QImage>
+#include <QtGui/QStyleOptionGraphicsItem>
+#include <QtGui/QPainter>
+#include <QtGui/QDesktopServices>
+#include <QtCore/QDateTime>
 
 namespace {
     const QString IMAGE_SAVING_PATH = QDesktopServices::storageLocation(QDesktopServices::PicturesLocation);

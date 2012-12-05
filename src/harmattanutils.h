@@ -19,7 +19,9 @@
 #ifndef HARMATTANUTILS_H
 #define HARMATTANUTILS_H
 
-#include <QTimer>
+#include <QtCore/QObject>
+
+class QTimer;
 
 class HarmattanUtils : public QObject
 {

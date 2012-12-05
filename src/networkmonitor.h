@@ -19,7 +19,9 @@
 #ifndef NETWORKMONITOR_H
 #define NETWORKMONITOR_H
 
-#include <QNetworkConfigurationManager>
+#include <QtCore/QObject>
+
+class QNetworkConfigurationManager;
 
 class NetworkMonitor : public QObject
 {
@@ -42,7 +44,7 @@ private:
     Q_DISABLE_COPY(NetworkMonitor)
 
     QNetworkConfigurationManager *networkManager;
-    bool online;
+    bool m_online;
 };
 
 #endif // NETWORKMONITOR_H

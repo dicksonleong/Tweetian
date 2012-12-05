@@ -18,8 +18,10 @@
 
 #include "networkmonitor.h"
 
+#include <QtNetwork/QNetworkConfigurationManager>
+
 NetworkMonitor::NetworkMonitor(QObject *parent) :
-    QObject(parent), networkManager(new QNetworkConfigurationManager(this)), online(false)
+    QObject(parent), networkManager(new QNetworkConfigurationManager(this)), m_online(false)
 {
     connect(networkManager, SIGNAL(onlineStateChanged(bool)), this, SLOT(checkIsOnline()));
     connect(networkManager, SIGNAL(updateCompleted()), this, SLOT(checkIsOnline()));
@@ -31,23 +33,23 @@ bool NetworkMonitor::isOnline() const
 #ifdef Q_WS_SIMULATOR
     return true;
 #else
-    return online;
+    return m_online;
 #endif
 }
 
 void NetworkMonitor::checkIsOnline()
 {
-    bool on = networkManager->isOnline();
-    if(online != on){
-        online = on;
+    bool online = networkManager->isOnline();
+    if(m_online != online){
+        m_online = online;
         emit onlineChanged();
     }
 }
 
 void NetworkMonitor::setToOnline()
 {
-    if(online == false){
-        online = true;
+    if(m_online == false){
+        m_online = true;
         emit onlineChanged();
     }
 }

@@ -19,10 +19,11 @@
 #ifndef TWEETIANIF_H
 #define TWEETIANIF_H
 
-#include <QApplication>
-#include <QDeclarativeView>
-#include <QDeclarativeItem>
 #include <QtDBus/QDBusAbstractAdaptor>
+
+class QApplication;
+class QDeclarativeView;
+class QDeclarativeItem;
 
 class TweetianIf : public QDBusAbstractAdaptor
 {
@@ -36,7 +37,7 @@ public slots:
     void message();
 
 private:
-    QDeclarativeView *mView;
+    QDeclarativeView *m_view;
     QDeclarativeItem *qmlMainView;
 };
 

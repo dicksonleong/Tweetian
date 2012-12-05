@@ -19,9 +19,10 @@
 #ifndef QMLUPLOADER_H
 #define QMLUPLOADER_H
 
-#include <QNetworkAccessManager>
-#include <QNetworkRequest>
-#include <QNetworkReply>
+#include <QtCore/QObject>
+
+class QNetworkAccessManager;
+class QNetworkReply;
 
 class QMLUploader : public QObject
 {
@@ -39,10 +40,10 @@ public:
     Q_INVOKABLE void setParameter(const QString &name, const QString &value);
     Q_INVOKABLE void send();
 
-    Service getService() const { return mService; }
-    void setService(const Service service) { mService = service; }
+    Service getService() const { return m_service; }
+    void setService(const Service service) { m_service = service; }
 
-    qreal getProgress() const { return mProgress; }
+    qreal getProgress() const { return m_progress; }
 
 signals:
     void success(const QString &replyData);
@@ -54,11 +55,10 @@ private slots:
     void uploadProgress(qint64 bytesSent, qint64 bytesTotal);
 
 private:
-    Service mService;
-    qreal mProgress;
-
-    QString mFileName;
-    QByteArray mAuthorizationHeader;
+    Service m_service;
+    qreal m_progress;
+    QString m_fileName;
+    QByteArray m_authorizationHeader;
     QNetworkAccessManager *manager;
     QByteArray bodyData;
 };

@@ -17,13 +17,18 @@
 */
 
 #include <QtGui/QApplication>
-#include <QDeclarativeContext>
-#include <QDeclarativeView>
+#include <QtDeclarative/QDeclarativeContext>
+#include <QtDeclarative/QDeclarativeView>
+#include <QtDeclarative/qdeclarative.h>
+#include <QtCore/QTranslator>
+#include <QtCore/QLocale>
+#include <QtCore/QFile>
 #include "qmlapplicationviewer.h"
 
-#include <QTranslator>
-#include <QLocale>
-#include <QFile>
+#if defined(Q_OS_SYMBIAN) || defined(Q_WS_SIMULATOR)
+#include <QtGui/QSplashScreen>
+#include <QtGui/QPixmap>
+#endif
 
 #include "src/qmlutils.h"
 #include "src/qmluploader.h"
@@ -35,13 +40,8 @@
 #include "src/harmattanutils.h"
 #endif
 
-#if defined(Q_OS_SYMBIAN) || defined(Q_WS_SIMULATOR)
-#include <QSplashScreen>
-#include <QPixmap>
-#endif
-
 #ifdef Q_OS_HARMATTAN
-#include <QDBusConnection>
+#include <QtDBus/QDBusConnection>
 #include "src/tweetianif.h"
 #endif
 
@@ -52,10 +52,10 @@ Q_DECL_EXPORT int main(int argc, char *argv[])
     QString lang = QLocale::system().name();
     lang.truncate(2); // ignore the country code
 
-    QStringList appArg = app->arguments();
-    for(int argIndex = 0; argIndex < appArg.length(); argIndex++){
-        if(appArg.at(argIndex).startsWith("--lang=")) {
-            lang = appArg.at(argIndex).mid(7);
+    const QStringList appArgs = app->arguments();
+    foreach (const QString &arg, appArgs) {
+        if(arg.startsWith(QLatin1String("--lang="))){
+            lang = arg.mid(7);
             break;
         }
     }

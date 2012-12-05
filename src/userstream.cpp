@@ -18,40 +18,41 @@
 
 #include "userstream.h"
 
-#include <QNetworkRequest>
-#include <QNetworkReply>
+#include <QtNetwork/QNetworkAccessManager>
+#include <QtNetwork/QNetworkRequest>
+#include <QtNetwork/QNetworkReply>
 #include "qmlutils.h"
 
 UserStream::UserStream(QObject *parent) :
-    QObject(parent), mStatus(UserStream::Disconnected), mReply(0)
+    QObject(parent), m_status(UserStream::Disconnected), m_reply(0)
 {
 }
 
 UserStream::Status UserStream::getStatus() const
 {
-    return mStatus;
+    return m_status;
 }
 
 void UserStream::setStatus(UserStream::Status status)
 {
-    if(mStatus != status){
-        mStatus = status;
+    if(m_status != status){
+        m_status = status;
         emit statusChanged();
     }
 }
 
 QDeclarativeListProperty<QObject> UserStream::resources()
 {
-    return QDeclarativeListProperty<QObject>(this, mResources);
+    return QDeclarativeListProperty<QObject>(this, m_resources);
 }
 
 void UserStream::connectToStream(const QString &url, const QString &authHeader)
 {
-    if(mReply != 0){
-        mReply->disconnect();
-        mReply->abort();
-        mReply->deleteLater();
-        mReply = 0;
+    if(m_reply != 0){
+        m_reply->disconnect();
+        m_reply->abort();
+        m_reply->deleteLater();
+        m_reply = 0;
     }
 
     if(!manager) manager = new QNetworkAccessManager(this);
@@ -63,20 +64,20 @@ void UserStream::connectToStream(const QString &url, const QString &authHeader)
     request.setRawHeader("Authorization", authHeader.toUtf8());
     request.setRawHeader("Connection", "close");
 
-    mReply = manager->get(request);
-    connect(mReply, SIGNAL(readyRead()), this, SLOT(replyRecieved()));
-    connect(mReply, SIGNAL(finished()), this, SLOT(replyFinished()));
+    m_reply = manager->get(request);
+    connect(m_reply, SIGNAL(readyRead()), this, SLOT(replyRecieved()));
+    connect(m_reply, SIGNAL(finished()), this, SLOT(replyFinished()));
 
     setStatus(UserStream::Connecting);
 }
 
 void UserStream::disconnectFromStream()
 {
-    if(mReply != 0){
-        mReply->disconnect();
-        mReply->abort();
-        mReply->deleteLater();
-        mReply = 0;
+    if(m_reply != 0){
+        m_reply->disconnect();
+        m_reply->abort();
+        m_reply->deleteLater();
+        m_reply = 0;
         setStatus(UserStream::Disconnected);
     }
 }
@@ -84,16 +85,16 @@ void UserStream::disconnectFromStream()
 void UserStream::replyRecieved()
 {
     setStatus(UserStream::Connected);
-    QByteArray replyData = mReply->readAll();
+    QByteArray replyData = m_reply->readAll();
 
     if(replyData == "\r\n"){ // Keep alive newline
         emit dataRecieved("");
         return;
     }
 
-    if(!mCachedResponse.isEmpty()){
-        replyData.prepend(mCachedResponse);
-        mCachedResponse.clear();
+    if(!m_cachedResponse.isEmpty()){
+        replyData.prepend(m_cachedResponse);
+        m_cachedResponse.clear();
     }
 
     int length = replyData.left(replyData.indexOf("\r\n")).toInt();
@@ -103,23 +104,23 @@ void UserStream::replyRecieved()
     if(jsonRawData.length() == length) // complete JSON
         emit dataRecieved(jsonRawData);
     else if(jsonRawData.length() < length) // incomplete JSON
-        mCachedResponse = replyData;
+        m_cachedResponse = replyData;
 }
 
 void UserStream::replyFinished()
 {   
-    int statusCode = mReply->attribute(QNetworkRequest::HttpStatusCodeAttribute).toInt();
+    int statusCode = m_reply->attribute(QNetworkRequest::HttpStatusCodeAttribute).toInt();
     QString statusText;
 
-    if(!mReply->error())
-        statusText = mReply->attribute(QNetworkRequest::HttpReasonPhraseAttribute).toString();
+    if(!m_reply->error())
+        statusText = m_reply->attribute(QNetworkRequest::HttpReasonPhraseAttribute).toString();
     else
-        statusText = mReply->errorString();
+        statusText = m_reply->errorString();
 
     emit disconnected(statusCode, statusText);
 
-    mReply->deleteLater();
-    mReply = 0;
+    m_reply->deleteLater();
+    m_reply = 0;
 
     setStatus(UserStream::Disconnected);
 }

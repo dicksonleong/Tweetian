@@ -19,8 +19,10 @@
 #ifndef QMLUTILS_H
 #define QMLUTILS_H
 
-#include <QClipboard>
-#include <QDeclarativeItem>
+#include <QtCore/QObject>
+
+class QClipboard;
+class QDeclarativeItem;
 
 class QMLUtils : public QObject
 {

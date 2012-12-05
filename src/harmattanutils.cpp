@@ -18,6 +18,8 @@
 
 #include "harmattanutils.h"
 
+#include <QtCore/QTimer>
+
 #ifdef Q_OS_HARMATTAN
 #include <MDataUri>
 #include <maemo-meegotouch-interfaces/shareuiinterface.h>
@@ -107,10 +109,11 @@ void HarmattanUtils::clearNotification(const QString &eventType)
 {
 #ifdef Q_OS_HARMATTAN
     QList<MNotification*> activeNotifications = MNotification::notifications();
-    for(int i=0; i<activeNotifications.length(); i++){
-        if(activeNotifications.at(i)->eventType() == eventType){
-            activeNotifications.at(i)->remove();
-        }
+    QMutableListIterator<MNotification*> i(activeNotifications);
+    while(i.hasNext()){
+        MNotification* notification = i.next();
+        if(notification->eventType() == eventType)
+            notification->remove();
     }
 #else
     Q_UNUSED(eventType)

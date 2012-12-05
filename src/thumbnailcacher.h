@@ -19,7 +19,9 @@
 #ifndef THUMBNAILCACHER_H
 #define THUMBNAILCACHER_H
 
-#include <QDeclarativeItem>
+#include <QtCore/QObject>
+
+class QDeclarativeItem;
 
 class ThumbnailCacher : public QObject
 {

@@ -19,9 +19,11 @@
 #ifndef USERSTREAM_H
 #define USERSTREAM_H
 
-#include <QNetworkAccessManager>
-#include <QNetworkReply>
-#include <QDeclarativeListProperty>
+#include <QtCore/QObject>
+#include <QtDeclarative/QDeclarativeListProperty>
+
+class QNetworkAccessManager;
+class QNetworkReply;
 
 class UserStream : public QObject
 {
@@ -52,11 +54,11 @@ private slots:
     void replyFinished();
 
 private:
-    Status mStatus;
+    Status m_status;
     QNetworkAccessManager *manager;
-    QNetworkReply *mReply;
-    QByteArray mCachedResponse;
-    QList<QObject*> mResources;
+    QNetworkReply *m_reply;
+    QByteArray m_cachedResponse;
+    QList<QObject*> m_resources;
 };
 
 #endif // USERSTREAM_H

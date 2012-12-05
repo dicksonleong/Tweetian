@@ -18,13 +18,14 @@
 
 #include "thumbnailcacher.h"
 
-#include <QCryptographicHash>
-#include <QFile>
-#include <QDir>
-#include <QImage>
-#include <QPainter>
-#include <QStyleOptionGraphicsItem>
-#include <QDesktopServices>
+#include <QtCore/QCryptographicHash>
+#include <QtCore/QFile>
+#include <QtCore/QDir>
+#include <QtDeclarative/QDeclarativeItem>
+#include <QtGui/QImage>
+#include <QtGui/QPainter>
+#include <QtGui/QStyleOptionGraphicsItem>
+#include <QtGui/QDesktopServices>
 
 ThumbnailCacher::ThumbnailCacher(QObject *parent) :
     QObject(parent)
@@ -92,8 +93,8 @@ int ThumbnailCacher::clearAll()
     int deleteCount = 0;
 
     QStringList thumbFiles = QDir(cachePath).entryList();
-    for(int i=0; i<thumbFiles.length(); i++){
-        bool removed = QFile::remove(cachePath + "/" + thumbFiles.at(i));
+    foreach (const QString &thumb, thumbFiles){
+        bool removed = QFile::remove(cachePath + "/" + thumb);
         if(removed) deleteCount++;
     }
 
