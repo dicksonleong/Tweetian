@@ -76,9 +76,6 @@ symbian{
     DEFINES += APP_VERSION=\"$$VERSION\"
 }
 
-TRANSLATIONS += i18n/tweetian_en.ts \
-                i18n/tweetian_zh.ts
-
 OTHER_FILES += qtc_packaging/debian_harmattan/* \
     i18n/tweetian_*.ts \
     tweetian_harmattan.desktop \

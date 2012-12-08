@@ -1,6 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
-<!DOCTYPE TS>
-<TS version="2.0" language="zh">
+<?xml version="1.0" ?><!DOCTYPE TS><TS language="zh" version="2.0">
 <context>
     <name>AboutPage</name>
     <message>
@@ -15,7 +13,7 @@
         <location filename="../qml/tweetian-harmattan/AboutPage.qml" line="37"/>
         <location filename="../qml/tweetian-symbian/AboutPage.qml" line="39"/>
         <source>Tweetian is a feature-rich Twitter app for smartphones, powered by Qt and QML. It has a simple, native and easy-to-use UI that will surely make you enjoy the Twitter experience on your smartphone. Tweetian is open source and licensed under GPL v3.</source>
-        <translation type="unfinished"></translation>
+        <translation>Tweetian是一个功能丰富的智能机可用的Twitter客户端，用Qt跟QML编写。它为你的手机提供一个简洁，原生，易用的Twitter使用体验。Tweetian是一个基于GPL v3的开源软件。</translation>
     </message>
     <message>
         <location filename="../qml/tweetian-harmattan/AboutPage.qml" line="43"/>
@@ -39,7 +37,7 @@
         <location filename="../qml/tweetian-harmattan/AboutPage.qml" line="82"/>
         <location filename="../qml/tweetian-symbian/AboutPage.qml" line="84"/>
         <source>Powered By</source>
-        <translation type="unfinished"></translation>
+        <translation>制作者</translation>
     </message>
     <message>
         <location filename="../qml/tweetian-harmattan/AboutPage.qml" line="102"/>
@@ -62,7 +60,7 @@
     <message>
         <location filename="../qml/tweetian-symbian/AboutPage.qml" line="12"/>
         <source>Back</source>
-        <translation>回去</translation>
+        <translation>返回</translation>
     </message>
 </context>
 <context>
@@ -119,7 +117,7 @@
         <location filename="../qml/tweetian-harmattan/SettingsPageCom/AccountTabScript.js" line="10"/>
         <location filename="../qml/tweetian-symbian/SettingsPageCom/AccountTabScript.js" line="10"/>
         <source>Error signing in to Pocket (%1)</source>
-        <translation type="unfinished"></translation>
+        <translation>错误登录Pocket(%1)</translation>
     </message>
     <message>
         <location filename="../qml/tweetian-harmattan/SettingsPageCom/AccountTabScript.js" line="17"/>
@@ -131,7 +129,7 @@
         <location filename="../qml/tweetian-harmattan/SettingsPageCom/AccountTabScript.js" line="22"/>
         <location filename="../qml/tweetian-symbian/SettingsPageCom/AccountTabScript.js" line="22"/>
         <source>Error signing in to Instapaper (%1)</source>
-        <translation type="unfinished"></translation>
+        <translation>错误登录Instapaper(%1)</translation>
     </message>
     <message>
         <location filename="../qml/tweetian-harmattan/SettingsPageCom/AccountTabScript.js" line="29"/>
@@ -397,17 +395,13 @@
         <location filename="../qml/tweetian-harmattan/Utils/Calculations.js" line="36"/>
         <location filename="../qml/tweetian-symbian/Utils/Calculations.js" line="36"/>
         <source>%n hr(s)</source>
-        <translation>
-            <numerusform>%n小时</numerusform>
-        </translation>
+        <translation><numerusform>%n小时</numerusform></translation>
     </message>
     <message numerus="yes">
         <location filename="../qml/tweetian-harmattan/Utils/Calculations.js" line="37"/>
         <location filename="../qml/tweetian-symbian/Utils/Calculations.js" line="37"/>
         <source>%n min(s)</source>
-        <translation>
-            <numerusform>%n分钟</numerusform>
-        </translation>
+        <translation><numerusform>%n分钟</numerusform></translation>
     </message>
     <message>
         <location filename="../qml/tweetian-harmattan/Utils/Calculations.js" line="38"/>
@@ -479,9 +473,7 @@
         <location filename="../qml/tweetian-harmattan/MainPageCom/DirectMessage.qml" line="27"/>
         <location filename="../qml/tweetian-symbian/MainPageCom/DirectMessage.qml" line="27"/>
         <source>%n new message(s)</source>
-        <translation>
-            <numerusform>%n个新私信</numerusform>
-        </translation>
+        <translation><numerusform>%n个新私信</numerusform></translation>
     </message>
     <message>
         <location filename="../qml/tweetian-harmattan/MainPageCom/DirectMessage.qml" line="93"/>
@@ -881,7 +873,7 @@
         <location filename="../qml/tweetian-harmattan/SettingsPageCom/MuteTab.qml" line="26"/>
         <location filename="../qml/tweetian-symbian/SettingsPageCom/MuteTab.qml" line="28"/>
         <source>Mute</source>
-        <translation type="unfinished"></translation>
+        <translation>忽略</translation>
     </message>
     <message>
         <location filename="../qml/tweetian-harmattan/SettingsPageCom/MuteTab.qml" line="33"/>
@@ -1083,7 +1075,7 @@
         <location filename="../qml/tweetian-symbian/NewTweetPage.qml" line="373"/>
         <source>Your tweet is more than 140 characters. Do you want to use TwitLonger to post your tweet?
 Note: The tweet content will be publicly visible even your tweet is private.</source>
-        <translation type="unfinished"></translation>
+        <translation>你的推文超过140个字了。是否要使用TwitLonger 服务来发送这条推⏎注意：即使你的推文是加锁的，但是这条长推将是公开的。</translation>
     </message>
     <message>
         <location filename="../qml/tweetian-harmattan/NewTweetPage.qml" line="391"/>
@@ -1351,7 +1343,7 @@ Note: The tweet content will be publicly visible even your tweet is private.</so
         <location filename="../qml/tweetian-harmattan/SelectImagePage.qml" line="83"/>
         <location filename="../qml/tweetian-symbian/SelectImagePage.qml" line="94"/>
         <source>Error loading image from gallery</source>
-        <translation type="unfinished"></translation>
+        <translation>从“多媒体资料”里载入图片出错</translation>
     </message>
     <message>
         <location filename="../qml/tweetian-harmattan/SelectImagePage.qml" line="163"/>
@@ -1362,7 +1354,7 @@ Note: The tweet content will be publicly visible even your tweet is private.</so
     <message>
         <location filename="../qml/tweetian-symbian/SelectImagePage.qml" line="13"/>
         <source>Back</source>
-        <translation>回去</translation>
+        <translation>返回</translation>
     </message>
 </context>
 <context>
@@ -1458,44 +1450,44 @@ Note: The tweet content will be publicly visible even your tweet is private.</so
         <location filename="../qml/tweetian-harmattan/SettingPage.qml" line="53"/>
         <location filename="../qml/tweetian-symbian/SettingPage.qml" line="58"/>
         <source>Mute</source>
-        <translation type="unfinished"></translation>
+        <translation>忽略</translation>
     </message>
     <message>
         <location filename="../qml/tweetian-harmattan/SettingPage.qml" line="59"/>
         <location filename="../qml/tweetian-symbian/SettingPage.qml" line="64"/>
         <source>TwitLonger is a third party service that allow you to post long tweet having more than 140 characters.&lt;br&gt;More info about TwitLonger:&lt;br&gt;&lt;a href=&quot;http://www.twitlonger.com/about&quot;&gt;www.twitlonger.com/about&lt;/a&gt;&lt;br&gt;By enable this service, you agree to TwitLonger privacy policy:&lt;br&gt;&lt;a href=&quot;http://www.twitlonger.com/privacy&quot;&gt;www.twitlonger.com/privacy&lt;/a&gt;</source>
-        <translation type="unfinished"></translation>
+        <translation>TwitLonger 是第三方的服务，用于发送长于140个字的推文&lt;br&gt;查看更多关于TwitLonger的信息：&lt;br&gt;&lt;a href=&quot;http://www.twitlonger.com/about&quot;&gt;www.twitlonger.com/about&lt;/a&gt;&lt;br&gt;同意TwitLonger 隐私条款后即可使用此服务&lt;br&gt;&lt;a href=&quot;http://www.twitlonger.com/privacy&quot;&gt;www.twitlonger.com/privacy&lt;/a&gt;</translation>
     </message>
     <message>
         <location filename="../qml/tweetian-harmattan/SettingPage.qml" line="66"/>
         <location filename="../qml/tweetian-symbian/SettingPage.qml" line="71"/>
         <source>Pocket is a third party service for saving web page links so that you can read it later.&lt;br&gt;More about Pocket:&lt;br&gt;&lt;a href=&quot;http://getpocket.com/about&quot;&gt;http://getpocket.com/about&lt;/a&gt;&lt;br&gt;By signing in, you agree to Pocket privacy policy:&lt;br&gt;&lt;a href=&quot;http://getpocket.com/privacy&quot;&gt;http://getpocket.com/privacy&lt;/a&gt;</source>
-        <translation type="unfinished"></translation>
+        <translation>Pocket是第三方的服务，用于保存网页链接方便你稍后阅读&lt;br&gt;查看更多关于Pocket的信息：&lt;br&gt;&lt;a href=&quot;http://getpocket.com/about&quot;&gt;http://getpocket.com/about&lt;/a&gt;&lt;br&gt;注册并同意Pocket隐私条款后即可使用服务&lt;br&gt;&lt;a href=&quot;http://getpocket.com/privacy&quot;&gt;http://getpocket.com/privacy&lt;/a&gt;</translation>
     </message>
     <message>
         <location filename="../qml/tweetian-harmattan/SettingPage.qml" line="73"/>
         <location filename="../qml/tweetian-symbian/SettingPage.qml" line="78"/>
         <source>More about Instapaper:&lt;br&gt;&lt;a href=&quot;http://www.instapaper.com/&quot;&gt;http://www.instapaper.com/&lt;/a&gt;&lt;br&gt;By signing in, you agree to Instapaper privacy policy:&lt;br&gt;&lt;a href=&quot;http://www.instapaper.com/privacy-policy&quot;&gt;http://www.instapaper.com/privacy-policy&lt;/a&gt;</source>
-        <translation type="unfinished"></translation>
+        <translation>查看更多关于Instapaper的信息：&lt;br&gt;&lt;a href=&quot;http://www.instapaper.com/&quot;&gt;http://www.instapaper.com/&lt;/a&gt;&lt;br&gt;注册并同意Instapaper隐私条款后即可使用服务&lt;br&gt;&lt;a href=&quot;http://www.instapaper.com/privacy-policy&quot;&gt;http://www.instapaper.com/privacy-policy&lt;/a&gt;</translation>
     </message>
     <message>
         <location filename="../qml/tweetian-harmattan/SettingPage.qml" line="78"/>
         <location filename="../qml/tweetian-symbian/SettingPage.qml" line="83"/>
         <source>Mute allow you to mute tweets from your timeline with some specific keywords. Separate the keywords by space to mute tweet when ALL of the keywords are matched or separate by newline to mute tweet when ANY of the keywords are matched.
 Keywords format: @user, #hashtag, source:Tweet_Button or plain words.</source>
-        <translation type="unfinished"></translation>
+        <translation>Mute可以让你设置一些关键词来过滤一些你不想要看到的推文出现在你得时间线上。关键词之间用空格隔开，过滤结果可以匹配单个关键词或者所有关键词。⏎ 关键词格式：@用户名、#标签、客户端（可以从Tweet_Button和推文里匹配）</translation>
     </message>
     <message>
         <location filename="../qml/tweetian-harmattan/SettingPage.qml" line="83"/>
         <location filename="../qml/tweetian-symbian/SettingPage.qml" line="88"/>
         <source>Streaming enable Tweetian to deliver real time update of timeline, mentions and direct messages without the needs of refreshing periodically. Auto refresh and manual refresh will be disabled when streaming is connected. It is not recommended to enable streaming when you are on a weak internet connection (eg. mobile data).</source>
-        <translation type="unfinished"></translation>
+        <translation>Tweetian可以使用流模式来实时更新时间线，提到和密信，而不是定时刷新。当开启流模式时，自动更新与手动更新将被禁用。不建议你在网络比较差的时候使用流模式功能。</translation>
     </message>
     <message>
         <location filename="../qml/tweetian-harmattan/SettingPage.qml" line="93"/>
         <location filename="../qml/tweetian-symbian/SettingPage.qml" line="100"/>
         <source>This action will clear all temporary caches and database. Twitter credential and app settings will not be reset. Continue?</source>
-        <translation type="unfinished"></translation>
+        <translation>这个操作将会清楚客户端的缓存和数据库。Twitter的验证数据跟程序的设置也将被重置。是否继续？</translation>
     </message>
     <message>
         <location filename="../qml/tweetian-harmattan/SettingPage.qml" line="95"/>
@@ -1546,13 +1538,13 @@ Keywords format: @user, #hashtag, source:Tweet_Button or plain words.</source>
         <location filename="../qml/tweetian-symbian/SettingsPageCom/SettingRefreshTab.qml" line="17"/>
         <location filename="../qml/tweetian-symbian/SettingsPageCom/SettingRefreshTab.qml" line="25"/>
         <source>Streaming</source>
-        <translation type="unfinished"></translation>
+        <translation>流模式</translation>
     </message>
     <message>
         <location filename="../qml/tweetian-harmattan/SettingsPageCom/SettingRefreshTab.qml" line="21"/>
         <location filename="../qml/tweetian-symbian/SettingsPageCom/SettingRefreshTab.qml" line="21"/>
         <source>Enable streaming</source>
-        <translation type="unfinished"></translation>
+        <translation>允许流模式</translation>
     </message>
     <message>
         <location filename="../qml/tweetian-harmattan/SettingsPageCom/SettingRefreshTab.qml" line="28"/>
@@ -1584,9 +1576,7 @@ Keywords format: @user, #hashtag, source:Tweet_Button or plain words.</source>
         <location filename="../qml/tweetian-symbian/SettingsPageCom/SettingRefreshTab.qml" line="43"/>
         <location filename="../qml/tweetian-symbian/SettingsPageCom/SettingRefreshTab.qml" line="53"/>
         <source>%n min(s)</source>
-        <translation>
-            <numerusform>%n分钟</numerusform>
-        </translation>
+        <translation><numerusform>%n分钟</numerusform></translation>
     </message>
     <message>
         <location filename="../qml/tweetian-harmattan/SettingsPageCom/SettingRefreshTab.qml" line="33"/>
@@ -1596,7 +1586,7 @@ Keywords format: @user, #hashtag, source:Tweet_Button or plain words.</source>
         <location filename="../qml/tweetian-symbian/SettingsPageCom/SettingRefreshTab.qml" line="43"/>
         <location filename="../qml/tweetian-symbian/SettingsPageCom/SettingRefreshTab.qml" line="53"/>
         <source>Disabled</source>
-        <translation type="unfinished"></translation>
+        <translation>不允许</translation>
     </message>
     <message>
         <location filename="../qml/tweetian-harmattan/SettingsPageCom/SettingRefreshTab.qml" line="42"/>
@@ -1669,13 +1659,13 @@ Keywords format: @user, #hashtag, source:Tweet_Button or plain words.</source>
         <location filename="../qml/tweetian-harmattan/SignInPage.qml" line="86"/>
         <location filename="../qml/tweetian-symbian/SignInPage.qml" line="88"/>
         <source>Server or connection error. Click the refresh button to try again.</source>
-        <translation type="unfinished"></translation>
+        <translation>服务器或连接错误。请点击刷新按钮再试一次。</translation>
     </message>
     <message>
         <location filename="../qml/tweetian-harmattan/SignInPage.qml" line="88"/>
         <location filename="../qml/tweetian-symbian/SignInPage.qml" line="90"/>
         <source>Error: %1. Make sure the time/date of your phone is set correctly.</source>
-        <translation type="unfinished"></translation>
+        <translation>错误：%1。请确保您手机的时间/日期设置正确。</translation>
     </message>
     <message>
         <location filename="../qml/tweetian-symbian/SignInPage.qml" line="16"/>
@@ -1694,13 +1684,13 @@ Keywords format: @user, #hashtag, source:Tweet_Button or plain words.</source>
         <location filename="../qml/tweetian-harmattan/MainPageCom/StreamingHeader.qml" line="26"/>
         <location filename="../qml/tweetian-symbian/MainPageCom/StreamingHeader.qml" line="26"/>
         <source>Streaming...</source>
-        <translation type="unfinished"></translation>
+        <translation>刷新中</translation>
     </message>
     <message>
         <location filename="../qml/tweetian-harmattan/MainPageCom/StreamingHeader.qml" line="26"/>
         <location filename="../qml/tweetian-symbian/MainPageCom/StreamingHeader.qml" line="26"/>
         <source>Connecting to streaming</source>
-        <translation type="unfinished"></translation>
+        <translation>连接到流模式</translation>
     </message>
     <message>
         <location filename="../qml/tweetian-harmattan/MainPageCom/StreamingHeader.qml" line="27"/>
@@ -1880,7 +1870,7 @@ Keywords format: @user, #hashtag, source:Tweet_Button or plain words.</source>
         <location filename="../qml/tweetian-harmattan/TweetImage.qml" line="179"/>
         <location filename="../qml/tweetian-symbian/TweetImage.qml" line="183"/>
         <source>Error loading image</source>
-        <translation type="unfinished"></translation>
+        <translation>加载图像错误</translation>
     </message>
     <message>
         <location filename="../qml/tweetian-symbian/TweetImage.qml" line="14"/>
@@ -1909,9 +1899,7 @@ Keywords format: @user, #hashtag, source:Tweet_Button or plain words.</source>
         <location filename="../qml/tweetian-harmattan/MainPageCom/TweetListView.qml" line="141"/>
         <location filename="../qml/tweetian-symbian/MainPageCom/TweetListView.qml" line="139"/>
         <source>%n new mention(s)</source>
-        <translation>
-            <numerusform>%n个新提及</numerusform>
-        </translation>
+        <translation><numerusform>%n个新提及</numerusform></translation>
     </message>
 </context>
 <context>
@@ -1962,13 +1950,13 @@ Keywords format: @user, #hashtag, source:Tweet_Button or plain words.</source>
         <location filename="../qml/tweetian-harmattan/TweetPage.qml" line="324"/>
         <location filename="../qml/tweetian-symbian/TweetPage.qml" line="355"/>
         <source>Error opening link: %1</source>
-        <translation type="unfinished"></translation>
+        <translation>打开链接错误：%1</translation>
     </message>
     <message>
         <location filename="../qml/tweetian-harmattan/TweetPage.qml" line="326"/>
         <location filename="../qml/tweetian-symbian/TweetPage.qml" line="357"/>
         <source>Streaming link is not available</source>
-        <translation type="unfinished"></translation>
+        <translation>流链接无法实现</translation>
     </message>
     <message>
         <location filename="../qml/tweetian-harmattan/TweetPage.qml" line="357"/>
@@ -1980,7 +1968,7 @@ Keywords format: @user, #hashtag, source:Tweet_Button or plain words.</source>
         <location filename="../qml/tweetian-harmattan/TweetPage.qml" line="381"/>
         <location filename="../qml/tweetian-symbian/TweetPage.qml" line="412"/>
         <source>In-reply-to â†‘</source>
-        <translation type="unfinished"></translation>
+        <translation>回复给 â†‘</translation>
     </message>
     <message>
         <location filename="../qml/tweetian-harmattan/TweetPage.qml" line="387"/>
@@ -2049,7 +2037,7 @@ Keywords format: @user, #hashtag, source:Tweet_Button or plain words.</source>
         <location filename="../qml/tweetian-harmattan/TweetPageJS.js" line="17"/>
         <location filename="../qml/tweetian-symbian/TweetPageJS.js" line="17"/>
         <source>Reported and blocked the user %1 successfully</source>
-        <translation type="unfinished"></translation>
+        <translation>成功举报和屏蔽用户 %1</translation>
     </message>
     <message>
         <location filename="../qml/tweetian-harmattan/TweetPageJS.js" line="22"/>
@@ -2067,7 +2055,7 @@ Keywords format: @user, #hashtag, source:Tweet_Button or plain words.</source>
         <location filename="../qml/tweetian-harmattan/TweetPageJS.js" line="95"/>
         <location filename="../qml/tweetian-symbian/TweetPageJS.js" line="95"/>
         <source>You are not sign in to your Pocket account. Please sign in to your Pocket account first under the &quot;Account&quot; tab in the Settings.</source>
-        <translation type="unfinished"></translation>
+        <translation>你还没有登录到你的Pocket帐户。请登录到你的Pocket帐户在设置下的“帐户”选项卡。</translation>
     </message>
     <message>
         <location filename="../qml/tweetian-harmattan/TweetPageJS.js" line="96"/>
@@ -2079,7 +2067,7 @@ Keywords format: @user, #hashtag, source:Tweet_Button or plain words.</source>
         <location filename="../qml/tweetian-harmattan/TweetPageJS.js" line="108"/>
         <location filename="../qml/tweetian-symbian/TweetPageJS.js" line="108"/>
         <source>You are not sign in to your Instapaper account. Please sign in to your Instapaper account first under the &quot;Account&quot; tab in the Settings.</source>
-        <translation type="unfinished"></translation>
+        <translation>你还没有登录到你的Instapaper帐户。请登录到你的Instapaper帐户在设置下的“帐户”选项卡。</translation>
     </message>
     <message>
         <location filename="../qml/tweetian-harmattan/TweetPageJS.js" line="109"/>
@@ -2097,7 +2085,7 @@ Keywords format: @user, #hashtag, source:Tweet_Button or plain words.</source>
         <location filename="../qml/tweetian-harmattan/TweetPageJS.js" line="126"/>
         <location filename="../qml/tweetian-symbian/TweetPageJS.js" line="126"/>
         <source>Error sending link to Pocket (%1)</source>
-        <translation type="unfinished"></translation>
+        <translation>无法发送链接到Pocket (%1)</translation>
     </message>
     <message>
         <location filename="../qml/tweetian-harmattan/TweetPageJS.js" line="131"/>
@@ -2109,7 +2097,7 @@ Keywords format: @user, #hashtag, source:Tweet_Button or plain words.</source>
         <location filename="../qml/tweetian-harmattan/TweetPageJS.js" line="136"/>
         <location filename="../qml/tweetian-symbian/TweetPageJS.js" line="136"/>
         <source>Error sending link to Instapaper (%1)</source>
-        <translation type="unfinished"></translation>
+        <translation>无法发送链接到Instapaper (%1)</translation>
     </message>
     <message>
         <location filename="../qml/tweetian-harmattan/TweetPageJS.js" line="161"/>
@@ -2175,7 +2163,7 @@ Keywords format: @user, #hashtag, source:Tweet_Button or plain words.</source>
         <location filename="../qml/tweetian-harmattan/UserPageCom/UserFollowersPage.qml" line="44"/>
         <location filename="../qml/tweetian-symbian/UserPageCom/UserFollowersPage.qml" line="44"/>
         <source>Error: No user to load?!</source>
-        <translation type="unfinished"></translation>
+        <translation>错误：没有用户可载入啊？！</translation>
     </message>
 </context>
 <context>
@@ -2196,7 +2184,7 @@ Keywords format: @user, #hashtag, source:Tweet_Button or plain words.</source>
         <location filename="../qml/tweetian-harmattan/UserPageCom/UserFollowingPage.qml" line="44"/>
         <location filename="../qml/tweetian-symbian/UserPageCom/UserFollowingPage.qml" line="44"/>
         <source>Error: No user to load?!</source>
-        <translation type="unfinished"></translation>
+        <translation>错误：没有用户可载入啊？！</translation>
     </message>
 </context>
 <context>
@@ -2232,7 +2220,7 @@ Keywords format: @user, #hashtag, source:Tweet_Button or plain words.</source>
         <location filename="../qml/tweetian-harmattan/UserPage.qml" line="90"/>
         <location filename="../qml/tweetian-symbian/UserPage.qml" line="95"/>
         <source>Report user as spammer</source>
-        <translation type="unfinished"></translation>
+        <translation>举报用户为SPAM</translation>
     </message>
     <message>
         <location filename="../qml/tweetian-harmattan/UserPage.qml" line="285"/>
@@ -2310,13 +2298,13 @@ Keywords format: @user, #hashtag, source:Tweet_Button or plain words.</source>
         <location filename="../qml/tweetian-harmattan/UserPage.qml" line="331"/>
         <location filename="../qml/tweetian-symbian/UserPage.qml" line="336"/>
         <source>Reported and blocked the user %1 successfully</source>
-        <translation type="unfinished"></translation>
+        <translation>成功举报和屏蔽用户 %1</translation>
     </message>
     <message>
         <location filename="../qml/tweetian-harmattan/UserPage.qml" line="341"/>
         <location filename="../qml/tweetian-symbian/UserPage.qml" line="346"/>
         <source>Do you want to report and block the user %1 ?</source>
-        <translation type="unfinished"></translation>
+        <translation>你是否要举报和屏蔽用户 %1 ？</translation>
     </message>
     <message>
         <location filename="../qml/tweetian-harmattan/UserPage.qml" line="350"/>
@@ -2334,7 +2322,7 @@ Keywords format: @user, #hashtag, source:Tweet_Button or plain words.</source>
         <location filename="../qml/tweetian-harmattan/UserPage.qml" line="342"/>
         <location filename="../qml/tweetian-symbian/UserPage.qml" line="347"/>
         <source>Report Spammer</source>
-        <translation type="unfinished"></translation>
+        <translation>举报SPAM</translation>
     </message>
     <message>
         <location filename="../qml/tweetian-harmattan/UserPage.qml" line="349"/>
@@ -2351,7 +2339,7 @@ Keywords format: @user, #hashtag, source:Tweet_Button or plain words.</source>
     <message>
         <location filename="../qml/tweetian-symbian/UserPage.qml" line="54"/>
         <source>Back</source>
-        <translation>回去</translation>
+        <translation>返回</translation>
     </message>
     <message>
         <location filename="../qml/tweetian-symbian/UserPage.qml" line="60"/>
@@ -2391,7 +2379,7 @@ Keywords format: @user, #hashtag, source:Tweet_Button or plain words.</source>
     <message>
         <location filename="../qml/tweetian-symbian/UserSearchPage.qml" line="32"/>
         <source>Back</source>
-        <translation>回去</translation>
+        <translation>返回</translation>
     </message>
 </context>
 <context>
@@ -2436,7 +2424,7 @@ Keywords format: @user, #hashtag, source:Tweet_Button or plain words.</source>
         <location filename="../qml/tweetian-harmattan/main.qml" line="31"/>
         <location filename="../qml/tweetian-symbian/main.qml" line="49"/>
         <source>Error: %1</source>
-        <translation type="unfinished"></translation>
+        <translation>错误。%1</translation>
     </message>
 </context>
 </TS>

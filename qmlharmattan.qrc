@@ -132,7 +132,16 @@
         <file>qml/tweetian-harmattan/UserPageCom/UserSubscribedListsPage.qml</file>
         <file>qml/tweetian-harmattan/UserPageCom/UserTweetsPage.qml</file>
         <file>qml/tweetian-harmattan/Image/banner_empty.jpg</file>
+        <file>i18n/tweetian_ca.qm</file>
+        <file>i18n/tweetian_de.qm</file>
         <file>i18n/tweetian_en.qm</file>
+        <file>i18n/tweetian_es.qm</file>
+        <file>i18n/tweetian_eu.qm</file>
+        <file>i18n/tweetian_fr.qm</file>
+        <file>i18n/tweetian_it.qm</file>
+        <file>i18n/tweetian_pt.qm</file>
+        <file>i18n/tweetian_ru.qm</file>
+        <file>i18n/tweetian_tr.qm</file>
         <file>i18n/tweetian_zh.qm</file>
     </qresource>
 </RCC>
