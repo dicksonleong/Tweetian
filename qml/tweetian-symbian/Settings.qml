@@ -24,40 +24,15 @@ QtObject{
 
     signal settingsLoaded
 
-    // TODO: QSettings
+    // TODO: Use QSettings but some of the values like oauthToken & pocketPassword can not store as plain text
     function loadSettings(){
         Database.initializeSettings()
-        var request = ["oauthToken", "oauthTokenSecret", "userScreenName", "userFullName", "userProfileImage",
-                       "timelineLastUpdate", "mentionsLastUpdate", "directMsgLastUpdate",
-                       "trendsLocationWoeid", "imageUploadService",
-                       "invertedTheme", "hashtagsInReply", "enableTwitLonger", "largeFontSize",
-                       "enableStreaming" ,"timelineRefreshFreq", "mentionsRefreshFreq", "directMsgRefreshFreq",
-                       "pocketUsername", "pocketPassword",
-                       "instapaperToken", "instapaperTokenSecret", "muteString"]
-        var settingsArray = Database.getSetting(request)
-        oauthToken = settingsArray[0]
-        oauthTokenSecret = settingsArray[1]
-        userScreenName = settingsArray[2]
-        userFullName = settingsArray[3]
-        userProfileImage = settingsArray[4]
-        timelineLastUpdate = settingsArray[5]
-        mentionsLastUpdate = settingsArray[6]
-        directMsgLastUpdate = settingsArray[7]
-        if(settingsArray[8]) trendsLocationWoeid = settingsArray[8]
-        if(settingsArray[9]) imageUploadService = settingsArray[9]
-        invertedTheme = settingsArray[10] === "true"
-        hashtagsInReply = settingsArray[11] !== "false"
-        enableTwitLonger = settingsArray[12] === "true"
-        largeFontSize = settingsArray[13] === "true"
-        enableStreaming = settingsArray[14] === "true"
-        if(settingsArray[15]) timelineRefreshFreq = settingsArray[15]
-        if(settingsArray[16]) mentionsRefreshFreq = settingsArray[16]
-        if(settingsArray[17]) directMsgRefreshFreq = settingsArray[17]
-        if(settingsArray[18]) pocketUsername = settingsArray[18]
-        if(settingsArray[19]) pocketPassword = settingsArray[19]
-        if(settingsArray[20]) instapaperToken = settingsArray[20]
-        if(settingsArray[21]) instapaperTokenSecret = settingsArray[21]
-        muteString = settingsArray[22]
+        var results = Database.getAllSettings()
+        for(var s in results){
+            if(settings.hasOwnProperty(s)) {
+                settings[s] = results[s]
+            }
+        }
         Database.initializeTweetsTable("Timeline")
         Database.initializeTweetsTable("Mentions")
         Database.initializeDirectMsg()
@@ -70,9 +45,6 @@ QtObject{
         userScreenName = ""
         userFullName = ""
         userProfileImage = ""
-        timelineLastUpdate = ""
-        mentionsLastUpdate = ""
-        directMsgLastUpdate = ""
         trendsLocationWoeid = "1"
         imageUploadService = 0
         invertedTheme = false
@@ -92,55 +64,49 @@ QtObject{
     }
 
     property string oauthToken: ""
-    onOauthTokenChanged: Database.setSetting([["oauthToken", oauthToken]])
+    onOauthTokenChanged: Database.setSetting({"oauthToken": oauthToken})
     property string oauthTokenSecret: ""
-    onOauthTokenSecretChanged: Database.setSetting([["oauthTokenSecret", oauthTokenSecret]])
+    onOauthTokenSecretChanged: Database.setSetting({"oauthTokenSecret": oauthTokenSecret})
     property string userScreenName: ""
-    onUserScreenNameChanged: Database.setSetting([["userScreenName", userScreenName]])
+    onUserScreenNameChanged: Database.setSetting({"userScreenName": userScreenName})
     property string userFullName: ""
-    onUserFullNameChanged: Database.setSetting([["userFullName", userFullName]])
+    onUserFullNameChanged: Database.setSetting({"userFullName": userFullName})
     property string userProfileImage: ""
-    onUserProfileImageChanged: Database.setSetting([["userProfileImage", userProfileImage]])
-
-    //those settings is set directly using storage.js from the ListView as this object have been destroyed
-    //when ListView onDestruction is triggered
-    property string timelineLastUpdate: ""
-    property string mentionsLastUpdate: ""
-    property string directMsgLastUpdate: ""
+    onUserProfileImageChanged: Database.setSetting({"userProfileImage": userProfileImage})
 
     property string trendsLocationWoeid: "1"
-    onTrendsLocationWoeidChanged: Database.setSetting([["trendsLocationWoeid", trendsLocationWoeid]])
+    onTrendsLocationWoeidChanged: Database.setSetting({"trendsLocationWoeid": trendsLocationWoeid})
     property int imageUploadService: 0
-    onImageUploadServiceChanged: Database.setSetting([["imageUploadService", imageUploadService.toString()]])
+    onImageUploadServiceChanged: Database.setSetting({"imageUploadService": imageUploadService.toString()})
 
     property bool invertedTheme: false
-    onInvertedThemeChanged: Database.setSetting([["invertedTheme", invertedTheme.toString()]])
+    onInvertedThemeChanged: Database.setSetting({"invertedTheme": invertedTheme.toString()})
     property bool hashtagsInReply: true
-    onHashtagsInReplyChanged: Database.setSetting([["hashtagsInReply", hashtagsInReply.toString()]])
+    onHashtagsInReplyChanged: Database.setSetting({"hashtagsInReply": hashtagsInReply.toString()})
     property bool enableTwitLonger: false
-    onEnableTwitLongerChanged: Database.setSetting([["enableTwitLonger", enableTwitLonger.toString()]])
+    onEnableTwitLongerChanged: Database.setSetting({"enableTwitLonger": enableTwitLonger.toString()})
     property bool largeFontSize: false
-    onLargeFontSizeChanged: Database.setSetting([["largeFontSize", largeFontSize.toString()]])
+    onLargeFontSizeChanged: Database.setSetting({"largeFontSize": largeFontSize.toString()})
 
     property bool enableStreaming: false
-    onEnableStreamingChanged: Database.setSetting([["enableStreaming", enableStreaming.toString()]])
+    onEnableStreamingChanged: Database.setSetting({"enableStreaming": enableStreaming.toString()})
     property int timelineRefreshFreq: 0
-    onTimelineRefreshFreqChanged: Database.setSetting([["timelineRefreshFreq", timelineRefreshFreq.toString()]])
+    onTimelineRefreshFreqChanged: Database.setSetting({"timelineRefreshFreq": timelineRefreshFreq.toString()})
     property int mentionsRefreshFreq: 0
-    onMentionsRefreshFreqChanged: Database.setSetting([["mentionsRefreshFreq", mentionsRefreshFreq.toString()]])
+    onMentionsRefreshFreqChanged: Database.setSetting({"mentionsRefreshFreq": mentionsRefreshFreq.toString()})
     property int directMsgRefreshFreq: 0
-    onDirectMsgRefreshFreqChanged: Database.setSetting([["directMsgRefreshFreq", directMsgRefreshFreq.toString()]])
+    onDirectMsgRefreshFreqChanged: Database.setSetting({"directMsgRefreshFreq": directMsgRefreshFreq.toString()})
 
     property string pocketUsername: ""
-    onPocketUsernameChanged: Database.setSetting([["pocketUsername", pocketUsername]])
+    onPocketUsernameChanged: Database.setSetting({"pocketUsername": pocketUsername})
     property string pocketPassword: ""
-    onPocketPasswordChanged: Database.setSetting([["pocketPassword", pocketPassword]])
+    onPocketPasswordChanged: Database.setSetting({"pocketPassword": pocketPassword})
 
     property string instapaperToken: ""
-    onInstapaperTokenChanged: Database.setSetting([["instapaperToken", instapaperToken]])
+    onInstapaperTokenChanged: Database.setSetting({"instapaperToken": instapaperToken})
     property string instapaperTokenSecret: ""
-    onInstapaperTokenSecretChanged: Database.setSetting([["instapaperTokenSecret", instapaperTokenSecret]])
+    onInstapaperTokenSecretChanged: Database.setSetting({"instapaperTokenSecret": instapaperTokenSecret})
 
     property string muteString: ""
-    onMuteStringChanged: Database.setSetting([["muteString", muteString]])
+    onMuteStringChanged: Database.setSetting({"muteString": muteString})
 }

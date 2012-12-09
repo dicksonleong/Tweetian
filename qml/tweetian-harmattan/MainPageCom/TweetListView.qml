@@ -177,7 +177,8 @@ Item{
             }
             else if(messageObject.type === "database") {
                 if(tweetView.count > 0) {
-                    tweetView.lastUpdate = type == "Timeline" ? settings.timelineLastUpdate : settings.mentionsLastUpdate
+                    if(type === "Timeline") tweetView.lastUpdate = Database.getSetting("timelineLastUpdate")
+                    else tweetView.lastUpdate = Database.getSetting("mentionsLastUpdate")
                     refresh("newer")
                 }
                 else refresh("all")
@@ -187,8 +188,8 @@ Item{
     }
 
     Component.onDestruction: {
-        Database.setSetting([[type == "Timeline" ? "timelineIndex" : "mentionsIndex", tweetView.indexAt(tweetView.contentX, tweetView.contentY)],
-                             [type == "Timeline" ? "timelineLastUpdate" : "mentionsLastUpdate", tweetView.lastUpdate]])
+        if(type === "Timeline") Database.setSetting({"timelineLastUpdate": tweetView.lastUpdate})
+        else Database.setSetting({"mentionsLastUpdate": tweetView.lastUpdate})
         var tweets = []
         for(var i=0; i<Math.min(100, tweetView.count); i++){
             var tweetObj = {

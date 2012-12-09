@@ -59,7 +59,7 @@ Item{
         }
         else if(type == "database") {
             if(fullModel.count > 0) {
-                directMsgView.lastUpdate = settings.directMsgLastUpdate
+                directMsgView.lastUpdate = Database.getSetting("directMsgLastUpdate")
                 refresh("newer")
             }
             else{
@@ -205,7 +205,7 @@ Item{
     }
 
     Component.onDestruction: {
-        Database.setSetting([["directMsgLastUpdate", directMsgView.lastUpdate]])
+        Database.setSetting({"directMsgLastUpdate": directMsgView.lastUpdate})
         var directMsgs = []
         for(var i=0; i<Math.min(100, fullModel.count); i++){
             var directMsgObj = {

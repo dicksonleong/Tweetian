@@ -26,29 +26,30 @@ function initializeSettings() {
     })
 }
 
-//"settings" must be a double dimensional array, eg. [["setting1", "value1"], ["setting2", "value2"], ...]
+// @param settings - key/value pair object of settings eg. { setting1: value1, setting2: value2 }
 function setSetting(settings) {
     db.transaction(function(tx) {
-        for(var i=0; i<settings.length; i++){
-            var rs = tx.executeSql('INSERT OR REPLACE INTO settings VALUES (?,?);', [settings[i][0],settings[i][1]])
+        for(var s in settings){
+            tx.executeSql('INSERT OR REPLACE INTO settings VALUES (?,?);', [s, settings[s]])
         }
     })
 }
 
-//"setting" can be a string or array of settings
 function getSetting(setting) {
-    var res
+    var res = ""
     db.readTransaction(function(tx) {
-        if(setting instanceof Array){
-            res = []
-            for(var i=0; i<setting.length; i++){
-                var rs = tx.executeSql('SELECT value FROM settings WHERE setting=?;', [setting[i]])
-                res.push(rs.rows.length > 0 ? rs.rows.item(0).value : "")
-            }
-        }
-        else{
-            var rs2 = tx.executeSql('SELECT value FROM settings WHERE setting=?;', [setting])
-            res = rs.rows.length > 0 ? rs.rows.item(0).length : ""
+        var rs = tx.executeSql('SELECT value FROM settings WHERE setting=?;', [setting])
+        if(rs.rows.length > 0) res = rs.rows.item(0).value
+    })
+    return res
+}
+
+function getAllSettings(){
+    var res = {}
+    db.readTransaction(function(tx) {
+        var rs = tx.executeSql('SELECT * FROM settings;')
+        for(var i=0; i<rs.rows.length; i++){
+            res[rs.rows.item(i).setting] = rs.rows.item(i).value
         }
     })
     return res
