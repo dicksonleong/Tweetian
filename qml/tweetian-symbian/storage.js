@@ -22,7 +22,7 @@ var db = openDatabaseSync("Tweetian", "1.0", "Tweetian Database", 1000000);
 
 function initializeSettings() {
     db.transaction(function(tx) {
-        tx.executeSql('CREATE TABLE IF NOT EXISTS settings(setting TEXT UNIQUE, value TEXT)');
+        tx.executeSql('CREATE TABLE IF NOT EXISTS settings(setting TEXT UNIQUE, value TEXT);');
     })
 }
 
@@ -79,29 +79,21 @@ function initializeTweetsTable(tableName){
     )
 }
 
-function storeTweets(tableName, tweets){
+function storeTweets(tableName, model){
     db.transaction(function(tx){
         tx.executeSql('DELETE FROM ' + tableName)
-        for(var i=0; i<tweets.length; i++){
-            tx.executeSql('INSERT OR REPLACE INTO '+ tableName +' VALUES(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?);',
-                                   [tweets[i].createdAt.toString(),
-                                    tweets[i].displayScreenName,
-                                    tweets[i].displayTweetText,
-                                    tweets[i].favourited,
-                                    tweets[i].inReplyToScreenName,
-                                    tweets[i].inReplyToStatusId,
-                                    tweets[i].latitude,
-                                    tweets[i].longitude,
-                                    tweets[i].mediaExpandedUrl,
-                                    tweets[i].mediaViewUrl,
-                                    tweets[i].mediaThumbnail,
-                                    tweets[i].profileImageUrl,
-                                    tweets[i].retweetId,
-                                    tweets[i].screenName,
-                                    tweets[i].source,
-                                    tweets[i].tweetId,
-                                    tweets[i].tweetText,
-                                    tweets[i].userName])
+        for(var i=0; i<Math.min(model.count, 100); i++){
+            var sqlText = 'INSERT INTO ' + tableName + ' VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?);'
+            var binding = [model.get(i).createdAt.toString(), model.get(i).displayScreenName,
+                           model.get(i).displayTweetText, (model.get(i).favourited ? 1 : 0),
+                           model.get(i).inReplyToScreenName, model.get(i).inReplyToStatusId,
+                           model.get(i).latitude, model.get(i).longitude,
+                           model.get(i).mediaExpandedUrl, model.get(i).mediaViewUrl,
+                           model.get(i).mediaThumbnail, model.get(i).profileImageUrl,
+                           model.get(i).retweetId, model.get(i).screenName,
+                           model.get(i).source, model.get(i).tweetId,
+                           model.get(i).tweetText, model.get(i).userName]
+            tx.executeSql(sqlText, binding)
         }
     })
 }
@@ -109,9 +101,9 @@ function storeTweets(tableName, tweets){
 function getTweets(tableName){
     var tweets = []
     db.readTransaction(function(tx){
-        var rs = tx.executeSql('SELECT * FROM '+ tableName +' ORDER BY tweetId DESC')
+        var rs = tx.executeSql('SELECT * FROM '+ tableName +' ORDER BY tweetId DESC;')
         for(var i=0; i<rs.rows.length; i++){
-            tweets[i] = new Object(rs.rows.item(i))
+            tweets.push(rs.rows.item(i))
         }
     })
     return tweets
@@ -126,22 +118,20 @@ function initializeDirectMsg(){
                       'tweetText TEXT,' +
                       'profileImageUrl TEXT,' +
                       'createdAt TEXT,' +
-                      'sentMsg INTEGER)')}
+                      'sentMsg INTEGER);')}
     )
 }
 
-function storeDM(dm){
+function storeDM(model){
     db.transaction(function(tx){
         tx.executeSql('DELETE FROM DirectMsg')
-        for(var i=0;i<dm.length;i++){
-            tx.executeSql('INSERT OR REPLACE INTO DirectMsg VALUES(?,?,?,?,?,?,?);',
-                                   [dm[i].tweetId,
-                                    dm[i].userName,
-                                    dm[i].screenName,
-                                    dm[i].tweetText,
-                                    dm[i].profileImageUrl,
-                                    dm[i].createdAt.toString(),
-                                    dm[i].sentMsg])
+        for(var i=0; i<Math.min(model.count, 100); i++){
+            var sqlText = 'INSERT INTO DirectMsg VALUES (?,?,?,?,?,?,?);'
+            var binding = [model.get(i).tweetId, model.get(i).userName,
+                           model.get(i).screenName, model.get(i).tweetText,
+                           model.get(i).profileImageUrl, model.get(i).createdAt.toString(),
+                           (model.get(i).sentMsg ? 1 : 0)]
+            tx.executeSql(sqlText, binding)
         }
     })
 }
@@ -149,9 +139,9 @@ function storeDM(dm){
 function getDM(){
     var dm = []
     db.readTransaction(function(tx){
-        var rs = tx.executeSql('SELECT * FROM DirectMsg ORDER BY tweetId DESC')
+        var rs = tx.executeSql('SELECT * FROM DirectMsg ORDER BY tweetId DESC;')
         for(var i=0; i<rs.rows.length; i++){
-            dm[i] = rs.rows.item(i)
+            dm.push(rs.rows.item(i))
         }
     })
     return dm
@@ -159,7 +149,7 @@ function getDM(){
 
 function initializeScreenNames(){
     db.transaction(function(tx){
-        tx.executeSql('CREATE TABLE IF NOT EXISTS ScreenNames(screenNames TEXT UNIQUE)')
+        tx.executeSql('CREATE TABLE IF NOT EXISTS ScreenNames(screenNames TEXT UNIQUE);')
     })
 }
 
@@ -169,7 +159,7 @@ function storeScreenNames(screenNames){
         for(var i=0;i<screenNames.length;i++){
             var rs = tx.executeSql('INSERT OR REPLACE INTO ScreenNames VALUES(?)', screenNames[i])
         }
-        var rs2 = tx.executeSql('SELECT * FROM ScreenNames ORDER BY screenNames ASC')
+        var rs2 = tx.executeSql('SELECT * FROM ScreenNames ORDER BY screenNames ASC;')
         for(var i2=0; i2<rs2.rows.length; i2++){
             totalScreenNames[i2] = rs2.rows.item(i2).screenNames
         }
@@ -180,7 +170,7 @@ function storeScreenNames(screenNames){
 function getScreenNames(){
     var screenNames = []
     db.readTransaction(function(tx){
-        var rs = tx.executeSql('SELECT * FROM ScreenNames ORDER BY screenNames ASC')
+        var rs = tx.executeSql('SELECT * FROM ScreenNames ORDER BY screenNames ASC;')
         for(var i=0; i<rs.rows.length; i++){
             screenNames[i] = rs.rows.item(i).screenNames
         }

@@ -178,30 +178,6 @@ Item{
     Component.onDestruction: {
         if(type === "Timeline") Database.setSetting({"timelineLastUpdate": tweetView.lastUpdate})
         else Database.setSetting({"mentionsLastUpdate": tweetView.lastUpdate})
-        var tweets = []
-        for(var i=0; i<Math.min(tweetView.count, 100); i++){
-            var tweetObj = {
-                "tweetId": tweetView.model.get(i).tweetId,
-                "retweetId": tweetView.model.get(i).retweetId,
-                "displayScreenName": tweetView.model.get(i).displayScreenName,
-                "screenName": tweetView.model.get(i).screenName,
-                "userName": tweetView.model.get(i).userName,
-                "tweetText": tweetView.model.get(i).tweetText,
-                "displayTweetText": tweetView.model.get(i).displayTweetText,
-                "profileImageUrl": tweetView.model.get(i).profileImageUrl,
-                "source": tweetView.model.get(i).source,
-                "createdAt": tweetView.model.get(i).createdAt,
-                "favourited": tweetView.model.get(i).favourited ? 1 : 0,
-                "inReplyToScreenName": tweetView.model.get(i).inReplyToScreenName,
-                "inReplyToStatusId": tweetView.model.get(i).inReplyToStatusId,
-                "mediaExpandedUrl": tweetView.model.get(i).mediaExpandedUrl,
-                "mediaViewUrl": tweetView.model.get(i).mediaViewUrl,
-                "mediaThumbnail": tweetView.model.get(i).mediaThumbnail,
-                "latitude": tweetView.model.get(i).latitude,
-                "longitude": tweetView.model.get(i).longitude
-            }
-            tweets.push(tweetObj)
-        }
-        Database.storeTweets(type, tweets)
+        Database.storeTweets(type, tweetView.model)
     }
 }
