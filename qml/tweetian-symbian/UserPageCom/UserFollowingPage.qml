@@ -20,7 +20,7 @@ import QtQuick 1.1
 import com.nokia.symbian 1.1
 import "../Delegate"
 import "../Services/Twitter.js" as Twitter
-import "../storage.js" as Database
+import "../database.js" as Database
 
 AbstractUserPage{
     id: userFollowingPage

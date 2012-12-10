@@ -18,7 +18,7 @@
 
 import QtQuick 1.1
 import com.nokia.meego 1.0
-import "../storage.js" as Storage
+import "../database.js" as Database
 import "../Services/Pocket.js" as Pocket
 import "../Services/Instapaper.js" as Instapaper
 import "AccountTabScript.js" as Script

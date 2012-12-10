@@ -15,7 +15,7 @@
         <file>qml/tweetian-symbian/SettingPage.qml</file>
         <file>qml/tweetian-symbian/Settings.qml</file>
         <file>qml/tweetian-symbian/SignInPage.qml</file>
-        <file>qml/tweetian-symbian/storage.js</file>
+        <file>qml/tweetian-symbian/database.js</file>
         <file>qml/tweetian-symbian/SuggestedUserPage.qml</file>
         <file>qml/tweetian-symbian/TextPage.qml</file>
         <file>qml/tweetian-symbian/TrendsPage.qml</file>

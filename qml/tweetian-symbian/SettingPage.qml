@@ -20,7 +20,7 @@ import QtQuick 1.1
 import com.nokia.symbian 1.1
 import "SettingsPageCom"
 import "Component"
-import "storage.js" as Storage
+import "database.js" as Database
 import "Dialog"
 
 Page{
@@ -118,13 +118,13 @@ when streaming is connected. It is not recommended to enable streaming when you 
             var message = qsTr("This action will clear all temporary caches and database. \
 Twitter credential and app settings will not be reset. Continue?")
             dialog.createQueryDialog(qsTr("Clear Cache & Database"), icon, message, function(){
-                Storage.dropTable("Timeline")
-                Storage.dropTable("Mentions")
-                Storage.dropTable("DirectMsg")
-                Storage.initializeTweetsTable("Timeline")
-                Storage.initializeTweetsTable("Mentions")
-                Storage.initializeDirectMsg()
-                Storage.clearTable("ScreenNames")
+                Database.dropTable("Timeline")
+                Database.dropTable("Mentions")
+                Database.dropTable("DirectMsg")
+                Database.initializeTweetsTable("Timeline")
+                Database.initializeTweetsTable("Mentions")
+                Database.initializeDirectMsg()
+                Database.clearTable("ScreenNames")
                 cache.clearAll()
                 infoBanner.alert(qsTr("All cache cleared"))
             })

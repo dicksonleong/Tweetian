@@ -19,7 +19,6 @@
 import QtQuick 1.1
 import com.nokia.meego 1.0
 import "Services/Twitter.js" as Twitter
-import "storage.js" as Storage
 import "Component"
 import "MainPageCom"
 import UserStream 1.0

@@ -64,13 +64,13 @@ function createInstapaperSignInDialog(){
 function createTwitterSignOutDialog(){
     var message = qsTr("Do you want to sign out from your Twitter account? All other accounts will also automatically sign out. All settings will be reset.")
     dialog.createQueryDialog(qsTr("Twitter Sign Out"), "", message, function(){
-        Storage.clearTable("Timeline")
+        Database.clearTable("Timeline")
         mainPage.timeline.parseData("all", [])
-        Storage.clearTable("Mentions")
+        Database.clearTable("Mentions")
         mainPage.mentions.parseData("all", [])
-        Storage.clearTable("DirectMsg")
+        Database.clearTable("DirectMsg")
         mainPage.directMsg.parser.clearAndInsert([],[])
-        Storage.clearTable("ScreenNames")
+        Database.clearTable("ScreenNames")
         settings.resetAll()
         cache.clearAll()
         window.pageStack.push(Qt.resolvedUrl("../SignInPage.qml"))

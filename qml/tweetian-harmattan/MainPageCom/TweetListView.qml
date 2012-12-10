@@ -19,7 +19,7 @@
 import QtQuick 1.1
 import com.nokia.meego 1.0
 import "../Utils/Calculations.js" as Calculate
-import "../storage.js" as Database
+import "../database.js" as Database
 import "../Component"
 import "../Delegate"
 import "../Services/Twitter.js" as Twitter

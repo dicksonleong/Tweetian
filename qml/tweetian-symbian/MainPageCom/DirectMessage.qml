@@ -20,7 +20,7 @@ import QtQuick 1.1
 import com.nokia.symbian 1.1
 import "../Component"
 import "../Delegate"
-import "../storage.js" as Database
+import "../database.js" as Database
 import "../Services/Twitter.js" as Twitter
 
 Item{

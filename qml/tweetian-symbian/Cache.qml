@@ -17,7 +17,7 @@
 */
 
 import QtQuick 1.1
-import "storage.js" as Database
+import "database.js" as Database
 
 QtObject{
     id: root

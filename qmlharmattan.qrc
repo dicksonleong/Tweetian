@@ -14,7 +14,7 @@
         <file>qml/tweetian-harmattan/SettingPage.qml</file>
         <file>qml/tweetian-harmattan/Settings.qml</file>
         <file>qml/tweetian-harmattan/SignInPage.qml</file>
-        <file>qml/tweetian-harmattan/storage.js</file>
+        <file>qml/tweetian-harmattan/database.js</file>
         <file>qml/tweetian-harmattan/SuggestedUserPage.qml</file>
         <file>qml/tweetian-harmattan/TextPage.qml</file>
         <file>qml/tweetian-harmattan/TrendsPage.qml</file>

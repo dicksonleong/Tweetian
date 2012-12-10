@@ -19,7 +19,6 @@
 import QtQuick 1.1
 import com.nokia.symbian 1.1
 import "Services/Twitter.js" as Twitter
-import "storage.js" as Storage
 import "Component"
 import "MainPageCom"
 import UserStream 1.0
