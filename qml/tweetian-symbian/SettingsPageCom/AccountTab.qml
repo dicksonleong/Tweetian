@@ -18,7 +18,7 @@
 
 import QtQuick 1.1
 import com.nokia.symbian 1.1
-import "../database.js" as Database
+import "../Utils/Database.js" as Database
 import "../Services/Pocket.js" as Pocket
 import "../Services/Instapaper.js" as Instapaper
 import "AccountTabScript.js" as Script

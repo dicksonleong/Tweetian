@@ -14,7 +14,6 @@
         <file>qml/tweetian-harmattan/SettingPage.qml</file>
         <file>qml/tweetian-harmattan/Settings.qml</file>
         <file>qml/tweetian-harmattan/SignInPage.qml</file>
-        <file>qml/tweetian-harmattan/database.js</file>
         <file>qml/tweetian-harmattan/SuggestedUserPage.qml</file>
         <file>qml/tweetian-harmattan/TextPage.qml</file>
         <file>qml/tweetian-harmattan/TrendsPage.qml</file>
@@ -115,6 +114,7 @@
         <file>qml/tweetian-harmattan/SettingsPageCom/SettingSwitch.qml</file>
         <file>qml/tweetian-harmattan/SettingsPageCom/SettingTextField.qml</file>
         <file>qml/tweetian-harmattan/Utils/Calculations.js</file>
+        <file>qml/tweetian-harmattan/Utils/Database.js</file>
         <file>qml/tweetian-harmattan/Utils/Parser.js</file>
         <file>qml/tweetian-harmattan/WorkerScript/AutoCompleter.js</file>
         <file>qml/tweetian-harmattan/WorkerScript/ConversationParser.js</file>

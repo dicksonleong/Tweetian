@@ -20,7 +20,7 @@ import QtQuick 1.1
 import com.nokia.symbian 1.1
 import "SettingsPageCom"
 import "Component"
-import "database.js" as Database
+import "Utils/Database.js" as Database
 import "Dialog"
 
 Page {

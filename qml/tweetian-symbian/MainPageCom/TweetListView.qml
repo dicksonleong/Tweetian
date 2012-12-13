@@ -19,7 +19,7 @@
 import QtQuick 1.1
 import com.nokia.symbian 1.1
 import "../Utils/Calculations.js" as Calculate
-import "../database.js" as Database
+import "../Utils/Database.js" as Database
 import "../Component"
 import "../Delegate"
 import "../Services/Twitter.js" as Twitter

@@ -19,7 +19,7 @@
 import QtQuick 1.1
 import com.nokia.meego 1.0
 import "SettingsPageCom"
-import "database.js" as Database
+import "Utils/Database.js" as Database
 
 Page {
     id: settingPage

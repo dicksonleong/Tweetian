@@ -20,7 +20,7 @@ import QtQuick 1.1
 import com.nokia.meego 1.0
 import "../Delegate"
 import "../Services/Twitter.js" as Twitter
-import "../database.js" as Database
+import "../Utils/Database.js" as Database
 
 AbstractUserPage {
     id: userFollowingPage
