@@ -54,14 +54,14 @@ Q_DECL_EXPORT int main(int argc, char *argv[])
 
     const QStringList appArgs = app->arguments();
     foreach (const QString &arg, appArgs) {
-        if(arg.startsWith(QLatin1String("--lang="))){
+        if (arg.startsWith(QLatin1String("--lang="))) {
             lang = arg.mid(7);
             break;
         }
     }
 
     QTranslator translator;
-    if(QFile::exists(":/i18n/tweetian_" + lang + ".qm")){
+    if (QFile::exists(":/i18n/tweetian_" + lang + ".qm")) {
         qDebug("Translation for \"%s\" exists", qPrintable(lang));
         translator.load("tweetian_" + lang, ":/i18n");
     }

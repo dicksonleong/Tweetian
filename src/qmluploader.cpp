@@ -63,7 +63,7 @@ void QMLUploader::send()
 {
     QFileInfo fileInfo(m_fileName);
 
-    if(!fileInfo.exists()){
+    if (!fileInfo.exists()) {
         emit failure(-1, tr("The file %1 does not exists").arg(m_fileName));
         bodyData.clear();
         return;
@@ -71,7 +71,7 @@ void QMLUploader::send()
 
     bodyData.append("--" + BOUNDARY + "\r\n");
     bodyData.append("Content-Disposition: form-data; name=\"");
-    if(m_service == QMLUploader::Twitter) bodyData.append("media[]");
+    if (m_service == QMLUploader::Twitter) bodyData.append("media[]");
     else bodyData.append("media");
     bodyData.append("\"; filename=\"");
     bodyData.append(fileInfo.fileName());
@@ -81,7 +81,7 @@ void QMLUploader::send()
     QFile file(fileInfo.absoluteFilePath());
     bool opened = file.open(QIODevice::ReadOnly);
 
-    if(!opened){
+    if (!opened) {
         emit failure(-1, tr("Unable to open the file %1").arg(file.fileName()));
         bodyData.clear();
         return;
@@ -93,16 +93,16 @@ void QMLUploader::send()
 
     QNetworkRequest request;
 
-    if(m_service == QMLUploader::Twitter){
+    if (m_service == QMLUploader::Twitter) {
         request.setUrl(TWITTER_UPLOAD_URL);
         request.setRawHeader("Authorization", m_authorizationHeader);
     }
-    else{
-        if(m_service == QMLUploader::TwitPic)
+    else {
+        if (m_service == QMLUploader::TwitPic)
             request.setUrl(TWITPIC_UPLOAD_URL);
-        else if(m_service == QMLUploader::MobyPicture)
+        else if (m_service == QMLUploader::MobyPicture)
             request.setUrl(MOBYPICTURE_UPLOAD_URL);
-        else if(m_service == QMLUploader::Imgly)
+        else if (m_service == QMLUploader::Imgly)
             request.setUrl(IMGLY_UPLOAD_URL);
 
         request.setRawHeader("X-Verify-Credentials-Authorization", m_authorizationHeader);
@@ -112,7 +112,7 @@ void QMLUploader::send()
     request.setRawHeader("Content-Type", "multipart/form-data; boundary=" + BOUNDARY);
     request.setRawHeader("User-Agent", QMLUtils::userAgent().toAscii());
 
-    if(!manager) manager = new QNetworkAccessManager(this);
+    if (!manager) manager = new QNetworkAccessManager(this);
 
     QNetworkReply *reply = manager->post(request, bodyData);
 
@@ -137,7 +137,7 @@ void QMLUploader::uploadProgress(qint64 bytesSent, qint64 bytesTotal)
 {
     qreal progress = qreal(bytesSent) / qreal(bytesTotal);
 
-    if(m_progress != progress){
+    if (m_progress != progress) {
         m_progress = progress;
         emit progressChanged();
     }

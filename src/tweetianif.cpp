@@ -30,7 +30,7 @@ TweetianIf::TweetianIf(QApplication *parent, QDeclarativeView *view) :
 void TweetianIf::mention()
 {
     m_view->activateWindow();
-    if(!qmlMainView)
+    if (!qmlMainView)
         qmlMainView = m_view->rootObject()->findChild<QDeclarativeItem*>("mainView");
     QMetaObject::invokeMethod(qmlMainView, "moveToColumn", Q_ARG(QVariant, 1));
 }
@@ -38,7 +38,7 @@ void TweetianIf::mention()
 void TweetianIf::message()
 {
     m_view->activateWindow();
-    if(!qmlMainView)
+    if (!qmlMainView)
         qmlMainView = m_view->rootObject()->findChild<QDeclarativeItem*>("mainView");
     QMetaObject::invokeMethod(qmlMainView, "moveToColumn", Q_ARG(QVariant, 2));
 }

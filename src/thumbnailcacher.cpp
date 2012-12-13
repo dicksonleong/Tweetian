@@ -32,19 +32,19 @@ ThumbnailCacher::ThumbnailCacher(QObject *parent) :
 {
 #if defined (Q_OS_SYMBIAN) // On Symbian, cachePath should be !:/Private/{UID}/.thumbnails
     QDir cacheDir(QDesktopServices::storageLocation(QDesktopServices::DataLocation));
-    if(!cacheDir.exists(".thumbnails")) cacheDir.mkdir(".thumbnails");
+    if (!cacheDir.exists(".thumbnails")) cacheDir.mkdir(".thumbnails");
     cacheDir.cd(".thumbnails");
 
     cachePath = cacheDir.absolutePath();
 #elif defined (Q_OS_LINUX) // On Linux, cachePath should be /home/user/.thumbnails/tweetian
     QDir cacheDir = QDir::homePath();
-    if(!cacheDir.exists(".thumbnails/tweetian")) cacheDir.mkpath(".thumbnails/tweetian");
+    if (!cacheDir.exists(".thumbnails/tweetian")) cacheDir.mkpath(".thumbnails/tweetian");
     cacheDir.cd(".thumbnails/tweetian");
 
     cachePath = cacheDir.absolutePath();
 #elif defined (Q_WS_SIMULATOR)
     QDir cacheDir = QDir::currentPath();
-    if(!cacheDir.exists(".thumbnails")) cacheDir.mkdir(".thumbnails");
+    if (!cacheDir.exists(".thumbnails")) cacheDir.mkdir(".thumbnails");
     cacheDir.cd(".thumbnails");
 
     cachePath = cacheDir.absolutePath();
@@ -53,7 +53,7 @@ ThumbnailCacher::ThumbnailCacher(QObject *parent) :
 #endif
 
     QStringList thumbFiles = QDir(cachePath).entryList();
-    if(thumbFiles.length() > 1000)
+    if (thumbFiles.length() > 1000)
         clearAll();
 }
 
@@ -61,7 +61,7 @@ QString ThumbnailCacher::get(const QString &id)
 {
     QString thumbFile = getThumbFilePath(id);
 
-    if(QFile::exists(thumbFile)){
+    if (QFile::exists(thumbFile)) {
         QUrl thumbUrl = QUrl::fromLocalFile(thumbFile);
         thumbUrl.setScheme("file");
         return thumbUrl.toString();
@@ -74,7 +74,7 @@ void ThumbnailCacher::store(const QString &id, QDeclarativeItem *imageObj)
 {
     QString thumbFile = getThumbFilePath(id);
 
-    if(QFile::exists(thumbFile))
+    if (QFile::exists(thumbFile))
         return;
 
     QImage thumb(imageObj->boundingRect().size().toSize(), QImage::Format_ARGB32);
@@ -84,7 +84,7 @@ void ThumbnailCacher::store(const QString &id, QDeclarativeItem *imageObj)
     imageObj->paint(&painter, &style, 0);
     bool saved = thumb.save(thumbFile, "PNG");
 
-    if(!saved)
+    if (!saved)
         qWarning("ThumbnailCacher::cache: Failed to save thumbnails to %s", qPrintable(thumbFile));
 }
 
@@ -93,9 +93,9 @@ int ThumbnailCacher::clearAll()
     int deleteCount = 0;
 
     QStringList thumbFiles = QDir(cachePath).entryList();
-    foreach (const QString &thumb, thumbFiles){
+    foreach (const QString &thumb, thumbFiles) {
         bool removed = QFile::remove(cachePath + "/" + thumb);
-        if(removed) deleteCount++;
+        if (removed) deleteCount++;
     }
 
     return deleteCount;

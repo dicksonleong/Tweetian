@@ -40,7 +40,7 @@ bool NetworkMonitor::isOnline() const
 void NetworkMonitor::checkIsOnline()
 {
     bool online = networkManager->isOnline();
-    if(m_online != online){
+    if (m_online != online) {
         m_online = online;
         emit onlineChanged();
     }
@@ -48,7 +48,7 @@ void NetworkMonitor::checkIsOnline()
 
 void NetworkMonitor::setToOnline()
 {
-    if(m_online == false){
+    if (m_online == false) {
         m_online = true;
         emit onlineChanged();
     }

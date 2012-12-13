@@ -35,7 +35,7 @@ UserStream::Status UserStream::getStatus() const
 
 void UserStream::setStatus(UserStream::Status status)
 {
-    if(m_status != status){
+    if (m_status != status) {
         m_status = status;
         emit statusChanged();
     }
@@ -48,14 +48,14 @@ QDeclarativeListProperty<QObject> UserStream::resources()
 
 void UserStream::connectToStream(const QString &url, const QString &authHeader)
 {
-    if(m_reply != 0){
+    if (m_reply != 0) {
         m_reply->disconnect();
         m_reply->abort();
         m_reply->deleteLater();
         m_reply = 0;
     }
 
-    if(!manager) manager = new QNetworkAccessManager(this);
+    if (!manager) manager = new QNetworkAccessManager(this);
 
     QNetworkRequest request;
     request.setUrl(QUrl(url));
@@ -73,7 +73,7 @@ void UserStream::connectToStream(const QString &url, const QString &authHeader)
 
 void UserStream::disconnectFromStream()
 {
-    if(m_reply != 0){
+    if (m_reply != 0) {
         m_reply->disconnect();
         m_reply->abort();
         m_reply->deleteLater();
@@ -87,12 +87,12 @@ void UserStream::replyRecieved()
     setStatus(UserStream::Connected);
     QByteArray replyData = m_reply->readAll();
 
-    if(replyData == "\r\n"){ // Keep alive newline
+    if (replyData == "\r\n") { // Keep alive newline
         emit dataRecieved("");
         return;
     }
 
-    if(!m_cachedResponse.isEmpty()){
+    if (!m_cachedResponse.isEmpty()) {
         replyData.prepend(m_cachedResponse);
         m_cachedResponse.clear();
     }
@@ -101,9 +101,9 @@ void UserStream::replyRecieved()
 
     QByteArray jsonRawData = replyData.mid(replyData.indexOf("{"));
 
-    if(jsonRawData.length() == length) // complete JSON
+    if (jsonRawData.length() == length) // complete JSON
         emit dataRecieved(jsonRawData);
-    else if(jsonRawData.length() < length) // incomplete JSON
+    else if (jsonRawData.length() < length) // incomplete JSON
         m_cachedResponse = replyData;
 }
 
@@ -112,7 +112,7 @@ void UserStream::replyFinished()
     int statusCode = m_reply->attribute(QNetworkRequest::HttpStatusCodeAttribute).toInt();
     QString statusText;
 
-    if(!m_reply->error())
+    if (!m_reply->error())
         statusText = m_reply->attribute(QNetworkRequest::HttpReasonPhraseAttribute).toString();
     else
         statusText = m_reply->errorString();

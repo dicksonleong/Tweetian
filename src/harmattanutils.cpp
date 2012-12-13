@@ -57,17 +57,17 @@ void HarmattanUtils::shareLink(const QString &url, const QString &title)
     uri.setMimeType("text/x-url");
     uri.setTextData(url);
 
-    if(!title.isEmpty())
+    if (!title.isEmpty())
         uri.setAttribute("title", title);
 
-    if(!uri.isValid()){
+    if (!uri.isValid()) {
         qWarning("HarmattanUtils::shareLink: Invalid URI");
         return;
     }
 
     ShareUiInterface shareIf(SHARE_UI_SERVICE);
 
-    if(!shareIf.isValid()){
+    if (!shareIf.isValid()) {
         qCritical("HarmattanUtils::shareLink: Invalid Share UI interface");
         return;
     }
@@ -82,7 +82,7 @@ void HarmattanUtils::shareLink(const QString &url, const QString &title)
 void HarmattanUtils::publishNotification(const QString &eventType, const QString &summary, const QString &body,
                                          const int count)
 {
-    if(eventType == "tweetian.mention" ? mentionColddown->isActive() : messageColddown->isActive())
+    if (eventType == "tweetian.mention" ? mentionColddown->isActive() : messageColddown->isActive())
         return;
 
 #ifdef Q_OS_HARMATTAN
@@ -101,7 +101,7 @@ void HarmattanUtils::publishNotification(const QString &eventType, const QString
     Q_UNUSED(count)
 #endif
 
-    if(eventType == "tweetian.mention") mentionColddown->start();
+    if (eventType == "tweetian.mention") mentionColddown->start();
     else messageColddown->start();
 }
 
@@ -110,9 +110,9 @@ void HarmattanUtils::clearNotification(const QString &eventType)
 #ifdef Q_OS_HARMATTAN
     QList<MNotification*> activeNotifications = MNotification::notifications();
     QMutableListIterator<MNotification*> i(activeNotifications);
-    while(i.hasNext()){
-        MNotification* notification = i.next();
-        if(notification->eventType() == eventType)
+    while (i.hasNext()) {
+        MNotification *notification = i.next();
+        if (notification->eventType() == eventType)
             notification->remove();
     }
 #else
@@ -125,7 +125,7 @@ void HarmattanUtils::getNowPlayingMedia()
 #ifdef Q_OS_HARMATTAN
     QDBusConnectionInterface *interface = QDBusConnection::sessionBus().interface();
     QDBusReply<bool> reply = interface->isServiceRegistered(MUSIC_SUITE_SERVICE);
-    if (!reply.isValid() || reply.value() == false){
+    if (!reply.isValid() || reply.value() == false) {
         emit mediaReceived("");
         return;
     }
@@ -144,7 +144,7 @@ void HarmattanUtils::processMediaName(const QStringList &media)
 {
 #ifdef Q_OS_HARMATTAN
     QString mediaName = "";
-    if(media.length() >= 3)
+    if (media.length() >= 3)
         mediaName = media.at(2) + " - " + media.at(1);
     emit mediaReceived(mediaName);
 
