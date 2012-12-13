@@ -150,7 +150,7 @@ Item {
 
     WorkerScript {
         id: tweetParser
-        source: "../WorkerScript/TimelineParser.js"
+        source: "../WorkerScript/TweetsParser.js"
         onMessage: {
             if (messageObject.type === "newer") {
                 if (messageObject.count > 0) {

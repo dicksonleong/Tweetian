@@ -147,7 +147,7 @@
         <file>qml/tweetian-symbian/WorkerScript/DirectMsgParser.js</file>
         <file>qml/tweetian-symbian/WorkerScript/DMConversationParser.js</file>
         <file>qml/tweetian-symbian/WorkerScript/SearchParser.js</file>
-        <file>qml/tweetian-symbian/WorkerScript/TimelineParser.js</file>
+        <file>qml/tweetian-symbian/WorkerScript/TweetsParser.js</file>
         <file>qml/tweetian-symbian/WorkerScript/UserParser.js</file>
         <file>qml/tweetian-symbian/Image/selection_indicator.svg</file>
         <file>qml/tweetian-symbian/Image/selection_indicator_inverse.svg</file>

@@ -49,7 +49,7 @@ AbstractUserPage {
 
     WorkerScript {
         id: userFavouritesParser
-        source: "../WorkerScript/TimelineParser.js"
+        source: "../WorkerScript/TweetsParser.js"
         onMessage: {
             backButtonEnabled = true
             loadingRect.visible = false

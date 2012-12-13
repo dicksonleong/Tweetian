@@ -25,7 +25,7 @@ import "../Utils/Calculations.js" as Calculate
 AbstractListPageItem {
     id: listTimeline
     width: listPageListView.width; height: listPageListView.height
-    workerScriptSource: "../WorkerScript/TimelineParser.js"
+    workerScriptSource: "../WorkerScript/TweetsParser.js"
     headerText: qsTr("List Timeline")
     emptyText: qsTr("No tweet")
     delegate: TweetDelegate {}

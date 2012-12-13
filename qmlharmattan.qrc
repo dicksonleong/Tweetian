@@ -121,7 +121,7 @@
         <file>qml/tweetian-harmattan/WorkerScript/DirectMsgParser.js</file>
         <file>qml/tweetian-harmattan/WorkerScript/DMConversationParser.js</file>
         <file>qml/tweetian-harmattan/WorkerScript/SearchParser.js</file>
-        <file>qml/tweetian-harmattan/WorkerScript/TimelineParser.js</file>
+        <file>qml/tweetian-harmattan/WorkerScript/TweetsParser.js</file>
         <file>qml/tweetian-harmattan/WorkerScript/UserParser.js</file>
         <file>qml/tweetian-harmattan/NearbyTweetsPage.qml</file>
         <file>qml/tweetian-harmattan/UserPageCom/AbstractUserPage.qml</file>
