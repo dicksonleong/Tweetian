@@ -22,15 +22,15 @@ import "Component"
 import "Delegate"
 import "Services/Twitter.js" as Twitter
 
-Page{
+Page {
     id: suggestedUserPage
 
     property string slug: ""
 
     onSlugChanged: script.refresh()
 
-    tools: ToolBarLayout{
-        ToolButtonWithTip{
+    tools: ToolBarLayout {
+        ToolButtonWithTip {
             id: backButton
             iconSource: "toolbar-back"
             toolTipText: qsTr("Back")
@@ -38,16 +38,16 @@ Page{
         }
     }
 
-    ListView{
+    ListView {
         id: suggestedUserView
-        anchors{ top: header.bottom; bottom: parent.bottom; left: parent.left; right: parent.right }
-        delegate: UserDelegate{}
-        model: ListModel{}
+        anchors { top: header.bottom; bottom: parent.bottom; left: parent.left; right: parent.right }
+        delegate: UserDelegate {}
+        model: ListModel {}
     }
 
-    ScrollDecorator{ platformInverted: settings.invertedTheme; flickableItem: suggestedUserView }
+    ScrollDecorator { platformInverted: settings.invertedTheme; flickableItem: suggestedUserView }
 
-    PageHeader{
+    PageHeader {
         id: header
         headerIcon: "Image/people.svg"
         headerText: qsTr("Suggested Users")
@@ -56,7 +56,7 @@ Page{
         onClicked: suggestedUserView.positionViewAtBeginning()
     }
 
-    WorkerScript{
+    WorkerScript {
         id: userParser
         source: "WorkerScript/UserParser.js"
         onMessage: {
@@ -65,15 +65,15 @@ Page{
         }
     }
 
-    QtObject{
+    QtObject {
         id: script
 
-        function refresh(){
+        function refresh() {
             Twitter.getSuggestedUser(slug, onSuccess, onFailure)
             header.busy = true
         }
 
-        function onSuccess(data){
+        function onSuccess(data) {
             backButton.enabled = false
             header.headerText += " - " + data.name
             var msg = {
@@ -84,7 +84,7 @@ Page{
             userParser.sendMessage(msg)
         }
 
-        function onFailure(status, statusText){
+        function onFailure(status, statusText) {
             infoBanner.showHttpError(status, statusText)
             header.busy = false
         }

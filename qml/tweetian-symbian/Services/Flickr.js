@@ -32,17 +32,17 @@ function getSizes(constant, photoId, onSuccess) {
     var request = new XMLHttpRequest()
     request.open("GET", url)
 
-    request.onreadystatechange = function (){
-        if(request.readyState === XMLHttpRequest.DONE && request.status == 200){
+    request.onreadystatechange = function() {
+        if (request.readyState === XMLHttpRequest.DONE && request.status == 200) {
             var data = JSON.parse(request.responseText)
             var thumb = "",full = "", medium
-            for(var i=0; i<data.sizes.size.length; i++){
-                if(data.sizes.size[i].label === "Square") thumb = data.sizes.size[i].source
-                else if(data.sizes.size[i].label === "Medium 640") full = data.sizes.size[i].source
-                else if(data.sizes.size[i].label === "Medium") medium = data.sizes.size[i].source
+            for (var i=0; i<data.sizes.size.length; i++) {
+                if (data.sizes.size[i].label === "Square") thumb = data.sizes.size[i].source
+                else if (data.sizes.size[i].label === "Medium 640") full = data.sizes.size[i].source
+                else if (data.sizes.size[i].label === "Medium") medium = data.sizes.size[i].source
             }
             // if full is not available, use medium
-            if(!full) full = medium
+            if (!full) full = medium
             onSuccess(full, thumb)
         }
     }

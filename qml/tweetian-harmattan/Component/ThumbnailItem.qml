@@ -19,30 +19,28 @@
 import QtQuick 1.1
 import com.nokia.meego 1.0
 
-Item{
+Item {
     id: root
 
     property url imageSource: ""
     property url iconSource: ""
+
     signal clicked
 
-    width: constant.thumbnailSize
-    height: constant.thumbnailSize
+    width: constant.thumbnailSize; height: constant.thumbnailSize
     clip: true
 
-    Image{
+    Image {
         id: mainImage
-        anchors.centerIn: parent
-        source: root.imageSource
+        anchors.fill: parent
         fillMode: Image.PreserveAspectCrop
-        height: parent.height
-        width: parent.width
+        source: root.imageSource
     }
 
-    Loader{
+    Loader {
         anchors.centerIn: parent
         sourceComponent: {
-            switch(mainImage.status){
+            switch (mainImage.status) {
             case Image.Loading:
                 return loading
             case Image.Ready:
@@ -54,31 +52,31 @@ Item{
         }
     }
 
-    Component{
+    Component {
         id: loading
-        BusyIndicator{
+
+        BusyIndicator {
+            width: constant.graphicSizeSmall; height: constant.graphicSizeSmall
             running: true
-            width: constant.graphicSizeSmall
-            height: constant.graphicSizeSmall
         }
     }
 
-    Component{
+    Component {
         id: iconImage
-        Image{
+
+        Image {
+            sourceSize { width: constant.graphicSizeMedium; height: constant.graphicSizeMedium }
             source: root.iconSource
-            sourceSize.width: constant.graphicSizeMedium
-            sourceSize.height: constant.graphicSizeMedium
         }
     }
 
-    MouseArea{
+    MouseArea {
         id: imagePress
         anchors.fill: parent
         onClicked: root.clicked()
     }
 
-    Rectangle{
+    Rectangle {
         id: cover
         anchors.fill: parent
         color: "transparent"

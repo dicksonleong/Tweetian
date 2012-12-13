@@ -18,16 +18,16 @@
 
 import QtQuick 1.1
 
-Item{
+Item {
     id: root
-    implicitWidth: parent.width
-    implicitHeight: text.height
 
     property string text: ""
 
-    Rectangle{
+    implicitWidth: parent.width; implicitHeight: text.height
+
+    Rectangle {
         id: line
-        anchors{
+        anchors {
             left: parent.left
             right: text.left; rightMargin: constant.paddingXLarge
             verticalCenter: parent.verticalCenter
@@ -36,15 +36,14 @@ Item{
         height: 1
     }
 
-    Text{
+    Text {
         id: text
-        anchors.right: parent.right
-        anchors.rightMargin: constant.paddingXLarge
-        text: root.text
+        anchors { right: parent.right; rightMargin: constant.paddingXLarge }
         color: constant.colorMid
         elide: Text.ElideRight
         horizontalAlignment: Text.AlignRight
         font.pixelSize: constant.fontSizeXSmall
         font.bold: true
+        text: root.text
     }
 }

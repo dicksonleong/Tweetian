@@ -22,7 +22,7 @@ import "../Delegate"
 import "../Services/Twitter.js" as Twitter
 import "../database.js" as Database
 
-AbstractUserPage{
+AbstractUserPage {
     id: userFollowingPage
 
     property variant userIdsData
@@ -35,23 +35,23 @@ AbstractUserPage{
     headerNumber: userInfoData.followersCount
     emptyText: qsTr("No follower")
     loadMoreButtonVisible: listView.count > 0 && listView.count < userInfoData.followersCount
-    delegate: UserDelegate{}
+    delegate: UserDelegate {}
 
     onReload: {
-        if(reloadType === "all"){
+        if (reloadType === "all") {
             listView.model.clear()
-            Twitter.getFollowersId(userInfoData.screenName, function(data){
+            Twitter.getFollowersId(userInfoData.screenName, function(data) {
                 userIdsData = data
                 reloadType = "older"
                 reload()
             }, __failureCallback)
             loadingRect.visible = true
         }
-        else{
+        else {
             var userCount = Math.min(50, userIdsData.ids.length - listView.count)
             currentRequestUserIds = userIdsData.ids.slice(listView.count, listView.count + userCount)
-            if(currentRequestUserIds.length > 0) {
-                Twitter.getUserLookup(currentRequestUserIds.join(), function(data){
+            if (currentRequestUserIds.length > 0) {
+                Twitter.getUserLookup(currentRequestUserIds.join(), function(data) {
                 backButtonEnabled = false
                 userFollowingParser.sendMessage({model: listView.model, data: data,
                     reloadType: reloadType, userIds: currentRequestUserIds})
@@ -65,19 +65,19 @@ AbstractUserPage{
         }
     }
 
-    WorkerScript{
+    WorkerScript {
         id: userFollowingParser
         source: "../WorkerScript/UserParser.js"
         onMessage: {
             backButtonEnabled = true
-            if(userInfoData.screenName === settings.userScreenName)
+            if (userInfoData.screenName === settings.userScreenName)
                 cache.screenNames = Database.storeScreenNames(messageObject.screenNames)
             currentRequestUserIds = undefined
             loadingRect.visible = false
         }
     }
 
-    function __failureCallback(status, statusText){
+    function __failureCallback(status, statusText) {
         infoBanner.showHttpError(status, statusText)
         loadingRect.visible = false
     }

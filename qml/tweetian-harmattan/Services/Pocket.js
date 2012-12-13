@@ -21,7 +21,7 @@
 var AUTHENTICATE_URL = "https://readitlaterlist.com/v2/auth"
 var ADD_PAGE_URL = "https://readitlaterlist.com/v2/add"
 
-function authenticate(constant, username, password, onSuccess, onFailure){
+function authenticate(constant, username, password, onSuccess, onFailure) {
     var parameters = {
         apikey: constant.pocketAPIKey,
         username: username,
@@ -31,9 +31,9 @@ function authenticate(constant, username, password, onSuccess, onFailure){
     var request = new XMLHttpRequest()
     request.open("POST", AUTHENTICATE_URL)
 
-    request.onreadystatechange = function (){
-        if(request.readyState === XMLHttpRequest.DONE){
-            if(request.status === 200) onSuccess(username, password)
+    request.onreadystatechange = function() {
+        if (request.readyState === XMLHttpRequest.DONE) {
+            if (request.status === 200) onSuccess(username, password)
             else onFailure(request.status)
         }
     }
@@ -56,9 +56,9 @@ function addPage(constant, username, password, url, title, ref_id, onSuccess, on
     var request = new XMLHttpRequest()
     request.open("POST", ADD_PAGE_URL)
 
-    request.onreadystatechange = function (){
-        if(request.readyState === XMLHttpRequest.DONE){
-            if(request.status === 200) onSuccess()
+    request.onreadystatechange = function() {
+        if (request.readyState === XMLHttpRequest.DONE) {
+            if (request.status === 200) onSuccess()
             else onFailure(request.status)
         }
     }

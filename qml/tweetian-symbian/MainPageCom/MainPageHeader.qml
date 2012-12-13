@@ -20,7 +20,7 @@ import QtQuick 1.1
 import com.nokia.symbian 1.1
 import "../Component"
 
-Item{
+Item {
     id: mainPageHeader
     anchors { top: parent.top; left: parent.left; right: parent.right }
     height: constant.headerHeight
@@ -31,60 +31,57 @@ Item{
         source: "../Image/header.png"
     }
 
-    Image{
+    Image {
         anchors { top: parent.top; left: parent.left }
         source: "../Image/meegoTLCorner.png"
     }
 
-    Image{
+    Image {
         anchors { top: parent.top; right: parent.right }
         source: "../Image/meegoTRCorner.png"
     }
 
-    Row{
+    Row {
         anchors.fill: parent
 
-        Repeater{
+        Repeater {
             id: sectionRepeater
             model: mainView.count
-            delegate: Item{
+            delegate: Item {
                 width: mainPageHeader.width / sectionRepeater.count
                 height: mainPageHeader.height
 
                 Image {
                     id: icon
                     anchors.centerIn: parent
+                    sourceSize { height: constant.graphicSizeSmall; width: constant.graphicSizeSmall }
                     source: index == 0 ? "../Image/home.svg" : index == 1 ? "../Image/mail.svg" : "../Image/inbox.svg"
-                    sourceSize.height: constant.graphicSizeSmall
-                    sourceSize.width: constant.graphicSizeSmall
                 }
 
-                CountBubble{
+                CountBubble {
                     anchors {
-                        left: icon.right
-                        leftMargin: -constant.paddingMedium
-                        top: parent.top
-                        topMargin: constant.paddingSmall
+                        top: parent.top; topMargin: constant.paddingSmall
+                        left: icon.right; leftMargin: -constant.paddingMedium
                     }
                     visible: value > 0
                     value: mainView.model.children[index].unreadCount
                 }
 
-                Loader{
+                Loader {
                     anchors.fill: parent
                     sourceComponent: mainView.model.children[index].busy
                                      ? busyIndicator : (sectionMouseArea.pressed ? pressingIndicator : undefined)
-                    Component{
+                    Component {
                         id: busyIndicator
 
-                        Rectangle{
+                        Rectangle {
                             anchors.fill: parent
                             color: "black"
                             opacity: 0
 
                             Behavior on opacity { NumberAnimation { duration: 250 } }
 
-                            BusyIndicator{
+                            BusyIndicator {
                                 opacity: 1
                                 anchors.centerIn: parent
                                 running: true
@@ -94,10 +91,10 @@ Item{
                         }
                     }
 
-                    Component{
+                    Component {
                         id: pressingIndicator
 
-                        Rectangle{
+                        Rectangle {
                             anchors.fill: parent
                             color: "black"
                             opacity: 0.5
@@ -105,7 +102,7 @@ Item{
                     }
                 }
 
-                MouseArea{
+                MouseArea {
                     id: sectionMouseArea
                     anchors.fill: parent
                     onClicked: mainView.currentIndex === index ? mainView.currentItem.positionAtTop()
@@ -117,7 +114,7 @@ Item{
         }
     }
 
-    Rectangle{
+    Rectangle {
         id: currentSectionIndicator
         anchors.bottom: parent.bottom
         color: "white"

@@ -21,33 +21,33 @@ import com.nokia.symbian 1.1
 import "../Delegate"
 import "../Services/Twitter.js" as Twitter
 
-AbstractUserPage{
+AbstractUserPage {
     id: userTweetsPage
 
     headerText: qsTr("Tweets")
     headerNumber: userInfoData.statusesCount
     emptyText: qsTr("No tweet")
     loadMoreButtonVisible: listView.count > 0 && listView.count < userInfoData.statusesCount
-    delegate: TweetDelegate{}
+    delegate: TweetDelegate {}
 
     onReload: {
         var maxId = ""
-        if(reloadType === "all") listView.model.clear()
+        if (reloadType === "all") listView.model.clear()
         else maxId = listView.model.get(listView.count - 1).tweetId
 
         Twitter.getUserTweets(userInfoData.screenName, maxId,
-        function(data){
+        function(data) {
             backButtonEnabled = false
             userTweetsParser.sendMessage({'model': listView.model, 'data': data, 'reloadType': reloadType})
         },
-        function(status, statusText){
+        function(status, statusText) {
             infoBanner.showHttpError(status, statusText)
             loadingRect.visible = false
         })
         loadingRect.visible = true
     }
 
-    WorkerScript{
+    WorkerScript {
         id: userTweetsParser
         source: "../WorkerScript/TimelineParser.js"
         onMessage: {

@@ -34,11 +34,11 @@ function getMaps(constant, latitude, longitude, width, height) {
 
     var requestURL = URL
 
-    for(var p in parameters){
-        if(requestURL.indexOf('?') < 0) requestURL += '?'
+    for (var p in parameters) {
+        if (requestURL.indexOf('?') < 0) requestURL += '?'
         else requestURL += '&'
 
-        if(parameters[p] === "") requestURL += p
+        if (parameters[p] === "") requestURL += p
         else requestURL += p + '=' + parameters[p]
     }
     return requestURL

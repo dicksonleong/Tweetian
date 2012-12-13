@@ -19,14 +19,14 @@
 import QtQuick 1.1
 import com.nokia.symbian 1.1
 
-ListHeading{
+ListHeading {
     id: root
 
     property string text: ""
 
     platformInverted: settings.invertedTheme
 
-    Text{
+    Text {
         id: text
         anchors.fill: parent.paddingItem
         text: root.text

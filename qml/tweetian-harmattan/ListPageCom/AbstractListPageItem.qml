@@ -20,7 +20,7 @@ import QtQuick 1.1
 import com.nokia.meego 1.0
 import "../Component"
 
-Item{
+Item {
     id: root
 
     // Required to set explicitly
@@ -28,6 +28,7 @@ Item{
     property string headerText: ""
     property string emptyText: ""
     property alias delegate: tweetView.delegate
+
     signal refresh(string type)
     signal dataRecieved(variant data)
 
@@ -40,38 +41,35 @@ Item{
     property bool dataLoaded: false
 
     // callback for Twitter request
-    function successCallback(data){
+    function successCallback(data) {
         dataLoaded = true
         dataRecieved(data)
     }
 
-    function failureCallback(status, statusText){
+    function failureCallback(status, statusText) {
         infoBanner.showHttpError(status, statusText)
         loadingRect.visible = false
     }
 
-    function sendToWorkerScript(data){
+    function sendToWorkerScript(data) {
         workerScript.sendMessage({data: data, reloadType: reloadType, model: tweetView.model})
     }
 
-    function positionAtTop(){
+    function positionAtTop() {
         tweetView.positionViewAtBeginning()
     }
 
     onRefresh: loadingRect.visible = true
 
-    AbstractListView{
+    AbstractListView {
         id: tweetView
         anchors.fill: parent
-        model: ListModel{}
-        header: PullToRefreshHeader{
+        model: ListModel {}
+        header: PullToRefreshHeader {
             height: sectionHeader.height
-            SectionHeader {
-                id: sectionHeader
-                text: root.headerText
-            }
+            SectionHeader { id: sectionHeader; text: root.headerText }
         }
-        footer: LoadMoreButton{
+        footer: LoadMoreButton {
             visible: tweetView.count > 0 && showLoadMoreButton
             enabled: !loadingRect.visible
             onClicked: refresh("older")
@@ -79,17 +77,17 @@ Item{
         onPullDownRefresh: refresh("newer")
     }
 
-    Text{
+    Text {
         anchors.centerIn: parent
+        visible: tweetView.count == 0 && !loadingRect.visible
         font.pixelSize: constant.fontSizeXXLarge
         color: constant.colorMid
         text: root.emptyText
-        visible: tweetView.count == 0 && !loadingRect.visible
     }
 
-    ScrollDecorator{ flickableItem: tweetView }
+    ScrollDecorator { flickableItem: tweetView }
 
-    WorkerScript{
+    WorkerScript {
         id: workerScript
         source: root.workerScriptSource
         onMessage: loadingRect.visible = false

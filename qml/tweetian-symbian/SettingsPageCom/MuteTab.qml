@@ -19,10 +19,10 @@
 import QtQuick 1.1
 import com.nokia.symbian 1.1
 
-Page{
+Page {
     id: muteTab
 
-    TextArea{
+    TextArea {
         id: muteTextArea
         anchors {
             fill: parent
@@ -37,12 +37,12 @@ Page{
         text: settings.muteString
     }
 
-    Item{
+    Item {
         id: buttonContainer
-        anchors{ top: muteTextArea.bottom; left: parent.left; right: parent.right; margins: constant.paddingMedium }
+        anchors { top: muteTextArea.bottom; left: parent.left; right: parent.right; margins: constant.paddingMedium }
         height: helpButton.height + (saveText.visible ? saveText.anchors.topMargin + saveText.height : 0)
 
-        Button{
+        Button {
             id: helpButton
             anchors { top: parent.top; left: parent.left }
             platformInverted: settings.invertedTheme
@@ -51,7 +51,7 @@ Page{
             onClicked: dialog.createMessageDialog(qsTr("Mute"), infoText.mute)
         }
 
-        Button{
+        Button {
             id: saveButton
             anchors {
                 top: parent.top; right: parent.right
@@ -63,7 +63,7 @@ Page{
             onClicked: settings.muteString = muteTextArea.text
         }
 
-        Text{
+        Text {
             id: saveText
             anchors {
                 top: helpButton.bottom; topMargin: constant.paddingMedium

@@ -19,30 +19,33 @@
 import QtQuick 1.1
 import com.nokia.symbian 1.1
 
-AbstractDelegate{
+AbstractDelegate {
     id: root
     height: Math.max(textColumn.height, profileImage.height) + 2 * constant.paddingMedium
     sideRectColor: {
-        switch(settings.userScreenName){
+        switch (settings.userScreenName) {
         case inReplyToScreenName: return constant.colorTextSelection
         case screenName: return constant.colorLight
         default: return ""
         }
     }
 
-    Column{
+    Column {
         id: textColumn
-        anchors{ top: parent.top; left: profileImage.right;  right: parent.right }
-        anchors.leftMargin: constant.paddingSmall
-        anchors.margins: constant.paddingMedium
+        anchors {
+            top: parent.top
+            left: profileImage.right; leftMargin: constant.paddingSmall
+            right: parent.right
+            margins: constant.paddingMedium
+        }
         height: childrenRect.height
 
-        Item{
+        Item {
             id: titleContainer
-            width: parent.width
+            anchors { left: parent.left; right: parent.right }
             height: userNameText.height
 
-            Text{
+            Text {
                 id: userNameText
                 anchors.left: parent.left
                 width: Math.min(parent.width, implicitWidth)
@@ -53,15 +56,15 @@ AbstractDelegate{
                 text: userName
             }
 
-            Text{
-                anchors{ left: userNameText.right; right: favouriteIconLoader.left; margins: constant.paddingSmall }
-                text: "@" + displayScreenName
+            Text {
+                anchors { left: userNameText.right; right: favouriteIconLoader.left; margins: constant.paddingSmall }
                 font.pixelSize: settings.largeFontSize ? constant.fontSizeMedium : constant.fontSizeSmall
                 color: highlighted ? constant.colorHighlighted : constant.colorMid
                 elide: Text.ElideRight
+                text: "@" + displayScreenName
             }
 
-            Loader{
+            Loader {
                 id: favouriteIconLoader
                 anchors.right: parent.right
                 width: sourceComponent ? item.sourceSize.height : 0
@@ -69,48 +72,47 @@ AbstractDelegate{
             }
         }
 
-        Text{
-            width: parent.width
-            text: displayTweetText
+        Text {
+            anchors { left: parent.left; right: parent.right }
             textFormat: Text.RichText
             font.pixelSize: settings.largeFontSize ? constant.fontSizeMedium : constant.fontSizeSmall
             wrapMode: Text.Wrap
             color: highlighted ? constant.colorHighlighted : constant.colorLight
+            text: displayTweetText
         }
 
-        Loader{
+        Loader {
             id: retweetLoader
+            anchors { left: parent.left; right: parent.right }
             sourceComponent: retweetId == tweetId ? undefined : retweetText
         }
 
-        Text{
-            width: parent.width
+        Text {
+            anchors { left: parent.left; right: parent.right }
             horizontalAlignment: Text.AlignRight
-            text: source + " | " + timeDiff
             font.pixelSize: settings.largeFontSize ? constant.fontSizeSmall : constant.fontSizeXSmall
             color: highlighted ? constant.colorHighlighted : constant.colorMid
             elide: Text.ElideRight
+            text: source + " | " + timeDiff
         }
     }
 
-    Component{
+    Component {
         id: retweetText
 
-        Text{
-            width: parent.width
-            text: qsTr("Retweeted by %1").arg("@" + screenName)
+        Text {
             font.pixelSize: settings.largeFontSize ? constant.fontSizeMedium : constant.fontSizeSmall
             wrapMode: Text.Wrap
             color: highlighted ? constant.colorHighlighted : constant.colorMid
+            text: qsTr("Retweeted by %1").arg("@" + screenName)
         }
     }
 
-    Component{
+    Component {
         id: favouriteIcon
 
-        Image{
-            sourceSize.height: titleContainer.height
-            sourceSize.width: titleContainer.height
+        Image {
+            sourceSize { height: titleContainer.height; width: titleContainer.height }
             source: platformInverted ? "../Image/favourite_inverse.svg" : "../Image/favourite.svg"
         }
     }

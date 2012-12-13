@@ -24,7 +24,7 @@ import "Utils/Calculations.js" as Calculate
 import "Component"
 import "Delegate"
 
-Page{
+Page {
     id: nearbyTweetsPage
 
     property double latitude
@@ -32,27 +32,27 @@ Page{
 
     Component.onCompleted: positionSource.start()
 
-    tools: ToolBarLayout{
-        ToolButtonWithTip{
+    tools: ToolBarLayout {
+        ToolButtonWithTip {
             id: backButton
             iconSource: "toolbar-back"
             opacity: enabled ? 1 : 0.25
             toolTipText: qsTr("Back")
             onClicked: pageStack.pop()
         }
-        ToolButtonWithTip{
+        ToolButtonWithTip {
             iconSource: "toolbar-menu"
             toolTipText: qsTr("Menu")
             onClicked: menu.open()
         }
     }
 
-    Menu{
+    Menu {
         id: menu
         platformInverted: settings.invertedTheme
 
-        MenuLayout{
-            MenuItem{
+        MenuLayout {
+            MenuItem {
                 text: qsTr("Refresh Cache & Location")
                 platformInverted: menu.platformInverted
                 enabled: !header.busy
@@ -61,22 +61,22 @@ Page{
         }
     }
 
-    AbstractListView{
+    AbstractListView {
         id: searchListView
         property bool stayAtCurrentPosition: internal.reloadType === "newer"
         anchors { top: header.bottom; left: parent.left; right: parent.right; bottom: parent.bottom }
-        footer: LoadMoreButton{
+        footer: LoadMoreButton {
             visible: searchListView.count > 0
             enabled: !header.busy
             onClicked: internal.refresh("older")
         }
-        delegate: TweetDelegate{}
-        model: ListModel{}
+        delegate: TweetDelegate {}
+        model: ListModel {}
         onPullDownRefresh: internal.refresh("newer")
-        onAtYBeginningChanged: if(atYBeginning) header.countBubbleValue = 0
+        onAtYBeginningChanged: if (atYBeginning) header.countBubbleValue = 0
         onContentYChanged: refreshUnreadCountTimer.running = true
 
-        Timer{
+        Timer {
             id: refreshUnreadCountTimer
             interval: 250
             repeat: false
@@ -85,7 +85,7 @@ Page{
         }
     }
 
-    Text{
+    Text {
         anchors.centerIn: parent
         font.pixelSize: constant.fontSizeXXLarge
         color: constant.colorMid
@@ -93,21 +93,21 @@ Page{
         visible: searchListView.count == 0 && !header.busy
     }
 
-    ScrollDecorator{ flickableItem: searchListView }
+    ScrollDecorator { flickableItem: searchListView }
 
-    PageHeader{
+    PageHeader {
         id: header
         headerIcon: "Image/location_mark" + (settings.invertedTheme ? "_inverse.svg" : ".svg")
         headerText: positionSource.active ? qsTr("Getting location...") : qsTr("Nearby Tweets")
         onClicked: searchListView.positionViewAtBeginning()
     }
 
-    WorkerScript{
+    WorkerScript {
         id: searchParser
         source: "WorkerScript/SearchParser.js"
         onMessage: {
             backButton.enabled = true
-            if(internal.reloadType === "newer") {
+            if (internal.reloadType === "newer") {
                 header.countBubbleVisible = true
                 header.countBubbleValue = messageObject.count
             }
@@ -119,10 +119,10 @@ Page{
         }
     }
 
-    PositionSource{
+    PositionSource {
         id: positionSource
         updateInterval: 1000
-        onActiveChanged: if(active) header.busy = true
+        onActiveChanged: if (active) header.busy = true
 
         onPositionChanged: {
             nearbyTweetsPage.latitude = position.coordinate.latitude
@@ -134,17 +134,17 @@ Page{
         Component.onDestruction: stop()
     }
 
-    QtObject{
+    QtObject {
         id: internal
 
         property string reloadType: "all"
 
-        function refresh(type){
+        function refresh(type) {
             var sinceId = "", maxId = ""
-            if(searchListView.count > 0){
-                if(type === "newer") sinceId = searchListView.model.get(0).tweetId
-                else if(type === "older") maxId =  searchListView.model.get(searchListView.count - 1).tweetId
-                else if(type === "all") searchListView.model.clear()
+            if (searchListView.count > 0) {
+                if (type === "newer") sinceId = searchListView.model.get(0).tweetId
+                else if (type === "older") maxId = searchListView.model.get(searchListView.count - 1).tweetId
+                else if (type === "all") searchListView.model.clear()
             }
             else type = "all"
             internal.reloadType = type
@@ -152,13 +152,13 @@ Page{
             header.busy = true
         }
 
-        function onSuccess(data){
-            if(reloadType != "older") searchListView.lastUpdate = new Date().toString()
+        function onSuccess(data) {
+            if (reloadType != "older") searchListView.lastUpdate = new Date().toString()
             backButton.enabled = false
             searchParser.sendMessage({'model': searchListView.model, 'data': data, 'reloadType': reloadType})
         }
 
-        function onFailure(status, statusText){
+        function onFailure(status, statusText) {
             infoBanner.showHttpError(status, statusText)
             header.busy = false
         }

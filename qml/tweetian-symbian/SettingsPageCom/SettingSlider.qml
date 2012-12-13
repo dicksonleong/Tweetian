@@ -19,7 +19,7 @@
 import QtQuick 1.1
 import com.nokia.symbian 1.1
 
-Item{
+Item {
     id: root
 
     property string text: ""
@@ -31,22 +31,22 @@ Item{
     implicitWidth: parent.width
     height: label.height + slider.height + 2 * constant.paddingMedium + slider.anchors.margins
 
-    Text{
+    Text {
         id: label
-        anchors{ top: parent.top; left: parent.left; margins: constant.paddingMedium }
+        anchors { top: parent.top; left: parent.left; margins: constant.paddingMedium }
         font.pixelSize: constant.fontSizeLarge
         color: constant.colorLight
         text: root.text
     }
 
-    Slider{
+    Slider {
         id: slider
-        anchors{ left: parent.left; right: parent.right; top: label.bottom; margins: constant.paddingSmall }
+        anchors { left: parent.left; right: parent.right; top: label.bottom; margins: constant.paddingSmall }
         platformInverted: settings.invertedTheme
         enabled: root.enabled
         minimumValue: 0
         valueIndicatorText: value == 0 ? "Off" : ""
         valueIndicatorVisible: true
-        onPressedChanged: if(!pressed) root.released()
+        onPressedChanged: if (!pressed) root.released()
     }
 }

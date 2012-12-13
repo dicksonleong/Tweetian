@@ -20,7 +20,7 @@ import QtQuick 1.1
 import com.nokia.meego 1.0
 import com.nokia.extras 1.1
 
-Item{
+Item {
     id: root
 
     property url headerIcon: ""
@@ -32,8 +32,8 @@ Item{
 
     signal clicked
 
-    implicitHeight: constant.headerHeight
     anchors { top: parent.top; left: parent.left; right: parent.right }
+    implicitHeight: constant.headerHeight
 
     Image {
         id: background
@@ -41,17 +41,17 @@ Item{
         source: "image://theme/color6-meegotouch-view-header-fixed" + (mouseArea.pressed ? "-pressed" : "")
     }
 
-    Image{
+    Image {
         id: icon
-        source: headerIcon
         anchors { verticalCenter: parent.verticalCenter; left: parent.left; margins: constant.paddingLarge }
         height: sourceSize.height; width: sourceSize.width
         sourceSize { height: constant.graphicSizeSmall; width: constant.graphicSizeSmall }
+        source: headerIcon
     }
 
-    Text{
+    Text {
         id: mainText
-        anchors{
+        anchors {
             verticalCenter: parent.verticalCenter
             left: icon.right
             right: busyIndicatorLoader.status === Loader.Ready ? busyIndicatorLoader.left : parent.right
@@ -63,30 +63,30 @@ Item{
         text: headerText
     }
 
-    Loader{
+    Loader {
         id: busyIndicatorLoader
-        anchors{ right: parent.right; rightMargin: constant.paddingXLarge; verticalCenter: parent.verticalCenter }
+        anchors { right: parent.right; rightMargin: constant.paddingXLarge; verticalCenter: parent.verticalCenter }
         sourceComponent: busy ? busyIndicatorComponent : (countBubbleVisible ? countBubbleComponent : undefined)
     }
 
-    Component{
+    Component {
         id: busyIndicatorComponent
 
-        BusyIndicator{
+        BusyIndicator {
             running: true
         }
     }
 
-    Component{
+    Component {
         id: countBubbleComponent
 
-        CountBubble{
+        CountBubble {
             value: root.countBubbleValue
             largeSized: true
         }
     }
 
-    MouseArea{
+    MouseArea {
         id: mouseArea
         anchors.fill: parent
         onClicked: root.clicked()

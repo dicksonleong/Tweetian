@@ -21,31 +21,31 @@ import com.nokia.meego 1.0
 import QtMobility.gallery 1.1
 import "Component"
 
-Page{
+Page {
     id: selectImagePage
 
     property Item newTweetPage: null
 
-    tools: ToolBarLayout{
-        ToolIcon{
+    tools: ToolBarLayout {
+        ToolIcon {
             platformIconId: "toolbar-back"
             onClicked: pageStack.pop()
         }
-        ToolButton{
+        ToolButton {
             text: qsTr("Service")
             onClicked: chooseServiceDialogComponent.createObject(selectImagePage)
         }
-        Item{ width: 80; height: 64 }
+        Item { width: 80; height: 64 }
     }
 
-    ContextMenu{
+    ContextMenu {
         id: imageMenu
 
         property string selectedImageUrl: ""
         property string selectedImagePath: ""
 
-        MenuLayout{
-            MenuItem{
+        MenuLayout {
+            MenuItem {
                 text: qsTr("Select image")
                 onClicked: {
                     newTweetPage.imageUrl = imageMenu.selectedImageUrl
@@ -53,14 +53,14 @@ Page{
                     pageStack.pop()
                 }
             }
-            MenuItem{
+            MenuItem {
                 text: qsTr("Preview")
                 onClicked: Qt.openUrlExternally(imageMenu.selectedImageUrl)
             }
         }
     }
 
-    GridView{
+    GridView {
         id: galleryGridView
         anchors { top: header.bottom; left: parent.left; right: parent.right; bottom: parent.bottom }
         cellWidth: inPortrait ? width / 3 : (width / 5 - constant.paddingSmall)
@@ -69,7 +69,7 @@ Page{
         model: galleryModel.ready ? galleryModel : undefined
     }
 
-    Text{
+    Text {
         anchors.centerIn: parent
         font.pixelSize: constant.fontSizeXXLarge
         color: constant.colorMid
@@ -77,16 +77,16 @@ Page{
         visible: galleryModel.ready && galleryModel.count == 0
     }
 
-    ScrollDecorator{ flickableItem: galleryModel.ready ? galleryGridView : null }
+    ScrollDecorator { flickableItem: galleryModel.ready ? galleryGridView : null }
 
-    PageHeader{
+    PageHeader {
         id: header
         headerText: qsTr("Select Image")
         headerIcon: "Image/photos.svg"
         onClicked: galleryGridView.positionViewAtBeginning()
     }
 
-    DocumentGalleryModel{
+    DocumentGalleryModel {
         id: galleryModel
 
         property bool ready: status === DocumentGalleryModel.Idle || status === DocumentGalleryModel.Finished
@@ -96,8 +96,8 @@ Page{
         sortProperties: ["-lastModified"]
         rootType: DocumentGallery.Image
         onStatusChanged: {
-            if(status === DocumentGalleryModel.Active) header.busy = true
-            else if(status === DocumentGalleryModel.Error){
+            if (status === DocumentGalleryModel.Active) header.busy = true
+            else if (status === DocumentGalleryModel.Error) {
                 header.busy = false
                 infoBanner.alert(qsTr("Error loading image from gallery"))
             }
@@ -105,16 +105,17 @@ Page{
         }
     }
 
-    Component{
+    Component {
         id: imageDelegate
-        Item{
+
+        Item {
             width: GridView.view.cellWidth
             height: width
             scale: mouseArea.pressed ? 0.9 : 1.0
 
-            Behavior on scale { NumberAnimation{ duration: 100 } }
+            Behavior on scale { NumberAnimation { duration: 100 } }
 
-            Image{
+            Image {
                 id: image
                 asynchronous: true
                 source: url
@@ -125,11 +126,11 @@ Page{
                 cache: false
             }
 
-            Loader{
+            Loader {
                 id: iconLoader
                 anchors.centerIn: parent
                 sourceComponent: {
-                    switch(image.status){
+                    switch (image.status) {
                     case Image.Null:
                     case Image.Error:
                         return icon
@@ -140,28 +141,26 @@ Page{
                     }
                 }
 
-                Component{
+                Component {
                     id: icon
 
-                    Image{
-                        sourceSize.width: constant.graphicSizeMedium
-                        sourceSize.height: constant.graphicSizeMedium
+                    Image {
+                        sourceSize { width: constant.graphicSizeMedium; height: constant.graphicSizeMedium }
                         source: settings.invertedTheme ? "Image/photos_inverse.svg" : "Image/photos.svg"
                     }
                 }
 
-                Component{
+                Component {
                     id: busy
 
-                    BusyIndicator{
-                        width: constant.graphicSizeMedium
-                        height: constant.graphicSizeMedium
+                    BusyIndicator {
+                        width: constant.graphicSizeMedium; height: constant.graphicSizeMedium
                         running: true
                     }
                 }
             }
 
-            MouseArea{
+            MouseArea {
                 id: mouseArea
                 anchors.fill: parent
                 onClicked: {
@@ -173,25 +172,25 @@ Page{
         }
     }
 
-    Component{
+    Component {
         id: chooseServiceDialogComponent
 
-        SelectionDialog{
+        SelectionDialog {
             id: chooseServiceDialog
             property bool __isClosing: false
             titleText: qsTr("Image Upload Service")
-            model: ListModel{
-                ListElement{ name: "Twitter"}
-                ListElement{ name: "TwitPic"}
-                ListElement{ name: "MobyPicture"}
-                ListElement{ name: "img.ly"}
+            model: ListModel {
+                ListElement { name: "Twitter" }
+                ListElement { name: "TwitPic" }
+                ListElement { name: "MobyPicture" }
+                ListElement { name: "img.ly" }
             }
             selectedIndex: settings.imageUploadService
             onSelectedIndexChanged: settings.imageUploadService = selectedIndex
             Component.onCompleted: open()
             onStatusChanged: {
-                if(status === DialogStatus.Closing) __isClosing = true
-                else if(status === DialogStatus.Closed && __isClosing) chooseServiceDialog.destroy(250)
+                if (status === DialogStatus.Closing) __isClosing = true
+                else if (status === DialogStatus.Closed && __isClosing) chooseServiceDialog.destroy(250)
             }
         }
     }

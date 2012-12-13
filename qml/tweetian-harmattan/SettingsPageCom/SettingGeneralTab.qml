@@ -19,20 +19,20 @@
 import QtQuick 1.1
 import com.nokia.meego 1.0
 
-Page{
+Page {
     id: root
 
-    Flickable{
+    Flickable {
         anchors.fill: parent
         contentHeight: switchColumn.height + 2 * switchColumn.anchors.topMargin
 
-        Column{
+        Column {
             id: switchColumn
-            anchors{ left: parent.left; right: parent.right; top: parent.top; topMargin: constant.paddingMedium }
+            anchors { left: parent.left; right: parent.right; top: parent.top; topMargin: constant.paddingMedium }
             height: childrenRect.height
             spacing: constant.paddingMedium
 
-            Text{
+            Text {
                 anchors.horizontalCenter: parent.horizontalCenter
                 width: parent.width - 2 * constant.paddingMedium
                 font.pixelSize: constant.fontSizeLarge
@@ -40,27 +40,27 @@ Page{
                 text: qsTr("Theme")
             }
 
-            ButtonRow{
+            ButtonRow {
                 anchors.horizontalCenter: parent.horizontalCenter
                 width: parent.width - 2 * constant.paddingMedium
                 onVisibleChanged: {
-                    if(visible) checkedButton = settings.invertedTheme ?  lightThemeButton : darkThemeButton
+                    if (visible) checkedButton = settings.invertedTheme ?  lightThemeButton : darkThemeButton
                 }
 
-                Button{
+                Button {
                     id: darkThemeButton
                     text: qsTr("Dark")
                     onClicked: settings.invertedTheme = false
                 }
 
-                Button{
+                Button {
                     id: lightThemeButton
                     text: qsTr("Light")
                     onClicked: settings.invertedTheme = true
                 }
             }
 
-            Text{
+            Text {
                 anchors.horizontalCenter: parent.horizontalCenter
                 width: parent.width - 2 * constant.paddingMedium
                 font.pixelSize: constant.fontSizeLarge
@@ -68,33 +68,33 @@ Page{
                 text: qsTr("Font size")
             }
 
-            ButtonRow{
+            ButtonRow {
                 anchors.horizontalCenter: parent.horizontalCenter
                 width: parent.width - 2 * constant.paddingMedium
                 onVisibleChanged: {
-                    if(visible) checkedButton = settings.largeFontSize ? largeFontSizeButton : smallFontSizeButton
+                    if (visible) checkedButton = settings.largeFontSize ? largeFontSizeButton : smallFontSizeButton
                 }
 
-                Button{
+                Button {
                     id: smallFontSizeButton
                     text: qsTr("Small")
                     onClicked: settings.largeFontSize = false
                 }
 
-                Button{
+                Button {
                     id: largeFontSizeButton
                     text: qsTr("Large")
                     onClicked: settings.largeFontSize = true
                 }
             }
 
-            SettingSwitch{
+            SettingSwitch {
                 text: qsTr("Include #hashtags in reply")
                 checked: settings.hashtagsInReply
                 onCheckedChanged: settings.hashtagsInReply = checked
             }
 
-            SettingSwitch{
+            SettingSwitch {
                 text: qsTr("Enable TwitLonger")
                 checked: settings.enableTwitLonger
                 infoButtonVisible: true

@@ -19,83 +19,85 @@
 import QtQuick 1.1
 import com.nokia.symbian 1.1
 
-AbstractDelegate{
+AbstractDelegate {
     id: root
     height: Math.max(textColumn.height, profileImage.height) + 2 * constant.paddingMedium
     sideRectColor: followersCount == 0 ? "Red" : ""
 
-    Loader{
+    Loader {
         id: iconLoader
-        sourceComponent: protectedUser ? protectedIcon : undefined
         anchors {
             right: parent.right
             top: parent.top
             margins: constant.paddingMedium
         }
+        sourceComponent: protectedUser ? protectedIcon : undefined
     }
 
-    Component{
+    Component {
         id: protectedIcon
 
-        Image{
+        Image {
+            sourceSize { height: constant.graphicSizeTiny; width: constant.graphicSizeTiny }
             source: settings.invertedTheme ? "../Image/lock_inverse.svg" : "../Image/lock.svg"
-            sourceSize.height: constant.graphicSizeTiny
-            sourceSize.width: constant.graphicSizeTiny
         }
     }
 
-    Column{
+    Column {
         id: textColumn
-        anchors{ top: parent.top; left: profileImage.right; right: parent.right }
-        anchors.leftMargin: constant.paddingSmall
-        anchors.margins: constant.paddingMedium
+        anchors {
+            top: parent.top
+            left: profileImage.right; leftMargin: constant.paddingSmall
+            right: parent.right
+            margins: constant.paddingMedium
+        }
         height: childrenRect.height
 
-        Item{
-            width: parent.width
+        Item {
+            anchors { left: parent.left; right: parent.right }
             height: userNameText.height
 
-            Text{
+            Text {
                 id: userNameText
                 anchors.left: parent.left
                 width: Math.min(implicitWidth, parent.width)
-                text: userName
                 font.bold: true
                 font.pixelSize: settings.largeFontSize ? constant.fontSizeMedium : constant.fontSizeSmall
                 color: highlighted ? constant.colorHighlighted : constant.colorLight
                 elide: Text.ElideRight
+                text: userName
             }
 
-            Text{
-                anchors{ left: userNameText.right; right: lockIconLoader.left; margins: constant.paddingSmall }
+            Text {
+                anchors { left: userNameText.right; right: lockIconLoader.left; margins: constant.paddingSmall }
                 width: parent.width - userNameText
-                text: "@" + screenName
                 font.pixelSize: settings.largeFontSize ? constant.fontSizeMedium : constant.fontSizeSmall
                 color: highlighted ? constant.colorHighlighted : constant.colorMid
                 elide: Text.ElideRight
+                text: "@" + screenName
             }
 
-            Loader{
+            Loader {
                 id: lockIconLoader
                 anchors.right: parent.right
                 sourceComponent: protectedUser ? protectedIcon : undefined
             }
         }
 
-        Text{
-            width: parent.width
-            text: bio
+        Text {
+            anchors { left: parent.left; right: parent.right }
             font.pixelSize: settings.largeFontSize ? constant.fontSizeMedium : constant.fontSizeSmall
             visible: text != ""
             wrapMode: Text.Wrap
             color: highlighted ? constant.colorHighlighted : constant.colorLight
+            text: bio
         }
 
-        Text{
-            width: parent.width
-            text: qsTr("%1 following | %2 followers").arg(followingCount).arg(followersCount)
+        Text {
+            anchors { left: parent.left; right: parent.right }
             font.pixelSize: settings.largeFontSize ? constant.fontSizeMedium : constant.fontSizeSmall
             color: highlighted ? constant.colorHighlighted : constant.colorMid
+            text: qsTr("%1 following | %2 followers").arg(followingCount).arg(followersCount)
         }
     }
 

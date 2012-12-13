@@ -19,33 +19,31 @@
 import QtQuick 1.1
 import com.nokia.symbian 1.1
 
-Item{
+Item {
     id: root
 
     property url imageSource: ""
     property url iconSource: ""
     property bool showLoading: false
+
     signal clicked
 
-    width: constant.thumbnailSize
-    height: constant.thumbnailSize
+    width: constant.thumbnailSize; height: constant.thumbnailSize
     clip: true
 
-    Image{
+    Image {
         id: mainImage
-        anchors.centerIn: parent
+        anchors.fill: parent
         source: root.imageSource
         fillMode: Image.PreserveAspectCrop
-        height: parent.height
-        width: parent.width
     }
 
-    Loader{
+    Loader {
         anchors.centerIn: parent
         sourceComponent: {
-            if(showLoading) return loading
+            if (showLoading) return loading
             else {
-                switch(mainImage.status){
+                switch (mainImage.status) {
                 case Image.Loading:
                     return loading
                 case Image.Ready:
@@ -58,32 +56,32 @@ Item{
         }
     }
 
-    Component{
+    Component {
         id: loading
-        BusyIndicator{
+
+        BusyIndicator {
+            width: constant.graphicSizeSmall; height: constant.graphicSizeSmall
             running: true
-            width: constant.graphicSizeSmall
-            height: constant.graphicSizeSmall
             platformInverted: !settings.invertedTheme
         }
     }
 
-    Component{
+    Component {
         id: iconImage
-        Image{
+
+        Image {
+            sourceSize { width: constant.graphicSizeMedium; height: constant.graphicSizeMedium }
             source: root.iconSource
-            sourceSize.width: constant.graphicSizeMedium
-            sourceSize.height: constant.graphicSizeMedium
         }
     }
 
-    MouseArea{
+    MouseArea {
         id: imagePress
         anchors.fill: parent
         onClicked: root.clicked()
     }
 
-    Rectangle{
+    Rectangle {
         id: cover
         anchors.fill: parent
         color: "transparent"

@@ -19,7 +19,7 @@
 import QtQuick 1.1
 import com.nokia.symbian 1.1
 
-MenuItem{
+MenuItem {
     id: root
 
     property url iconSource: ""
@@ -27,11 +27,10 @@ MenuItem{
     platformLeftMargin: icon.sourceSize.width + 2 * constant.paddingMedium
     platformInverted: settings.invertedTheme
 
-    Image{
+    Image {
         id: icon
-        anchors{ left: parent.left; leftMargin: constant.paddingMedium; verticalCenter: parent.verticalCenter }
-        sourceSize.width: constant.graphicSizeSmall
-        sourceSize.height: constant.graphicSizeSmall
+        anchors { left: parent.left; leftMargin: constant.paddingMedium; verticalCenter: parent.verticalCenter }
+        sourceSize { width: constant.graphicSizeSmall; height: constant.graphicSizeSmall }
         source: root.iconSource
     }
 }

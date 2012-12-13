@@ -19,25 +19,22 @@
 import QtQuick 1.1
 import com.nokia.meego 1.0
 
-CommonDialog{
+CommonDialog {
     id: root
 
     property string message: ""
     property bool __isClosing: false
 
     buttonTexts: [qsTr("Close")]
-    content: Item{
+    content: Item {
         anchors {
-            left: parent.left
-            leftMargin: constant.paddingMedium
-            right: parent.right
-            rightMargin: constant.paddingMedium
-            top: parent.top
-            topMargin: root.platformStyle.contentMargin
+            top: parent.top; topMargin: root.platformStyle.contentMargin
+            left: parent.left; leftMargin: constant.paddingMedium
+            right: parent.right; rightMargin: constant.paddingMedium
         }
         height: messageText.paintedHeight + anchors.topMargin * 2
 
-        Text{
+        Text {
             id: messageText
             anchors { left: parent.left; right: parent.right }
             color: "white"
@@ -52,7 +49,7 @@ CommonDialog{
     Component.onCompleted: open()
 
     onStatusChanged: {
-        if(status === DialogStatus.Closing) __isClosing = true
-        else if(status === DialogStatus.Closed && __isClosing) root.destroy(250)
+        if (status === DialogStatus.Closing) __isClosing = true
+        else if (status === DialogStatus.Closed && __isClosing) root.destroy(250)
     }
 }

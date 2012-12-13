@@ -19,40 +19,35 @@
 import QtQuick 1.1
 import "../Utils/Calculations.js" as Calculate
 
-Item{
+Item {
     id: root
     height: 0
     width: ListView.view.width
 
-    Item{
+    Item {
         id: container
-        anchors.horizontalCenter: parent.horizontalCenter
-        anchors.bottom: parent.top
-        anchors.bottomMargin: constant.paddingXXLarge
+        anchors { horizontalCenter: parent.horizontalCenter; bottom: parent.top; bottomMargin: constant.paddingXXLarge }
         height: pullIcon.height
         width: pullIcon.width + textColumn.width + textColumn.anchors.leftMargin
         visible: root.ListView.view.__wasAtYBeginning && root.ListView.view.__initialContentY - root.ListView.view.contentY > 10
 
-        Image{
+        Image {
             id: pullIcon
             anchors.left: parent.left
-            source: settings.invertedTheme ? "image://theme/icon-m-toolbar-next" : "image://theme/icon-m-toolbar-next-white-selected"
-            sourceSize.width: constant.graphicSizeSmall
-            sourceSize.height: constant.graphicSizeSmall
+            sourceSize { width: constant.graphicSizeSmall; height: constant.graphicSizeSmall }
             rotation: visible && root.ListView.view.__initialContentY - root.ListView.view.contentY > 100 ? 270 : 90
+            source: settings.invertedTheme ? "image://theme/icon-m-toolbar-next" : "image://theme/icon-m-toolbar-next-white-selected"
 
-            Behavior on rotation { NumberAnimation{ duration: 250 } }
+            Behavior on rotation { NumberAnimation { duration: 250 } }
         }
 
-        Column{
+        Column {
             id: textColumn
+            anchors { verticalCenter: parent.verticalCenter; left: pullIcon.right; leftMargin: constant.paddingLarge }
             width: Math.max(pullText.width, lastUpdateText.width)
             height: childrenRect.height
-            anchors.verticalCenter: parent.verticalCenter
-            anchors.left: pullIcon.right
-            anchors.leftMargin: constant.paddingLarge
 
-            Text{
+            Text {
                 id: pullText
                 font.pixelSize: constant.fontSizeMedium
                 color: constant.colorLight
@@ -60,13 +55,13 @@ Item{
                           qsTr("Release to refresh") : qsTr("Pull down to refresh")
             }
 
-            Text{
+            Text {
                 id: lastUpdateText
                 font.pixelSize: constant.fontSizeSmall
                 color: constant.colorMid
                 visible: container.visible && root.ListView.view.lastUpdate
                 onVisibleChanged: {
-                    if(visible) text = qsTr("Last update: %1").arg(Calculate.timeDiff(root.ListView.view.lastUpdate))
+                    if (visible) text = qsTr("Last update: %1").arg(Calculate.timeDiff(root.ListView.view.lastUpdate))
                 }
             }
         }

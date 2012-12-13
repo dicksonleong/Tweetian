@@ -19,7 +19,7 @@
 import QtQuick 1.1
 import com.nokia.meego 1.0
 
-Item{
+Item {
     id: root
 
     property string settingText: ""
@@ -29,30 +29,27 @@ Item{
 
     property alias acceptableInput: textField.acceptableInput
 
-    implicitHeight: column.height
-    implicitWidth: parent.width
+    implicitHeight: column.height; implicitWidth: parent.width
 
-    Column{
+    Column {
         id: column
-        anchors{
-            left: parent.left
-            right: parent.right
-            leftMargin: constant.paddingMedium
-            rightMargin: constant.paddingXLarge
+        anchors {
+            left: parent.left; leftMargin: constant.paddingMedium
+            right: parent.right; rightMargin: constant.paddingXLarge
         }
         height: childrenRect.height
         spacing: constant.paddingMedium
 
-        Text{
-            anchors{ left: parent.left; right: parent.right }
+        Text {
+            anchors { left: parent.left; right: parent.right }
             font.pixelSize: constant.fontSizeMedium
             color: constant.colorLight
             text: settingText
         }
 
-        TextField{
+        TextField {
             id: textField
-            anchors{ left: parent.left; right: parent.right }
+            anchors { left: parent.left; right: parent.right }
         }
     }
 }

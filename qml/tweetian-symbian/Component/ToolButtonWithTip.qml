@@ -19,7 +19,7 @@
 import QtQuick 1.1
 import com.nokia.symbian 1.1
 
-ToolButton{
+ToolButton {
     id: root
 
     property string toolTipText: ""

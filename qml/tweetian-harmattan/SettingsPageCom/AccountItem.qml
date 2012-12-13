@@ -19,25 +19,25 @@
 import QtQuick 1.1
 import com.nokia.meego 1.0
 
-Item{
+Item {
     id: root
 
     property string accountName
     property bool signedIn
     property bool infoButtonVisible: false
+
     signal buttonClicked
     signal infoClicked
 
     anchors { left: parent.left; right: parent.right }
     height: accountNameText.height + signedInText.height
 
-    Text{
+    Text {
         id: accountNameText
         anchors {
-            left: parent.left
             top: parent.top
+            left: parent.left; leftMargin: constant.paddingMedium
             right: infoButtonVisible ? infoIconLoader.left : signInButton.left
-            leftMargin: constant.paddingMedium
         }
         color: constant.colorLight
         font.pixelSize: constant.fontSizeLarge
@@ -45,7 +45,7 @@ Item{
         elide: Text.ElideRight
     }
 
-    Text{
+    Text {
         id: signedInText
         anchors { left: parent.left; top: accountNameText.bottom; leftMargin: constant.paddingMedium }
         color: signedIn ? "Green" : "Red"
@@ -54,36 +54,32 @@ Item{
         font.italic: true
     }
 
-    Loader{
+    Loader {
         id: infoIconLoader
-        anchors.right: signInButton.left
-        anchors.rightMargin: constant.paddingLarge
-        anchors.verticalCenter: parent.verticalCenter
+        anchors { right: signInButton.left; rightMargin: constant.paddingLarge; verticalCenter: parent.verticalCenter }
         sourceComponent: infoButtonVisible ? infoIcon : undefined
 
-        MouseArea{
+        MouseArea {
             anchors.fill: parent
             onClicked: root.infoClicked()
         }
     }
 
-    Component{
+    Component {
         id: infoIcon
 
-        Image{
-            source: settings.invertedTheme ? "image://theme/icon-m-content-description"
-                                           : "image://theme/icon-m-content-description-inverse"
+        Image {
             sourceSize.width: constant.graphicSizeSmall + constant.paddingMedium
             sourceSize.height: constant.graphicSizeSmall + constant.paddingMedium
             cache: false
+            source: settings.invertedTheme ? "image://theme/icon-m-content-description"
+                                           : "image://theme/icon-m-content-description-inverse"
         }
     }
 
-    Button{
+    Button {
         id: signInButton
-        anchors.right: parent.right
-        anchors.rightMargin: constant.paddingMedium
-        anchors.verticalCenter: parent.verticalCenter
+        anchors { right: parent.right; rightMargin: constant.paddingMedium; verticalCenter: parent.verticalCenter }
         width: parent.width / 3
         text: signedIn ? qsTr("Sign Out") : qsTr("Sign In")
         onClicked: root.buttonClicked()

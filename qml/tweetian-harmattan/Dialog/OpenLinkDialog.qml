@@ -20,7 +20,7 @@ import QtQuick 1.1
 import com.nokia.meego 1.0
 import "../Component"
 
-ContextMenu{
+ContextMenu {
     id: root
 
     property string link
@@ -31,9 +31,9 @@ ContextMenu{
 
     property bool __isClosing: false
 
-    platformTitle: Text{
+    platformTitle: Text {
         id: linkText
-        anchors{ left: parent.left; right: parent.right }
+        anchors { left: parent.left; right: parent.right }
         horizontalAlignment: Text.AlignHCenter
         text: link
         font.italic: true
@@ -44,34 +44,34 @@ ContextMenu{
         wrapMode: Text.WrapAnywhere
     }
 
-    MenuLayout{
-        MenuItem{
+    MenuLayout {
+        MenuItem {
             text: qsTr("Open link in web browser")
             onClicked: {
                 Qt.openUrlExternally(link)
                 infoBanner.alert(qsTr("Launching web browser..."))
             }
         }
-        MenuItem{
+        MenuItem {
             text: qsTr("Share link")
             onClicked: harmattanUtils.shareLink(link)
         }
 
-        MenuItem{
+        MenuItem {
             text: qsTr("Copy link")
             onClicked: {
                 QMLUtils.copyToClipboard(link)
                 infoBanner.alert(qsTr("Link copied to clipboard"))
             }
-            platformStyle: MenuItemStyle{ position: sendToPocketButton.visible ? "vertical-center" : "vertical-bottom" }
+            platformStyle: MenuItemStyle { position: sendToPocketButton.visible ? "vertical-center" : "vertical-bottom" }
         }
-        MenuItem{
+        MenuItem {
             id: sendToPocketButton
             visible: showAddPageServices
             text: qsTr("Send to Pocket")
             onClicked: addToPocketClicked(link)
         }
-        MenuItem{
+        MenuItem {
             id: sendToInstapaperButton
             visible: showAddPageServices
             text: qsTr("Send to Instapaper")
@@ -82,7 +82,7 @@ ContextMenu{
     Component.onCompleted: open()
 
     onStatusChanged: {
-        if(status === DialogStatus.Closing) __isClosing = true
-        else if(status === DialogStatus.Closed && __isClosing) root.destroy(250)
+        if (status === DialogStatus.Closing) __isClosing = true
+        else if (status === DialogStatus.Closed && __isClosing) root.destroy(250)
     }
 }

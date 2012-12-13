@@ -22,13 +22,13 @@ import "Services/Twitter.js" as Twitter
 import "Component"
 import "Utils/Calculations.js" as Calculate
 
-Page{
+Page {
     id: userPage
 
     property string screenName
     property variant userInfoRawData
 
-    QtObject{
+    QtObject {
         id: userInfoData
 
         property string profileImageUrl: ""
@@ -43,9 +43,9 @@ Page{
         property int listedCount: 0
         property bool following: false
 
-        function setData(){
+        function setData() {
             profileImageUrl = userInfoRawData.profile_image_url
-            if(userInfoRawData.profile_banner_url) bannerImageUrl = userInfoRawData.profile_banner_url
+            if (userInfoRawData.profile_banner_url) bannerImageUrl = userInfoRawData.profile_banner_url
             screenName = userInfoRawData.screen_name
             protectedUser = userInfoRawData.protected
             userName = userInfoRawData.name
@@ -54,62 +54,62 @@ Page{
             followersCount = userInfoRawData.followers_count
             favouritesCount = userInfoRawData.favourites_count
             listedCount = userInfoRawData.listed_count
-            if(userInfoRawData.following) following = userInfoRawData.following
+            if (userInfoRawData.following) following = userInfoRawData.following
             userInfoRawData = undefined
         }
     }
 
     onScreenNameChanged: {
-        if(screenName === settings.userScreenName && cache.userInfo)
+        if (screenName === settings.userScreenName && cache.userInfo)
             internal.userInfoOnSuccess(cache.userInfo)
-        else if(userInfoRawData) internal.userInfoOnSuccess(userInfoRawData)
+        else if (userInfoRawData) internal.userInfoOnSuccess(userInfoRawData)
         else internal.refresh()
     }
 
-    tools: ToolBarLayout{
-        ToolButtonWithTip{
+    tools: ToolBarLayout {
+        ToolButtonWithTip {
             iconSource: "toolbar-back"
             toolTipText: qsTr("Back")
             onClicked: pageStack.pop()
         }
-        ToolButtonWithTip{
+        ToolButtonWithTip {
             iconSource: platformInverted ? "Image/mail_inverse.svg" : "Image/mail.svg"
             enabled: screenName !== settings.userScreenName
             toolTipText: qsTr("Mentions")
             onClicked: pageStack.push(Qt.resolvedUrl("NewTweetPage.qml"), {type: "New", placedText: "@"+screenName+" "})
         }
-        ToolButtonWithTip{
+        ToolButtonWithTip {
             iconSource: platformInverted ? "Image/create_message_inverse.svg" : "Image/create_message.svg"
             enabled: screenName !== settings.userScreenName
             toolTipText: qsTr("Direct Messages")
             onClicked: pageStack.push(Qt.resolvedUrl("NewTweetPage.qml"), {type: "DM", screenName: screenName})
         }
-        ToolButtonWithTip{
+        ToolButtonWithTip {
             iconSource: "toolbar-refresh"
             enabled: !loadingRect.visible
             toolTipText: qsTr("Refresh")
             onClicked: internal.refresh()
         }
-        ToolButtonWithTip{
+        ToolButtonWithTip {
             iconSource: "toolbar-menu"
             toolTipText: qsTr("Menu")
             onClicked: userPageMenu.open()
         }
     }
 
-    Menu{
+    Menu {
         id: userPageMenu
         platformInverted: settings.invertedTheme
 
-        MenuLayout{
-            MenuItem{
+        MenuLayout {
+            MenuItem {
                 text: userInfoData.following ? qsTr("Unfollow %1").arg("@" + screenName)
                                              : qsTr("Follow %1").arg("@" + screenName)
                 enabled: screenName !== settings.userScreenName
                 platformInverted: userPageMenu.platformInverted
                 onClicked: internal.createFollowUserDialog()
             }
-            MenuItem{
+            MenuItem {
                 text: qsTr("Report user as spammer")
                 enabled: screenName !== settings.userScreenName
                 platformInverted: userPageMenu.platformInverted
@@ -118,51 +118,51 @@ Page{
         }
     }
 
-    Flickable{
+    Flickable {
         id: userFlickable
         anchors.fill: parent
         flickableDirection: Flickable.VerticalFlick
         contentHeight: userColumn.height
 
-        Column{
+        Column {
             id: userColumn
-            anchors{ left: parent.left; right: parent.right }
+            anchors { left: parent.left; right: parent.right }
 
-            Item{
+            Item {
                 id: headerItem
-                anchors{ left: parent.left; right: parent.right }
+                anchors { left: parent.left; right: parent.right }
                 height: inPortrait ? width / 2 : width / 4
 
-                Image{
+                Image {
                     id: headerImage
                     anchors.fill: parent
                     cache: false
                     fillMode: Image.PreserveAspectCrop
                     clip: true
                     source: {
-                        if(userInfoData.bannerImageUrl)
+                        if (userInfoData.bannerImageUrl)
                             return userInfoData.bannerImageUrl.concat(inPortrait ? "/web" : "/mobile_retina")
                         else
                             return "Image/banner_empty.jpg"
                     }
 
-                    onStatusChanged: if(status === Image.Error) source = "Image/banner_empty.jpg"
+                    onStatusChanged: if (status === Image.Error) source = "Image/banner_empty.jpg"
                 }
 
-                Item{
+                Item {
                     id: headerTopItem
-                    anchors{ left: parent.left; right: parent.right }
+                    anchors { left: parent.left; right: parent.right }
                     height: childrenRect.height
 
-                    Rectangle{
+                    Rectangle {
                         id: profileImageContainer
-                        anchors{ left: parent.left; top: parent.top; margins: constant.paddingMedium }
+                        anchors { left: parent.left; top: parent.top; margins: constant.paddingMedium }
                         width: profileImage.width + (border.width / 2); height: width
                         color: "black"
                         border.width: 2
                         border.color: profileImageMouseArea.pressed ? constant.colorTextSelection : constant.colorMid
 
-                        Image{
+                        Image {
                             id: profileImage
                             anchors.centerIn: parent
                             height: userNameText.height + screenNameText.height; width: height
@@ -171,7 +171,7 @@ Page{
                             source: userInfoData.profileImageUrl.replace("_normal", "_bigger")
                         }
 
-                        MouseArea{
+                        MouseArea {
                             id: profileImageMouseArea
                             anchors.fill: parent
                             onClicked: {
@@ -181,9 +181,9 @@ Page{
                         }
                     }
 
-                    Text{
+                    Text {
                         id: userNameText
-                        anchors{
+                        anchors {
                             top: parent.top
                             left: profileImageContainer.right
                             right: parent.right
@@ -197,9 +197,9 @@ Page{
                         text: userInfoData.userName
                     }
 
-                    Text{
+                    Text {
                         id: screenNameText
-                        anchors{
+                        anchors {
                             top: userNameText.bottom
                             left: profileImageContainer.right; leftMargin: constant.paddingMedium
                             right: parent.right; rightMargin: constant.paddingMedium
@@ -212,9 +212,9 @@ Page{
                     }
                 }
 
-                Text{
+                Text {
                     id: descriptionText
-                    anchors{
+                    anchors {
                         left: parent.left
                         right: parent.right
                         top: headerTopItem.bottom
@@ -232,17 +232,17 @@ Page{
                 }
             }
 
-            Rectangle{
-                anchors{ left: parent.left; right: parent.right }
+            Rectangle {
+                anchors { left: parent.left; right: parent.right }
                 height: 1
                 color: constant.colorMarginLine
             }
 
-            Repeater{
+            Repeater {
                 id: userInfoRepeater
-                width: parent.width
-                model: ListModel{}
-                delegate: ListItem{
+                anchors { left: parent.left; right: parent.right }
+                model: ListModel {}
+                delegate: ListItem {
                     id: listItem
                     height: Math.max(listItemColumn.height + 2 * constant.paddingMedium, implicitHeight)
                     subItemIndicator: model.clickedString
@@ -250,30 +250,30 @@ Page{
                              || !userInfoData.protectedUser
                              || userInfoData.following
                              || userPage.screenName === settings.userScreenName
-                    onClicked: if(model.clickedString) eval(model.clickedString)
+                    onClicked: if (model.clickedString) eval(model.clickedString)
                     // TODO: Remove eval() if possible
 
-                    Column{
+                    Column {
                         id: listItemColumn
-                        anchors{
+                        anchors {
                             verticalCenter: parent.verticalCenter
                             left: parent.paddingItem.left
                             right: parent.paddingItem.right
                         }
                         height: childrenRect.height
 
-                        ListItemText{
+                        ListItemText {
                             id: titleText
-                            width: parent.width
+                            anchors { left: parent.left; right: parent.right }
                             mode: listItem.mode
                             role: "Title"
                             text: title
                             wrapMode: Text.Wrap
                             platformInverted: listItem.platformInverted
                         }
-                        ListItemText{
+                        ListItemText {
                             id: subTitleText
-                            width: parent.width
+                            anchors { left: parent.left; right: parent.right }
                             role: "SubTitle"
                             mode: listItem.mode
                             text: subtitle
@@ -289,24 +289,24 @@ Page{
         }
     }
 
-    ScrollDecorator{ platformInverted: settings.invertedTheme; flickableItem: userFlickable }
+    ScrollDecorator { platformInverted: settings.invertedTheme; flickableItem: userFlickable }
 
-    QtObject{
+    QtObject {
         id: internal
 
-        function refresh(){
+        function refresh() {
             userInfoRepeater.model.clear()
             Twitter.getUserInfo(userPage.screenName, userInfoOnSuccess, userInfoOnFailure)
             loadingRect.visible = true
         }
 
-        function userInfoOnSuccess(data){
-            if(userPage.screenName === settings.userScreenName) cache.userInfo = data
+        function userInfoOnSuccess(data) {
+            if (userPage.screenName === settings.userScreenName) cache.userInfo = data
             userInfoRawData = data
             userInfoData.setData()
-            if(data.description) descriptionText.text = data.description
-            if(data.url) __addToUserInfo(qsTr("Website"), data.url, "dialog.createOpenLinkDialog(subtitle)")
-            if(data.location) __addToUserInfo(qsTr("Location"), data.location)
+            if (data.description) descriptionText.text = data.description
+            if (data.url) __addToUserInfo(qsTr("Website"), data.url, "dialog.createOpenLinkDialog(subtitle)")
+            if (data.location) __addToUserInfo(qsTr("Location"), data.location)
             __addToUserInfo(qsTr("Joined"), Qt.formatDate(new Date(data.created_at), Qt.SystemLocaleShortDate))
             __addToUserInfo(qsTr("Tweets"), data.statuses_count + " | " + Calculate.tweetsFrequency(data.created_at,data.statuses_count),
                             "internal.pushUserPage(\"UserPageCom/UserTweetsPage.qml\")")
@@ -323,7 +323,7 @@ Page{
             loadingRect.visible = false
         }
 
-        function __addToUserInfo(title, subtitle, clickedString){
+        function __addToUserInfo(title, subtitle, clickedString) {
             var item = {
                 title: title,
                 subtitle: subtitle,
@@ -332,48 +332,48 @@ Page{
             userInfoRepeater.model.append(item)
         }
 
-        function userInfoOnFailure(status, statusText){
-            if(status === 404) infoBanner.alert(qsTr("The user %1 does not exist").arg("@" + userPage.screenName))
+        function userInfoOnFailure(status, statusText) {
+            if (status === 404) infoBanner.alert(qsTr("The user %1 does not exist").arg("@" + userPage.screenName))
             else infoBanner.showHttpError(status, statusText)
             loadingRect.visible = false
         }
 
-        function followOnSuccess(data, isFollowing){
+        function followOnSuccess(data, isFollowing) {
             userInfoData.following = isFollowing
-            if(isFollowing) infoBanner.alert(qsTr("Followed the user %1 successfully").arg("@" + data.screen_name))
+            if (isFollowing) infoBanner.alert(qsTr("Followed the user %1 successfully").arg("@" + data.screen_name))
             else infoBanner.alert(qsTr("Unfollowed the user %1 successfully").arg("@" + data.screen_name))
             loadingRect.visible = false
         }
 
-        function followOnFailure(status, statusText){
+        function followOnFailure(status, statusText) {
             infoBanner.showHttpError(status, statusText)
             loadingRect.visible = false
         }
 
-        function reportSpamOnSuccess(data){
+        function reportSpamOnSuccess(data) {
             infoBanner.alert(qsTr("Reported and blocked the user %1 successfully").arg("@" + data.screen_name))
             loadingRect.visible = false
         }
 
-        function reportSpamOnFailure(status, statusText){
+        function reportSpamOnFailure(status, statusText) {
             infoBanner.showHttpError(status, statusText)
             loadingRect.visible = false
         }
 
-        function createReportSpamDialog(){
+        function createReportSpamDialog() {
             var message = qsTr("Do you want to report and block the user %1 ?").arg("@" + screenName)
-            dialog.createQueryDialog(qsTr("Report Spammer"), "", message, function(){
+            dialog.createQueryDialog(qsTr("Report Spammer"), "", message, function() {
                 Twitter.postReportSpam(screenName, reportSpamOnSuccess, reportSpamOnFailure)
                 loadingRect.visible = true
             })
         }
 
-        function createFollowUserDialog(){
+        function createFollowUserDialog() {
             var title = userInfoData.following ? qsTr("Unfollow user") : qsTr("Follow user")
             var message = userInfoData.following ? qsTr("Do you want to unfollow the user %1 ?").arg("@" + screenName)
                                                  : qsTr("Do you want to follow the user %1 ?").arg("@" + screenName)
-            dialog.createQueryDialog(title, "", message, function(){
-                if(userInfoData.following)
+            dialog.createQueryDialog(title, "", message, function() {
+                if (userInfoData.following)
                     Twitter.postUnfollow(screenName, followOnSuccess, followOnFailure)
                 else
                     Twitter.postFollow(screenName, followOnSuccess, followOnFailure)
@@ -381,7 +381,7 @@ Page{
             })
         }
 
-        function pushUserPage(pageString){
+        function pushUserPage(pageString) {
             pageStack.push(Qt.resolvedUrl(pageString), { userInfoData: userInfoData })
         }
     }

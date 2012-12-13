@@ -18,13 +18,13 @@
 
 Qt.include("../Utils/Calculations.js")
 
-WorkerScript.onMessage = function (msg){
+WorkerScript.onMessage = function(msg) {
             var count = 0
 
-            switch(msg.type){
+            switch (msg.type) {
             case "insert":
-                for(var i=0; i < msg.count; i++){
-                    if(msg.fullModel.get(i).screenName === msg.screenName){
+                for (var i=0; i < msg.count; i++) {
+                    if (msg.fullModel.get(i).screenName === msg.screenName) {
                         var obj = {
                             tweetId: msg.fullModel.get(i).tweetId,
                             userName: msg.fullModel.get(i).userName,
@@ -41,8 +41,8 @@ WorkerScript.onMessage = function (msg){
                 }
                 break
             case "remove":
-                for(var iDelete=0; iDelete < msg.model.count; iDelete++){
-                    if(msg.model.get(iDelete).tweetId === msg.tweetId){
+                for (var iDelete=0; iDelete < msg.model.count; iDelete++) {
+                    if (msg.model.get(iDelete).tweetId === msg.tweetId) {
                         msg.model.remove(iDelete)
                         break
                     }

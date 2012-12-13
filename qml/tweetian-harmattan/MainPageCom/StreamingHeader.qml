@@ -19,26 +19,24 @@
 import QtQuick 1.1
 import com.nokia.meego 1.0
 
-Item{
+Item {
     id: root
     height: 0
     width: ListView.view.width
 
-    Row{
+    Row {
         id: headerRow
-        anchors.horizontalCenter: parent.horizontalCenter
-        anchors.bottom: parent.top
-        anchors.bottomMargin: constant.paddingXXLarge
+        anchors { horizontalCenter: parent.horizontalCenter; bottom: parent.top; bottomMargin: constant.paddingXXLarge }
         width: childrenRect.width
         visible: root.ListView.view.__wasAtYBeginning && root.ListView.view.__initialContentY - root.ListView.view.contentY > 10
         spacing: constant.paddingLarge
 
-        Loader{
+        Loader {
             id: iconLoader
             sourceComponent: userStream.status === 2 ? streamingIcon : pullIcon
         }
 
-        Text{
+        Text {
             font.pixelSize: constant.fontSizeMedium
             color: constant.colorLight
             text: networkMonitor.online ? (userStream.status === 2 ? qsTr("Streaming...") : qsTr("Connecting to streaming"))
@@ -46,15 +44,14 @@ Item{
         }
     }
 
-    Component{
+    Component {
         id: streamingIcon
 
-        Image{
+        Image {
+            smooth: true
+            sourceSize { width: constant.graphicSizeSmall; height: constant.graphicSizeSmall }
             source: settings.invertedTheme ? "image://theme/icon-m-toolbar-refresh"
                                            : "image://theme/icon-m-toolbar-refresh-white-selected"
-            sourceSize.width: constant.graphicSizeSmall
-            sourceSize.height: constant.graphicSizeSmall
-            smooth: true
 
             RotationAnimation on rotation {
                 from: 360; to: 0
@@ -65,16 +62,15 @@ Item{
         }
     }
 
-    Component{
+    Component {
         id: pullIcon
 
-        Image{
-            source: settings.invertedTheme ? "image://theme/icon-m-toolbar-next" : "image://theme/icon-m-toolbar-next-white-selected"
-            sourceSize.width: constant.graphicSizeSmall
-            sourceSize.height: constant.graphicSizeSmall
+        Image {
+            sourceSize { width: constant.graphicSizeSmall; height: constant.graphicSizeSmall }
             rotation: visible && root.ListView.view.__initialContentY - root.ListView.view.contentY > 100 ? 270 : 90
+            source: settings.invertedTheme ? "image://theme/icon-m-toolbar-next" : "image://theme/icon-m-toolbar-next-white-selected"
 
-            Behavior on rotation { NumberAnimation{ duration: 250 } }
+            Behavior on rotation { NumberAnimation { duration: 250 } }
         }
     }
 }

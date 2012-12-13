@@ -20,7 +20,7 @@ import QtQuick 1.1
 import com.nokia.symbian 1.1
 import "../Component"
 
-ContextMenu{
+ContextMenu {
     id: root
 
     property string link
@@ -33,9 +33,9 @@ ContextMenu{
 
     platformInverted: settings.invertedTheme
 
-    MenuLayout{
-        Text{
-            width: parent.width
+    MenuLayout {
+        Text {
+            anchors { left: parent.left; right: parent.right }
             horizontalAlignment: Text.AlignHCenter
             text: link
             font.italic: true
@@ -45,7 +45,7 @@ ContextMenu{
             maximumLineCount: 2
             wrapMode: Text.WrapAnywhere
         }
-        MenuItemWithIcon{
+        MenuItemWithIcon {
             iconSource: platformInverted ? "../Image/internet_inverse.svg" : "../Image/internet.svg"
             text: qsTr("Open link in web browser")
             platformInverted: root.platformInverted
@@ -54,7 +54,7 @@ ContextMenu{
                 infoBanner.alert(qsTr("Launching web browser..."))
             }
         }
-        MenuItemWithIcon{
+        MenuItemWithIcon {
             iconSource: "image://theme/qtg_toolbar_copy" + (platformInverted ? "_inverse" : "" )
             text: qsTr("Copy link")
             platformInverted: root.platformInverted
@@ -63,13 +63,13 @@ ContextMenu{
                 infoBanner.alert(qsTr("Link copied to clipboard"))
             }
         }
-        MenuItemWithIcon{
+        MenuItemWithIcon {
             visible: showAddPageServices
             iconSource: platformInverted ? "../Image/web_page_inverse.svg" : "../Image/web_page.svg"
             text: qsTr("Send to Pocket")
             onClicked: addToPocketClicked(link)
         }
-        MenuItemWithIcon{
+        MenuItemWithIcon {
             visible: showAddPageServices
             iconSource: platformInverted ? "../Image/web_page_inverse.svg" : "../Image/web_page.svg"
             text: qsTr("Send to Instapaper")
@@ -80,7 +80,7 @@ ContextMenu{
     Component.onCompleted: open()
 
     onStatusChanged: {
-        if(status === DialogStatus.Closing) __isClosing = true
-        else if(status === DialogStatus.Closed && __isClosing) root.destroy()
+        if (status === DialogStatus.Closing) __isClosing = true
+        else if (status === DialogStatus.Closed && __isClosing) root.destroy()
     }
 }

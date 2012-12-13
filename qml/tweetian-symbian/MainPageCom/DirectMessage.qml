@@ -23,13 +23,12 @@ import "../Delegate"
 import "../database.js" as Database
 import "../Services/Twitter.js" as Twitter
 
-Item{
+Item {
     id: root
-    implicitHeight: mainView.height
-    implicitWidth: mainView.width
+    implicitHeight: mainView.height; implicitWidth: mainView.width
 
     property string reloadType: "all"
-    property ListModel fullModel: ListModel{}
+    property ListModel fullModel: ListModel {}
     property WorkerScript parser: directMsgParser
 
     property bool busy: true
@@ -38,43 +37,43 @@ Item{
     signal dataParsed(string type, int count, bool createNotification)
 
     onDataParsed: {
-        if(type == "insert") {
-            if(createNotification) {
+        if (type === "insert") {
+            if (createNotification) {
                 unreadCount += count
-                if(symbian.foreground && mainPage.status !== PageStatus.Active)
+                if (symbian.foreground && mainPage.status !== PageStatus.Active)
                     infoBanner.alert(qsTr("%n new message(s)", "", unreadCount))
             }
             busy = false
         }
-        else if(type == "clearAndInsert") {
+        else if (type === "clearAndInsert") {
             busy = false
         }
-        else if(type == "database") {
-            if(fullModel.count > 0) {
+        else if (type == "database") {
+            if (fullModel.count > 0) {
                 directMsgView.lastUpdate = Database.getSetting("directMsgLastUpdate")
                 refresh("newer")
             }
-            else{
+            else {
                 refresh("all")
             }
         }
     }
 
-    function initialize(){
+    function initialize() {
         var directMsg = Database.getDM()
         parser.insertFromDatabase(directMsg)
         busy = true
     }
 
-    function positionAtTop(){
+    function positionAtTop() {
         directMsgView.positionViewAtBeginning()
     }
 
-    function refresh(type){
+    function refresh(type) {
         var sinceId = ""
-        if(directMsgView.count > 0){
-            if(type === "newer") sinceId = fullModel.get(0).tweetId
-            else if(type === "all") directMsgView.model.clear()
+        if (directMsgView.count > 0) {
+            if (type === "newer") sinceId = fullModel.get(0).tweetId
+            else if (type === "all") directMsgView.model.clear()
         }
         else type = "all"
         reloadType = type
@@ -82,51 +81,51 @@ Item{
         busy = true
     }
 
-    AbstractListView{
+    AbstractListView {
         id: directMsgView
         anchors.fill: parent
         header: settings.enableStreaming ? streamingHeader : pullToRefreshHeader
-        delegate: DMThreadDelegate{}
-        model: ListModel{}
-        onPullDownRefresh: if(userStream.status === 0) refresh("newer")
+        delegate: DMThreadDelegate {}
+        model: ListModel {}
+        onPullDownRefresh: if (userStream.status === 0) refresh("newer")
 
-        Component{ id: pullToRefreshHeader; PullToRefreshHeader{} }
-        Component{ id: streamingHeader; StreamingHeader{} }
+        Component { id: pullToRefreshHeader; PullToRefreshHeader {} }
+        Component { id: streamingHeader; StreamingHeader {} }
     }
 
-    Text{
+    Text {
         anchors.centerIn: parent
+        visible: directMsgView.count == 0 && !busy
         font.pixelSize: constant.fontSizeXXLarge
         color: constant.colorMid
         text: qsTr("No message")
-        visible: directMsgView.count == 0 && !busy
     }
 
     ScrollDecorator { platformInverted: settings.invertedTheme; flickableItem: directMsgView }
 
-    Timer{
+    Timer {
         id: refreshTimeStampTimer
         interval: 60000
         repeat: true
         running: symbian.foreground
         triggeredOnStart: true
-        onTriggered: if(directMsgView.count > 0) parser.refreshTime()
+        onTriggered: if (directMsgView.count > 0) parser.refreshTime()
     }
 
-    Timer{
+    Timer {
         id: autoRefreshTimer
-        interval: settings.directMsgRefreshFreq * 60 * 1000
+        interval: settings.directMsgRefreshFreq * 60000
         repeat: true
         running: networkMonitor.online && !settings.enableStreaming
         onTriggered: refresh("newer")
     }
 
-    WorkerScript{
+    WorkerScript {
         id: directMsgParser
         source: "../WorkerScript/DirectMsgParser.js"
         onMessage: dataParsed(messageObject.type, messageObject.count, messageObject.createNotification)
 
-        function insert(recieveMsg, sentMsg){
+        function insert(recieveMsg, sentMsg) {
             var msg = {
                 type: "insert",
                 model: fullModel,
@@ -138,7 +137,7 @@ Item{
             directMsgView.lastUpdate = new Date().toString()
         }
 
-        function clearAndInsert(receiveMsg, sentMsg){
+        function clearAndInsert(receiveMsg, sentMsg) {
             var msg = {
                 type: "clearAndInsert",
                 model: fullModel,
@@ -149,11 +148,11 @@ Item{
             sendMessage(msg)
         }
 
-        function refreshTime(){
+        function refreshTime() {
             sendMessage({type: "time", threadModel: directMsgView.model})
         }
 
-        function insertFromDatabase(data){
+        function insertFromDatabase(data) {
             var msg = {
                 type: "database",
                 model: fullModel,
@@ -163,11 +162,11 @@ Item{
             sendMessage(msg)
         }
 
-        function remove(id){
+        function remove(id) {
             sendMessage({type: "delete", model: fullModel, id: id})
         }
 
-        function setProperty(index, propertyString, value){
+        function setProperty(index, propertyString, value) {
             var msg = {
                 type: "setProperty",
                 threadModel: directMsgView.model,
@@ -179,16 +178,16 @@ Item{
         }
     }
 
-    QtObject{
+    QtObject {
         id: internal
 
-        function successCallback(dmRecieve, dmSent){
-            if(reloadType == "all") parser.clearAndInsert(dmRecieve, dmSent)
-            else if(reloadType == "newer") parser.insert(dmRecieve, dmSent)
-            if(autoRefreshTimer.running) autoRefreshTimer.restart()
+        function successCallback(dmRecieve, dmSent) {
+            if (reloadType == "all") parser.clearAndInsert(dmRecieve, dmSent)
+            else if (reloadType == "newer") parser.insert(dmRecieve, dmSent)
+            if (autoRefreshTimer.running) autoRefreshTimer.restart()
         }
 
-        function failureCallback(status, statusText){
+        function failureCallback(status, statusText) {
             infoBanner.showHttpError(status, statusText)
             busy = false
         }

@@ -19,7 +19,7 @@
 import QtQuick 1.1
 import com.nokia.meego 1.0
 
-ContextMenu{
+ContextMenu {
     id: root
 
     property string screenName
@@ -28,9 +28,9 @@ ContextMenu{
 
     property bool __isClosing: false
 
-    MenuLayout{
+    MenuLayout {
         id: menuLayout
-        MenuItem{
+        MenuItem {
             text: qsTr("Copy DM")
             onClicked: {
                 // TODO: Remove html for links
@@ -38,20 +38,20 @@ ContextMenu{
                 infoBanner.alert(qsTr("DM copied to clipboard"))
             }
         }
-        MenuItem{
+        MenuItem {
             text: qsTr("Delete")
             onClicked: internal.createDeleteDMDialog(tweetId)
         }
-        MenuItem{
+        MenuItem {
             text: qsTr("%1 Profile").arg("<font color=\"LightSeaGreen\">@" + screenName + "</font>")
             visible: screenName != ""
             onClicked: pageStack.push(Qt.resolvedUrl("../UserPage.qml"), {screenName: screenName})
-            platformStyle: MenuItemStyle{ position: linksRepeater.count > 0 ? "vertical-center" : "vertical-bottom" }
+            platformStyle: MenuItemStyle { position: linksRepeater.count > 0 ? "vertical-center" : "vertical-bottom" }
         }
-        Repeater{
+        Repeater {
             id: linksRepeater
 
-            MenuItem{
+            MenuItem {
                 width: menuLayout.width
                 parent: menuLayout
                 text: modelData.substring(modelData.indexOf('://') + 3)
@@ -62,8 +62,8 @@ ContextMenu{
 
     Component.onCompleted: {
         var linksArray = dmText.match(/href="http[^"]+"/g)
-        if(linksArray != null){
-            for(var i=0; i < linksArray.length; i++){
+        if (linksArray != null) {
+            for (var i=0; i < linksArray.length; i++) {
                 linksArray[i] = linksArray[i].substring(6, linksArray[i].length - 1)
             }
             linksRepeater.model = linksArray
@@ -72,7 +72,7 @@ ContextMenu{
     }
 
     onStatusChanged: {
-        if(status === DialogStatus.Closing) __isClosing = true
-        else if(status === DialogStatus.Closed && __isClosing) root.destroy(250)
+        if (status === DialogStatus.Closing) __isClosing = true
+        else if (status === DialogStatus.Closed && __isClosing) root.destroy(250)
     }
 }

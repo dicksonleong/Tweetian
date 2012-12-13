@@ -21,18 +21,18 @@ import com.nokia.meego 1.0
 import "../Delegate"
 import "../Services/Twitter.js" as Twitter
 
-AbstractUserPage{
+AbstractUserPage {
     id: userSubscribedListsPage
 
     headerText: qsTr("Subscribed Lists")
     headerNumber: listView.count
     emptyText: qsTr("No list")
     loadMoreButtonVisible: false
-    delegate: ListDelegate{}
+    delegate: ListDelegate {}
 
     onReload: {
-        Twitter.getUserLists(userInfoData.screenName, function(data){
-            for(var i=0; i<data.length; i++){
+        Twitter.getUserLists(userInfoData.screenName, function(data) {
+            for (var i=0; i<data.length; i++) {
                 var obj = {
                         "listName": data[i].name,
                         "subscriberCount": data[i].subscriber_count,
@@ -48,7 +48,7 @@ AbstractUserPage{
                 listView.model.append(obj)
             }
             loadingRect.visible = false
-        }, function(status, statusText){
+        }, function(status, statusText) {
             infoBanner.showHttpError(status, statusText)
             loadingRect.visible = false
         })

@@ -19,7 +19,7 @@
 import QtQuick 1.1
 import com.nokia.meego 1.0
 
-QtObject{
+QtObject {
     id: constant
 
     // color
@@ -102,10 +102,10 @@ QtObject{
     property string youtubeDevKey: ""
 
     // TODO: move the following function to a more suitable place
-    function encodeParameters(parameters){
+    function encodeParameters(parameters) {
         var encoded = ""
-        for(var p in parameters){
-            if(encoded) encoded += "&"
+        for (var p in parameters) {
+            if (encoded) encoded += "&"
             encoded += p + "=" + encodeURIComponent(parameters[p])
         }
         return encoded

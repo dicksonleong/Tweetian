@@ -20,7 +20,7 @@ import QtQuick 1.1
 import com.nokia.meego 1.0
 import com.nokia.extras 1.1
 
-Item{
+Item {
     id: root
 
     property string sideRectColor: ""
@@ -46,38 +46,39 @@ Item{
                                        : "image://theme/meegotouch-panel-inverted-background-pressed"
     }
 
-    Rectangle{
+    Rectangle {
         id: bottomLine
         anchors { left: parent.left; right: parent.right; bottom: parent.bottom }
         height: 1
         color: constant.colorDisabled
     }
 
-    Loader{
+    Loader {
         id: sideRectLoader
-        anchors{ left: parent.left; top: parent.top }
+        anchors { left: parent.left; top: parent.top }
         sourceComponent: sideRectColor ? sideRect : undefined
     }
 
-    Component{
+    Component {
         id: sideRect
-        Rectangle{
+
+        Rectangle {
             height: root.height - bottomLine.height
             width: constant.paddingSmall
             color: sideRectColor ? sideRectColor : "transparent"
         }
     }
 
-    MaskedItem{
+    MaskedItem {
         id: profileImageItem
         anchors { left: parent.left; top: parent.top; margins: constant.paddingMedium }
         width: constant.graphicSizeMedium; height: constant.graphicSizeMedium
-        mask: Image{ source: "../Image/pic_mask.png"}
+        mask: Image { source: "../Image/pic_mask.png"}
 
-        Image{
+        Image {
             id: profileImage
             anchors.fill: parent
-            sourceSize{ width: parent.width; height: parent.height }
+            sourceSize { width: parent.width; height: parent.height }
             asynchronous: true
 
             NumberAnimation {
@@ -88,7 +89,7 @@ Item{
                 duration: 250
             }
 
-            Binding{
+            Binding {
                 id: imageSourceBinding
                 target: profileImage
                 property: "source"
@@ -97,7 +98,7 @@ Item{
                 when: false
             }
 
-            Connections{
+            Connections {
                 id: movementEndedSignal
                 target: null
                 onMovementEnded: {
@@ -107,21 +108,21 @@ Item{
             }
 
             onStatusChanged: {
-                if(status == Image.Ready){
+                if (status == Image.Ready) {
                     imageLoadedEffect.start()
-                    if(source == root.imageSource) thumbnailCacher.store(root.imageSource, profileImage)
+                    if (source == root.imageSource) thumbnailCacher.store(root.imageSource, profileImage)
                 }
-                else if(status == Image.Error) source = constant.twitterBirdIcon
+                else if (status == Image.Error) source = constant.twitterBirdIcon
             }
 
             Component.onCompleted: {
-                if(!root.ListView.view || !root.ListView.view.moving) imageSourceBinding.when = true
+                if (!root.ListView.view || !root.ListView.view.moving) imageSourceBinding.when = true
                 else movementEndedSignal.target = root.ListView.view
             }
         }
     }
 
-    MouseArea{
+    MouseArea {
         id: delegateMouseArea
         anchors.fill: parent
         enabled: root.enabled
@@ -146,8 +147,8 @@ Item{
     }
 
     ListView.onAdd: {
-        if(root.ListView.view.stayAtCurrentPosition) {
-            if(root.ListView.view.atYBeginning) root.ListView.view.contentY += 1
+        if (root.ListView.view.stayAtCurrentPosition) {
+            if (root.ListView.view.atYBeginning) root.ListView.view.contentY += 1
             __originalHeight = height
             height = 0
             pause.start()

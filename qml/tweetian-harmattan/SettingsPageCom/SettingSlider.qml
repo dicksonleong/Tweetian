@@ -19,36 +19,34 @@
 import QtQuick 1.1
 import com.nokia.meego 1.0
 
-Item{
+Item {
     id: root
 
     property string text: ""
     property alias maximumValue: slider.maximumValue
     property alias stepSize: slider.stepSize
     property alias value: slider.value
+
     signal released
 
     implicitWidth: parent.width
     height: mainText.height + slider.height + 2 * constant.paddingMedium + slider.anchors.margins
 
-    Text{
+    Text {
         id: mainText
-        anchors{ top: parent.top; left: parent.left; margins: constant.paddingMedium }
+        anchors { top: parent.top; left: parent.left; margins: constant.paddingMedium }
         font.pixelSize: constant.fontSizeLarge
         color: constant.colorLight
         text: root.text
     }
 
-    Slider{
+    Slider {
         id: slider
-        anchors.left: parent.left
-        anchors.right: parent.right
-        anchors.top: mainText.bottom
-        anchors.margins: constant.paddingSmall
+        anchors { top: mainText.bottom; left: parent.left; right: parent.right; margins: constant.paddingSmall }
         enabled: root.enabled
         minimumValue: 0
         valueIndicatorText: value == 0 ? "Off" : value
         valueIndicatorVisible: true
-        onPressedChanged: if(!pressed) root.released()
+        onPressedChanged: if (!pressed) root.released()
     }
 }

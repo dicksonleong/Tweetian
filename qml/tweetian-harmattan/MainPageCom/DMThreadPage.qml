@@ -23,7 +23,7 @@ import "../Delegate"
 import "../Dialog"
 import "../Services/Twitter.js" as Twitter
 
-Page{
+Page {
     id: dMThreadPage
 
     property QtObject userStream: null
@@ -33,35 +33,35 @@ Page{
 
     Component.onCompleted: parser.insert(mainPage.directMsg.fullModel.count)
 
-    tools: ToolBarLayout{
-        ToolIcon{
+    tools: ToolBarLayout {
+        ToolIcon {
             id: backButton
             platformIconId: "toolbar-back" + (enabled ? "" : "-dimmed")
             onClicked: pageStack.pop()
         }
-        ToolIcon{
+        ToolIcon {
             platformIconId: "toolbar-edit"
             onClicked: pageStack.push(Qt.resolvedUrl("../NewTweetPage.qml"), {type: "DM", screenName: screenName})
         }
-        ToolIcon{
+        ToolIcon {
             platformIconId: "toolbar-refresh" + (enabled ? "" : "-dimmed")
             enabled: userStream.status === 0
             onClicked: mainPage.directMsg.refresh("newer")
         }
     }
 
-    AbstractListView{
+    AbstractListView {
         id: dMConversationView
-        anchors{ top: header.bottom; left: parent.left; right: parent.right; bottom: parent.bottom }
-        model: ListModel{}
-        header: PullToRefreshHeader{ visible: userStream.status === 0 }
-        delegate: DirectMsgDelegate{}
-        onPullDownRefresh: if(userStream.status === 0) mainPage.directMsg.refresh("newer")
+        anchors { top: header.bottom; left: parent.left; right: parent.right; bottom: parent.bottom }
+        model: ListModel {}
+        header: PullToRefreshHeader { visible: userStream.status === 0 }
+        delegate: DirectMsgDelegate {}
+        onPullDownRefresh: if (userStream.status === 0) mainPage.directMsg.refresh("newer")
     }
 
-    ScrollDecorator{ flickableItem: dMConversationView }
+    ScrollDecorator { flickableItem: dMConversationView }
 
-    PageHeader{
+    PageHeader {
         id: header
         headerText: qsTr("DM: %1").arg("@" + screenName)
         headerIcon: "../Image/inbox.svg"
@@ -69,13 +69,13 @@ Page{
         onClicked: dMConversationView.positionViewAtBeginning()
     }
 
-    WorkerScript{
+    WorkerScript {
         id: dMConversationParser
         source: "../WorkerScript/DMConversationParser.js"
         onMessage: backButton.enabled = true
 
-        function insert(count){
-            if(count > 0){
+        function insert(count) {
+            if (count > 0) {
                 backButton.enabled = false
                 var msg = {
                     type: "insert",
@@ -88,7 +88,7 @@ Page{
             }
         }
 
-        function remove(tweetId){
+        function remove(tweetId) {
             var msg = {
                 type: "remove",
                 model: dMConversationView.model,
@@ -98,41 +98,41 @@ Page{
         }
     }
 
-    Connections{
+    Connections {
         target: mainPage.directMsg
-        onDataParsed: if(type === "insert") parser.insert(count)
+        onDataParsed: if (type === "insert") parser.insert(count)
     }
 
-    QtObject{
+    QtObject {
         id: internal
 
         property Component __dmDialog: null
 
-        function deleteDMOnSuccess(data){
+        function deleteDMOnSuccess(data) {
             mainPage.directMsg.parser.remove(data.id_str)
             parser.remove(data.id_str)
             infoBanner.alert(qsTr("Direct message deleted successfully"))
             header.busy = false
         }
 
-        function deleteDMOnFailure(status, statusText){
+        function deleteDMOnFailure(status, statusText) {
             infoBanner.showHttpError(status, statusText)
             header.busy = false
         }
 
-        function createDMDialog(model){
+        function createDMDialog(model) {
             var prop = {
                 tweetId: model.tweetId,
                 screenName: (model.sentMsg ? settings.userScreenName : model.screenName),
                 dmText: model.tweetText
             }
-            if(!__dmDialog) __dmDialog = Qt.createComponent("DMDialog.qml")
+            if (!__dmDialog) __dmDialog = Qt.createComponent("DMDialog.qml")
             __dmDialog.createObject(dMThreadPage, prop)
         }
 
-        function createDeleteDMDialog(tweetId){
+        function createDeleteDMDialog(tweetId) {
             var message = qsTr("Do you want to delete this direct message?")
-            dialog.createQueryDialog(qsTr("Delete Message"), "", message, function(){
+            dialog.createQueryDialog(qsTr("Delete Message"), "", message, function() {
                 Twitter.postDeleteDirectMsg(tweetId, deleteDMOnSuccess, deleteDMOnFailure)
                 header.busy = true
             })

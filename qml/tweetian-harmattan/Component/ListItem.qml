@@ -20,7 +20,7 @@ import QtQuick 1.1
 import com.nokia.meego 1.0
 import com.nokia.extras 1.1
 
-Item{
+Item {
     id: root
 
     property bool marginLineVisible: true
@@ -49,8 +49,7 @@ Item{
     Loader {
         id: iconLoader
         anchors {
-            right: parent.right
-            rightMargin: constant.paddingMedium
+            right: parent.right; rightMargin: constant.paddingMedium
             verticalCenter: parent.verticalCenter
         }
         sourceComponent: root.subItemIndicator ? subItemIcon : undefined
@@ -62,39 +61,40 @@ Item{
         Image {
             source: "image://theme/icon-m-common-drilldown-arrow"
             .concat(settings.invertedTheme ? "" : "-inverse").concat(root.enabled ? "" : "-disabled")
-            sourceSize.width: constant.graphicSizeSmall
-            sourceSize.height: constant.graphicSizeSmall
+            sourceSize { width: constant.graphicSizeSmall; height: constant.graphicSizeSmall }
         }
     }
 
-    Loader{
+    Loader {
         id: imageLoader
-        anchors.left: parent.left
-        anchors.top: imageAnchorAtCenter ? undefined : parent.top
-        anchors.verticalCenter: imageAnchorAtCenter ? parent.verticalCenter : undefined
-        anchors.margins: constant.paddingMedium
+        anchors {
+            top: imageAnchorAtCenter ? undefined : parent.top
+            left: parent.left
+            verticalCenter: imageAnchorAtCenter ? parent.verticalCenter : undefined
+            margins: constant.paddingMedium
+        }
         sourceComponent: imageSource ? imageComponent : undefined
     }
 
-    Component{
+    Component {
         id: imageComponent
 
-        MaskedItem{
+        MaskedItem {
             id: pic
             width: constant.graphicSizeMedium; height: constant.graphicSizeMedium
-            mask: Image{ source: "../Image/pic_mask.png"}
+            mask: Image { source: "../Image/pic_mask.png"}
 
-            Image{
+            Image {
                 id: profileImage
                 anchors.fill: parent
-                sourceSize{ width: parent.width; height: parent.height }
+                sourceSize { width: parent.width; height: parent.height }
                 asynchronous: true
                 source: root.imageSource
             }
         }
     }
 
-    Rectangle{
+    Rectangle {
         id: bottomLine
         height: 1
         anchors { left: root.left; right: root.right; bottom: parent.bottom }
@@ -102,14 +102,14 @@ Item{
         visible: root.marginLineVisible
     }
 
-    MouseArea{
+    MouseArea {
         id: mouseArea
         anchors.fill: parent
         onClicked: root.clicked()
         onPressAndHold: root.pressAndHold()
     }
 
-    ListView.onAdd: NumberAnimation{
+    ListView.onAdd: NumberAnimation {
         target: root
         property: "scale"
         duration: 250
@@ -117,7 +117,7 @@ Item{
         from: 0.25; to: 1
     }
 
-    ListView.onRemove: SequentialAnimation{
+    ListView.onRemove: SequentialAnimation {
         PropertyAction { target: root; property: "ListView.delayRemove"; value: true }
         NumberAnimation {
             target: root

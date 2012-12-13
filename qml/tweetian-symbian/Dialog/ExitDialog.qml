@@ -19,7 +19,7 @@
 import QtQuick 1.1
 import com.nokia.symbian 1.1
 
-CommonDialog{
+CommonDialog {
     id: root
 
     property bool __isClosing: false
@@ -36,14 +36,14 @@ CommonDialog{
     }
 
     onButtonClicked: {
-        if(index === 0) Qt.quit()
-        else if(index === 1) appQmlView.lower()
+        if (index === 0) Qt.quit()
+        else if (index === 1) appQmlView.lower()
     }
 
     Component.onCompleted: open()
 
     onStatusChanged: {
-        if(status === DialogStatus.Closing) __isClosing = true
-        else if(status === DialogStatus.Closed && __isClosing) root.destroy()
+        if (status === DialogStatus.Closing) __isClosing = true
+        else if (status === DialogStatus.Closed && __isClosing) root.destroy()
     }
 }

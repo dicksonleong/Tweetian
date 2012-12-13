@@ -19,59 +19,61 @@
 import QtQuick 1.1
 import com.nokia.symbian 1.1
 
-AbstractDelegate{
+AbstractDelegate {
     id: root
     height: Math.max(textColumn.height, profileImage.height) + 2 * constant.paddingMedium
     imageSource: sentMsg ? settings.userProfileImage : profileImageUrl
 
-    Column{
+    Column {
         id: textColumn
-        anchors{ top: parent.top; left: profileImage.right; right: parent.right }
-        anchors.leftMargin: constant.paddingSmall
-        anchors.margins: constant.paddingMedium
+        anchors {
+            top: parent.top
+            left: profileImage.right; leftMargin: constant.paddingSmall
+            right: parent.right
+            margins: constant.paddingMedium
+        }
         height: childrenRect.height
 
-        Item{
-            width: parent.width
+        Item {
+            anchors { left: parent.left; right: parent.right }
             height: userNameText.height
 
-            Text{
+            Text {
                 id: userNameText
                 anchors.left: parent.left
                 width: Math.min(implicitWidth, parent.width)
-                text: sentMsg ? settings.userFullName : userName
                 font.pixelSize: settings.largeFontSize ? constant.fontSizeMedium : constant.fontSizeSmall
                 font.bold: true
                 color: highlighted ? constant.colorHighlighted : constant.colorLight
                 elide: Text.ElideRight
+                text: sentMsg ? settings.userFullName : userName
             }
 
-            Text{
-                anchors{ left: userNameText.right; leftMargin: constant.paddingSmall; right: parent.right }
-                text: "@" + (sentMsg ? settings.userScreenName : screenName)
+            Text {
+                anchors { left: userNameText.right; leftMargin: constant.paddingSmall; right: parent.right }
                 font.pixelSize: settings.largeFontSize ? constant.fontSizeMedium : constant.fontSizeSmall
                 color: highlighted ? constant.colorHighlighted : constant.colorMid
                 elide: Text.ElideRight
+                text: "@" + (sentMsg ? settings.userScreenName : screenName)
             }
         }
 
-        Text{
-            width: parent.width
-            text: tweetText
+        Text {
+            anchors { left: parent.left; right: parent.right }
             font.pixelSize: settings.largeFontSize ? constant.fontSizeMedium : constant.fontSizeSmall
             wrapMode: Text.Wrap
             color: highlighted ? constant.colorHighlighted : constant.colorLight
+            text: tweetText
         }
 
-        Text{
-            width: parent.width
+        Text {
+            anchors { left: parent.left; right: parent.right }
             horizontalAlignment: Text.AlignRight
-            text: timeDiff
             font.pixelSize: settings.largeFontSize ? constant.fontSizeSmall : constant.fontSizeXSmall
             color: highlighted ? constant.colorHighlighted : constant.colorMid
+            text: timeDiff
         }
     }
-
 
     onClicked: internal.createDMDialog(model)
 }

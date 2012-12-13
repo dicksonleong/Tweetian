@@ -19,18 +19,18 @@
 Qt.include("../Utils/Parser.js")
 Qt.include("../Utils/Calculations.js")
 
-WorkerScript.onMessage = function(msg){
+WorkerScript.onMessage = function(msg) {
     var screenNames = []
 
-    if(msg.reloadType === "all"){
+    if (msg.reloadType === "all") {
         msg.model.clear()
         msg.model.sync()
     }
 
-    if(msg.userIds){
-        for(var iArray=0; iArray < msg.userIds.length; iArray++){
-            for(var iData=0; iData < msg.data.length; iData++){
-                if(msg.userIds[iArray] === msg.data[iData].id_str){
+    if (msg.userIds) {
+        for (var iArray=0; iArray < msg.userIds.length; iArray++) {
+            for (var iData=0; iData < msg.data.length; iData++) {
+                if (msg.userIds[iArray] === msg.data[iData].id_str) {
                     var userObject = {
                         userName: msg.data[iData].name,
                         screenName: msg.data[iData].screen_name,
@@ -55,8 +55,8 @@ WorkerScript.onMessage = function(msg){
             }
         }
     }
-    else{
-        for(var iData2=0; iData2 < msg.data.length; iData2++){
+    else {
+        for (var iData2=0; iData2 < msg.data.length; iData2++) {
             var userObject2 = {
                 userName: msg.data[iData2].name,
                 screenName: msg.data[iData2].screen_name,

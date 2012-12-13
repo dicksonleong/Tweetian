@@ -20,19 +20,19 @@ import QtQuick 1.1
 import com.nokia.symbian 1.1
 import "Component"
 
-Page{
+Page {
     id: tweetImagePage
 
     property string imageLink: ""
     property url imageUrl: ""
 
-    tools: ToolBarLayout{
-        ToolButtonWithTip{
+    tools: ToolBarLayout {
+        ToolButtonWithTip {
             iconSource: "toolbar-back"
             toolTipText: qsTr("Back")
             onClicked: pageStack.pop()
         }
-        ToolButtonWithTip{
+        ToolButtonWithTip {
             iconSource: platformInverted ? "Image/undo_inverse.svg" : "Image/undo.svg"
             enabled: tweetImagePreview.scale !== pinchArea.minScale
             toolTipText: qsTr("Reset Zoom")
@@ -42,43 +42,42 @@ Page{
                 bounceBackAnimation.start()
             }
         }
-        ToolButtonWithTip{
+        ToolButtonWithTip {
             iconSource: platformInverted ? "Image/internet_inverse.svg" : "Image/internet.svg"
             enabled: imageLink != ""
             toolTipText: qsTr("Open Link")
             onClicked: dialog.createOpenLinkDialog(imageLink)
         }
-        ToolButtonWithTip{
+        ToolButtonWithTip {
             iconSource: platformInverted ? "Image/save_inverse.svg" : "Image/save.svg"
             toolTipText: qsTr("Save Image")
             enabled: tweetImagePreview.status == Image.Ready
             onClicked: {
                 var filePath = QMLUtils.saveImage(tweetImagePreview)
-                if(filePath) infoBanner.alert(qsTr("Image saved in %1").arg(filePath))
+                if (filePath) infoBanner.alert(qsTr("Image saved in %1").arg(filePath))
                 else infoBanner.alert(qsTr("Failed to save image"))
             }
         }
     }
 
-    Flickable{
+    Flickable {
         id: imageFlickable
         anchors.fill: parent
-        contentWidth: imageContainer.width
-        contentHeight: imageContainer.height
+        contentWidth: imageContainer.width; contentHeight: imageContainer.height
         clip: true
-        onHeightChanged: if(tweetImagePreview.status === Image.Ready) tweetImagePreview.fitToScreen()
+        onHeightChanged: if (tweetImagePreview.status === Image.Ready) tweetImagePreview.fitToScreen()
 
-        Item{
+        Item {
             id: imageContainer
             width: Math.max(tweetImagePreview.width * tweetImagePreview.scale, imageFlickable.width)
             height: Math.max(tweetImagePreview.height * tweetImagePreview.scale, imageFlickable.height)
 
-            Image{
+            Image {
                 id: tweetImagePreview
 
                 property real prevScale
 
-                function fitToScreen(){
+                function fitToScreen() {
                     scale = Math.min(imageFlickable.width / width, imageFlickable.height / height, 1)
                     pinchArea.minScale = scale
                     prevScale = scale
@@ -93,13 +92,13 @@ Page{
                 smooth: !imageFlickable.moving
 
                 onStatusChanged: {
-                    if(status == Image.Ready){
+                    if (status == Image.Ready) {
                         fitToScreen()
                         loadedAnimation.start()
                     }
                 }
 
-                NumberAnimation{
+                NumberAnimation {
                     id: loadedAnimation
                     target: tweetImagePreview
                     property: "opacity"
@@ -122,7 +121,7 @@ Page{
             }
         }
 
-        PinchArea{
+        PinchArea {
             id: pinchArea
 
             property real minScale: 1.0
@@ -136,17 +135,17 @@ Page{
 
             onPinchFinished: {
                 imageFlickable.returnToBounds()
-                if(tweetImagePreview.scale < pinchArea.minScale){
+                if (tweetImagePreview.scale < pinchArea.minScale) {
                     bounceBackAnimation.to = pinchArea.minScale
                     bounceBackAnimation.start()
                 }
-                else if(tweetImagePreview.scale > pinchArea.maxScale){
+                else if (tweetImagePreview.scale > pinchArea.maxScale) {
                     bounceBackAnimation.to = pinchArea.maxScale
                     bounceBackAnimation.start()
                 }
             }
 
-            NumberAnimation{
+            NumberAnimation {
                 id: bounceBackAnimation
                 target: tweetImagePreview
                 duration: 250
@@ -156,10 +155,10 @@ Page{
         }
     }
 
-    Loader{
+    Loader {
         anchors.centerIn: parent
         sourceComponent: {
-            switch(tweetImagePreview.status){
+            switch (tweetImagePreview.status) {
             case Image.Loading:
                 return loadingIndicator
             case Image.Error:
@@ -169,23 +168,25 @@ Page{
             }
         }
 
-        Component{
+        Component {
             id: loadingIndicator
 
-            Item{
+            Item {
                 height: childrenRect.height
                 width: tweetImagePage.width
 
-                BusyIndicator{
+                BusyIndicator {
                     id: imageLoadingIndicator
-                    anchors{ horizontalCenter: parent.horizontalCenter }
-                    running: true
+                    anchors.horizontalCenter: parent.horizontalCenter
                     height: constant.graphicSizeLarge; width: constant.graphicSizeLarge
+                    running: true
                 }
 
-                Text{
-                    anchors{ horizontalCenter: parent.horizontalCenter; top: imageLoadingIndicator.bottom }
-                    anchors.topMargin: constant.paddingXLarge
+                Text {
+                    anchors {
+                        top: imageLoadingIndicator.bottom; topMargin: constant.paddingXLarge
+                        horizontalCenter: parent.horizontalCenter
+                    }
                     font.pixelSize: constant.fontSizeLarge
                     color: constant.colorLight
                     text: qsTr("Loading image...%1").arg(Math.round(tweetImagePreview.progress*100) + "%")
@@ -193,9 +194,9 @@ Page{
             }
         }
 
-        Component{
+        Component {
             id: failedLoading
-            Text{
+            Text {
                 font.pixelSize: constant.fontSizeLarge
                 color: constant.colorLight
                 text: qsTr("Error loading image")
@@ -203,5 +204,5 @@ Page{
         }
     }
 
-    ScrollDecorator{ platformInverted: settings.invertedTheme; flickableItem: imageFlickable }
+    ScrollDecorator { platformInverted: settings.invertedTheme; flickableItem: imageFlickable }
 }

@@ -21,14 +21,13 @@ import com.nokia.symbian 1.1
 import "../Services/Twitter.js" as Twitter
 import "../Component"
 
-Item{
+Item {
     id: listInfo
-    width: listPageListView.width
-    height: listPageListView.height
+    width: listPageListView.width; height: listPageListView.height
 
-    function initialize(){
+    function initialize() {
 
-        function addToListInfo(title, subtitle, clickedString){
+        function addToListInfo(title, subtitle, clickedString) {
             var item = { title: title, subtitle: subtitle, clickedString: clickedString || "" }
             listInfoListView.model.append(item)
         }
@@ -36,38 +35,35 @@ Item{
         addToListInfo(qsTr("List Name"), listName)
         addToListInfo(qsTr("List Owner"), "@" + ownerScreenName,
                       "pageStack.push(Qt.resolvedUrl(\"../UserPage.qml\"), {screenName: subtitle.substring(1)})")
-        if(listDescription) addToListInfo(qsTr("Description"), listDescription)
+        if (listDescription) addToListInfo(qsTr("Description"), listDescription)
         addToListInfo(qsTr("Member"), memberCount, "listPageListView.currentIndex = 2")
         addToListInfo(qsTr("Subscriber"), subscriberCount, "listPageListView.currentIndex = 3")
     }
 
-    function positionAtTop(){
+    function positionAtTop() {
         listInfoListView.positionViewAtBeginning()
     }
 
-    ListView{
+    ListView {
         id: listInfoListView
         anchors.fill: parent
-        model: ListModel{}
-        header: SectionHeader{
-            id: sectionHeader
-            text: qsTr("List Info")
-        }
-        delegate: ListItem{
+        model: ListModel {}
+        header: SectionHeader { id: sectionHeader; text: qsTr("List Info") }
+        delegate: ListItem {
             id: listItem
             height: listItemColumn.height + 2 * constant.paddingMedium
             platformInverted: settings.invertedTheme
             subItemIndicator: model.clickedString
-            onClicked: if(model.clickedString) eval(model.clickedString)
+            onClicked: if (model.clickedString) eval(model.clickedString)
 
-            Column{
+            Column {
                 id: listItemColumn
-                anchors {top: parent.paddingItem.top; left: parent.paddingItem.left; right: parent.paddingItem.right}
+                anchors { top: parent.paddingItem.top; left: parent.paddingItem.left; right: parent.paddingItem.right }
                 height: childrenRect.height
 
-                ListItemText{
+                ListItemText {
                     id: titleText
-                    width: parent.width
+                    anchors { left: parent.left; right: parent.right }
                     platformInverted: listItem.platformInverted
                     role: "Title"
                     mode: listItem.mode
@@ -75,9 +71,9 @@ Item{
                     wrapMode: Text.Wrap
                     font.bold: true
                 }
-                ListItemText{
+                ListItemText {
                     id: subTitleText
-                    width: parent.width
+                    anchors { left: parent.left; right: parent.right }
                     platformInverted: listItem.platformInverted
                     role: "SubTitle"
                     mode: listItem.mode

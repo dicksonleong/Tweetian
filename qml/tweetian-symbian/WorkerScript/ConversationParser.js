@@ -19,15 +19,15 @@
 Qt.include("../Utils/Parser.js")
 Qt.include("../Utils/Calculations.js")
 
-WorkerScript.onMessage = function (msg) {
+WorkerScript.onMessage = function(msg) {
 
-    if(msg.timelineModel && msg.mentionsModel){
+    if (msg.timelineModel && msg.mentionsModel) {
         var skipCurrentLoop = false
         var replyId = msg.inReplyToStatusId
-        while(replyId && msg.ancestorModel.count < 10){
+        while (replyId && msg.ancestorModel.count < 10) {
             skipCurrentLoop = false
-            for(var iTimeline=0; iTimeline < msg.timelineModel.count; iTimeline++){
-                if(msg.timelineModel.get(iTimeline).tweetId == replyId){
+            for (var iTimeline=0; iTimeline < msg.timelineModel.count; iTimeline++) {
+                if (msg.timelineModel.get(iTimeline).tweetId == replyId) {
                     var timelineObject = {
                         "tweetId": msg.timelineModel.get(iTimeline).tweetId,
                         "retweetId": msg.timelineModel.get(iTimeline).retweetId,
@@ -55,9 +55,9 @@ WorkerScript.onMessage = function (msg) {
                     break
                 }
             }
-            if(skipCurrentLoop) continue
-            for(var iMentions=0; iMentions < msg.mentionsModel.count; iMentions++){
-                if(msg.mentionsModel.get(iMentions).tweetId == replyId){
+            if (skipCurrentLoop) continue
+            for (var iMentions=0; iMentions < msg.mentionsModel.count; iMentions++) {
+                if (msg.mentionsModel.get(iMentions).tweetId == replyId) {
                     var mentionsObject = {
                         "tweetId": msg.mentionsModel.get(iMentions).tweetId,
                         "retweetId": msg.mentionsModel.get(iMentions).retweetId,
@@ -85,29 +85,29 @@ WorkerScript.onMessage = function (msg) {
                     break
                 }
             }
-            if(skipCurrentLoop) continue
+            if (skipCurrentLoop) continue
             replyId = undefined
         }
     }
 
-    else{
-        for(var i=0; i<(msg.data[0] ? msg.data[0].results.length : 0); i++){
+    else {
+        for (var i=0; i<(msg.data[0] ? msg.data[0].results.length : 0); i++) {
             var model
             var skipCurrentTweet = false
             var insertIndex = undefined
-            if(msg.data[0].results[i].annotations.ConversationRole === "Ancestor"){
+            if (msg.data[0].results[i].annotations.ConversationRole === "Ancestor") {
                 // check whether the tweet is already exist in the model
-                for(var iAncestor=0; iAncestor < msg.ancestorModel.count; iAncestor++){
-                    if(msg.ancestorModel.get(iAncestor).tweetId == msg.data[0].results[i].value.id_str){
+                for (var iAncestor=0; iAncestor < msg.ancestorModel.count; iAncestor++) {
+                    if (msg.ancestorModel.get(iAncestor).tweetId == msg.data[0].results[i].value.id_str) {
                         skipCurrentTweet = true
                         break
                     }
-                    else if(new Date(msg.ancestorModel.get(iAncestor).createdAt) > new Date(msg.data[0].results[i].value.created_at)){
+                    else if (new Date(msg.ancestorModel.get(iAncestor).createdAt) > new Date(msg.data[0].results[i].value.created_at)) {
                         insertIndex = iAncestor
                         break
                     }
                 }
-                if(skipCurrentTweet) continue
+                if (skipCurrentTweet) continue
                 model = msg.ancestorModel
             }
             else model = msg.descendantModel
@@ -118,7 +118,7 @@ WorkerScript.onMessage = function (msg) {
                 "screenName": msg.data[0].results[i].value.user.screen_name
             }
 
-            if(msg.data[0].results[i].value.retweeted_status){
+            if (msg.data[0].results[i].value.retweeted_status) {
                 msg.data[0].results[i].value = msg.data[0].results[i].value.retweeted_status
             }
 
@@ -135,16 +135,16 @@ WorkerScript.onMessage = function (msg) {
             tweetObject.inReplyToScreenName = msg.data[0].results[i].value.in_reply_to_screen_name
             tweetObject.inReplyToStatusId = msg.data[0].results[i].value.in_reply_to_status_id_str
 
-            if(msg.data[0].results[i].value.entities.urls instanceof Array){
-                for(var i2=0; i2<msg.data[0].results[i].value.entities.urls.length; i2++){
+            if (msg.data[0].results[i].value.entities.urls instanceof Array) {
+                for (var i2=0; i2<msg.data[0].results[i].value.entities.urls.length; i2++) {
                     tweetObject.displayTweetText = tweetObject.displayTweetText.parseURL(msg.data[0].results[i].value.entities.urls[i2].url,
                                                                                          msg.data[0].results[i].value.entities.urls[i2].display_url,
                                                                                          msg.data[0].results[i].value.entities.urls[i2].expanded_url)
                 }
             }
 
-            if(msg.data[0].results[i].value.entities.media instanceof Array &&
-                    msg.data[0].results[i].value.entities.media[0]){
+            if (msg.data[0].results[i].value.entities.media instanceof Array
+                    && msg.data[0].results[i].value.entities.media[0]) {
                 tweetObject.mediaExpandedUrl = msg.data[0].results[i].value.entities.media[0].expanded_url
                 tweetObject.mediaViewUrl = msg.data[0].results[i].value.entities.media[0].media_url
                 tweetObject.mediaThumbnail = msg.data[0].results[i].value.entities.media[0].media_url + ":thumb"
@@ -152,23 +152,23 @@ WorkerScript.onMessage = function (msg) {
                                                                                      msg.data[0].results[i].value.entities.media[0].display_url,
                                                                                      msg.data[0].results[i].value.entities.media[0].expanded_url)
             }
-            else{
+            else {
                 var picURL = parsePic(tweetObject.displayTweetText)
                 tweetObject.mediaExpandedUrl = picURL[0]
                 tweetObject.mediaViewUrl = picURL[1]
                 tweetObject.mediaThumbnail = picURL[2]
             }
 
-            if(msg.data[0].results[i].value.geo){
+            if (msg.data[0].results[i].value.geo) {
                 tweetObject.latitude = msg.data[0].results[i].value.geo.coordinates[0]
                 tweetObject.longitude = msg.data[0].results[i].value.geo.coordinates[1]
             }
-            else{
+            else {
                 tweetObject.latitude = ""
                 tweetObject.longitude = ""
             }
 
-            if(typeof insertIndex === "number") model.insert(insertIndex, tweetObject)
+            if (typeof insertIndex === "number") model.insert(insertIndex, tweetObject)
             else model.append(tweetObject)
         }
     }

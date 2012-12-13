@@ -19,16 +19,17 @@
 import QtQuick 1.1
 import com.nokia.meego 1.0
 
-Dialog{
+Dialog {
     id: root
+    objectName: "commonDialog"
 
     property string titleText: ""
     property alias titleIcon: iconImage.source
     property variant buttonTexts: []
+
     signal buttonClicked(int index)
 
-    objectName: "commonDialog"
-    platformStyle: DialogStyle{
+    platformStyle: DialogStyle {
         property int contentMargin: 21
         leftMargin: constant.paddingLarge
         rightMargin: constant.paddingLarge
@@ -40,34 +41,30 @@ Dialog{
                     titleBarIconField.height + titleTextText.height + titleFieldCol.spacing
         Column {
             id: titleFieldCol
+            anchors { left: parent.left; right:  parent.right; top:  parent.top }
             spacing: 17
-
-            anchors.left:  parent.left
-            anchors.right:  parent.right
-            anchors.top:  parent.top
 
             Item {
                 id: titleBarIconField
+                anchors { left: parent.left; right: parent.right }
                 height: iconImage.height
-                width: parent.width
+
                 Image {
                     id: iconImage
                     anchors.horizontalCenter: titleBarIconField.horizontalCenter
-                    source: ""
                 }
-
             }
 
             Item {
                 id: titleBarTextField
+                anchors { left: parent.left; right: parent.right }
                 height: titleTextText.height
-                width: parent.width
 
                 Text {
                     id: titleTextText
-                    width: parent.width
+                    anchors { left: parent.left; right: parent.right }
                     horizontalAlignment: Text.AlignHCenter
-                    verticalAlignment:   Text.AlignVCenter
+                    verticalAlignment: Text.AlignVCenter
                     font.pixelSize: constant.fontSizeXXLarge
                     font.bold: true
                     color: "white"
@@ -79,30 +76,31 @@ Dialog{
         }
     }
 
-    buttons: Item{
-        anchors.left: parent.left
-        anchors.right: parent.right
+    buttons: Item {
+        anchors { left: parent.left; right: parent.right }
         height: buttonCol.height + buttonCol.anchors.topMargin
 
         Column {
             id: buttonCol
-            anchors.top: parent.top
-            anchors.topMargin: root.platformStyle.buttonsTopMargin
+            anchors {
+                top: parent.top
+                topMargin: root.platformStyle.buttonsTopMargin
+                horizontalCenter: parent.horizontalCenter
+            }
             spacing: root.platformStyle.buttonsColumnSpacing
             height: childrenRect.height
-            anchors.horizontalCenter: parent.horizontalCenter
 
-            Repeater{
+            Repeater {
                 model: buttonTexts
 
                 Button {
                     text: modelData
                     onClicked: {
                         buttonClicked(index)
-                        if(index === 0) accept()
+                        if (index === 0) accept()
                         else reject()
                     }
-                    platformStyle: ButtonStyle{
+                    platformStyle: ButtonStyle {
                         inverted: true
                         background: index === 0 ? "image://theme/meegotouch-dialog-button-positive"
                                                 : "image://theme/meegotouch-dialog-button-negative"

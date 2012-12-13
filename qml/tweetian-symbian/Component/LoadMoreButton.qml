@@ -19,7 +19,7 @@
 import QtQuick 1.1
 import com.nokia.symbian 1.1
 
-Item{
+Item {
     id: root
 
     signal clicked
@@ -27,18 +27,18 @@ Item{
     implicitWidth: parent.width
     height: visible ? buttonLoader.height + 2 * constant.paddingMedium : 0
 
-    Loader{
+    Loader {
         id: buttonLoader
         anchors.centerIn: parent
         sourceComponent: visible ? loadMoreButton : undefined
     }
 
-    Component{
+    Component {
         id: loadMoreButton
 
-        Button{
-            text: qsTr("Load more")
+        Button {
             width: root.width * 0.75
+            text: qsTr("Load more")
             platformInverted: settings.invertedTheme
             onClicked: root.clicked()
         }

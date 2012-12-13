@@ -19,7 +19,7 @@
 import QtQuick 1.1
 import com.nokia.symbian 1.1
 
-ListItem{
+ListItem {
     id: root
 
     property url imageSource: ""
@@ -30,18 +30,22 @@ ListItem{
     subItemIndicator: true
     platformInverted: settings.invertedTheme
 
-    Image{
+    Image {
         id: pic
-        anchors{ top: parent.top; left: parent.left; margins: constant.paddingMedium }
-        source: root.imageSource
-        sourceSize.width: constant.graphicSizeMedium
-        sourceSize.height: constant.graphicSizeMedium
+        anchors { top: parent.top; left: parent.left; margins: constant.paddingMedium }
+        sourceSize { width: constant.graphicSizeMedium; height: constant.graphicSizeMedium }
         cache: false
+        source: root.imageSource
     }
 
-    Text{
-        anchors{ top: parent.top; bottom: parent.bottom; left: pic.right; right: parent.right }
-        anchors.margins: constant.paddingMedium
+    Text {
+        anchors {
+            top: parent.top
+            bottom: parent.bottom
+            left: pic.right
+            right: parent.righ
+            margins: constant.paddingMedium
+        }
         verticalAlignment: Text.AlignVCenter
         elide: Text.ElideRight
         font.pixelSize: constant.fontSizeMedium

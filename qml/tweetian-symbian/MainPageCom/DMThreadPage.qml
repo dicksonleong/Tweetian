@@ -23,7 +23,7 @@ import "../Delegate"
 import "../Dialog"
 import "../Services/Twitter.js" as Twitter
 
-Page{
+Page {
     id: dMThreadPage
 
     property QtObject userStream: null
@@ -31,23 +31,23 @@ Page{
     property string screenName: ""
     property WorkerScript parser: dMConversationParser
 
-    onScreenNameChanged: if(parser) parser.insert(mainPage.directMsg.fullModel.count) // Qt 4.7.4 compatibility
-    Component.onCompleted: if(screenName) parser.insert(mainPage.directMsg.fullModel.count)
+    onScreenNameChanged: if (parser) parser.insert(mainPage.directMsg.fullModel.count) // Qt 4.7.4 compatibility
+    Component.onCompleted: if (screenName) parser.insert(mainPage.directMsg.fullModel.count)
 
-    tools: ToolBarLayout{
-        ToolButtonWithTip{
+    tools: ToolBarLayout {
+        ToolButtonWithTip {
             id: backButton
             iconSource: "toolbar-back"
             toolTipText: qsTr("Back")
             onClicked: pageStack.pop()
         }
-        ToolButtonWithTip{
+        ToolButtonWithTip {
             iconSource: platformInverted ? "../Image/edit_inverse.svg" : "../Image/edit.svg"
             toolTipText: qsTr("New DM")
             onClicked: pageStack.push(Qt.resolvedUrl("../NewTweetPage.qml"),
                                       {type: "DM", screenName: screenName})
         }
-        ToolButtonWithTip{
+        ToolButtonWithTip {
             iconSource: "toolbar-refresh"
             toolTipText: qsTr("Refresh")
             opacity: enabled ? 1 : 0.25
@@ -56,18 +56,18 @@ Page{
         }
     }
 
-    AbstractListView{
+    AbstractListView {
         id: dMConversationView
-        anchors{ top: header.bottom; left: parent.left; right: parent.right; bottom: parent.bottom }
-        model: ListModel{}
-        header: PullToRefreshHeader{ visible: userStream.status === 0 }
-        delegate: DirectMsgDelegate{}
-        onPullDownRefresh: if(userStream.status === 0) mainPage.directMsg.refresh("newer")
+        anchors { top: header.bottom; left: parent.left; right: parent.right; bottom: parent.bottom }
+        model: ListModel {}
+        header: PullToRefreshHeader { visible: userStream.status === 0 }
+        delegate: DirectMsgDelegate {}
+        onPullDownRefresh: if (userStream.status === 0) mainPage.directMsg.refresh("newer")
     }
 
     ScrollDecorator { platformInverted: settings.invertedTheme; flickableItem: dMConversationView }
 
-    PageHeader{
+    PageHeader {
         id: header
         headerText: qsTr("DM: %1").arg("@" + screenName)
         headerIcon: "../Image/inbox.svg"
@@ -75,13 +75,13 @@ Page{
         onClicked: dMConversationView.positionViewAtBeginning()
     }
 
-    WorkerScript{
+    WorkerScript {
         id: dMConversationParser
         source: "../WorkerScript/DMConversationParser.js"
         onMessage: backButton.enabled = true
 
-        function insert(count){
-            if(count > 0){
+        function insert(count) {
+            if (count > 0) {
                 backButton.enabled = false
                 var msg = {
                     type: "insert",
@@ -94,7 +94,7 @@ Page{
             }
         }
 
-        function remove(tweetId){
+        function remove(tweetId) {
             var msg = {
                 type: "remove",
                 model: dMConversationView.model,
@@ -104,42 +104,42 @@ Page{
         }
     }
 
-    Connections{
+    Connections {
         target: mainPage.directMsg
-        onDataParsed: if(type === "insert") parser.insert(count)
+        onDataParsed: if (type === "insert") parser.insert(count)
     }
 
-    QtObject{
+    QtObject {
         id: internal
 
         property Component __dmDialog: null
 
-        function deleteDMOnSuccess(data){
+        function deleteDMOnSuccess(data) {
             mainPage.directMsg.parser.remove(data.id_str)
             parser.remove(data.id_str)
             infoBanner.alert(qsTr("Direct message deleted successfully"))
             header.busy = false
         }
 
-        function deleteDMOnFailure(status, statusText){
+        function deleteDMOnFailure(status, statusText) {
             infoBanner.showHttpError(status, statusText)
             header.busy = false
         }
 
-        function createDMDialog(model){
+        function createDMDialog(model) {
             var prop = {
                 tweetId: model.tweetId,
                 screenName: (model.sentMsg ? settings.userScreenName : model.screenName),
                 dmText: model.tweetText
             }
-            if(!__dmDialog) __dmDialog = Qt.createComponent("DMDialog.qml")
+            if (!__dmDialog) __dmDialog = Qt.createComponent("DMDialog.qml")
             __dmDialog.createObject(dMThreadPage, prop)
         }
 
-        function createDeleteDMDialog(tweetId){
+        function createDeleteDMDialog(tweetId) {
             var icon = platformInverted ? "image://theme/toolbar-delete_inverse" : "image://theme/toolbar-delete"
             var message = qsTr("Do you want to delete this direct message?")
-            dialog.createQueryDialog(qsTr("Delete Message"), icon, message, function(){
+            dialog.createQueryDialog(qsTr("Delete Message"), icon, message, function() {
                 Twitter.postDeleteDirectMsg(tweetId, deleteDMOnSuccess, deleteDMOnFailure)
                 header.busy = true
             })

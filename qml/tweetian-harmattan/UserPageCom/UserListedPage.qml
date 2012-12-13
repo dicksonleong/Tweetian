@@ -21,7 +21,7 @@ import com.nokia.meego 1.0
 import "../Delegate"
 import "../Services/Twitter.js" as Twitter
 
-AbstractUserPage{
+AbstractUserPage {
     id: userListedPage
 
     property string nextCursor: ""
@@ -30,12 +30,12 @@ AbstractUserPage{
     headerNumber: userInfoData.listedCount
     emptyText: qsTr("No list")
     loadMoreButtonVisible: listView.count > 0 && listView.count < userInfoData.listedCount
-    delegate: ListDelegate{}
+    delegate: ListDelegate {}
 
     onReload: {
-        if(reloadType === "all") nextCursor = ""
-        Twitter.getUserListsMemberships(userInfoData.screenName, nextCursor, function(data){
-            for(var i=0; i<data.lists.length; i++){
+        if (reloadType === "all") nextCursor = ""
+        Twitter.getUserListsMemberships(userInfoData.screenName, nextCursor, function(data) {
+            for (var i=0; i<data.lists.length; i++) {
                 var obj = {
                     "listName": data.lists[i].name,
                     "subscriberCount": data.lists[i].subscriber_count,
@@ -52,7 +52,7 @@ AbstractUserPage{
             }
             nextCursor = data.next_cursor_str
             loadingRect.visible = false
-        }, function(status, statusText){
+        }, function(status, statusText) {
             infoBanner.showHttpError(status, statusText)
             loadingRect.visible = false
         })

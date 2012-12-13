@@ -25,9 +25,9 @@ function tweetsFrequency(date, tweetsCount) {
     var days = (new Date().getTime() - startDate.getTime()) / 1000 / 60 / 60 / 24 //calculate the numbers of days
     var freq = days >= 1 ? tweetsCount / days : tweetsCount
 
-    if(freq > 1) return qsTr("~%1 per day").arg(Math.round(freq))
-    else if(freq * 7 > 1) return qsTr("~%1 per week").arg(Math.round(freq * 7))
-    else if(freq * 30 > 1) return qsTr("~%1 per month").arg(Math.round(freq * 30))
+    if (freq > 1) return qsTr("~%1 per day").arg(Math.round(freq))
+    else if (freq * 7 > 1) return qsTr("~%1 per week").arg(Math.round(freq * 7))
+    else if (freq * 30 > 1) return qsTr("~%1 per month").arg(Math.round(freq * 30))
     else return qsTr("< 1 per month")
 }
 
@@ -35,7 +35,7 @@ function timeDiff(tweetTimeStr) {
     var tweetTime = new Date(tweetTimeStr)
     var diff = new Date().getTime() - tweetTime.getTime()
 
-    if(diff <= 0) return qsTr("Now")
+    if (diff <= 0) return qsTr("Now")
 
     var daysDiff = Math.floor(diff/1000/60/60/24)
     diff -= daysDiff * 1000 * 60 * 60 * 24
@@ -48,15 +48,15 @@ function timeDiff(tweetTimeStr) {
 
     var secondsDiff = Math.floor(diff/1000)
 
-    if(daysDiff >= 7) return Qt.formatDate(tweetTime, Qt.SystemLocaleShortDate).toString()
-    else if(daysDiff > 1) return Qt.formatDate(tweetTime, "ddd d MMM").toString()
-    else if(daysDiff == 1) return qsTr("Yesterday %1").arg(Qt.formatTime(tweetTime, "h:mm AP").toString())
-    else if(hoursDiff >= 1) return qsTr("%n hr(s)", "", hoursDiff)
-    else if(minutesDiff >= 1) return qsTr("%n min(s)", "", minutesDiff)
+    if (daysDiff >= 7) return Qt.formatDate(tweetTime, Qt.SystemLocaleShortDate).toString()
+    else if (daysDiff > 1) return Qt.formatDate(tweetTime, "ddd d MMM").toString()
+    else if (daysDiff == 1) return qsTr("Yesterday %1").arg(Qt.formatTime(tweetTime, "h:mm AP").toString())
+    else if (hoursDiff >= 1) return qsTr("%n hr(s)", "", hoursDiff)
+    else if (minutesDiff >= 1) return qsTr("%n min(s)", "", minutesDiff)
     else return qsTr("Just now")
 }
 
-function toDegree(latitude, longitude){
+function toDegree(latitude, longitude) {
     var latD = latitude > 0 ? "N" : "S"
     latitude = Math.abs(latitude)
     var latDeg = Math.floor(latitude)
@@ -73,12 +73,12 @@ function toDegree(latitude, longitude){
             longDeg + "° "+ longMin + "' " + longSec + "\" " + longD
 }
 
-function minusOne(numberStr){
+function minusOne(numberStr) {
     numberStr += "" // cast to string
-    if(!numberStr) return ""
+    if (!numberStr) return ""
 
     var lastNumber = parseInt(numberStr.substring(numberStr.length - 2), 10)
-    if(lastNumber === 0) return numberStr
+    if (lastNumber === 0) return numberStr
 
     lastNumber--
     var lastNumberStr = lastNumber < 10 ? "0" + lastNumber.toString() : lastNumber.toString()

@@ -22,7 +22,7 @@ import "Services/Twitter.js" as Twitter
 import "Component"
 import "ListPageCom"
 
-Page{
+Page {
     id: listPage
 
     property string listName: ""
@@ -37,44 +37,44 @@ Page{
 
     onOwnerProfileImageUrlChanged: listInfo.initialize()
 
-    tools: ToolBarLayout{
-        ToolIcon{
+    tools: ToolBarLayout {
+        ToolIcon {
             platformIconId: "toolbar-back"
             onClicked: pageStack.pop()
         }
-        ToolButton{
+        ToolButton {
             text: ownerScreenName === settings.userScreenName ? qsTr("Delete")
                                                               : followingList ? qsTr("Unsubscribe") : qsTr("Subscribe")
             onClicked: ownerScreenName === settings.userScreenName ? internal.createDeleteListDialogDialog()
                                                                    : internal.createSubscribeDialog()
         }
-        Item{ width: 80; height: 64 }
+        Item { width: 80; height: 64 }
     }
 
-    ListView{
+    ListView {
         id: listPageListView
         anchors { top: pageHeader.bottom; bottom: parent.bottom; left: parent.left; right: parent.right }
         highlightRangeMode: ListView.StrictlyEnforceRange
         snapMode: ListView.SnapOneItem
         orientation: ListView.Horizontal
         boundsBehavior: Flickable.StopAtBounds
-        model: VisualItemModel{
-            ListInfo{ id: listInfo }
-            ListTimeline{ id: listTimeline }
-            ListMembers{ id: listMembers }
-            ListSubscribers{ id: listSubscribers }
+        model: VisualItemModel {
+            ListInfo { id: listInfo }
+            ListTimeline { id: listTimeline }
+            ListMembers { id: listMembers }
+            ListSubscribers { id: listSubscribers }
         }
-        onCurrentIndexChanged: if(currentItem.refresh && !currentItem.dataLoaded) currentItem.refresh("all")
+        onCurrentIndexChanged: if (currentItem.refresh && !currentItem.dataLoaded) currentItem.refresh("all")
         onMovementStarted: paneIndicator.show()
         onMovementEnded: paneIndicator.hide()
     }
 
-    PaneIndicator{
+    PaneIndicator {
         id: paneIndicator
         listView: listPageListView
     }
 
-    LargePageHeader{
+    LargePageHeader {
         id: pageHeader
         primaryText: listName
         secondaryText: qsTr("By %1").arg("@" + ownerScreenName)
@@ -83,46 +83,46 @@ Page{
         onClicked: listPageListView.currentItem.positionAtTop()
     }
 
-    QtObject{
+    QtObject {
         id: internal
 
-        function subscribeOnSuccess(data){
+        function subscribeOnSuccess(data) {
             followingList = true
             infoBanner.alert(qsTr("You have subscribed to the list %1 successfully").arg("<b>"+data.name+"</b>"))
             loadingRect.visible = false
         }
 
-        function unsubscribeOnSuccess(data){
+        function unsubscribeOnSuccess(data) {
             followingList = false
             infoBanner.alert(qsTr("You have unsubscribed from the list %1 successfully").arg("<b>"+data.name+"</b>"))
             loadingRect.visible = false
         }
 
-        function deleteListOnSuccess(data){
+        function deleteListOnSuccess(data) {
             infoBanner.alert(qsTr("You have deleted the list %1 successfully").arg("<b>"+data.name+"</b>"))
             loadingRect.visible = false
             pageStack.pop()
         }
 
-        function onFailure(status, statusText){
+        function onFailure(status, statusText) {
             infoBanner.showHttpError(status, statusText)
             loadingRect.visible = false
         }
 
-        function createSubscribeDialog(){
+        function createSubscribeDialog() {
             var title = followingList ? qsTr("Unsubscribe List") : qsTr("Subscribe List")
             var message = followingList ? qsTr("Do you want to unsubscribe from the list %1?").arg("\""+listName+"\"")
                                         : qsTr("Do you want to subscribe to the list %1?").arg("\""+listName+"\"")
-            dialog.createQueryDialog(title, "", message, function(){
-                if(followingList) Twitter.postUnsubscribeList(listId, unsubscribeOnSuccess, onFailure)
+            dialog.createQueryDialog(title, "", message, function() {
+                if (followingList) Twitter.postUnsubscribeList(listId, unsubscribeOnSuccess, onFailure)
                 else Twitter.postSubscribeList(listId, subscribeOnSuccess, onFailure)
                 loadingRect.visible = true
             })
         }
 
-        function createDeleteListDialogDialog(){
+        function createDeleteListDialogDialog() {
             var message = qsTr("Do you want to delete the list %1?").arg("\""+listName+"\"")
-            dialog.createQueryDialog(qsTr("Delete List"), "", message, function(){
+            dialog.createQueryDialog(qsTr("Delete List"), "", message, function() {
                 Twitter.postDeleteList(listId, deleteListOnSuccess, onFailure)
                 loadingRect.visible = true
             })

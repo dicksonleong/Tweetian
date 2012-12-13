@@ -19,19 +19,20 @@
 import QtQuick 1.1
 import com.nokia.meego 1.0
 
-Item{
+Item {
     id: root
 
     property string text: ""
     property alias checked: switchItem.checked
     property bool infoButtonVisible: false
+
     signal infoClicked
 
     width: parent.width
     height: switchItem.height + 2 * switchItem.anchors.topMargin
 
-    Text{
-        anchors{
+    Text {
+        anchors {
             left: parent.left
             right: infoButtonVisible ? infoIconLoader.left : switchItem.left
             margins: constant.paddingMedium
@@ -45,36 +46,34 @@ Item{
         text: root.text
     }
 
-    Loader{
+    Loader {
         id: infoIconLoader
-        anchors.right: switchItem.left
-        anchors.rightMargin: constant.paddingLarge
-        anchors.verticalCenter: parent.verticalCenter
+        anchors { right: switchItem.left; rightMargin: constant.paddingLarge; verticalCenter: parent.verticalCenter }
         sourceComponent: infoButtonVisible ? infoIcon : undefined
 
-        MouseArea{
+        MouseArea {
             anchors.fill: parent
             onClicked: root.infoClicked()
         }
     }
 
-    Component{
+    Component {
         id: infoIcon
 
-        Image{
-            source: settings.invertedTheme ? "image://theme/icon-m-content-description"
-                                           : "image://theme/icon-m-content-description-inverse"
+        Image {
             sourceSize.width: constant.graphicSizeSmall + constant.paddingMedium
             sourceSize.height: constant.graphicSizeSmall + constant.paddingMedium
             cache: false
+            source: settings.invertedTheme ? "image://theme/icon-m-content-description"
+                                           : "image://theme/icon-m-content-description-inverse"
         }
     }
 
-    Switch{
+    Switch {
         id: switchItem
-        anchors.right: parent.right
-        anchors.top: parent.top
-        anchors.topMargin: constant.paddingXLarge
-        anchors.rightMargin: constant.paddingXLarge
+        anchors {
+            top: parent.top; topMargin: constant.paddingXLarge
+            right: parent.right; rightMargin: constant.paddingXLarge
+        }
     }
 }

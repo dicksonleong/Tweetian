@@ -19,7 +19,7 @@
 import QtQuick 1.1
 import com.nokia.meego 1.0
 
-ListView{
+ListView {
     id: root
 
     property string lastUpdate: ""
@@ -31,19 +31,19 @@ ListView{
     property bool __toBeRefresh: false
 
     flickableDirection: Flickable.VerticalFlick
-    header: PullToRefreshHeader{}
+    header: PullToRefreshHeader {}
     onMovementStarted: {
         __wasAtYBeginning = atYBeginning
         __initialContentY = contentY
         __toBeRefresh = false
     }
-    onMovementEnded: if(__toBeRefresh) pullDownRefresh()
+    onMovementEnded: if (__toBeRefresh) pullDownRefresh()
     onContentYChanged: detectPullDownTimer.running = true
 
-    Timer{
+    Timer {
         id: detectPullDownTimer
         interval: 250
         repeat: false
-        onTriggered: if(__wasAtYBeginning && __initialContentY - contentY > 100) __toBeRefresh = true
+        onTriggered: if (__wasAtYBeginning && __initialContentY - contentY > 100) __toBeRefresh = true
     }
 }

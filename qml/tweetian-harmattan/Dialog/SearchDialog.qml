@@ -19,7 +19,7 @@
 import QtQuick 1.1
 import com.nokia.meego 1.0
 
-CommonDialog{
+CommonDialog {
     id: root
 
     property bool __isClosing: false
@@ -27,9 +27,9 @@ CommonDialog{
     buttonTexts: [qsTr("Search"), qsTr("Advanced"), qsTr("Cancel")]
     titleText: qsTr("Search Twitter")
     titleIcon: "image://theme/icon-l-search"
-    content: Item{
+    content: Item {
         id: dialogContent
-        anchors{
+        anchors {
             top: parent.top; topMargin: root.platformStyle.contentMargin
             left: parent.left
             right: parent.right
@@ -38,13 +38,13 @@ CommonDialog{
         height: searchTypeRow.height + searchTextField.height + 2 * anchors.topMargin +
                 searchTypeRow.anchors.topMargin
 
-        TextField{
+        TextField {
             id: searchTextField
-            width: parent.width
+            anchors { left: parent.left; right: parent.right }
             placeholderText: qsTr("Enter your search query...")
             font.pixelSize: constant.fontSizeLarge
             inputMethodHints: Qt.ImhNoPredictiveText
-            platformSipAttributes: SipAttributes{
+            platformSipAttributes: SipAttributes {
                 actionKeyEnabled: searchTextField.text.length > 0
                 actionKeyHighlighted: true
                 actionKeyLabel: qsTr("Search")
@@ -55,7 +55,7 @@ CommonDialog{
             }
         }
 
-        Text{
+        Text {
             id: searchTypeText
             anchors.verticalCenter: searchTypeRow.verticalCenter
             font.pixelSize: constant.fontSizeMedium
@@ -63,20 +63,20 @@ CommonDialog{
             text: qsTr("Search for:")
         }
 
-        ButtonRow{
+        ButtonRow {
             id: searchTypeRow
-            anchors{
-                left: searchTypeText.right; leftMargin: constant.paddingLarge
+            anchors {
                 top: searchTextField.bottom; topMargin: constant.paddingLarge
+                left: searchTypeText.right; leftMargin: constant.paddingLarge
                 right: parent.right
             }
             height: childrenRect.height
 
-            Button{
+            Button {
                 id: tweetType
                 text: qsTr("Tweet")
             }
-            Button{
+            Button {
                 id: userType
                 text: qsTr("User")
             }
@@ -84,20 +84,20 @@ CommonDialog{
     }
 
     onAccepted: {
-        if(tweetType.checked)
+        if (tweetType.checked)
             pageStack.push(Qt.resolvedUrl("../SearchPage.qml"), {searchName: searchTextField.text})
-        else if(userType.checked)
+        else if (userType.checked)
             pageStack.push(Qt.resolvedUrl("../UserSearchPage.qml"), {userSearchQuery: searchTextField.text})
     }
 
     onButtonClicked: {
-        if(index === 1) pageStack.push(Qt.resolvedUrl("../AdvSearchPage.qml"), {searchQuery: searchTextField.text})
+        if (index === 1) pageStack.push(Qt.resolvedUrl("../AdvSearchPage.qml"), {searchQuery: searchTextField.text})
     }
 
     Component.onCompleted: open()
 
     onStatusChanged: {
-        if(status === DialogStatus.Closing) __isClosing = true
-        else if(status === DialogStatus.Closed && __isClosing) root.destroy(250)
+        if (status === DialogStatus.Closing) __isClosing = true
+        else if (status === DialogStatus.Closed && __isClosing) root.destroy(250)
     }
 }

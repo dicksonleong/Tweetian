@@ -19,7 +19,7 @@
 import QtQuick 1.1
 import com.nokia.symbian 1.1
 
-CommonDialog{
+CommonDialog {
     id: root
 
     property string message: ""
@@ -27,11 +27,11 @@ CommonDialog{
 
     platformInverted: settings.invertedTheme
     buttonTexts: [qsTr("Close")]
-    content: Item{
+    content: Item {
         anchors { left: parent.left; right: parent.right; top: parent.top }
         height: messageText.paintedHeight + messageText.anchors.margins * 2
 
-        Text{
+        Text {
             id: messageText
             anchors { left: parent.left; right: parent.right; top: parent.top; margins: constant.paddingMedium }
             color: constant.colorLight
@@ -45,7 +45,7 @@ CommonDialog{
     Component.onCompleted: open()
 
     onStatusChanged: {
-        if(status === DialogStatus.Closing) __isClosing = true
-        else if(status === DialogStatus.Closed && __isClosing) root.destroy()
+        if (status === DialogStatus.Closing) __isClosing = true
+        else if (status === DialogStatus.Closed && __isClosing) root.destroy()
     }
 }

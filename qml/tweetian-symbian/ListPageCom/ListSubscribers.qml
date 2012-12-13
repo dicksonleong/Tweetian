@@ -21,21 +21,20 @@ import com.nokia.symbian 1.1
 import "../Delegate"
 import "../Services/Twitter.js" as Twitter
 
-AbstractListPageItem{
+AbstractListPageItem {
     id: listSubscribers
 
     property string nextCursor: "-1"
 
-    width: listPageListView.width
-    height: listPageListView.height
+    width: listPageListView.width; height: listPageListView.height
     workerScriptSource: "../WorkerScript/UserParser.js"
     headerText: qsTr("Subscribers (%1)").arg(subscriberCount)
     emptyText: qsTr("No subscriber")
     showLoadMoreButton: nextCursor != "0"
     refreshTimeStamp: false
-    delegate: UserDelegate{}
+    delegate: UserDelegate {}
     onRefresh: {
-        if(type === "newer" || type === "all") {
+        if (type === "newer" || type === "all") {
             reloadType = "all"
             model.clear()
             Twitter.getListSubscribers(listId, -1, successCallback, failureCallback)

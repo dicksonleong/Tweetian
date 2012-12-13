@@ -20,7 +20,7 @@ import QtQuick 1.1
 import com.nokia.symbian 1.1
 import "../Component"
 
-ContextMenu{
+ContextMenu {
     id: root
 
     property string screenName
@@ -31,9 +31,9 @@ ContextMenu{
 
     platformInverted: settings.invertedTheme
 
-    MenuLayout{
+    MenuLayout {
         id: menuLayout
-        MenuItemWithIcon{
+        MenuItemWithIcon {
             iconSource: "image://theme/qtg_toolbar_copy" + (platformInverted ? "_inverse" : "" )
             text: qsTr("Copy DM")
             onClicked: {
@@ -42,21 +42,21 @@ ContextMenu{
                 infoBanner.alert(qsTr("DM copied to clipboard"))
             }
         }
-        MenuItemWithIcon{
+        MenuItemWithIcon {
             iconSource: platformInverted ? "image://theme/toolbar-delete_inverse" : "image://theme/toolbar-delete"
             text: qsTr("Delete")
             onClicked: internal.createDeleteDMDialog(tweetId)
         }
-        MenuItemWithIcon{
+        MenuItemWithIcon {
             iconSource: platformInverted ? "../Image/contacts_inverse.svg" : "../Image/contacts.svg"
             text: qsTr("%1 Profile").arg("<font color=\"LightSeaGreen\">@" + screenName + "</font>")
             visible: screenName != ""
             onClicked: pageStack.push(Qt.resolvedUrl("../UserPage.qml"), {screenName: screenName})
         }
-        Repeater{
+        Repeater {
             id: linksRepeater
 
-            MenuItemWithIcon{
+            MenuItemWithIcon {
                 width: menuLayout.width
                 iconSource: platformInverted ? "../Image/internet_inverse.svg" : "../Image/internet.svg"
                 text: modelData.substring(modelData.indexOf('://') + 3)
@@ -67,8 +67,8 @@ ContextMenu{
 
     Component.onCompleted: {
         var linksArray = dmText.match(/href="http[^"]+"/g)
-        if(linksArray != null){
-            for(var i=0; i < linksArray.length; i++){
+        if (linksArray != null) {
+            for (var i=0; i < linksArray.length; i++) {
                 linksArray[i] = linksArray[i].substring(6, linksArray[i].length - 1)
             }
             linksRepeater.model = linksArray
@@ -77,8 +77,8 @@ ContextMenu{
     }
 
     onStatusChanged: {
-        if(status === DialogStatus.Closing) __isClosing = true
-        else if(status === DialogStatus.Closed && __isClosing) root.destroy()
+        if (status === DialogStatus.Closing) __isClosing = true
+        else if (status === DialogStatus.Closed && __isClosing) root.destroy()
     }
 }
 

@@ -21,34 +21,34 @@ import com.nokia.meego 1.0
 import "Component"
 import "Services/Twitter.js" as Twitter
 
-Page{
+Page {
     id: aboutPage
-    tools: ToolBarLayout{
-        ToolIcon{
+    tools: ToolBarLayout {
+        ToolIcon {
             platformIconId: "toolbar-back"
             onClicked: pageStack.pop()
         }
     }
 
-    Flickable{
+    Flickable {
         id: aboutPageFlickable
         anchors { top: header.bottom; left: parent.left; right: parent.right; bottom: parent.bottom }
         contentHeight: aboutColumn.height
 
-        Column{
+        Column {
             id: aboutColumn
-            width: parent.width
+            anchors { left: parent.left; right: parent.right }
             height: childrenRect.height
 
-            SectionHeader{ text: qsTr("About Tweetian") }
+            SectionHeader { text: qsTr("About Tweetian") }
 
-            Item{
-                width: parent.width
+            Item {
+                anchors { left: parent.left; right: parent.right }
                 height: aboutText.height + 2 * constant.paddingMedium
 
-                Text{
+                Text {
                     id: aboutText
-                    anchors{ left: parent.left; right: parent.right; top: parent.top; margins: constant.paddingMedium }
+                    anchors { left: parent.left; right: parent.right; top: parent.top; margins: constant.paddingMedium }
                     wrapMode: Text.Wrap
                     font.pixelSize: constant.fontSizeMedium
                     color: constant.colorLight
@@ -58,15 +58,15 @@ smartphone. Tweetian is open source and licensed under GPL v3.")
                 }
             }
 
-            SectionHeader{ text: qsTr("Version") }
+            SectionHeader { text: qsTr("Version") }
 
-            Item{
-                width: parent.width
+            Item {
+                anchors { left: parent.left; right: parent.right }
                 height: versionText.height + 2 * constant.paddingMedium
 
-                Text{
+                Text {
                     id: versionText
-                    anchors{ left: parent.left; right: parent.right; top: parent.top; margins: constant.paddingMedium }
+                    anchors { left: parent.left; right: parent.right; top: parent.top; margins: constant.paddingMedium }
                     font.pixelSize: constant.fontSizeMedium
                     color: constant.colorLight
                     wrapMode: Text.Wrap
@@ -75,51 +75,51 @@ you are trying at your own risk]</i>"
                 }
             }
 
-            SectionHeader{ text: qsTr("Developed By") }
+            SectionHeader { text: qsTr("Developed By") }
 
-            AboutPageItem{
+            AboutPageItem {
                 imageSource: "Image/DicksonBetaDP.png"
                 text: "@DicksonBeta"
                 onClicked: pageStack.push(Qt.resolvedUrl("UserPage.qml"), {screenName: "DicksonBeta"})
             }
 
-            SectionHeader{ text: qsTr("Special Thanks") }
+            SectionHeader { text: qsTr("Special Thanks") }
 
-            AboutPageItem{
+            AboutPageItem {
                 imageSource: "Image/knobtvikerDP.jpg"
                 text: "@knobtviker"
                 onClicked: pageStack.push(Qt.resolvedUrl("UserPage.qml"), {screenName: "knobtviker"})
             }
 
-            AboutPageItem{
+            AboutPageItem {
                 imageSource: "Image/Mandeep_ThemesDP.png"
                 text: "@Mandeep_Themes"
                 onClicked: pageStack.push(Qt.resolvedUrl("UserPage.qml"), {screenName: "Mandeep_Themes"})
             }
 
-            SectionHeader{ text: qsTr("Powered By") }
+            SectionHeader { text: qsTr("Powered By") }
 
-            AboutPageItem{
+            AboutPageItem {
                 imageSource: "Image/twitter-bird-white-on-blue.png"
                 text: "Twitter"
                 onClicked: pageStack.push(Qt.resolvedUrl("UserPage.qml"), {screenName: "twitter"})
             }
 
-            AboutPageItem{
+            AboutPageItem {
                 imageSource: "Image/nokia_icon.png"
                 text: "Nokia"
                 onClicked: pageStack.push(Qt.resolvedUrl("UserPage.qml"), {screenName: "nokia"})
             }
 
-            AboutPageItem{
+            AboutPageItem {
                 imageSource: "Image/qt_icon.png"
                 text: "Qt"
                 onClicked: pageStack.push(Qt.resolvedUrl("UserPage.qml"), {screenName: "qtproject"})
             }
 
-            SectionHeader{ text: qsTr("Legal") }
+            SectionHeader { text: qsTr("Legal") }
 
-            AboutPageItem{
+            AboutPageItem {
                 id: privacyButton
                 imageSource: "Image/twitter-bird-white-on-blue.png"
                 text: qsTr("Twitter Privacy Policy")
@@ -129,7 +129,7 @@ you are trying at your own risk]</i>"
                 }
             }
 
-            AboutPageItem{
+            AboutPageItem {
                 id: tosButton
                 imageSource: "Image/twitter-bird-white-on-blue.png"
                 text: qsTr("Twitter Terms of Service")
@@ -141,31 +141,31 @@ you are trying at your own risk]</i>"
         }
     }
 
-    ScrollDecorator{ flickableItem: aboutPageFlickable }
+    ScrollDecorator { flickableItem: aboutPageFlickable }
 
-    PageHeader{
+    PageHeader {
         id: header
         headerIcon: "Image/information_userguide.svg"
         headerText: qsTr("About Tweetian")
         onClicked: aboutPageFlickable.contentY = 0
     }
 
-    QtObject{
+    QtObject {
         id: callback
 
-        function privacyOnSuccess(data){
+        function privacyOnSuccess(data) {
             var param = {text: data.privacy, headerText: privacyButton.text, headerIcon: privacyButton.imageSource}
             pageStack.push(Qt.resolvedUrl("TextPage.qml"), param)
             loadingRect.visible = false
         }
 
-        function tosOnSuccess(data){
+        function tosOnSuccess(data) {
             var param = {text: data.tos, headerText: tosButton.text, headerIcon: tosButton.imageSource}
             pageStack.push(Qt.resolvedUrl("TextPage.qml"), param)
             loadingRect.visible = false
         }
 
-        function onFailure(status, statusText){
+        function onFailure(status, statusText) {
             infoBanner.showHttpError(status, statusText)
             loadingRect.visible = false
         }

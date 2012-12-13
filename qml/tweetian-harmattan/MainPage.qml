@@ -31,63 +31,64 @@ Page {
     property Item mentions: mentions
     property Item directMsg: directMsg
 
-    onStatusChanged: if(status == PageStatus.Activating) loadingRect.visible = false
+    onStatusChanged: if (status == PageStatus.Activating) loadingRect.visible = false
 
-    tools: ToolBarLayout{
-        ToolIcon{
+    tools: ToolBarLayout {
+        ToolIcon {
             platformIconId: "toolbar-back-dimmed"
             enabled: false
         }
-        ToolIcon{
+        ToolIcon {
             id: newTweetButton
             platformIconId: "toolbar-edit"
             onClicked: pageStack.push(Qt.resolvedUrl("NewTweetPage.qml"), {type: "New"})
         }
-        ToolIcon{
+        ToolIcon {
             id: messageButton
             platformIconId: "toolbar-search"
             onClicked: pageStack.push(Qt.resolvedUrl("TrendsPage.qml"))
         }
-        ToolIcon{
+        ToolIcon {
             platformIconId: "toolbar-contact"
             onClicked: pageStack.push(Qt.resolvedUrl("UserPage.qml"), {screenName: settings.userScreenName})
         }
-        ToolIcon{
+        ToolIcon {
             id: optionsButton
             platformIconId: "toolbar-view-menu"
             onClicked: mainMenu.open()
         }
     }
 
-    Menu{
+    Menu {
         id: mainMenu
 
-        MenuLayout{
-            MenuItem{
+        MenuLayout {
+            MenuItem {
                 text: qsTr("Refresh cache")
                 enabled: !mainView.currentItem.busy
                 onClicked: mainView.currentItem.refresh("all")
             }
-            MenuItem{
+            MenuItem {
                 text: qsTr("Settings")
                 onClicked: pageStack.push(Qt.resolvedUrl("SettingPage.qml"))
             }
-            MenuItem{
+            MenuItem {
                 text: qsTr("About")
                 onClicked: pageStack.push(Qt.resolvedUrl("AboutPage.qml"))
             }
         }
     }
 
-    ListView{
+    ListView {
         id: mainView
+        objectName: "mainView"
 
-        function moveToColumn(index){
+        function moveToColumn(index) {
             columnMovingAnimation.to = index * mainView.width
             columnMovingAnimation.restart()
         }
 
-        NumberAnimation{
+        NumberAnimation {
             id: columnMovingAnimation
             target: mainView
             property: "contentX"
@@ -95,27 +96,26 @@ Page {
             easing.type: Easing.InOutExpo
         }
 
-        objectName: "mainView"
         anchors { top: mainPageHeader.bottom; bottom: parent.bottom; left: parent.left; right: parent.right }
         highlightRangeMode: ListView.StrictlyEnforceRange
-        model: VisualItemModel{
-            TweetListView{ id: timeline; type: "Timeline" }
-            TweetListView{ id: mentions; type: "Mentions" }
-            DirectMessage{ id: directMsg }
+        model: VisualItemModel {
+            TweetListView { id: timeline; type: "Timeline" }
+            TweetListView { id: mentions; type: "Mentions" }
+            DirectMessage { id: directMsg }
         }
         snapMode: ListView.SnapOneItem
         orientation: ListView.Horizontal
         boundsBehavior: Flickable.StopAtBounds
     }
 
-    Connections{
+    Connections {
         target: settings
         onSettingsLoaded: {
             Twitter.init(constant, settings.oauthToken, settings.oauthTokenSecret)
-            if(settings.oauthToken == "" || settings.oauthTokenSecret == ""){
+            if (settings.oauthToken === "" || settings.oauthTokenSecret === "") {
                 pageStack.push(Qt.resolvedUrl("SignInPage.qml"))
             }
-            else{
+            else {
                 timeline.initialize()
                 mentions.initialize()
                 directMsg.initialize()
@@ -125,23 +125,23 @@ Page {
         }
     }
 
-    MainPageHeader{ id: mainPageHeader }
+    MainPageHeader { id: mainPageHeader }
 
-    UserStream{
+    UserStream {
         id: userStream
         onDataRecieved: StreamScript.streamRecieved(rawData)
         onDisconnected: StreamScript.reconnectStream(statusCode, errorText)
         // make sure missed tweets is loaded after connected
-        onStatusChanged: if(status === UserStream.Connected) StreamScript.refreshAll()
+        onStatusChanged: if (status === UserStream.Connected) StreamScript.refreshAll()
 
         property bool firstStart: true
 
-        Timer{
+        Timer {
             id: reconnectTimer
             interval: 30000
             onTriggered: {
                 StreamScript.log("Timer triggered, connecting to user stream")
-                if(userStream.firstStart){
+                if (userStream.firstStart) {
                     interval = 5000
                     userStream.firstStart = false
                 }
@@ -150,7 +150,7 @@ Page {
             }
         }
 
-        Timer{
+        Timer {
             id: timeOutTimer
             interval: 90000 // 90 seconds as describe in <https://dev.twitter.com/docs/streaming-apis/connecting>
             running: userStream.status == UserStream.Connected
@@ -163,17 +163,17 @@ Page {
         }
 
         // connect or disconnect stream when streaming settings is changed
-        Connections{
+        Connections {
             id: streamingSettingsConnection
             target: null
             onEnableStreamingChanged: {
-                if(networkMonitor.online){
-                    if(settings.enableStreaming){
+                if (networkMonitor.online) {
+                    if (settings.enableStreaming) {
                         reconnectTimer.interval = userStream.firstStart ? 30000 : 5000
                         StreamScript.log("Streaming enabled by user, connect to streaming in "+reconnectTimer.interval/1000+"s")
                         reconnectTimer.restart()
                     }
-                    else{
+                    else {
                         StreamScript.log("Streaming disabled by user, disconnect from streaming")
                         reconnectTimer.stop()
                         userStream.disconnectFromStream()
@@ -183,17 +183,17 @@ Page {
         }
 
         // connect or disconnect stream when networkMonitor.online is changed
-        Connections{
+        Connections {
             id: onlineConnection
             target: null
             onOnlineChanged: {
-                if(settings.enableStreaming){
-                    if(networkMonitor.online){
+                if (settings.enableStreaming) {
+                    if (networkMonitor.online) {
                         reconnectTimer.interval = userStream.firstStart ? 30000 : 5000
                         StreamScript.log("App going online, connect to streaming in " + reconnectTimer.interval/1000+"s")
                         reconnectTimer.restart()
                     }
-                    else{
+                    else {
                         StreamScript.log("App going offline, disconnect from streaming")
                         reconnectTimer.stop()
                         userStream.disconnectFromStream()

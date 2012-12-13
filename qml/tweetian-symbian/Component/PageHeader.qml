@@ -19,7 +19,7 @@
 import QtQuick 1.1
 import com.nokia.symbian 1.1
 
-Item{
+Item {
     id: root
 
     property url headerIcon: ""
@@ -31,8 +31,8 @@ Item{
 
     signal clicked
 
-    implicitHeight: constant.headerHeight
     anchors { top: parent.top; left: parent.left; right: parent.right }
+    implicitHeight: constant.headerHeight
 
     Image {
         id: background
@@ -40,26 +40,26 @@ Item{
         source: mouseArea.pressed ? "../Image/header-pressed.png" : "../Image/header.png"
     }
 
-    Image{
+    Image {
         anchors { top: parent.top; left: parent.left }
         source: "../Image/meegoTLCorner.png"
     }
 
-    Image{
+    Image {
         anchors { top: parent.top; right: parent.right }
         source: "../Image/meegoTRCorner.png"
     }
 
-    Image{
+    Image {
         id: icon
-        source: headerIcon
         anchors { verticalCenter: parent.verticalCenter; left: parent.left; margins: constant.paddingMedium }
         height: sourceSize.height; width: sourceSize.width
         sourceSize { height: constant.graphicSizeSmall; width: constant.graphicSizeSmall }
+        source: headerIcon
     }
 
-    Text{
-        anchors{
+    Text {
+        anchors {
             left: icon.right
             right: busyIndicatorLoader.status == Loader.Ready ? busyIndicatorLoader.left : parent.right
             verticalCenter: parent.verticalCenter
@@ -71,33 +71,32 @@ Item{
         text: headerText
     }
 
-    Loader{
+    Loader {
         id: busyIndicatorLoader
         anchors { right: parent.right; rightMargin: constant.paddingMedium; verticalCenter: parent.verticalCenter }
         sourceComponent: busy ? busyIndicatorComponent : (countBubbleVisible ? countBubbleComponent : undefined)
     }
 
-    Component{
+    Component {
         id: busyIndicatorComponent
 
-        BusyIndicator{
+        BusyIndicator {
             anchors.centerIn: parent
-            running: true
             height: constant.graphicSizeSmall + constant.paddingSmall
             width: constant.graphicSizeSmall + constant.paddingSmall
+            running: true
         }
-
     }
 
-    Component{
+    Component {
         id: countBubbleComponent
 
-        CountBubble{
+        CountBubble {
             value: root.countBubbleValue
         }
     }
 
-    MouseArea{
+    MouseArea {
         id: mouseArea
         anchors.fill: parent
         onClicked: root.clicked()

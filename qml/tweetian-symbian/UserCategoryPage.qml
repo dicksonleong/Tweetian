@@ -21,76 +21,74 @@ import com.nokia.symbian 1.1
 import "Component"
 import "Services/Twitter.js" as Twitter
 
-Page{
+Page {
     id: userCategoryPage
 
     Component.onCompleted: script.refresh()
 
-    tools: ToolBarLayout{
-        ToolButtonWithTip{
+    tools: ToolBarLayout {
+        ToolButtonWithTip {
             iconSource: "toolbar-back"
             toolTipText: "Back"
             onClicked: pageStack.pop()
         }
     }
 
-    AbstractListView{
+    AbstractListView {
         id: userCategoryView
-        anchors{ top: header.bottom; bottom: parent.bottom; left: parent.left; right: parent.right }
+        anchors { top: header.bottom; bottom: parent.bottom; left: parent.left; right: parent.right }
         delegate: userCategoryDelegate
-        model: ListModel{}
+        model: ListModel {}
         onPullDownRefresh: script.refresh()
     }
 
-    ScrollDecorator{ platformInverted: settings.invertedTheme; flickableItem: userCategoryView }
+    ScrollDecorator { platformInverted: settings.invertedTheme; flickableItem: userCategoryView }
 
-    PageHeader{
+    PageHeader {
         id: header
         headerText: qsTr("Suggested User Categories")
         headerIcon: "Image/people.svg"
         onClicked: userCategoryView.positionViewAtBeginning()
     }
 
-    QtObject{
+    QtObject {
         id: script
 
-        function onSuccess(data){
-            for(var i=0; i<data.length; i++){
+        function onSuccess(data) {
+            for (var i=0; i<data.length; i++) {
                 userCategoryView.model.append(data[i])
             }
             header.busy = false
         }
 
-        function onFailure(status, statusText){
+        function onFailure(status, statusText) {
             infoBanner.showHttpError(status, statusText)
             header.busy = false
         }
 
-        function refresh(){
+        function refresh() {
             userCategoryView.model.clear()
             Twitter.getSuggestedUserCategories(onSuccess, onFailure)
             header.busy = true
         }
     }
 
-    Component{
+    Component {
         id: userCategoryDelegate
 
-        ListItem{
+        ListItem {
             id: userCategoryItem
             platformInverted: settings.invertedTheme
             width: ListView.view.width
             height: categoryText.height + categoryText.anchors.topMargin * 2
             subItemIndicator: true
 
-            Text{
+            Text {
                 id: categoryText
-                anchors{
-                    left: userCategoryItem.left
-                    top: userCategoryItem.top
+                anchors {
+                    top: userCategoryItem.top; topMargin: constant.paddingXLarge
+                    left: userCategoryItem.left; leftMargin: constant.paddingMedium
                     right: countBubble.left
-                    topMargin: constant.paddingXLarge
-                    leftMargin: constant.paddingMedium
                 }
                 elide: Text.ElideRight
                 text: model.name
@@ -98,10 +96,9 @@ Page{
                 color: constant.colorLight
             }
 
-            CountBubble{
+            CountBubble {
                 id: countBubble
-                anchors.right: paddingItem.right
-                anchors.verticalCenter: parent.verticalCenter
+                anchors { right: paddingItem.right; verticalCenter: parent.verticalCenter }
                 value: model.size
             }
 

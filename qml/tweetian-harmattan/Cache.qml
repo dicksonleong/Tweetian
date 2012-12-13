@@ -19,10 +19,10 @@
 import QtQuick 1.1
 import "database.js" as Database
 
-QtObject{
+QtObject {
     id: root
 
-    function clearAll(){
+    function clearAll() {
         trendsModel.clear()
         trendsLastUpdate = ""
         userInfo = undefined
@@ -31,22 +31,22 @@ QtObject{
         translationToken = ""
     }
 
-    function pushToHashtags(newHashtags){
-        if(newHashtags instanceof Array && newHashtags.length > 0){
+    function pushToHashtags(newHashtags) {
+        if (newHashtags instanceof Array && newHashtags.length > 0) {
             var tempArray = hashtags
-            for(var i=0; i<newHashtags.length; i++){
-                if(tempArray.indexOf(newHashtags[i]) == -1) tempArray.push(newHashtags[i])
+            for (var i=0; i<newHashtags.length; i++) {
+                if (tempArray.indexOf(newHashtags[i]) === -1) tempArray.push(newHashtags[i])
             }
             hashtags = tempArray
         }
     }
 
-    property ListModel trendsModel: ListModel{}
+    property ListModel trendsModel: ListModel {}
     property string trendsLastUpdate: ""
 
     property variant userInfo
     onUserInfoChanged: {
-        if(userInfo){
+        if (userInfo) {
             settings.userFullName = cache.userInfo.name
             settings.userProfileImage = cache.userInfo.profile_image_url
             settings.userScreenName = cache.userInfo.screen_name

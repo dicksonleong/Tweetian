@@ -22,19 +22,19 @@ import com.nokia.symbian 1.1
 import "Services/Twitter.js" as Twitter
 import "Component"
 
-Page{
+Page {
     id: signInPage
 
     property string tokenTempo: ""
     property string tokenSecretTempo: ""
 
-    tools: ToolBarLayout{
-        ToolButtonWithTip{
+    tools: ToolBarLayout {
+        ToolButtonWithTip {
             iconSource: platformInverted ? "Image/close_stop_inverse.svg" : "Image/close_stop.svg"
             toolTipText: qsTr("Exit")
             onClicked: Qt.quit()
         }
-        ToolButtonWithTip{
+        ToolButtonWithTip {
             iconSource: "toolbar-refresh"
             toolTipText: qsTr("Refresh")
             onClicked: {
@@ -49,21 +49,21 @@ Page{
         header.busy = true
     }
 
-    onStatusChanged: if(status === PageStatus.Deactivating) settings.settingsLoaded()
+    onStatusChanged: if (status === PageStatus.Deactivating) settings.settingsLoaded()
 
-    Flickable{
+    Flickable {
         id: webViewFlickable
         anchors { top: header.bottom; left: parent.left; right: parent.right; bottom: parent.bottom }
         contentHeight: signInWebView.height
         contentWidth: signInWebView.width
 
-        WebView{
+        WebView {
             id: signInWebView
             preferredHeight: webViewFlickable.height
             preferredWidth: webViewFlickable.width
             onUrlChanged: {
                 var index = (url.toString()).indexOf("oauth_verifier=")
-                if(index !== -1){
+                if (index !== -1) {
                     var oauthVerifier = (url.toString()).substring(index + 15, url.length)
                     Twitter.postAccessToken(tokenTempo, tokenSecretTempo, oauthVerifier,
                                             script.accessTokenOnSuccess, script.onFailure)
@@ -76,24 +76,24 @@ Page{
         }
     }
 
-    ScrollDecorator{ platformInverted: settings.invertedTheme; flickableItem: webViewFlickable }
+    ScrollDecorator { platformInverted: settings.invertedTheme; flickableItem: webViewFlickable }
 
-    PageHeader{
+    PageHeader {
         id: header
         headerText: qsTr("Sign In to Twitter")
         headerIcon: "Image/sign_in.svg"
     }
 
-    QtObject{
+    QtObject {
         id: script
 
-        function requestTokenOnSuccess(token, tokenSecret){
+        function requestTokenOnSuccess(token, tokenSecret) {
             tokenTempo = token
             tokenSecretTempo = tokenSecret
             signInWebView.url = "https://api.twitter.com/oauth/authorize?oauth_token=" + tokenTempo
         }
 
-        function accessTokenOnSuccess(token, tokenSecret, screenName){
+        function accessTokenOnSuccess(token, tokenSecret, screenName) {
             settings.oauthToken = token
             settings.oauthTokenSecret = tokenSecret
             settings.userScreenName = screenName
@@ -101,8 +101,8 @@ Page{
             pageStack.pop(null)
         }
 
-        function onFailure(status, statusText){
-            if(status === 0)
+        function onFailure(status, statusText) {
+            if (status === 0)
                 infoBanner.alert(qsTr("Server or connection error. Click the refresh button to try again."))
             else
                 infoBanner.alert(qsTr("Error: %1. Make sure the time/date of your phone is set correctly.").arg(statusText + "(" + status + ")"))

@@ -22,75 +22,73 @@ import com.nokia.extras 1.1
 import "Component"
 import "Services/Twitter.js" as Twitter
 
-Page{
+Page {
     id: userCategoryPage
 
     Component.onCompleted: script.refresh()
 
-    tools: ToolBarLayout{
-        ToolIcon{
+    tools: ToolBarLayout {
+        ToolIcon {
             platformIconId: "toolbar-back"
             onClicked: pageStack.pop()
         }
     }
 
-    AbstractListView{
+    AbstractListView {
         id: userCategoryView
-        anchors{ top: header.bottom; bottom: parent.bottom; left: parent.left; right: parent.right }
+        anchors { top: header.bottom; bottom: parent.bottom; left: parent.left; right: parent.right }
         delegate: userCategoryDelegate
-        model: ListModel{}
+        model: ListModel {}
         onPullDownRefresh: script.refresh()
     }
 
-    ScrollDecorator{ flickableItem: userCategoryView }
+    ScrollDecorator { flickableItem: userCategoryView }
 
-    PageHeader{
+    PageHeader {
         id: header
         headerText: qsTr("Suggested User Categories")
         headerIcon: "image://theme/icon-m-toolbar-people-white-selected"
         onClicked: userCategoryView.positionViewAtBeginning()
     }
 
-    QtObject{
+    QtObject {
         id: script
 
-        function onSuccess(data){
-            for(var i=0; i<data.length; i++){
+        function onSuccess(data) {
+            for (var i=0; i<data.length; i++) {
                 userCategoryView.model.append(data[i])
             }
             header.busy = false
         }
 
-        function onFailure(status, statusText){
+        function onFailure(status, statusText) {
             infoBanner.showHttpError(status, statusText)
             header.busy = false
         }
 
-        function refresh(){
+        function refresh() {
             userCategoryView.model.clear()
             Twitter.getSuggestedUserCategories(onSuccess, onFailure)
             header.busy = true
         }
     }
 
-    Component{
+    Component {
         id: userCategoryDelegate
 
-        ListItem{
+        ListItem {
             id: userCategoryItem
             width: ListView.view.width
             height: categoryText.height + categoryText.anchors.topMargin * 2
             subItemIndicator: true
             marginLineVisible: false
 
-            Text{
+            Text {
                 id: categoryText
-                anchors{
-                    left: userCategoryItem.left
-                    top: userCategoryItem.top
+                anchors {
+                    top: userCategoryItem.top; topMargin: constant.paddingXXLarge
+                    left: userCategoryItem.left; leftMargin: constant.paddingMedium
                     right: countBubble.left
-                    topMargin: constant.paddingXXLarge
-                    leftMargin: constant.paddingMedium
                 }
                 elide: Text.ElideRight
                 text: model.name
@@ -98,11 +96,12 @@ Page{
                 color: constant.colorLight
             }
 
-            CountBubble{
+            CountBubble {
                 id: countBubble
-                anchors.right: parent.right
-                anchors.verticalCenter: parent.verticalCenter
-                anchors.rightMargin: constant.paddingMedium + listItemRightMargin
+                anchors {
+                    right: parent.right; rightMargin: constant.paddingMedium + listItemRightMargin
+                    verticalCenter: parent.verticalCenter
+                }
                 largeSized: true
                 value: model.size
             }

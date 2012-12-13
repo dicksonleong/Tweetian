@@ -19,7 +19,7 @@
 import QtQuick 1.1
 import com.nokia.symbian 1.1
 
-Item{
+Item {
     id: root
 
     property string settingText: ""
@@ -32,27 +32,25 @@ Item{
     implicitHeight: column.height
     implicitWidth: parent.width
 
-    Column{
+    Column {
         id: column
-        anchors{
-            left: parent.left
-            right: parent.right
-            leftMargin: constant.paddingMedium
-            rightMargin: constant.paddingLarge // for scroll bar
+        anchors {
+            left: parent.left; leftMargin: constant.paddingMedium
+            right: parent.right; rightMargin: constant.paddingLarge // for scroll bar
         }
         height: childrenRect.height
         spacing: constant.paddingMedium
 
-        Text{
-            anchors{ left: parent.left; right: parent.right }
+        Text {
+            anchors { left: parent.left; right: parent.right }
             font.pixelSize: constant.fontSizeMedium
             color: constant.colorLight
             text: settingText
         }
 
-        TextField{
+        TextField {
             id: textField
-            anchors{ left: parent.left; right: parent.right }
+            anchors { left: parent.left; right: parent.right }
             platformInverted: settings.invertedTheme
         }
     }

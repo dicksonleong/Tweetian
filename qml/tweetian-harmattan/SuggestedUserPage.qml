@@ -22,31 +22,31 @@ import "Component"
 import "Delegate"
 import "Services/Twitter.js" as Twitter
 
-Page{
+Page {
     id: suggestedUserPage
 
     property string slug: ""
 
     Component.onCompleted: script.refresh()
 
-    tools: ToolBarLayout{
-        ToolIcon{
+    tools: ToolBarLayout {
+        ToolIcon {
             id: backButton
             platformIconId: "toolbar-back" + (enabled ? "" : "-dimmed")
             onClicked: pageStack.pop()
         }
     }
 
-    ListView{
+    ListView {
         id: suggestedUserView
-        anchors{ top: header.bottom; bottom: parent.bottom; left: parent.left; right: parent.right }
-        delegate: UserDelegate{}
-        model: ListModel{}
+        anchors { top: header.bottom; bottom: parent.bottom; left: parent.left; right: parent.right }
+        delegate: UserDelegate {}
+        model: ListModel {}
     }
 
-    ScrollDecorator{ flickableItem: suggestedUserView }
+    ScrollDecorator { flickableItem: suggestedUserView }
 
-    PageHeader{
+    PageHeader {
         id: header
         headerIcon: "image://theme/icon-m-toolbar-people-white-selected"
         headerText: qsTr("Suggested Users")
@@ -55,7 +55,7 @@ Page{
         onClicked: suggestedUserView.positionViewAtBeginning()
     }
 
-    WorkerScript{
+    WorkerScript {
         id: userParser
         source: "WorkerScript/UserParser.js"
         onMessage: {
@@ -64,15 +64,15 @@ Page{
         }
     }
 
-    QtObject{
+    QtObject {
         id: script
 
-        function refresh(){
+        function refresh() {
             Twitter.getSuggestedUser(slug, onSuccess, onFailure)
             header.busy = true
         }
 
-        function onSuccess(data){
+        function onSuccess(data) {
             backButton.enabled = false
             header.headerText += " - " + data.name
             var msg = {
@@ -83,7 +83,7 @@ Page{
             userParser.sendMessage(msg)
         }
 
-        function onFailure(status, statusText){
+        function onFailure(status, statusText) {
             infoBanner.showHttpError(status, statusText)
             header.busy = false
         }

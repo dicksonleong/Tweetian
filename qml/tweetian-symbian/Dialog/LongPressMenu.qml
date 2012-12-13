@@ -20,28 +20,26 @@ import QtQuick 1.1
 import com.nokia.symbian 1.1
 import "../Component"
 
-ContextMenu{
+ContextMenu {
     id: root
 
     property variant model
     property bool __isClosing: false
 
-    function getAllHashtags(text){
-        if(!settings.hashtagsInReply)
-            return ""
-
+    function getAllHashtags(text) {
+        if (!settings.hashtagsInReply) return ""
         var hashtags = ""
         var hashtagsArray = text.match(/href="#[^"\s]+/g)
-        if(hashtagsArray != null)
-            for(var i=0; i<hashtagsArray.length; i++) hashtags += hashtagsArray[i].substring(6) + " "
+        if (hashtagsArray != null)
+            for (var i=0; i<hashtagsArray.length; i++) hashtags += hashtagsArray[i].substring(6) + " "
 
         return hashtags
     }
 
     platformInverted: settings.invertedTheme
 
-    MenuLayout{
-        MenuItemWithIcon{
+    MenuLayout {
+        MenuItemWithIcon {
             iconSource: platformInverted ? "../Image/reply_inverse.png" : "../Image/reply.png"
             text: qsTr("Reply")
             platformInverted: root.platformInverted
@@ -50,7 +48,7 @@ ContextMenu{
                 pageStack.push(Qt.resolvedUrl("../NewTweetPage.qml"), prop)
             }
         }
-        MenuItemWithIcon{
+        MenuItemWithIcon {
             iconSource: platformInverted ? "../Image/retweet_inverse.png" : "../Image/retweet.png"
             text: qsTr("Retweet")
             platformInverted: root.platformInverted
@@ -60,13 +58,13 @@ ContextMenu{
                 pageStack.push(Qt.resolvedUrl("../NewTweetPage.qml"), {type: "RT", placedText: text, tweetId: model.retweetId})
             }
         }
-        MenuItemWithIcon{
+        MenuItemWithIcon {
             iconSource: platformInverted ? "../Image/contacts_inverse.svg" : "../Image/contacts.svg"
             text: qsTr("%1 Profile").arg("<font color=\"LightSeaGreen\">@" + model.screenName + "</font>")
             platformInverted: root.platformInverted
             onClicked: pageStack.push(Qt.resolvedUrl("../UserPage.qml"), {screenName: model.screenName})
         }
-        MenuItemWithIcon{
+        MenuItemWithIcon {
             iconSource: platformInverted ? "../Image/contacts_inverse.svg" : "../Image/contacts.svg"
             text: qsTr("%1 Profile").arg("<font color=\"LightSeaGreen\">@" + model.displayScreenName + "</font>")
             visible: model.displayScreenName != model.screenName
@@ -78,7 +76,7 @@ ContextMenu{
     Component.onCompleted: open()
 
     onStatusChanged: {
-        if(status === DialogStatus.Closing) __isClosing = true
-        else if(status === DialogStatus.Closed && __isClosing) root.destroy()
+        if (status === DialogStatus.Closing) __isClosing = true
+        else if (status === DialogStatus.Closed && __isClosing) root.destroy()
     }
 }

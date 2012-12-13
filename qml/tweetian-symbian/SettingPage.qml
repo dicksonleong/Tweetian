@@ -23,33 +23,33 @@ import "Component"
 import "database.js" as Database
 import "Dialog"
 
-Page{
+Page {
     id: settingPage
 
-    tools: ToolBarLayout{
-        ToolButtonWithTip{
+    tools: ToolBarLayout {
+        ToolButtonWithTip {
             iconSource: "toolbar-back"
             toolTipText: qsTr("Back")
             onClicked: pageStack.pop()
         }
-        ToolButtonWithTip{
+        ToolButtonWithTip {
             iconSource: "toolbar-menu"
             toolTipText: qsTr("Menu")
             onClicked: settingPageMenu.open()
         }
     }
 
-    Menu{
+    Menu {
         id: settingPageMenu
         platformInverted: settings.invertedTheme
 
-        MenuLayout{
-            MenuItem{
+        MenuLayout {
+            MenuItem {
                 text: qsTr("Clear cache & database")
                 platformInverted: settingPageMenu.platformInverted
                 onClicked: internal.createClearCacheDialog()
             }
-            MenuItem{
+            MenuItem {
                 text: qsTr("Clear thumbnails cache")
                 platformInverted: settingPageMenu.platformInverted
                 onClicked: internal.createClearThumbnailDialog()
@@ -57,26 +57,26 @@ Page{
         }
     }
 
-    TabGroup{
+    TabGroup {
         id: settingTabGroup
         anchors { left: parent.left; right: parent.right; top: settingTabBarLayout.bottom; bottom: parent.bottom }
 
-        SettingGeneralTab{ id: generalTab }
-        SettingRefreshTab{ id: refreshTab }
-        AccountTab{ id: accountTab }
-        MuteTab{ id: muteTab }
+        SettingGeneralTab { id: generalTab }
+        SettingRefreshTab { id: refreshTab }
+        AccountTab { id: accountTab }
+        MuteTab { id: muteTab }
     }
 
-    TabBarLayout{
+    TabBarLayout {
         id: settingTabBarLayout
         anchors { left: parent.left; right: parent.right; top: parent.top }
-        TabButton{ tab: generalTab; text: qsTr("General") }
-        TabButton{ tab: refreshTab; text: qsTr("Update") }
-        TabButton{ tab: accountTab; text: qsTr("Account") }
-        TabButton{ tab: muteTab; text: qsTr("Mute") }
+        TabButton { tab: generalTab; text: qsTr("General") }
+        TabButton { tab: refreshTab; text: qsTr("Update") }
+        TabButton { tab: accountTab; text: qsTr("Account") }
+        TabButton { tab: muteTab; text: qsTr("Mute") }
     }
 
-    QtObject{
+    QtObject {
         id: infoText
 
         property string twitLonger: qsTr("TwitLonger is a third party service that allow you to post long tweet \
@@ -109,15 +109,15 @@ when streaming is connected. It is not recommended to enable streaming when you 
 (eg. mobile data).")
     }
 
-    QtObject{
+    QtObject {
         id: internal
 
-        function createClearCacheDialog(){
+        function createClearCacheDialog() {
             var icon = settings.invertedTheme ? "image://theme/toolbar-delete_inverse"
                                               : "image://theme/toolbar-delete"
             var message = qsTr("This action will clear all temporary caches and database. \
 Twitter credential and app settings will not be reset. Continue?")
-            dialog.createQueryDialog(qsTr("Clear Cache & Database"), icon, message, function(){
+            dialog.createQueryDialog(qsTr("Clear Cache & Database"), icon, message, function() {
                 Database.dropTable("Timeline")
                 Database.dropTable("Mentions")
                 Database.dropTable("DirectMsg")
@@ -130,11 +130,11 @@ Twitter credential and app settings will not be reset. Continue?")
             })
         }
 
-        function createClearThumbnailDialog(){
+        function createClearThumbnailDialog() {
             var icon = settings.invertedTheme ? "image://theme/toolbar-delete_inverse"
                                               : "image://theme/toolbar-delete"
             var message = qsTr("Delete all cached thumbnails?")
-            dialog.createQueryDialog(qsTr("Clear Thumbnails Cache"), icon, message, function(){
+            dialog.createQueryDialog(qsTr("Clear Thumbnails Cache"), icon, message, function() {
                 var deleteCount = thumbnailCacher.clearAll()
                 infoBanner.alert(qsTr("%1 thumbnails cache cleared").arg(deleteCount))
             })

@@ -40,14 +40,16 @@ function getAccessToken(constant, username, password, onSuccess, onFailure) {
     var requestURL = OAuth.addToURL(message.action, message.parameters)
     request.open(message.method, requestURL)
 
-    request.onreadystatechange = function(){
-        if(request.readyState === XMLHttpRequest.DONE){
-            if(request.status === 200){
+    request.onreadystatechange = function() {
+        if (request.readyState === XMLHttpRequest.DONE) {
+            if (request.status === 200) {
                 var oauthToken = "", oauthTokenSecret = ""
                 var tokenArray = request.responseText.split('&')
-                for(var i=0; i<tokenArray.length; i++){
-                    if(tokenArray[i].indexOf("oauth_token=") === 0) oauthToken = tokenArray[i].substring(12)
-                    else if(tokenArray[i].indexOf("oauth_token_secret=") === 0) oauthTokenSecret = tokenArray[i].substring(19)
+                for (var i=0; i<tokenArray.length; i++) {
+                    if (tokenArray[i].indexOf("oauth_token=") === 0)
+                        oauthToken = tokenArray[i].substring(12)
+                    else if (tokenArray[i].indexOf("oauth_token_secret=") === 0)
+                        oauthTokenSecret = tokenArray[i].substring(19)
                 }
                 onSuccess(oauthToken, oauthTokenSecret)
             }
@@ -61,7 +63,7 @@ function getAccessToken(constant, username, password, onSuccess, onFailure) {
     request.send(body)
 }
 
-function addBookmark(constant, accessToken, accessTokenSecret, url, description, onSuccess, onFailure){
+function addBookmark(constant, accessToken, accessTokenSecret, url, description, onSuccess, onFailure) {
     var accessor = {
         consumerKey: constant.instapaperConsumerKey,
         consumerSecret: constant.instapaperConsumerSecret,
@@ -80,9 +82,9 @@ function addBookmark(constant, accessToken, accessTokenSecret, url, description,
     var requestURL = OAuth.addToURL(message.action, message.parameters)
     request.open(message.method, requestURL)
 
-    request.onreadystatechange = function(){
-        if(request.readyState === XMLHttpRequest.DONE){
-            if(request.status === 200) onSuccess()
+    request.onreadystatechange = function() {
+        if (request.readyState === XMLHttpRequest.DONE) {
+            if (request.status === 200) onSuccess()
             else onFailure(request.status)
         }
     }

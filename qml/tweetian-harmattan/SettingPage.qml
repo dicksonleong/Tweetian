@@ -21,57 +21,57 @@ import com.nokia.meego 1.0
 import "SettingsPageCom"
 import "database.js" as Database
 
-Page{
+Page {
     id: settingPage
 
-    tools: ToolBarLayout{
-        ToolIcon{
+    tools: ToolBarLayout {
+        ToolIcon {
             platformIconId: "toolbar-back"
             onClicked: pageStack.pop()
         }
-        ToolIcon{
+        ToolIcon {
             platformIconId: "toolbar-view-menu"
             onClicked: settingPageMenu.open()
         }
     }
 
-    Menu{
+    Menu {
         id: settingPageMenu
 
-        MenuLayout{
-            MenuItem{
+        MenuLayout {
+            MenuItem {
                 text: qsTr("Clear cache & database")
                 onClicked: internal.createClearCacheDialog()
             }
-            MenuItem{
+            MenuItem {
                 text: qsTr("Clear thumbnails cache")
                 onClicked: internal.createClearThumbnailDialog()
             }
         }
     }
 
-    TabGroup{
+    TabGroup {
         id: settingTabGroup
         anchors { left: parent.left; right: parent.right; top: tabButttonRow.bottom; bottom: parent.bottom }
         currentTab: generalTab
 
-        SettingGeneralTab{ id: generalTab }
-        SettingRefreshTab{ id: refreshTab }
-        AccountTab{ id: accountTab }
-        MuteTab{ id: muteTab }
+        SettingGeneralTab { id: generalTab }
+        SettingRefreshTab { id: refreshTab }
+        AccountTab { id: accountTab }
+        MuteTab { id: muteTab }
     }
 
-    ButtonRow{
+    ButtonRow {
         id: tabButttonRow
-        anchors{ top: parent.top; left: parent.left; right: parent.right }
+        anchors { top: parent.top; left: parent.left; right: parent.right }
 
-        TabButton{ tab: generalTab; text: qsTr("General")}
-        TabButton{ tab: refreshTab; text: qsTr("Update")}
-        TabButton{ tab: accountTab; text: qsTr("Account") }
-        TabButton{ tab: muteTab; text: qsTr("Mute") }
+        TabButton { tab: generalTab; text: qsTr("General")}
+        TabButton { tab: refreshTab; text: qsTr("Update") }
+        TabButton { tab: accountTab; text: qsTr("Account") }
+        TabButton { tab: muteTab; text: qsTr("Mute") }
     }
 
-    QtObject{
+    QtObject {
         id: infoText
 
         property string twitLonger: qsTr("TwitLonger is a third party service that allow you to post long tweet \
@@ -104,13 +104,13 @@ when streaming is connected. It is not recommended to enable streaming when you 
 (eg. mobile data).")
     }
 
-    QtObject{
+    QtObject {
         id: internal
 
-        function createClearCacheDialog(){
+        function createClearCacheDialog() {
             var message = qsTr("This action will clear all temporary caches and database. \
 Twitter credential and app settings will not be reset. Continue?")
-            dialog.createQueryDialog(qsTr("Clear Cache & Database"), "", message, function(){
+            dialog.createQueryDialog(qsTr("Clear Cache & Database"), "", message, function() {
                 Database.dropTable("Timeline")
                 Database.dropTable("Mentions")
                 Database.dropTable("DirectMsg")
@@ -123,9 +123,9 @@ Twitter credential and app settings will not be reset. Continue?")
             })
         }
 
-        function createClearThumbnailDialog(){
+        function createClearThumbnailDialog() {
             var message = qsTr("Delete all cached thumbnails?")
-            dialog.createQueryDialog(qsTr("Clear Thumbnails Cache"), "", message, function(){
+            dialog.createQueryDialog(qsTr("Clear Thumbnails Cache"), "", message, function() {
                 var deleteCount = thumbnailCacher.clearAll()
                 infoBanner.alert(qsTr("%1 thumbnails cache cleared").arg(deleteCount))
             })

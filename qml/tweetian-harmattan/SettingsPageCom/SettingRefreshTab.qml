@@ -20,21 +20,21 @@ import QtQuick 1.1
 import com.nokia.meego 1.0
 import "../Component"
 
-Page{
+Page {
     id: root
 
-    Flickable{
+    Flickable {
         anchors.fill: parent
         contentHeight: mainColumn.height
 
-        Column{
+        Column {
             id: mainColumn
-            width: parent.width
+            anchors { left: parent.left; right: parent.right }
             height: childrenRect.height
 
-            SectionHeader{ text: qsTr("Streaming") }
+            SectionHeader { text: qsTr("Streaming") }
 
-            SettingSwitch{
+            SettingSwitch {
                 id: streamingSwitch
                 text: qsTr("Enable streaming")
                 checked: settings.enableStreaming
@@ -43,9 +43,9 @@ Page{
                 onInfoClicked: dialog.createMessageDialog(qsTr("Streaming"), infoText.streaming)
             }
 
-            SectionHeader{ text: qsTr("Auto Refresh Frequency") }
+            SectionHeader { text: qsTr("Auto Refresh Frequency") }
 
-            SettingSlider{
+            SettingSlider {
                 enabled: !streamingSwitch.checked
                 text: qsTr("Timeline") + ": " +
                       (enabled ? (value === 0 ? qsTr("Off") : qsTr("%n min(s)", "", value)) : qsTr("Disabled"))
@@ -55,7 +55,7 @@ Page{
                 onReleased: settings.timelineRefreshFreq = value
             }
 
-            SettingSlider{
+            SettingSlider {
                 enabled: !streamingSwitch.checked
                 text: qsTr("Mentions") + ": " +
                       (enabled ? (value === 0 ? qsTr("Off") : qsTr("%n min(s)", "", value)) : qsTr("Disabled"))
@@ -65,7 +65,7 @@ Page{
                 onReleased: settings.mentionsRefreshFreq = value
             }
 
-            SettingSlider{
+            SettingSlider {
                 enabled: !streamingSwitch.checked
                 text: qsTr("Direct messages") + ": " +
                       (enabled ? (value === 0 ? qsTr("Off") : qsTr("%n min(s)", "", value)) : qsTr("Disabled"))
@@ -75,15 +75,15 @@ Page{
                 onReleased: settings.directMsgRefreshFreq = value
             }
 
-            SectionHeader{ text: qsTr("Notifications") }
+            SectionHeader { text: qsTr("Notifications") }
 
-            SettingSwitch{
+            SettingSwitch {
                 text: qsTr("Mentions")
                 checked: settings.mentionNotification
                 onCheckedChanged: settings.mentionNotification = checked
             }
 
-            SettingSwitch{
+            SettingSwitch {
                 text: qsTr("Direct messages")
                 checked: settings.messageNotification
                 onCheckedChanged: settings.messageNotification = checked

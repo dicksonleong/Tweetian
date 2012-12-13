@@ -19,7 +19,7 @@
 import QtQuick 1.1
 import com.nokia.meego 1.0
 
-CommonDialog{
+CommonDialog {
     id: root
 
     property bool __isClosing: false
@@ -27,25 +27,20 @@ CommonDialog{
     signal signIn(string username, string password)
 
     buttonTexts: [qsTr("Sign In"), qsTr("Cancel")]
-    content: Item{
+    content: Item {
         id: contentItem
-        anchors { left: parent.left; right: parent.right; top: parent.top }
-        anchors.topMargin: root.platformStyle.contentMargin
+        anchors { left: parent.left; right: parent.right; top: parent.top; topMargin: root.platformStyle.contentMargin }
         height: textFieldColumn.height + anchors.topMargin * 2
 
-        Column{
+        Column {
             id: textFieldColumn
-            anchors {
-                left: parent.left
-                right: parent.right
-                margins: constant.paddingMedium
-            }
+            anchors { left: parent.left; right: parent.right; margins: constant.paddingMedium }
             spacing: constant.paddingLarge
             height: childrenRect.height
 
-            TextField{
+            TextField {
                 id: usernameTextField
-                width: parent.width
+                anchors { left: parent.left; right: parent.right }
                 placeholderText: qsTr("Username")
                 inputMethodHints: Qt.ImhNoPredictiveText | Qt.ImhNoAutoUppercase
                 platformSipAttributes: SipAttributes {
@@ -56,9 +51,9 @@ CommonDialog{
                 Keys.onReturnPressed: passwordTextField.forceActiveFocus()
             }
 
-            TextField{
+            TextField {
                 id: passwordTextField
-                width: parent.width
+                anchors { left: parent.left; right: parent.right }
                 placeholderText: qsTr("Password")
                 inputMethodHints: Qt.ImhNoPredictiveText | Qt.ImhNoAutoUppercase
                 echoMode: TextInput.Password
@@ -80,7 +75,7 @@ CommonDialog{
     Component.onCompleted:open()
 
     onStatusChanged: {
-        if(status === DialogStatus.Closing) __isClosing = true
-        else if(status === DialogStatus.Closed && __isClosing) root.destroy(250)
+        if (status === DialogStatus.Closing) __isClosing = true
+        else if (status === DialogStatus.Closed && __isClosing) root.destroy(250)
     }
 }

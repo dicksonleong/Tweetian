@@ -79,7 +79,7 @@ var POST_UNSUBSCRIBE_LIST_URL = "https://api.twitter.com/1/lists/subscribers/des
 var POST_DELETE_LIST_URL = "https://api.twitter.com/1/lists/destroy.json"
 var TWITTER_IMAGE_UPLOAD_URL = "https://upload.twitter.com/1/statuses/update_with_media.json"
 
-function init(constant, token, tokenSecret){
+function init(constant, token, tokenSecret) {
     OAUTH_CONSUMER_KEY = constant.twitterConsumerKey
     OAUTH_CONSUMER_SECRET = constant.twitterConsumerSecret
     OAUTH_TOKEN = token
@@ -87,7 +87,7 @@ function init(constant, token, tokenSecret){
     USER_AGENT = constant.userAgent
 }
 
-function OAuthRequest(method, url){
+function OAuthRequest(method, url) {
     this.accessor = {
         consumerKey: OAUTH_CONSUMER_KEY,
         consumerSecret: OAUTH_CONSUMER_SECRET,
@@ -100,11 +100,11 @@ function OAuthRequest(method, url){
     }
 }
 
-OAuthRequest.prototype.setParameters = function (parameters) {
+OAuthRequest.prototype.setParameters = function(parameters) {
     this.message.parameters = parameters
 }
 
-OAuthRequest.prototype.sendRequest = function (onSuccess, onFailure) {
+OAuthRequest.prototype.sendRequest = function(onSuccess, onFailure) {
     var encoded = OAuth.formEncode(this.message.parameters)
     var encodedURL = this.message.method == "GET" && encoded.length > 0 ? this.message.action + '?' + encoded
                                                                         : this.message.action
@@ -113,10 +113,10 @@ OAuthRequest.prototype.sendRequest = function (onSuccess, onFailure) {
     var request = new XMLHttpRequest()
     request.open(this.message.method, encodedURL)
 
-    request.onreadystatechange = function (){
-        if(request.readyState == XMLHttpRequest.DONE){
-            if(request.status === 200){
-                if(request.responseText != "") onSuccess(JSON.parse(request.responseText))
+    request.onreadystatechange = function() {
+        if (request.readyState == XMLHttpRequest.DONE) {
+            if (request.status === 200) {
+                if (request.responseText != "") onSuccess(JSON.parse(request.responseText))
                 else onSuccess("")
             }
             else onFailure(request.status, request.statusText)
@@ -132,17 +132,17 @@ OAuthRequest.prototype.sendRequest = function (onSuccess, onFailure) {
 function getHomeTimeline(sinceId, maxId, onSuccess, onFailure) {
     var timelineRequest = new OAuthRequest("GET", GET_TIMELIME_URL)
     var parameters = [["count", "200"], ["include_rts", true], ["include_entities", true]]
-    if(maxId) parameters.push(["max_id", maxId])
-    else if(sinceId) parameters.push(["since_id", sinceId])
+    if (maxId) parameters.push(["max_id", maxId])
+    else if (sinceId) parameters.push(["since_id", sinceId])
     timelineRequest.setParameters(parameters)
     timelineRequest.sendRequest(onSuccess, onFailure)
 }
 
-function getMentions(sinceId, maxId, onSuccess, onFailure){
+function getMentions(sinceId, maxId, onSuccess, onFailure) {
     var mentionsRequest = new OAuthRequest("GET", GET_MENTIONS_URL)
     var parameters = [["count", "200"], ["include_rts", true], ["include_entities", true]]
-    if(maxId) parameters.push(["max_id", maxId])
-    else if(sinceId) parameters.push(["since_id", sinceId])
+    if (maxId) parameters.push(["max_id", maxId])
+    else if (sinceId) parameters.push(["since_id", sinceId])
     mentionsRequest.setParameters(parameters)
     mentionsRequest.sendRequest(onSuccess, onFailure)
 }
@@ -150,10 +150,10 @@ function getMentions(sinceId, maxId, onSuccess, onFailure){
 function getDirectMsg(sinceId, maxId, onSuccess, onFailure) {
     var directMsgRequest = new OAuthRequest("GET", GET_DIRECT_MSG_URL)
     var parameters = [["count", "100"], ["include_entities", true]]
-    if(maxId) parameters.push(["max_id", maxId])
-    else if(sinceId) parameters.push(["since_id", sinceId])
+    if (maxId) parameters.push(["max_id", maxId])
+    else if (sinceId) parameters.push(["since_id", sinceId])
     directMsgRequest.setParameters(parameters)
-    directMsgRequest.sendRequest(function(data){
+    directMsgRequest.sendRequest(function(data) {
                                      getSentDirectMsg(sinceId, maxId, data, onSuccess, onFailure)
                                  },onFailure)
 }
@@ -161,10 +161,10 @@ function getDirectMsg(sinceId, maxId, onSuccess, onFailure) {
 function getSentDirectMsg(sinceId, maxId, dmRecieve, onSucces, onFailure) {
     var directMsgSent = new OAuthRequest("GET", GET_SENT_DIRECT_MSG_URL)
     var parameters = [["count", "100"], ["include_entities", true]]
-    if(maxId) parameters.push(["max_id", maxId])
-    else if(sinceId) parameters.push(["since_id", sinceId])
+    if (maxId) parameters.push(["max_id", maxId])
+    else if (sinceId) parameters.push(["since_id", sinceId])
     directMsgSent.setParameters(parameters)
-    directMsgSent.sendRequest(function(data){onSucces(dmRecieve, data)}, onFailure)
+    directMsgSent.sendRequest(function(data) {onSucces(dmRecieve, data)}, onFailure)
 }
 
 function getStatus(statusId, onSuccess, onFailure) {
@@ -187,15 +187,15 @@ function getUserInfo(screenName, onSuccess, onFailure) {
 function getUserTweets(screenName, maxId, onSuccess, onFailure) {
     var userTweetsRequest = new OAuthRequest("GET", GET_USER_TWEETS_URL)
     var parameters = [["screen_name", screenName], ["count", 50], ["include_rts", true], ["include_entities", true]]
-    if(maxId) parameters.push(["max_id", maxId])
+    if (maxId) parameters.push(["max_id", maxId])
     userTweetsRequest.setParameters(parameters)
     userTweetsRequest.sendRequest(onSuccess, onFailure)
 }
 
-function getUserFavourites(screenName, maxId, onSuccess, onFailure){
+function getUserFavourites(screenName, maxId, onSuccess, onFailure) {
     var favouritesRequest = new OAuthRequest("GET", GET_USER_FAVOURITES_URL)
     var parameters = [["screen_name", screenName], ["count", 50], ["include_entities", true]]
-    if(maxId) parameters.push(["max_id", maxId])
+    if (maxId) parameters.push(["max_id", maxId])
     favouritesRequest.setParameters(parameters)
     favouritesRequest.sendRequest(onSuccess, onFailure)
 }
@@ -213,22 +213,22 @@ function getUserListsMemberships(screenName, cursor, onSuccess, onFailure) {
     listsMemberRequest.sendRequest(onSuccess, onFailure)
 }
 
-function getListTimeline(listId, sinceId, maxId, onSuccess, onFailure){
+function getListTimeline(listId, sinceId, maxId, onSuccess, onFailure) {
     var listTimelineRequest = new OAuthRequest("GET", GET_LIST_TIMELINE_URL)
     var parameters = [["list_id", listId], ["per_page", 100], ["include_entities", true], ["include_rts", true]]
-    if(sinceId) parameters.push(["since_id", sinceId])
-    else if(maxId) parameters.push(["max_id", maxId])
+    if (sinceId) parameters.push(["since_id", sinceId])
+    else if (maxId) parameters.push(["max_id", maxId])
     listTimelineRequest.setParameters(parameters)
     listTimelineRequest.sendRequest(onSuccess, onFailure)
 }
 
-function getListMembers(listId, cursor, onSuccess, onFailure){
+function getListMembers(listId, cursor, onSuccess, onFailure) {
     var listMemberRequest = new OAuthRequest("GET", GET_LIST_MEMBER_URL)
     listMemberRequest.setParameters([["list_id", listId], ["cursor", cursor], ["skip_status", true]])
     listMemberRequest.sendRequest(onSuccess, onFailure)
 }
 
-function getListSubscribers(listId, cursor, onSuccess, onFailure){
+function getListSubscribers(listId, cursor, onSuccess, onFailure) {
     var listSubscribersRequest = new OAuthRequest("GET", GET_LIST_SUBSCRIBERS_URL)
     listSubscribersRequest.setParameters([["list_id", listId], ["cursor", cursor], ["skip_status", true]])
     listSubscribersRequest.sendRequest(onSuccess, onFailure)
@@ -239,7 +239,7 @@ function getTrends(woeid, onSuccess, onFailure) {
     trendsRequest.sendRequest(onSuccess, onFailure)
 }
 
-function getTrendsAvailable(onSuccess, onFailure){
+function getTrendsAvailable(onSuccess, onFailure) {
     var trendsAvailableRequest = new OAuthRequest("GET", GET_TRENDS_AVAILABLE_URL)
     trendsAvailableRequest.sendRequest(onSuccess, onFailure)
 }
@@ -249,21 +249,21 @@ function getSavedSearches(onSuccess, onFailure) {
     savedSearchRequest.sendRequest(onSuccess, onFailure)
 }
 
-function getSearch(query, sinceId, maxId, onSuccess, onFailure){
+function getSearch(query, sinceId, maxId, onSuccess, onFailure) {
     var searchRequest = new OAuthRequest("GET", GET_SEARCH_URL)
     var parameters = [["q", query], ["rpp", 50], ["include_entities", true]]
-    if(maxId) parameters.push(["max_id", maxId])
-    else if(sinceId) parameters.push(["since_id", sinceId])
+    if (maxId) parameters.push(["max_id", maxId])
+    else if (sinceId) parameters.push(["since_id", sinceId])
     searchRequest.setParameters(parameters)
     searchRequest.sendRequest(onSuccess, onFailure)
 }
 
-function getNearbyTweets(latitude, longitude, sinceId, maxId, onSuccess, onFailure){
+function getNearbyTweets(latitude, longitude, sinceId, maxId, onSuccess, onFailure) {
     var geocode = latitude + "," + longitude + ",1km"
     var nearbyTweetsRequest = new OAuthRequest("GET", GET_SEARCH_URL)
     var parameters = [["geocode", geocode], ["rpp", 50], ["include_entities", true]]
-    if(maxId) parameters.push(["max_id", maxId])
-    else if(sinceId) parameters.push(["since_id", sinceId])
+    if (maxId) parameters.push(["max_id", maxId])
+    else if (sinceId) parameters.push(["since_id", sinceId])
     nearbyTweetsRequest.setParameters(parameters)
     nearbyTweetsRequest.sendRequest(onSuccess, onFailure)
 }
@@ -280,30 +280,30 @@ function getFollowingId(screenName, onSuccess, onFailure) {
     followingIdRequest.sendRequest(onSuccess, onFailure)
 }
 
-function getFollowersId(screenName, onSuccess, onFailure){
+function getFollowersId(screenName, onSuccess, onFailure) {
     var followersIdRequest = new OAuthRequest("GET", GET_FOLLOWERS_ID_URL)
     followersIdRequest.setParameters([["screen_name", screenName], ["stringify_ids", true]])
     followersIdRequest.sendRequest(onSuccess, onFailure)
 }
 
-function getUserLookup(userId, onSuccess, onFailure){
+function getUserLookup(userId, onSuccess, onFailure) {
     var userLookupRequest = new OAuthRequest("GET", GET_USERS_LOOKUP_URL)
     userLookupRequest.setParameters([["user_id", userId]])
     userLookupRequest.sendRequest(onSuccess, onFailure)
 }
 
-function getConversation(id, onSuccess, onFailure){
+function getConversation(id, onSuccess, onFailure) {
     var conversationRequest = new OAuthRequest("GET", GET_RELATED_RESULTS + id + ".json")
     conversationRequest.setParameters([["include_entities", true]])
     conversationRequest.sendRequest(onSuccess, onFailure)
 }
 
-function getSuggestedUserCategories(onSuccess, onFailure){
+function getSuggestedUserCategories(onSuccess, onFailure) {
     var userCategoriesRequest = new OAuthRequest("GET", GET_SUGGESTED_USER_CATERGORIES)
     userCategoriesRequest.sendRequest(onSuccess, onFailure)
 }
 
-function getSuggestedUser(slug, onSuccess, onFailure){
+function getSuggestedUser(slug, onSuccess, onFailure) {
     var suggestedUserRequest = new OAuthRequest("GET", GET_SUGGESTED_USER + slug + ".json")
     suggestedUserRequest.sendRequest(onSuccess, onFailure)
 }
@@ -313,12 +313,12 @@ function getPrivacyPolicy(onSuccess, onFailure) {
     privacyRequest.sendRequest(onSuccess, onFailure)
 }
 
-function getTermsOfService(onSuccess, onFailure){
+function getTermsOfService(onSuccess, onFailure) {
     var tosRequest = new OAuthRequest("GET", GET_TOS_URL)
     tosRequest.sendRequest(onSuccess, onFailure)
 }
 
-function getVerifyCredentials(onSuccess, onFailure){
+function getVerifyCredentials(onSuccess, onFailure) {
     var verifyCrendtialsRequest = new OAuthRequest("GET", GET_VERIFY_CREDENTIALS_URL)
     verifyCrendtialsRequest.sendRequest(onSuccess, onFailure)
 }
@@ -338,17 +338,17 @@ function postRequestToken(onSuccess, onFailure) {
     var request = new XMLHttpRequest()
     request.open(message.method, message.action)
 
-    request.onreadystatechange = function (){
-        if(request.readyState === XMLHttpRequest.DONE){
-            if(request.status === 200){
+    request.onreadystatechange = function() {
+        if (request.readyState === XMLHttpRequest.DONE) {
+            if (request.status === 200) {
                 var token, tokenSecret, callbackConfirmed
                 var tokenArray = request.responseText.split('&')
-                for(var i=0; i<tokenArray.length; i++){
-                    if(tokenArray[i].indexOf("oauth_token=") == 0) token = tokenArray[i].substring(12)
-                    else if(tokenArray[i].indexOf("oauth_token_secret=") == 0) tokenSecret = tokenArray[i].substring(19)
-                    else if(tokenArray[i].indexOf("oauth_callback_confirmed=") == 0) callbackConfirmed = tokenArray[i].substring(25)
+                for (var i=0; i<tokenArray.length; i++) {
+                    if (tokenArray[i].indexOf("oauth_token=") == 0) token = tokenArray[i].substring(12)
+                    else if (tokenArray[i].indexOf("oauth_token_secret=") == 0) tokenSecret = tokenArray[i].substring(19)
+                    else if (tokenArray[i].indexOf("oauth_callback_confirmed=") == 0) callbackConfirmed = tokenArray[i].substring(25)
                 }
-                if(callbackConfirmed == "true") onSuccess(token, tokenSecret)
+                if (callbackConfirmed == "true") onSuccess(token, tokenSecret)
                 else onFailure(request.status, "oauth_callback_confirmed value is not true")
             }
             else onFailure(request.status, request.statusText)
@@ -379,15 +379,15 @@ function postAccessToken(token, tokenSecret, oauthVerifier, onSuccess, onFailure
     var request = new XMLHttpRequest()
     request.open(message.method, message.action)
 
-    request.onreadystatechange = function (){
-        if(request.readyState === XMLHttpRequest.DONE){
-            if(request.status === 200) {
+    request.onreadystatechange = function() {
+        if (request.readyState === XMLHttpRequest.DONE) {
+            if (request.status === 200) {
                 var token, tokenSecret, screenName
                 var tokenArray = request.responseText.split('&')
-                for(var i=0; i<tokenArray.length; i++){
-                    if(tokenArray[i].indexOf("oauth_token=") == 0) token = tokenArray[i].substring(12)
-                    else if(tokenArray[i].indexOf("oauth_token_secret=") == 0) tokenSecret = tokenArray[i].substring(19)
-                    else if(tokenArray[i].indexOf("screen_name=") == 0) screenName = tokenArray[i].substring(12)
+                for (var i=0; i<tokenArray.length; i++) {
+                    if (tokenArray[i].indexOf("oauth_token=") == 0) token = tokenArray[i].substring(12)
+                    else if (tokenArray[i].indexOf("oauth_token_secret=") == 0) tokenSecret = tokenArray[i].substring(19)
+                    else if (tokenArray[i].indexOf("screen_name=") == 0) screenName = tokenArray[i].substring(12)
                 }
                 onSuccess(token, tokenSecret, screenName)
             }
@@ -404,8 +404,8 @@ function postAccessToken(token, tokenSecret, oauthVerifier, onSuccess, onFailure
 function postStatus(status, statusId, latitude, longitude, onSuccess, onFailure) {
     var postStatusRequest = new OAuthRequest("POST", POST_STATUS_URL)
     var parameters = [["status", status], ["include_entities", true]]
-    if(statusId) parameters.push(["in_reply_to_status_id", statusId])
-    if(latitude && longitude){
+    if (statusId) parameters.push(["in_reply_to_status_id", statusId])
+    if (latitude && longitude) {
         parameters.push(["lat", latitude])
         parameters.push(["long", longitude])
     }
@@ -424,37 +424,37 @@ function postDirectMsg(status, screenName, onSuccess, onFailure) {
     postDirectMsgRequest.sendRequest(onSuccess, onFailure)
 }
 
-function postDeleteDirectMsg(statusId, onSuccess, onFailure){
+function postDeleteDirectMsg(statusId, onSuccess, onFailure) {
     var deleteDirectMsg = new OAuthRequest("POST", POST_DIRECT_MSG_DELETE_URL + statusId + ".json")
     deleteDirectMsg.sendRequest(onSuccess, onFailure)
 }
 
-function postRetweet(statusId, onSuccess, onFailure){
+function postRetweet(statusId, onSuccess, onFailure) {
     var retweetRequest = new OAuthRequest("POST", POST_RETWEET_URL + statusId + ".json")
     retweetRequest.setParameters([["include_entities", true]])
     retweetRequest.sendRequest(onSuccess, onFailure)
 }
 
-function postFavourite(statusId, onSuccess, onFailure){
+function postFavourite(statusId, onSuccess, onFailure) {
     var favouriteRequest = new OAuthRequest("POST", POST_FAVOURITE_URL + statusId + ".json")
-    favouriteRequest.sendRequest(function(data){onSuccess(data, true)}, onFailure)
+    favouriteRequest.sendRequest(function(data) {onSuccess(data, true)}, onFailure)
 }
 
-function postUnfavourite(statusId, onSuccess, onFailure){
+function postUnfavourite(statusId, onSuccess, onFailure) {
     var unfavouriteRequest = new OAuthRequest("POST", POST_UNFAVOURITE_URL + statusId + ".json")
-    unfavouriteRequest.sendRequest(function(data){onSuccess(data, false)}, onFailure)
+    unfavouriteRequest.sendRequest(function(data) {onSuccess(data, false)}, onFailure)
 }
 
-function postFollow(screenName, onSuccess, onFailure){
+function postFollow(screenName, onSuccess, onFailure) {
     var followRequest = new OAuthRequest("POST", POST_FOLLOW_URL)
     followRequest.setParameters([["screen_name", screenName]])
-    followRequest.sendRequest(function(data){onSuccess(data, true)}, onFailure)
+    followRequest.sendRequest(function(data) {onSuccess(data, true)}, onFailure)
 }
 
 function postUnfollow(screenName, onSuccess, onFailure) {
     var unfollowRequest = new OAuthRequest("POST", POST_UNFOLLOW_URL)
     unfollowRequest.setParameters([["screen_name", screenName]])
-    unfollowRequest.sendRequest(function(data){onSuccess(data, false)}, onFailure)
+    unfollowRequest.sendRequest(function(data) {onSuccess(data, false)}, onFailure)
 }
 
 function postSavedSearches(query, onSuccess, onFailure) {
@@ -463,37 +463,37 @@ function postSavedSearches(query, onSuccess, onFailure) {
     savedNewSearchRequest.sendRequest(onSuccess, onFailure)
 }
 
-function postRemoveSavedSearch(id, onSuccess, onFailure){
+function postRemoveSavedSearch(id, onSuccess, onFailure) {
     var removeSearchRequest = new OAuthRequest("POST", POST_REMOVE_SAVED_SEARCH_URL + id + ".json")
     removeSearchRequest.sendRequest(onSuccess, onFailure)
 }
 
-function postReportSpam(screenName, onSuccess, onFailure){
+function postReportSpam(screenName, onSuccess, onFailure) {
     var reportSpamRequest = new OAuthRequest("POST", POST_REPORT_SPAM_URL)
     reportSpamRequest.setParameters([["screen_name", screenName]])
     reportSpamRequest.sendRequest(onSuccess, onFailure)
 }
 
-function postSubscribeList(listId, onSuccess, onFailure){
+function postSubscribeList(listId, onSuccess, onFailure) {
     var subscribeListRequest = new OAuthRequest("POST", POST_SUBSCRIBE_LIST_URL)
     subscribeListRequest.setParameters([["list_id", listId]])
     subscribeListRequest.sendRequest(onSuccess, onFailure)
 }
 
-function postUnsubscribeList(listId, onSuccess, onFailure){
+function postUnsubscribeList(listId, onSuccess, onFailure) {
     var unsubscriberListRequest = new OAuthRequest("POST", POST_UNSUBSCRIBE_LIST_URL)
     unsubscriberListRequest.setParameters([["list_id", listId]])
     unsubscriberListRequest.sendRequest(onSuccess, onFailure)
 }
 
-function postDeleteList(listId, onSuccess, onFailure){
+function postDeleteList(listId, onSuccess, onFailure) {
     var deleteListRequest = new OAuthRequest("POST", POST_DELETE_LIST_URL)
     deleteListRequest.setParameters([["list_id", listId]])
     deleteListRequest.sendRequest(onSuccess, onFailure)
 }
 
 // functions for generating header and url for use in C++
-function getTwitterImageUploadAuthHeader(){
+function getTwitterImageUploadAuthHeader() {
     var accessor = {
         consumerKey: OAUTH_CONSUMER_KEY,
         consumerSecret: OAUTH_CONSUMER_SECRET,
@@ -508,7 +508,7 @@ function getTwitterImageUploadAuthHeader(){
     return OAuth.getAuthorizationHeader(message.action, message.parameters)
 }
 
-function getUserStreamURLAndHeader(){
+function getUserStreamURLAndHeader() {
     var accessor = {
         consumerKey: OAUTH_CONSUMER_KEY,
         consumerSecret: OAUTH_CONSUMER_SECRET,
@@ -526,7 +526,7 @@ function getUserStreamURLAndHeader(){
     return {url: url, header: authorizationHeader}
 }
 
-function getOAuthEchoAuthHeader(){
+function getOAuthEchoAuthHeader() {
     var accessor = {
         consumerKey: OAUTH_CONSUMER_KEY,
         consumerSecret: OAUTH_CONSUMER_SECRET,

@@ -18,7 +18,7 @@
 
 import QtQuick 1.1
 
-Item{
+Item {
     id: root
 
     property string primaryText: ""
@@ -36,19 +36,19 @@ Item{
         source: mouseArea.pressed ? "../Image/header-pressed.png" : "../Image/header.png"
     }
 
-    Image{
+    Image {
         anchors { top: parent.top; left: parent.left }
         source: "../Image/meegoTLCorner.png"
     }
 
-    Image{
+    Image {
         anchors { top: parent.top; right: parent.right }
         source: "../Image/meegoTRCorner.png"
     }
 
-    Text{
+    Text {
         id: firstLineText
-        anchors{ left: profileImage.right; top: parent.top; right: protectedIcon.left; margins: constant.paddingMedium }
+        anchors { left: profileImage.right; top: parent.top; right: protectedIcon.left; margins: constant.paddingMedium }
         font.pixelSize: constant.fontSizeLarge
         color: "white"
         text: primaryText
@@ -56,50 +56,53 @@ Item{
         elide: Text.ElideRight
     }
 
-    Text{
+    Text {
         id: secondLineText
-        anchors{ left: profileImage.right; top: firstLineText.bottom; right: protectedIcon.left; leftMargin: constant.paddingMedium }
+        anchors {
+            top: firstLineText.bottom
+            left: profileImage.right; leftMargin: constant.paddingMedium
+            right: protectedIcon.left
+        }
         font.pixelSize: constant.fontSizeMedium
         color: "white"
         text: secondaryText
         elide: Text.ElideRight
     }
 
-    Image{
+    Image {
         id: protectedIcon
-        anchors.right: parent.right
-        anchors.rightMargin: constant.paddingMedium
-        anchors.verticalCenter: parent.verticalCenter
+        anchors {
+            right: parent.right; rightMargin: constant.paddingMedium
+            verticalCenter: parent.verticalCenter
+        }
+        sourceSize { height: constant.graphicSizeSmall; width: constant.graphicSizeSmall }
         source: showProtectedIcon ? "../Image/lock.svg" : ""
-        sourceSize.height: constant.graphicSizeSmall
-        sourceSize.width: constant.graphicSizeSmall
     }
 
-    MouseArea{
+    MouseArea {
         id: mouseArea
         anchors.fill: parent
         onClicked: root.clicked()
     }
 
-    Image{
+    Image {
         id: profileImage
-        anchors {top: parent.top; left: parent.left; margins: constant.paddingMedium}
-        height: 50
-        width: 50
+        anchors { top: parent.top; left: parent.left; margins: constant.paddingMedium }
+        height: 50; width: 50
         source: root.imageSource
         cache: false
 
-        MouseArea{
+        MouseArea {
             id: imageClicked
             anchors.fill: parent
             enabled: profileImage.status == Image.Ready
             onClicked: {
-                pageStack.push(Qt.resolvedUrl("../TweetImage.qml"),
-                               {"imageUrl": profileImage.source.toString().replace("_normal", "")})
+                var prop = { "imageUrl": profileImage.source.toString().replace("_normal", "") }
+                pageStack.push(Qt.resolvedUrl("../TweetImage.qml"), prop)
             }
         }
 
-        Rectangle{
+        Rectangle {
             anchors.fill: parent
             color: imageClicked.pressed ? "black" : "transparent"
             opacity: 0.75

@@ -32,9 +32,9 @@ function requestToken(constant, onSuccess, onFailure) {
     var request = new XMLHttpRequest()
     request.open("POST", REQUEST_TOKEN_URL)
 
-    request.onreadystatechange = function(){
-        if(request.readyState === XMLHttpRequest.DONE){
-            if(request.status == 200) onSuccess(JSON.parse(request.responseText).access_token)
+    request.onreadystatechange = function() {
+        if (request.readyState === XMLHttpRequest.DONE) {
+            if (request.status == 200) onSuccess(JSON.parse(request.responseText).access_token)
             else onFailure(request.status, request.statusText)
         }
     }
@@ -44,7 +44,7 @@ function requestToken(constant, onSuccess, onFailure) {
     request.send(body)
 }
 
-function translate(constant, accessToken, text, onSuccess, onFailure){
+function translate(constant, accessToken, text, onSuccess, onFailure) {
     var parameters = {
         text: text,
         to: "en",
@@ -55,9 +55,9 @@ function translate(constant, accessToken, text, onSuccess, onFailure){
     var request = new XMLHttpRequest()
     request.open("GET", url)
 
-    request.onreadystatechange = function(){
-        if(request.readyState === XMLHttpRequest.DONE){
-            if(request.status == 200) onSuccess(JSON.parse(request.responseText))
+    request.onreadystatechange = function() {
+        if (request.readyState === XMLHttpRequest.DONE) {
+            if (request.status == 200) onSuccess(JSON.parse(request.responseText))
             else onFailure(request.status, request.statusText)
         }
     }

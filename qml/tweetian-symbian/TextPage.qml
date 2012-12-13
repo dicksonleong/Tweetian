@@ -20,28 +20,28 @@ import QtQuick 1.1
 import com.nokia.symbian 1.1
 import "Component"
 
-Page{
+Page {
     id: textPage
 
     property alias text: mainText.text
     property string headerText: ""
     property url headerIcon: ""
 
-    tools: ToolBarLayout{
-        ToolButtonWithTip{
+    tools: ToolBarLayout {
+        ToolButtonWithTip {
             iconSource: "toolbar-back"
             toolTipText: qsTr("Back")
             onClicked: pageStack.pop()
         }
     }
 
-    Flickable{
+    Flickable {
         id: textFlickable
         anchors { top: pageHeader.bottom; left: parent.left; right: parent.right; bottom: parent.bottom }
         flickableDirection: Flickable.VerticalFlick
         contentHeight: mainText.paintedHeight + 2 * mainText.anchors.margins
 
-        Text{
+        Text {
             id: mainText
             anchors { left: parent.left; right: parent.right; top: parent.top; margins: constant.paddingMedium }
             font.pixelSize: constant.fontSizeMedium
@@ -50,9 +50,9 @@ Page{
         }
     }
 
-    ScrollDecorator{ platformInverted: settings.invertedTheme; flickableItem: textFlickable }
+    ScrollDecorator { platformInverted: settings.invertedTheme; flickableItem: textFlickable }
 
-    PageHeader{
+    PageHeader {
         id: pageHeader
         headerText: textPage.headerText
         headerIcon: textPage.headerIcon

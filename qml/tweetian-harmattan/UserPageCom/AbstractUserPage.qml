@@ -20,7 +20,7 @@ import QtQuick 1.1
 import com.nokia.meego 1.0
 import "../Component"
 
-Page{
+Page {
     id: root
 
     property string headerText
@@ -37,22 +37,22 @@ Page{
 
     signal reload
 
-    onStatusChanged: if(status === PageStatus.Deactivating) loadingRect.visible = false
+    onStatusChanged: if (status === PageStatus.Deactivating) loadingRect.visible = false
     Component.onCompleted: reload()
 
-    tools: ToolBarLayout{
-        ToolIcon{
+    tools: ToolBarLayout {
+        ToolIcon {
             platformIconId: "toolbar-back" + (enabled ? "" : "-dimmed")
             enabled: backButtonEnabled
             onClicked: pageStack.pop()
         }
     }
 
-    AbstractListView{
+    AbstractListView {
         id: listView
-        anchors{ top: header.bottom; bottom: parent.bottom; left: parent.left; right: parent.right }
-        model: ListModel{}
-        footer: LoadMoreButton{
+        anchors { top: header.bottom; bottom: parent.bottom; left: parent.left; right: parent.right }
+        model: ListModel {}
+        footer: LoadMoreButton {
             visible: loadMoreButtonVisible
             enabled: !loadingRect.visible
             onClicked: {
@@ -66,17 +66,17 @@ Page{
         }
     }
 
-    Text{
+    Text {
         anchors.centerIn: parent
+        visible: listView.count == 0 && !loadingRect.visible
         font.pixelSize: constant.fontSizeXXLarge
         color: constant.colorMid
         text: root.emptyText
-        visible: listView.count == 0 && !loadingRect.visible
     }
 
-    ScrollDecorator{ flickableItem: listView }
+    ScrollDecorator { flickableItem: listView }
 
-    PageHeader{
+    PageHeader {
         id: header
         headerIcon: userInfoData.profileImageUrl
         headerText: "<b>@" + userInfoData.screenName + "</b>: " + root.headerText

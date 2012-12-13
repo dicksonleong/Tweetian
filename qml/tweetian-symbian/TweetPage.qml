@@ -30,7 +30,7 @@ import "Services/NokiaMaps.js" as Maps
 import "Services/Youtube.js" as YouTube
 import "TweetPageJS.js" as JS
 
-Page{
+Page {
     id: tweetPage
 
     property variant currentTweet: {
@@ -55,17 +55,17 @@ Page{
     }
     property bool favouritedTweet: false
 
-    property ListModel ancestorModel: ListModel{}
-    property ListModel descendantModel: ListModel{}
+    property ListModel ancestorModel: ListModel {}
+    property ListModel descendantModel: ListModel {}
 
     onCurrentTweetChanged: {
-        if(currentTweet.tweetId){
+        if (currentTweet.tweetId) {
             profileImage.loadImage(currentTweet.profileImageUrl)
             favouritedTweet = currentTweet.favourited
             // Process image thumbnail
-            if(currentTweet.mediaViewUrl){
-                if(currentTweet.mediaViewUrl == "flickr"){
-                    Flickr.getSizes(constant, currentTweet.mediaExpandedUrl.substring(17), function(full, thumb){
+            if (currentTweet.mediaViewUrl) {
+                if (currentTweet.mediaViewUrl === "flickr") {
+                    Flickr.getSizes(constant, currentTweet.mediaExpandedUrl.substring(17), function(full, thumb) {
                         thumbnailModel.append({"type": "image", "thumb": thumb,"full": full, "link": currentTweet.mediaExpandedUrl})
                     })
                 }
@@ -73,30 +73,32 @@ Page{
                                                "link": currentTweet.mediaExpandedUrl})
             }
             // Process location thumbnail
-            if(currentTweet.latitude && currentTweet.longitude){
+            if (currentTweet.latitude && currentTweet.longitude) {
                 var thumbnailURL = Maps.getMaps(constant, currentTweet.latitude, currentTweet.longitude,
                                                 constant.thumbnailSize, constant.thumbnailSize)
                 thumbnailModel.append({"type": "map", "thumb": thumbnailURL, "full": "", "link": ""})
             }
             // Process Youtube thumbnail
             var youtubeLink = currentTweet.displayTweetText.match(/https?:\/\/(youtu.be\/[\w-]{11,}|www.youtube.com\/watch\?[\w-=&]{11,})/)
-            if(youtubeLink != null){
-                YouTube.getVideoThumbnailAndLink(constant, JS.getYouTubeVideoId(youtubeLink[0]), function(thumb, rstpLink){
+            if (youtubeLink != null) {
+                YouTube.getVideoThumbnailAndLink(constant, JS.getYouTubeVideoId(youtubeLink[0]), function(thumb, rstpLink) {
                     thumbnailModel.append({type: "video", thumb: thumb, full: "", link: rstpLink})
                 })
             }
             // Load conversation
-            if(currentTweet.inReplyToStatusId){
+            if (currentTweet.inReplyToStatusId) {
                 backButton.enabled = false
                 header.busy = true
-                conversationParser.sendMessage({'ancestorModel': ancestorModel, 'descendantModel': descendantModel,
-                                                   'timelineModel': mainPage.timeline.model,
-                                                   'mentionsModel': mainPage.mentions.model,
-                                                   'inReplyToStatusId': currentTweet.inReplyToStatusId})
+                var obj = {
+                    ancestorModel: ancestorModel, descendantModel: descendantModel,
+                    timelineModel: mainPage.timeline.model, mentionsModel: mainPage.mentions.model,
+                    inReplyToStatusId: currentTweet.inReplyToStatusId
+                }
+                conversationParser.sendMessage(obj)
             }
             // check for TwitLonger
             var twitLongerLink = currentTweet.displayTweetText.match(/http:\/\/tl.gd\/\w+/)
-            if(twitLongerLink != null){
+            if (twitLongerLink != null) {
                 TwitLonger.getFullTweet(constant, twitLongerLink[0], JS.getTwitLongerTextOnSuccess, JS.commonOnFailure)
                 header.busy = true
             }
@@ -104,23 +106,25 @@ Page{
     }
 
     Component.onCompleted: {
-        if(currentTweet.inReplyToStatusId){
+        if (currentTweet.inReplyToStatusId) {
             backButton.enabled = false
-            conversationParser.sendMessage({'ancestorModel': ancestorModel, 'descendantModel': descendantModel,
-                                               'timelineModel': mainPage.timeline.model,
-                                               'mentionsModel': mainPage.mentions.model,
-                                               'inReplyToStatusId': currentTweet.inReplyToStatusId})
+            var obj = {
+                ancestorModel: ancestorModel, descendantModel: descendantModel,
+                timelineModel: mainPage.timeline.model, mentionsModel: mainPage.mentions.model,
+                inReplyToStatusId: currentTweet.inReplyToStatusId
+            }
+            conversationParser.sendMessage(obj)
         }
     }
 
-    tools: ToolBarLayout{
-        ToolButtonWithTip{
+    tools: ToolBarLayout {
+        ToolButtonWithTip {
             id: backButton
             iconSource: "toolbar-back"
             toolTipText: qsTr("Back")
             onClicked: pageStack.pop()
         }
-        ToolButtonWithTip{
+        ToolButtonWithTip {
             iconSource: platformInverted ? "Image/reply_inverse.png" : "Image/reply.png"
             toolTipText: qsTr("Reply All")
             onClicked: {
@@ -133,41 +137,41 @@ Page{
                 pageStack.push(Qt.resolvedUrl("NewTweetPage.qml"), prop)
             }
         }
-        ToolButtonWithTip{
+        ToolButtonWithTip {
             iconSource: platformInverted ? "Image/retweet_inverse.png" : "Image/retweet.png"
             toolTipText: qsTr("Retweet")
             onClicked: {
                 var text
-                if(currentTweet.retweetId === currentTweet.tweetId)
+                if (currentTweet.retweetId === currentTweet.tweetId)
                     text = "RT @"+currentTweet.screenName + ": " + currentTweet.tweetText
                 else
                     text = "RT @"+currentTweet.screenName+": RT @"+currentTweet.displayScreenName+": "+currentTweet.tweetText
                 pageStack.push(Qt.resolvedUrl("NewTweetPage.qml"), {type: "RT", placedText: text, tweetId: currentTweet.retweetId})
             }
         }
-        ToolButtonWithTip{
+        ToolButtonWithTip {
             iconSource: favouritedTweet ? "Image/unfavourite.png"
                                         : (platformInverted ? "Image/favourite_inverse.svg" : "Image/favourite.svg")
             toolTipText: favouritedTweet ? qsTr("Unfavourite") : qsTr("Favourite")
             onClicked: {
-                if(favouritedTweet) Twitter.postUnfavourite(currentTweet.tweetId, JS.favouriteOnSuccess, JS.commonOnFailure)
+                if (favouritedTweet) Twitter.postUnfavourite(currentTweet.tweetId, JS.favouriteOnSuccess, JS.commonOnFailure)
                 else Twitter.postFavourite(currentTweet.tweetId, JS.favouriteOnSuccess, JS.commonOnFailure)
                 header.busy = true
             }
         }
-        ToolButtonWithTip{
+        ToolButtonWithTip {
             iconSource: "toolbar-menu"
             toolTipText: qsTr("Menu")
             onClicked: tweetMenu.open()
         }
     }
 
-    Menu{
+    Menu {
         id: tweetMenu
         platformInverted: settings.invertedTheme
 
-        MenuLayout{
-            MenuItem{
+        MenuLayout {
+            MenuItem {
                 text: qsTr("Copy tweet")
                 platformInverted: tweetMenu.platformInverted
                 onClicked: {
@@ -175,23 +179,23 @@ Page{
                     infoBanner.alert(qsTr("Tweet copied to clipboard"))
                 }
             }
-            MenuItem{
+            MenuItem {
                 text: translatedTweetLoader.sourceComponent ? qsTr("Hide translated tweet") : qsTr("Translate tweet")
                 platformInverted: tweetMenu.platformInverted
                 onClicked: {
-                    if(translatedTweetLoader.sourceComponent) translatedTweetLoader.sourceComponent = undefined
-                    else if(cache.translationToken && JS.checkExpire(cache.translationToken)){
+                    if (translatedTweetLoader.sourceComponent) translatedTweetLoader.sourceComponent = undefined
+                    else if (cache.translationToken && JS.checkExpire(cache.translationToken)) {
                         Translation.translate(constant, cache.translationToken, currentTweet.tweetText,
                                               JS.translateOnSuccess, JS.commonOnFailure)
                         header.busy = true
                     }
-                    else{
+                    else {
                         Translation.requestToken(constant, JS.translateTokenOnSuccess, JS.commonOnFailure)
                         header.busy = true
                     }
                 }
             }
-            MenuItem{
+            MenuItem {
                 text: qsTr("Tweet permalink")
                 platformInverted: tweetMenu.platformInverted
                 onClicked: {
@@ -199,7 +203,7 @@ Page{
                     dialog.createOpenLinkDialog(permalink)
                 }
             }
-            MenuItem{
+            MenuItem {
                 text: qsTr("Delete tweet")
                 platformInverted: tweetMenu.platformInverted
                 visible: currentTweet.screenName === settings.userScreenName
@@ -208,37 +212,33 @@ Page{
         }
     }
 
-    Flickable{
+    Flickable {
         id: tweetPageFlickable
-        anchors{ top: header.bottom; left: parent.left; right: parent.right; bottom: parent.bottom }
+        anchors { top: header.bottom; left: parent.left; right: parent.right; bottom: parent.bottom }
         contentHeight: mainColumn.height
 
-        Column{
+        Column {
             id: mainColumn
-            width: parent.width
+            anchors { left: parent.left; right: parent.right }
             height: childrenRect.height
 
-            Column{
+            Column {
                 id: ancestorColumn
-                width: parent.width
+                anchors { left: parent.left; right: parent.right }
                 height: childrenRect.height
 
-                Repeater{
-                    id: ancestorRepeater
-
-                    TweetDelegate{ width: ancestorColumn.width }
-                }
+                Repeater { id: ancestorRepeater; TweetDelegate { width: ancestorColumn.width } }
             }
 
-            Loader{ sourceComponent: ancestorRepeater.count > 0 ? inReplyToHeading : undefined }
+            Loader { sourceComponent: ancestorRepeater.count > 0 ? inReplyToHeading : undefined }
 
-            Column{
+            Column {
                 id: mainTweetColumn
+                anchors { left: parent.left; right: parent.right }
                 height: childrenRect.height + constant.paddingMedium
-                width: parent.width
                 spacing: constant.paddingMedium
 
-                ListItem{
+                ListItem {
                     id: userItem
                     height: profileImage.height + 2 * constant.paddingMedium
                     subItemIndicator: true
@@ -247,26 +247,24 @@ Page{
                         pageStack.push(Qt.resolvedUrl("UserPage.qml"), {screenName: currentTweet.displayScreenName})
                     }
 
-                    Image{
+                    Image {
                         id: profileImage
                         anchors { top: parent.top; left: parent.left; margins: constant.paddingMedium }
                         height: 50; width: 50
-                        sourceSize{ height: height; width: width }
+                        sourceSize { height: height; width: width }
                         asynchronous: true
 
-                        function loadImage(imageURL){
+                        function loadImage(imageURL) {
                             source = thumbnailCacher.get(imageURL)
                                     || (networkMonitor.online ? imageURL : constant.twitterBirdIcon)
                         }
                     }
 
-                    Column{
-                        anchors.left: profileImage.right
-                        anchors.top: parent.top
-                        anchors.margins: constant.paddingMedium
+                    Column {
+                        anchors { top: parent.top; left: profileImage.right; margins: constant.paddingMedium }
                         height: childrenRect.height
 
-                        ListItemText{
+                        ListItemText {
                             text: currentTweet.userName
                             role: "Title"
                             mode: userItem.mode
@@ -274,7 +272,7 @@ Page{
                             platformInverted: settings.invertedTheme
                         }
 
-                        ListItemText{
+                        ListItemText {
                             font.pixelSize: constant.fontSizeMedium
                             text: "@" + currentTweet.displayScreenName
                             role: "SubTitle"
@@ -284,56 +282,55 @@ Page{
                     }
                 }
 
-                Text{
+                Text {
                     id: tweetTextText
+                    anchors { left: parent.left; right: parent.right }
                     font.pixelSize: settings.largeFontSize ? constant.fontSizeXLarge : constant.fontSizeLarge
                     color: constant.colorLight
                     textFormat: Text.RichText
-                    width: parent.width
                     wrapMode: Text.Wrap
                     text: currentTweet.displayTweetText
                     onLinkActivated: {
                         basicHapticEffect.play()
-                        if(link.indexOf("@") === 0)
+                        if (link.indexOf("@") === 0)
                             pageStack.push(Qt.resolvedUrl("UserPage.qml"), {screenName: link.substring(1)})
-                        else if(link.indexOf("#") === 0)
+                        else if (link.indexOf("#") === 0)
                             pageStack.push(Qt.resolvedUrl("SearchPage.qml"), {searchName: link})
-                        else if(link.indexOf("http") === 0)
+                        else if (link.indexOf("http") === 0)
                             dialog.createOpenLinkDialog(link, JS.addToPocket, JS.addToInstapaper)
                     }
                 }
 
-                Text{
+                Text {
+                    anchors { left: parent.left; right: parent.right }
+                    height: visible ? undefined : 0
                     font.pixelSize: settings.largeFontSize ? constant.fontSizeLarge : constant.fontSizeMedium
                     color: constant.colorMid
                     text: qsTr("Retweeted by %1").arg("@" + currentTweet.screenName)
                     visible: currentTweet.retweetId !== currentTweet.tweetId
-                    height: visible ? undefined : 0
-                    width: parent.width
                 }
 
-                Item{
+                Item {
+                    anchors { left: parent.left; right: parent.right }
                     height: timeAndSourceText.height
-                    width: parent.width
 
-                    Loader{
+                    Loader {
                         id: iconLoader
                         anchors.left: parent.left
                         width: sourceComponent ? item.sourceSize.width : 0
                         sourceComponent: favouritedTweet ? favouriteIcon : undefined
 
-                        Component{
+                        Component {
                             id: favouriteIcon
 
-                            Image{
+                            Image {
+                                sourceSize { height: timeAndSourceText.height; width: timeAndSourceText.height }
                                 source: settings.invertedTheme ? "Image/favourite_inverse.svg" : "Image/favourite.svg"
-                                sourceSize.height: timeAndSourceText.height
-                                sourceSize.width: timeAndSourceText.height
                             }
                         }
                     }
 
-                    Text{
+                    Text {
                         id: timeAndSourceText
                         anchors { left: iconLoader.right; leftMargin: constant.paddingSmall; right: parent.right }
                         font.pixelSize: settings.largeFontSize ? constant.fontSizeMedium : constant.fontSizeSmall
@@ -344,34 +341,38 @@ Page{
                     }
                 }
 
-                Row{
+                Row {
                     id: thumbnailRow
+                    anchors { left: parent.left; right: parent.right }
                     height: childrenRect.height
-                    width: parent.width
                     spacing: constant.paddingMedium
 
-                    Repeater{
-                        model: ListModel{ id: thumbnailModel }
+                    Repeater {
+                        model: ListModel { id: thumbnailModel }
 
-                        ThumbnailItem{
+                        ThumbnailItem {
                             imageSource: model.thumb
                             iconSource: {
-                                if(model.type === "image")
+                                switch (model.type) {
+                                case "image":
                                     return settings.invertedTheme ? "Image/photos_inverse.svg" : "Image/photos.svg"
-                                else if(model.type === "map")
+                                case "map":
                                     return settings.invertedTheme ? "Image/location_mark_inverse.svg" : "Image/location_mark.svg"
-                                else
+                                case "video":
                                     return settings.invertedTheme ? "Image/video_inverse.svg" : "Image/video.svg"
+                                default:
+                                    throw new Error("Invalid type:" + model.type)
+                                }
                             }
                             onClicked: {
-                                if(model.type === "image")
+                                if (model.type === "image")
                                     pageStack.push(Qt.resolvedUrl("TweetImage.qml"), {"imageLink": model.link,"imageUrl": model.full})
-                                else if(model.type === "map")
+                                else if (model.type === "map")
                                     pageStack.push(Qt.resolvedUrl("MapPage.qml"), {latitude: currentTweet.latitude, longitude: currentTweet.longitude})
                                 else { // model.type === "video"
-                                    if(model.link){
+                                    if (model.link) {
                                         var success = Qt.openUrlExternally(model.link)
-                                        if(!success) infoBanner.alert(qsTr("Error opening link: %1").arg(model.link))
+                                        if (!success) infoBanner.alert(qsTr("Error opening link: %1").arg(model.link))
                                     }
                                     else infoBanner.alert(qsTr("Streaming link is not available"))
                                 }
@@ -381,42 +382,38 @@ Page{
                 }
             }
 
-            Loader{ id: translatedTweetLoader; height: sourceComponent ? undefined : 0 }
+            Loader { id: translatedTweetLoader; height: sourceComponent ? undefined : 0 }
 
-            Loader{ sourceComponent: descendantRepeater.count > 0 ? replyHeading : undefined }
+            Loader { sourceComponent: descendantRepeater.count > 0 ? replyHeading : undefined }
 
-            Column{
+            Column {
                 id: descendantColumn
-                width: parent.width
+                anchors { left: parent.left; right: parent.right }
                 height: childrenRect.height
 
-                Repeater{
-                    id: descendantRepeater
-
-                    TweetDelegate{ width: descendantColumn.width }
-                }
+                Repeater { id: descendantRepeater; TweetDelegate { width: descendantColumn.width } }
             }
         }
     }
 
-    ScrollDecorator{ platformInverted: settings.invertedTheme; flickableItem: tweetPageFlickable }
+    ScrollDecorator { platformInverted: settings.invertedTheme; flickableItem: tweetPageFlickable }
 
-    PageHeader{
+    PageHeader {
         id: header
         headerIcon: "Image/chat.png"
         headerText: qsTr("Tweet")
         onClicked: tweetPageFlickable.contentY = 0
     }
 
-    WorkerScript{
+    WorkerScript {
         id: conversationParser
         source: "WorkerScript/ConversationParser.js"
         onMessage: {
             backButton.enabled = true
-            if(messageObject.action === "callAPI"){
+            if (messageObject.action === "callAPI") {
                 ancestorRepeater.model = ancestorModel
                 descendantRepeater.model = descendantModel
-                if(networkMonitor.online){
+                if (networkMonitor.online) {
                     Twitter.getConversation(currentTweet.tweetId, JS.conversationOnSuccess, JS.commonOnFailure)
                     header.busy = true
                 }
@@ -425,36 +422,38 @@ Page{
         }
     }
 
-    Component{
+    Component {
         id: inReplyToHeading
 
-        SectionHeader{ text: qsTr("In-reply-to ↑") }
+        SectionHeader { text: qsTr("In-reply-to ↑") }
     }
 
-    Component{
+    Component {
         id: replyHeading
 
-        SectionHeader{ text: qsTr("Reply ↓") }
+        SectionHeader { text: qsTr("Reply ↓") }
     }
 
-    Component{
-        id: translatedTweet
-        Item{
-            id: root
-            property string text
+    Component {
+        id: translatedTweetComponent
+
+        Item {
+            property string translatedText
             width: mainColumn.width
             height: childrenRect.height + constant.paddingMedium
 
-            SectionHeader{
-                id: translateHeader
-                text: qsTr("Translated Tweet")
-            }
+            SectionHeader { text: qsTr("Translated Tweet") }
 
-            Text{
-                anchors { left: parent.left; right: parent.right; top: translateHeader.bottom; margins: constant.paddingMedium }
+            Text {
+                anchors {
+                    top: translateHeader.bottom
+                    left: parent.left
+                    right: parent.right
+                    margins: constant.paddingMedium
+                }
                 font.pixelSize: constant.fontSizeLarge
                 color: constant.colorLight
-                text: root.text
+                text: translatedText
                 wrapMode: Text.Wrap
             }
         }

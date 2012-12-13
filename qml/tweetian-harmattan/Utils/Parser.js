@@ -27,9 +27,9 @@ String.prototype.parseUsername = function() {
 }
 
 String.prototype.parseHashtag = function(hashtags) {
-    if(!validHashtagRegExp) validHashtagRegExp = __buildValidHashtagRegExp()
+    if (!validHashtagRegExp) validHashtagRegExp = __buildValidHashtagRegExp()
     return this.replace(validHashtagRegExp, function(t) {
-        if(hashtags) hashtags.push(t.substring(1))
+        if (hashtags) hashtags.push(t.substring(1))
         return "<a style=\"color: LightSeaGreen; text-decoration: none\" href=\""+t+"\">"+t+"</a>"
     })
 }
@@ -39,42 +39,44 @@ String.prototype.parseURL = function(url, displayUrl, expandedUrl) {
 }
 
 /**Convert <a href="...">source</a> to source**/
-function unlink(source){
-    if(/</.test(source)) return source.substring(source.indexOf('>') + 1, source.indexOf('<', 1))
-    else if(/&q/.test(source)) return source.substring(source.indexOf('&quot;&gt;') + 10, source.lastIndexOf('&lt;/a&gt;'))
+function unlink(source) {
+    if (/</.test(source))
+        return source.substring(source.indexOf('>') + 1, source.indexOf('<', 1))
+    else if (/&q/.test(source))
+        return source.substring(source.indexOf('&quot;&gt;') + 10, source.lastIndexOf('&lt;/a&gt;'))
     else return source
 }
 
 // TODO: improve algorithm and performance
-function parsePic(text){
+function parsePic(text) {
     var thumbnail = ""
     var full = ""
     var link = ""
 
-    if(/http:\/\/twitpic.com\/\w+/.test(text)){
+    if (/http:\/\/twitpic.com\/\w+/.test(text)) {
         link = text.match(/http:\/\/twitpic.com\/\w+/)[0]
         var twitpicId = link.substring(19)
         full = "http://twitpic.com/show/full/" + twitpicId
         thumbnail = "http://twitpic.com/show/thumb/" + twitpicId //150x150
     }
-    else if(/http:\/\/(twitter.)?yfrog.com\/\w+/.test(text)){
+    else if (/http:\/\/(twitter.)?yfrog.com\/\w+/.test(text)) {
         link = text.match(/http:\/\/(twitter.)?yfrog.com\/\w+/)[0]
         var yfrogId = link.substring(link.indexOf("yfrog.com/") + 10)
         full = "http://yfrog.com/" + yfrogId + ":medium" //640x480
         thumbnail = "http://yfrog.com/" + yfrogId + ":small" //100x100
     }
-    else if(/http:\/\/instagr.am\/p\/[^\/]+\//.test(text)){
+    else if (/http:\/\/instagr.am\/p\/[^\/]+\//.test(text)) {
         link = text.match(/http:\/\/instagr.am\/p\/[^\/]+\//)[0]
         full = link + "media/?size=l" //612x612
         thumbnail = link + "media/?size=t" //150x150
     }
-    else if(/http:\/\/img.ly\/\w+/.test(text)){
+    else if (/http:\/\/img.ly\/\w+/.test(text)) {
         link = text.match(/http:\/\/img.ly\/\w+/)[0]
         var imglyId = link.substring(14)
         full = "http://img.ly/show/full/"+ imglyId
         thumbnail = "http://img.ly/show/thumb/"+ imglyId //150x150
     }
-    else if(/http:\/\/(m.)?9gag.com\/gag\/[^"]+/.test(text)){
+    else if (/http:\/\/(m.)?9gag.com\/gag\/[^"]+/.test(text)) {
         link = text.match(/http:\/\/(m.)?9gag.com\/gag\/[^"]+/)[0]
         var gagIdPos = link.indexOf("9gag.com/gag/") + 13
         var questionMark = link.indexOf('?')
@@ -82,39 +84,39 @@ function parsePic(text){
         full = "http://d24w6bsrhbeh9d.cloudfront.net/photo/"+ gagId +"_460s.jpg"
         thumbnail = "http://d24w6bsrhbeh9d.cloudfront.net/photo/"+ gagId +"_220x145.jpg"
     }
-    else if(/http:\/\/moby.to\/\w+/.test(text)){
+    else if (/http:\/\/moby.to\/\w+/.test(text)) {
         link = text.match(/http:\/\/moby.to\/\w+/)[0]
         full = link + ":full"
         thumbnail = link + ":square" //90x90
     }
-    else if(/http:\/\/lockerz.com\/[^"]+/.test(text)){
+    else if (/http:\/\/lockerz.com\/[^"]+/.test(text)) {
         link = text.match(/http:\/\/lockerz.com\/[^"]+/)[0]
         full = "http://api.plixi.com/api/tpapi.svc/imagefromurl?size=big&url="+link
         thumbnail = "http://api.plixi.com/api/tpapi.svc/imagefromurl?size=small&url="+link //150x150
     }
-    else if(/http:\/\/molo.me\/p\/\w+/.test(text)){
+    else if (/http:\/\/molo.me\/p\/\w+/.test(text)) {
         link = text.match(/http:\/\/molo.me\/p\/\w+/)[0]
         var molomeId = link.substring(17)
         full = "http://p.molo.me/"+ molomeId
         thumbnail = "http://p135x135.molo.me/"+ molomeId +"_135x135"
     }
-    else if(/http:\/\/flic.kr\/p\/\w+/.test(text)){
+    else if (/http:\/\/flic.kr\/p\/\w+/.test(text)) {
         link = text.match(/http:\/\/flic.kr\/p\/\w+/)[0]
         full = "flickr"
         thumbnail = "flickr"
     }
-    else if(/http:\/\/twitgoo.com\/\w+/.test(text)){
+    else if (/http:\/\/twitgoo.com\/\w+/.test(text)) {
         link = text.match(/http:\/\/twitgoo.com\/\w+/)[0]
         full = link.concat("/img")
         thumbnail = link.concat("/thumb")
     }
-    else if(/http:\/\/i.imgur.com\/[^"]+/.test(text)){
+    else if (/http:\/\/i.imgur.com\/[^"]+/.test(text)) {
         link = text.match(/http:\/\/i.imgur.com\/[^"]+/)[0]
         full = link
         var imgurId = link.substring(19)
         thumbnail = "http://i.imgur.com/" + imgurId.replace(".", "s.")
     }
-    else if(/http:\/\/sdrv.ms\/[^"]+/.test(text)){
+    else if (/http:\/\/sdrv.ms\/[^"]+/.test(text)) {
         link = text.match(/http:\/\/sdrv.ms\/[^"]+/)[0]
         full = "https://apis.live.net/v5.0/skydrive/get_item_preview?type=normal&url=" + link
         thumbnail = "https://apis.live.net/v5.0/skydrive/get_item_preview?type=album&url=" + link
@@ -129,21 +131,20 @@ var __HTML_ENTITIES = {
     "&gt;": ">"
 }
 
-function unescapeHtml(text){
-    return text && text.replace(/(&amp;|&lt;|&gt;)/g, function(html){
+function unescapeHtml(text) {
+    return text && text.replace(/(&amp;|&lt;|&gt;)/g, function(html) {
         return __HTML_ENTITIES[html]
     })
 }
 
 // Internal function for contruct validHashtagRegExp
-function __buildValidHashtagRegExp(){
+function __buildValidHashtagRegExp() {
     var validHashtagArray = []
 
-    function addCharsToValidHashtag(start, end){
+    function addCharsToValidHashtag(start, end) {
         var s = String.fromCharCode(start)
-        if(end !== start){
+        if (end !== start)
             s += "-" + String.fromCharCode(end)
-        }
         validHashtagArray.push(s)
     }
 

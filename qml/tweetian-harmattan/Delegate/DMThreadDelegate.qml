@@ -19,56 +19,54 @@
 import QtQuick 1.1
 import com.nokia.meego 1.0
 
-AbstractDelegate{
+AbstractDelegate {
     id: root
     height: Math.max(textColumn.height, profileImage.height) + 2 * constant.paddingMedium
     sideRectColor: newMsg ? constant.colorTextSelection : ""
 
-    Column{
+    Column {
         id: textColumn
-        anchors{
-            left: profileImage.right
+        anchors {
+            top: parent.top; topMargin: constant.paddingMedium
+            left: profileImage.right; leftMargin: constant.paddingSmall
             right: subIcon.left
-            leftMargin: constant.paddingSmall
-            top: parent.top
-            topMargin: constant.paddingMedium
         }
         height: childrenRect.height
 
-        Item{
-            width: parent.width
+        Item {
+            anchors { left: parent.left; right: parent.right }
             height: childrenRect.height
 
-            Text{
+            Text {
                 id: userNameText
                 anchors.left: parent.left
                 width: Math.min(implicitWidth, parent.width)
-                text: userName
                 font.pixelSize: settings.largeFontSize ? constant.fontSizeMedium : constant.fontSizeSmall
                 font.bold: true
                 color: highlighted ? constant.colorHighlighted : constant.colorLight
                 elide: Text.ElideRight
+                text: userName
             }
 
-            Text{
-                anchors{ left: userNameText.right; leftMargin: constant.paddingMedium; right: parent.right }
-                text: "@" + screenName
+            Text {
+                anchors { left: userNameText.right; leftMargin: constant.paddingMedium; right: parent.right }
                 font.pixelSize: settings.largeFontSize ? constant.fontSizeMedium : constant.fontSizeSmall
                 color: highlighted ? constant.colorHighlighted : constant.colorMid
                 elide: Text.ElideRight
+                text: "@" + screenName
             }
         }
 
-        Text{
-            width: parent.width
+        Text {
+            anchors { left: parent.left; right: parent.right }
             wrapMode: Text.Wrap
             font.pixelSize: settings.largeFontSize ? constant.fontSizeMedium : constant.fontSizeSmall
             color: highlighted ? constant.colorHighlighted : constant.colorLight
             text: tweetText
         }
 
-        Text{
-            width: parent.width
+        Text {
+            anchors { left: parent.left; right: parent.right }
             horizontalAlignment: Text.AlignRight
             font.pixelSize: settings.largeFontSize ? constant.fontSizeSmall : constant.fontSizeXSmall
             color: highlighted ? constant.colorHighlighted : constant.colorMid
@@ -78,18 +76,14 @@ AbstractDelegate{
 
     Image {
         id: subIcon
-        anchors.verticalCenter: parent.verticalCenter
-        anchors.right: parent.right
-        anchors.rightMargin: constant.paddingMedium
+        anchors { verticalCenter: parent.verticalCenter; right: parent.right; rightMargin: constant.paddingMedium }
+        height: sourceSize.height; width: sourceSize.width
+        sourceSize { width: constant.graphicSizeSmall; height: constant.graphicSizeSmall }
         source: "image://theme/icon-m-common-drilldown-arrow".concat(settings.invertedTheme ? "" : "-inverse")
-        sourceSize.width: constant.graphicSizeSmall
-        sourceSize.height: constant.graphicSizeSmall
-        height: sourceSize.height
-        width: sourceSize.width
     }
 
     onClicked: {
-        if(newMsg) parser.setProperty(index, "newMsg", false)
+        if (newMsg) parser.setProperty(index, "newMsg", false)
         unreadCount = 0
         var prop = { screenName: screenName, userStream: userStream }
         pageStack.push(Qt.resolvedUrl("../MainPageCom/DMThreadPage.qml"), prop)

@@ -23,21 +23,21 @@ import "../Services/Pocket.js" as Pocket
 import "../Services/Instapaper.js" as Instapaper
 import "AccountTabScript.js" as Script
 
-Page{
+Page {
     id: accountTab
 
-    Column{
-        anchors{ left: parent.left; right: parent.right; top: parent.top; topMargin: constant.paddingLarge }
+    Column {
+        anchors { top: parent.top; topMargin: constant.paddingLarge; left: parent.left; right: parent.right }
         height: childrenRect.height
         spacing: constant.paddingLarge
 
-        AccountItem{
+        AccountItem {
             accountName: "Twitter"
             signedIn: true
             onButtonClicked: Script.createTwitterSignOutDialog()
         }
 
-        AccountItem{
+        AccountItem {
             accountName: "Pocket"
             signedIn: settings.pocketUsername && settings.pocketPassword
             infoButtonVisible: true
@@ -45,7 +45,7 @@ Page{
             onButtonClicked: signedIn ? Script.createPocketSignOutDialog() : Script.createPocketSignInDialog()
         }
 
-        AccountItem{
+        AccountItem {
             accountName: "Instapaper"
             signedIn: settings.instapaperToken && settings.instapaperTokenSecret
             infoButtonVisible: true

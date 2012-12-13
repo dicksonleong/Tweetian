@@ -19,44 +19,47 @@
 import QtQuick 1.1
 import com.nokia.symbian 1.1
 
-AbstractDelegate{
+AbstractDelegate {
     id: root
     height: Math.max(textColumn.height, profileImage.height) + 2 * constant.paddingMedium
 
-    Column{
+    Column {
         id: textColumn
-        anchors{ top: parent.top; left: profileImage.right; right: parent.right }
-        anchors.leftMargin: constant.paddingSmall
-        anchors.margins: constant.paddingMedium
+        anchors {
+            top: parent.top
+            left: profileImage.right; leftMargin: constant.paddingSmall
+            right: parent.right
+            margins: constant.paddingMedium
+        }
         height: childrenRect.height
 
-        Item{
+        Item {
             id: titleContainer
-            width: parent.width
+            anchors { left: parent.left; right: parent.right }
             height: listNameText.height
 
-            Text{
+            Text {
                 id: listNameText
                 anchors.left: parent.left
                 width: Math.min(parent.width, implicitWidth)
                 font.bold: true
                 font.pixelSize: settings.largeFontSize ? constant.fontSizeMedium : constant.fontSizeSmall
                 color: highlighted ? constant.colorHighlighted : constant.colorLight
-                text: listName
                 elide: Text.ElideRight
+                text: listName
             }
 
-            Text{
-                anchors{ left: listNameText.right; leftMargin: constant.paddingSmall; right: parent.right }
+            Text {
+                anchors { left: listNameText.right; leftMargin: constant.paddingSmall; right: parent.right }
                 font.pixelSize: settings.largeFontSize ? constant.fontSizeMedium : constant.fontSizeSmall
                 color: highlighted ? constant.colorHighlighted : constant.colorMid
-                text: qsTr("By %1").arg(ownerUserName)
                 elide: Text.ElideRight
+                text: qsTr("By %1").arg(ownerUserName)
             }
         }
 
-        Text{
-            width: parent.width
+        Text {
+            anchors { left: parent.left; right: parent.right }
             visible: text != ""
             wrapMode: Text.Wrap
             font.pixelSize: settings.largeFontSize ? constant.fontSizeMedium : constant.fontSizeSmall
@@ -64,8 +67,8 @@ AbstractDelegate{
             text: listDescription
         }
 
-        Text{
-            width: parent.width
+        Text {
+            anchors { left: parent.left; right: parent.right }
             font.pixelSize: settings.largeFontSize ? constant.fontSizeMedium : constant.fontSizeSmall
             color: highlighted ? constant.colorHighlighted : constant.colorMid
             text: qsTr("%1 members | %2 subscribers").arg(memberCount).arg(subscriberCount)

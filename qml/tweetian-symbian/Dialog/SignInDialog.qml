@@ -19,7 +19,7 @@
 import QtQuick 1.1
 import com.nokia.symbian 1.1
 
-CommonDialog{
+CommonDialog {
     id: root
 
     property bool __isClosing: false
@@ -28,12 +28,12 @@ CommonDialog{
 
     platformInverted: settings.invertedTheme
     buttonTexts: [qsTr("Sign In"), qsTr("Cancel")]
-    content: Item{
+    content: Item {
         id: contentItem
-        anchors { left: parent.left; right: parent.right; top: parent.top }
+        anchors { top: parent.top; left: parent.left; right: parent.right}
         height: textFieldColumn.height + textFieldColumn.anchors.margins * 2
 
-        Column{
+        Column {
             id: textFieldColumn
             anchors {
                 left: parent.left
@@ -44,17 +44,17 @@ CommonDialog{
             spacing: constant.paddingLarge
             height: childrenRect.height
 
-            TextField{
+            TextField {
                 id: usernameTextField
-                width: parent.width
+                anchors { left: parent.left; right: parent.right }
                 platformInverted: root.platformInverted
                 placeholderText: qsTr("Username")
                 inputMethodHints: Qt.ImhNoPredictiveText | Qt.ImhNoAutoUppercase
             }
 
-            TextField{
+            TextField {
                 id: passwordTextField
-                width: parent.width
+                anchors { left: parent.left; right: parent.right }
                 platformInverted: root.platformInverted
                 placeholderText: qsTr("Password")
                 inputMethodHints: Qt.ImhNoPredictiveText | Qt.ImhNoAutoUppercase
@@ -67,7 +67,7 @@ CommonDialog{
     Component.onCompleted: open()
 
     onStatusChanged: {
-        if(status === DialogStatus.Closing) __isClosing = true
-        else if(status === DialogStatus.Closed && __isClosing) root.destroy()
+        if (status === DialogStatus.Closing) __isClosing = true
+        else if (status === DialogStatus.Closed && __isClosing) root.destroy()
     }
 }
