@@ -91,13 +91,13 @@ Item {
 
     onUnreadCountChanged: if (unreadCount === 0) harmattanUtils.clearNotification("tweetian.message")
 
-    AbstractListView {
+    PullDownListView {
         id: directMsgView
         anchors.fill: parent
         header: settings.enableStreaming ? streamingHeader : pullToRefreshHeader
         delegate: DMThreadDelegate {}
         model: ListModel {}
-        onPullDownRefresh: if (userStream.status === 0) refresh("newer")
+        onPulledDown: if (userStream.status === 0) refresh("newer")
 
         Component { id: pullToRefreshHeader; PullToRefreshHeader {} }
         Component { id: streamingHeader; StreamingHeader {} }

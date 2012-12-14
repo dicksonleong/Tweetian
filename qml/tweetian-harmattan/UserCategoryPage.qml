@@ -34,12 +34,12 @@ Page {
         }
     }
 
-    AbstractListView {
+    PullDownListView {
         id: userCategoryView
         anchors { top: header.bottom; bottom: parent.bottom; left: parent.left; right: parent.right }
         delegate: userCategoryDelegate
         model: ListModel {}
-        onPullDownRefresh: script.refresh()
+        onPulledDown: script.refresh()
     }
 
     ScrollDecorator { flickableItem: userCategoryView }

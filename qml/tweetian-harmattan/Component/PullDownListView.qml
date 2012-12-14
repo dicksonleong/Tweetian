@@ -23,7 +23,7 @@ ListView {
     id: root
 
     property string lastUpdate: ""
-    signal pullDownRefresh()
+    signal pulledDown()
 
     // Private
     property bool __wasAtYBeginning: false
@@ -35,15 +35,18 @@ ListView {
     onMovementStarted: {
         __wasAtYBeginning = atYBeginning
         __initialContentY = contentY
-        __toBeRefresh = false
     }
-    onMovementEnded: if (__toBeRefresh) pullDownRefresh()
+    onMovementEnded: {
+        if (__toBeRefresh) {
+            pulledDown()
+            __toBeRefresh = false
+        }
+    }
     onContentYChanged: detectPullDownTimer.running = true
 
     Timer {
         id: detectPullDownTimer
         interval: 250
-        repeat: false
         onTriggered: if (__wasAtYBeginning && __initialContentY - contentY > 100) __toBeRefresh = true
     }
 }

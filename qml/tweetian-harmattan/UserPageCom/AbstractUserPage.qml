@@ -48,7 +48,7 @@ Page {
         }
     }
 
-    AbstractListView {
+    PullDownListView {
         id: listView
         anchors { top: header.bottom; bottom: parent.bottom; left: parent.left; right: parent.right }
         model: ListModel {}
@@ -60,7 +60,7 @@ Page {
                 reload()
             }
         }
-        onPullDownRefresh: {
+        onPulledDown: {
             reloadType = "all"
             reload()
         }

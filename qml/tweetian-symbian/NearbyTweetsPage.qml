@@ -61,7 +61,7 @@ Page {
         }
     }
 
-    AbstractListView {
+    PullDownListView {
         id: searchListView
         property bool stayAtCurrentPosition: internal.reloadType === "newer"
         anchors { top: header.bottom; left: parent.left; right: parent.right; bottom: parent.bottom }
@@ -72,7 +72,7 @@ Page {
         }
         delegate: TweetDelegate {}
         model: ListModel {}
-        onPullDownRefresh: internal.refresh("newer")
+        onPulledDown: internal.refresh("newer")
         onAtYBeginningChanged: if (atYBeginning) header.countBubbleValue = 0
         onContentYChanged: refreshUnreadCountTimer.running = true
 

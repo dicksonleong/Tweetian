@@ -50,8 +50,7 @@ Item {
         Image {
             smooth: true
             sourceSize { width: constant.graphicSizeSmall; height: constant.graphicSizeSmall }
-            source: settings.invertedTheme ? "image://theme/icon-m-toolbar-refresh"
-                                           : "image://theme/icon-m-toolbar-refresh-white-selected"
+            source: "image://theme/icon-m-toolbar-refresh" + (settings.invertedTheme ? "" : "-white-selected")
 
             RotationAnimation on rotation {
                 from: 360; to: 0
@@ -67,8 +66,8 @@ Item {
 
         Image {
             sourceSize { width: constant.graphicSizeSmall; height: constant.graphicSizeSmall }
-            rotation: visible && root.ListView.view.__initialContentY - root.ListView.view.contentY > 100 ? 270 : 90
-            source: settings.invertedTheme ? "image://theme/icon-m-toolbar-next" : "image://theme/icon-m-toolbar-next-white-selected"
+            rotation: root.ListView.view.__toBeRefresh ? 270 : 90
+            source: "image://theme/icon-m-toolbar-next" + (settings.invertedTheme ? "" : "-white-selected")
 
             Behavior on rotation { NumberAnimation { duration: 250 } }
         }

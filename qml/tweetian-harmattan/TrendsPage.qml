@@ -70,7 +70,7 @@ Page {
         }
     }
 
-    AbstractListView {
+    PullDownListView {
         id: trendsPageListView
         anchors { top: header.bottom; left: parent.left; right: parent.right; bottom: parent.bottom }
         model: cache.trendsModel
@@ -99,7 +99,7 @@ Page {
                     savedSearchMenuComponent.createObject(trendsPage, { id: id, searchName: title })
             }
         }
-        onPullDownRefresh: internal.refresh()
+        onPulledDown: internal.refresh()
     }
 
     ScrollDecorator { flickableItem: trendsPageListView }

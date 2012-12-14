@@ -79,7 +79,7 @@ Item {
         if (unreadCount === 0 && type === "Mentions") harmattanUtils.clearNotification("tweetian.mention")
     }
 
-    AbstractListView {
+    PullDownListView {
         id: tweetView
 
         property bool stayAtCurrentPosition: (userStream.status === 2 && !active) ||
@@ -95,7 +95,7 @@ Item {
             enabled: !busy
             onClicked: refresh("older")
         }
-        onPullDownRefresh: if (userStream.status === 0) refresh("newer")
+        onPulledDown: if (userStream.status === 0) refresh("newer")
         onAtYBeginningChanged: if (atYBeginning) unreadCount = 0
         onContentYChanged: refreshUnreadCountTimer.running = true
 

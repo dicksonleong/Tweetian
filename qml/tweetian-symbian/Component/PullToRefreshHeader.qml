@@ -35,8 +35,8 @@ Item {
             id: pullIcon
             anchors.left: parent.left
             sourceSize { width: constant.graphicSizeSmall; height: constant.graphicSizeSmall }
-            rotation: visible && root.ListView.view.__initialContentY - root.ListView.view.contentY > 100 ? 270 : 90
-            source: settings.invertedTheme ? "image://theme/toolbar-next_inverse" : "image://theme/toolbar-next"
+            rotation: root.ListView.view.__toBeRefresh ? 270 : 90
+            source: "image://theme/toolbar-next" + (settings.invertedTheme ? "_inverse" : "")
 
             Behavior on rotation { NumberAnimation { duration: 250 } }
         }
@@ -51,8 +51,7 @@ Item {
                 id: pullText
                 font.pixelSize: constant.fontSizeMedium
                 color: constant.colorLight
-                text: visible && root.ListView.view.__initialContentY - root.ListView.view.contentY > 100 ?
-                          qsTr("Release to refresh") : qsTr("Pull down to refresh")
+                text: root.ListView.view.__toBeRefresh ? qsTr("Release to refresh") : qsTr("Pull down to refresh")
             }
 
             Text {

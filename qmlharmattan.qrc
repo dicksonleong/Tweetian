@@ -25,7 +25,6 @@
         <file>qml/tweetian-harmattan/UserPage.qml</file>
         <file>qml/tweetian-harmattan/UserSearchPage.qml</file>
         <file>qml/tweetian-harmattan/Component/AboutPageItem.qml</file>
-        <file>qml/tweetian-harmattan/Component/AbstractListView.qml</file>
         <file>qml/tweetian-harmattan/Component/FastScroll.js</file>
         <file>qml/tweetian-harmattan/Component/FastScroll.qml</file>
         <file>qml/tweetian-harmattan/Component/FastScrollStyle.qml</file>
@@ -34,6 +33,7 @@
         <file>qml/tweetian-harmattan/Component/LoadMoreButton.qml</file>
         <file>qml/tweetian-harmattan/Component/PageHeader.qml</file>
         <file>qml/tweetian-harmattan/Component/PaneIndicator.qml</file>
+        <file>qml/tweetian-harmattan/Component/PullDownListView.qml</file>
         <file>qml/tweetian-harmattan/Component/PullToRefreshHeader.qml</file>
         <file>qml/tweetian-harmattan/Component/SectionHeader.qml</file>
         <file>qml/tweetian-harmattan/Component/ThumbnailItem.qml</file>

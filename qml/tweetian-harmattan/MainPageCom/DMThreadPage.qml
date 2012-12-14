@@ -50,13 +50,13 @@ Page {
         }
     }
 
-    AbstractListView {
+    PullDownListView {
         id: dMConversationView
         anchors { top: header.bottom; left: parent.left; right: parent.right; bottom: parent.bottom }
         model: ListModel {}
         header: PullToRefreshHeader { visible: userStream.status === 0 }
         delegate: DirectMsgDelegate {}
-        onPullDownRefresh: if (userStream.status === 0) mainPage.directMsg.refresh("newer")
+        onPulledDown: if (userStream.status === 0) mainPage.directMsg.refresh("newer")
     }
 
     ScrollDecorator { flickableItem: dMConversationView }
