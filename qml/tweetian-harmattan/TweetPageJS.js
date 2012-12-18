@@ -79,7 +79,8 @@ function conversationOnSuccess(data) {
 
 function translateTokenOnSuccess(token) {
     cache.translationToken = token
-    Translation.translate(constant, cache.translationToken, currentTweet.tweetText, translateOnSuccess, commonOnFailure)
+    Translation.translate(constant, cache.translationToken, currentTweet.tweetText, settings.translateLangCode,
+                          translateOnSuccess, commonOnFailure)
 }
 
 function translateOnSuccess(data) {
@@ -91,13 +92,6 @@ function translateOnSuccess(data) {
         translatedTweetLoader.item.translatedText = data
     }
     header.busy = false
-}
-
-//check the stored translate access token is expired or not (will expired after 10mins)
-function checkExpire(translateToken) {
-    var time = translateToken.substr(translateToken.indexOf('ExpiresOn=') + 10, 10) * 1000
-    var diff = time - new Date().getTime()
-    return diff > 0
 }
 
 function addToPocket(link) {

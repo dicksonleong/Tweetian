@@ -162,9 +162,9 @@ Page {
                 text: translatedTweetLoader.sourceComponent ? qsTr("Hide translated tweet") : qsTr("Translate tweet")
                 onClicked: {
                     if (translatedTweetLoader.sourceComponent) translatedTweetLoader.sourceComponent = undefined
-                    else if (cache.translationToken && JS.checkExpire(cache.translationToken)) {
+                    else if (cache.isTranslationTokenValid()) {
                         Translation.translate(constant, cache.translationToken, currentTweet.tweetText,
-                                              JS.translateOnSuccess, JS.commonOnFailure)
+                                              settings.translateLangCode, JS.translateOnSuccess, JS.commonOnFailure)
                         header.busy = true
                     }
                     else {
@@ -405,21 +405,17 @@ Page {
     Component {
         id: translatedTweetComponent
 
-        Item {
+        Column {
             property string translatedText
 
             width: mainColumn.width
             height: childrenRect.height + constant.paddingMedium
+            spacing: constant.paddingMedium
 
-            SectionHeader { id: translateHeader; text: qsTr("Translated Tweet") }
+            SectionHeader { text: qsTr("Translated Tweet") }
 
             Text {
-                anchors {
-                    top: translateHeader.bottom
-                    left: parent.left
-                    right: parent.right
-                    margins: constant.paddingMedium
-                }
+                anchors { left: parent.left; right: parent.right; margins: constant.paddingMedium }
                 font.pixelSize: constant.fontSizeLarge
                 color: constant.colorLight
                 text: translatedText

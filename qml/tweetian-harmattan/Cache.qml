@@ -41,6 +41,13 @@ QtObject {
         }
     }
 
+    function isTranslationTokenValid() {
+        if (!translationToken) return false
+        var time = translationToken.substr(translationToken.indexOf('ExpiresOn=') + 10, 10) * 1000
+        var diff = time - new Date().getTime()
+        return diff > 0
+    }
+
     property ListModel trendsModel: ListModel {}
     property string trendsLastUpdate: ""
 

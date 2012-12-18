@@ -52,6 +52,8 @@ QtObject {
         hashtagsInReply = true
         enableTwitLonger = false
         largeFontSize = false
+        translateLangName = "English"
+        translateLangCode = "en"
         enableStreaming = false
         timelineRefreshFreq = 0
         mentionsRefreshFreq = 0
@@ -93,6 +95,11 @@ QtObject {
     onEnableTwitLongerChanged: Database.setSetting({"enableTwitLonger": enableTwitLonger.toString()})
     property bool largeFontSize: false
     onLargeFontSizeChanged: Database.setSetting({"largeFontSize": largeFontSize.toString()})
+
+    property string translateLangName: "English"
+    onTranslateLangNameChanged: Database.setSetting({"translateLangName": translateLangName})
+    property string translateLangCode: "en"
+    onTranslateLangCodeChanged: Database.setSetting({"translateLangCode": translateLangCode})
 
     property bool enableStreaming: false
     onEnableStreamingChanged: Database.setSetting({"enableStreaming": enableStreaming.toString()})

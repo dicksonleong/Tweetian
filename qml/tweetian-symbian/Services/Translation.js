@@ -16,9 +16,16 @@
     along with this program. If not, see <http://www.gnu.org/licenses/>.
 */
 
+/**
+ * Powered by Microsoft Translator
+ * Documentation: <http://msdn.microsoft.com/en-gb/library/ff512404.aspx>
+ */
+
 .pragma library
 
 var REQUEST_TOKEN_URL = "https://datamarket.accesscontrol.windows.net/v2/OAuth2-13"
+var GET_LANGUAGES_FOR_TRANSLATE_URL = "http://api.microsofttranslator.com/V2/Ajax.svc/GetLanguagesForTranslate"
+var GET_LANGUAGES_NAMES_URL = "http://api.microsofttranslator.com/V2/Ajax.svc/GetLanguageNames"
 var TRANSLATE_URL = "http://api.microsofttranslator.com/V2/Ajax.svc/Translate"
 
 function requestToken(constant, onSuccess, onFailure) {
@@ -44,10 +51,47 @@ function requestToken(constant, onSuccess, onFailure) {
     request.send(body)
 }
 
-function translate(constant, accessToken, text, onSuccess, onFailure) {
+function getLanguagesForTranslate(constant, accessToken, onSuccess, onFailure) {
+    var request = new XMLHttpRequest()
+    request.open("GET", GET_LANGUAGES_FOR_TRANSLATE_URL)
+
+    request.onreadystatechange = function() {
+        if (request.readyState === XMLHttpRequest.DONE) {
+            if (request.status === 200) onSuccess(JSON.parse(request.responseText))
+            else onFailure(request.status, request.statusText)
+        }
+    }
+
+    request.setRequestHeader("Authorization", "Bearer " + accessToken)
+    request.setRequestHeader("User-Agent", constant.userAgent)
+    request.send()
+}
+
+function getLanguageNames(constant, accessToken, languageCodes, onSuccess, onFailure) {
+    var parameters = {
+        locale: "en", // TODO: Follow device's language
+        languageCodes: languageCodes
+    }
+    var url = GET_LANGUAGES_NAMES_URL + "?" + constant.encodeParameters(parameters)
+    var request = new XMLHttpRequest()
+    request.open("GET", url)
+
+    request.onreadystatechange = function() {
+        if (request.readyState === XMLHttpRequest.DONE) {
+            if (request.status == 200) onSuccess(JSON.parse(request.responseText))
+            else onFailure(request.status, request.statusText)
+        }
+    }
+
+    request.setRequestHeader("Authorization", "Bearer " + accessToken)
+    request.setRequestHeader("User-Agent", constant.userAgent)
+    request.send()
+}
+
+function translate(constant, accessToken, text, to, onSuccess, onFailure) {
     var parameters = {
         text: text,
-        to: "en",
+        to:  to,
         contentType: "text/plain",
         category: "general"
     }
@@ -62,7 +106,7 @@ function translate(constant, accessToken, text, onSuccess, onFailure) {
         }
     }
 
-    request.setRequestHeader("Authorization", "Bearer" + " " + accessToken)
+    request.setRequestHeader("Authorization", "Bearer " + accessToken)
     request.setRequestHeader("User-Agent", constant.userAgent)
     request.send()
 }
