@@ -99,7 +99,7 @@ Page {
             if (status === DocumentGalleryModel.Active) header.busy = true
             else if (status === DocumentGalleryModel.Error) {
                 header.busy = false
-                infoBanner.alert(qsTr("Error loading image from gallery"))
+                infoBanner.showText(qsTr("Error loading image from gallery"))
             }
             else header.busy = false
         }

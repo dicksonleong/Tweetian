@@ -156,7 +156,7 @@ Page {
             isSavedSearch = true
             savedSearchId = data.id
             loadingRect.visible = false
-            infoBanner.alert(qsTr("The search %1 is saved successfully").arg("\""+data.name+"\""))
+            infoBanner.showText(qsTr("The search %1 is saved successfully").arg("\""+data.name+"\""))
         }
 
         function savedSearchOnFailure(status, statusText) {
@@ -174,7 +174,7 @@ Page {
             isSavedSearch = false
             savedSearchId = ""
             loadingRect.visible = false
-            infoBanner.alert(qsTr("The saved search %1 is removed successfully").arg("\""+data.name+"\""))
+            infoBanner.showText(qsTr("The saved search %1 is removed successfully").arg("\""+data.name+"\""))
         }
 
         function removeSearchOnFailure(status, statusText) {

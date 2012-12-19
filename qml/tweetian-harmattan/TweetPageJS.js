@@ -19,15 +19,15 @@
 function deleteTweetOnSuccess(data) {
     mainPage.timeline.parseData("delete", data)
     loadingRect.visible = false
-    infoBanner.alert(qsTr("Tweet deleted successfully"))
+    infoBanner.showText(qsTr("Tweet deleted successfully"))
     pageStack.pop()
 }
 
 function favouriteOnSuccess(data, isFavourite) {
     mainPage.timeline.parseData("favourite", data)
     favouritedTweet = isFavourite
-    if (favouritedTweet) infoBanner.alert(qsTr("Tweet favourited succesfully"))
-    else infoBanner.alert(qsTr("Tweet unfavourited successfully"))
+    if (favouritedTweet) infoBanner.showText(qsTr("Tweet favourited succesfully"))
+    else infoBanner.showText(qsTr("Tweet unfavourited successfully"))
     header.busy = false
 }
 
@@ -85,7 +85,7 @@ function translateTokenOnSuccess(token) {
 
 function translateOnSuccess(data) {
     if (data.indexOf("ArgumentOutOfRangeException") === 0) {
-        infoBanner.alert(qsTr("Unable to translate tweet"))
+        infoBanner.showText(qsTr("Unable to translate tweet"))
     }
     else {
         translatedTweetLoader.sourceComponent = translatedTweetComponent
@@ -120,22 +120,22 @@ function addToInstapaper(link) {
 
 function pocketSuccessCallback() {
     loadingRect.visible = false
-    infoBanner.alert(qsTr("The link has been sent to Pocket successfully"))
+    infoBanner.showText(qsTr("The link has been sent to Pocket successfully"))
 }
 
 function pocketFailureCallback(errorCode) {
     loadingRect.visible = false
-    infoBanner.alert(qsTr("Error sending link to Pocket (%1)").arg(errorCode))
+    infoBanner.showText(qsTr("Error sending link to Pocket (%1)").arg(errorCode))
 }
 
 function instapaperSuccessCallback() {
     loadingRect.visible = false
-    infoBanner.alert(qsTr("The link has been sent to Instapaper successfully"))
+    infoBanner.showText(qsTr("The link has been sent to Instapaper successfully"))
 }
 
 function instapaperFailureCallback(errorCode) {
     loadingRect.visible = false
-    infoBanner.alert(qsTr("Error sending link to Instapaper (%1)").arg(errorCode))
+    infoBanner.showText(qsTr("Error sending link to Instapaper (%1)").arg(errorCode))
 }
 
 function getYouTubeVideoId(link) {

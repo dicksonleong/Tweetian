@@ -47,7 +47,7 @@ Item {
                         harmattanUtils.publishNotification("tweetian.message", "Tweetian", body, unreadCount)
                     }
                     else if (mainPage.status !== PageStatus.Active) {
-                        infoBanner.alert(body)
+                        infoBanner.showText(body)
                     }
                 }
             }

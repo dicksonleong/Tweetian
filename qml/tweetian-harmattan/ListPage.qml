@@ -88,18 +88,18 @@ Page {
 
         function subscribeOnSuccess(data) {
             followingList = true
-            infoBanner.alert(qsTr("You have subscribed to the list %1 successfully").arg("<b>"+data.name+"</b>"))
+            infoBanner.showText(qsTr("You have subscribed to the list %1 successfully").arg("<b>"+data.name+"</b>"))
             loadingRect.visible = false
         }
 
         function unsubscribeOnSuccess(data) {
             followingList = false
-            infoBanner.alert(qsTr("You have unsubscribed from the list %1 successfully").arg("<b>"+data.name+"</b>"))
+            infoBanner.showText(qsTr("You have unsubscribed from the list %1 successfully").arg("<b>"+data.name+"</b>"))
             loadingRect.visible = false
         }
 
         function deleteListOnSuccess(data) {
-            infoBanner.alert(qsTr("You have deleted the list %1 successfully").arg("<b>"+data.name+"</b>"))
+            infoBanner.showText(qsTr("You have deleted the list %1 successfully").arg("<b>"+data.name+"</b>"))
             loadingRect.visible = false
             pageStack.pop()
         }

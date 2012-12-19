@@ -51,7 +51,7 @@ ContextMenu {
             platformInverted: root.platformInverted
             onClicked: {
                 Qt.openUrlExternally(link)
-                infoBanner.alert(qsTr("Launching web browser..."))
+                infoBanner.showText(qsTr("Launching web browser..."))
             }
         }
         MenuItemWithIcon {
@@ -60,7 +60,7 @@ ContextMenu {
             platformInverted: root.platformInverted
             onClicked: {
                 QMLUtils.copyToClipboard(link)
-                infoBanner.alert(qsTr("Link copied to clipboard"))
+                infoBanner.showText(qsTr("Link copied to clipboard"))
             }
         }
         MenuItemWithIcon {

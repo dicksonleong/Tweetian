@@ -125,7 +125,7 @@ Page {
                     break
                 }
             }
-            infoBanner.alert(qsTr("The saved search %1 is removed successfully").arg("\""+data.name+"\""))
+            infoBanner.showText(qsTr("The saved search %1 is removed successfully").arg("\""+data.name+"\""))
             savedSearchLoading = false
         }
 

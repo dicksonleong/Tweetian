@@ -97,15 +97,15 @@ Page {
             settings.oauthToken = token
             settings.oauthTokenSecret = tokenSecret
             settings.userScreenName = screenName
-            infoBanner.alert(qsTr("Signed in successfully"))
+            infoBanner.showText(qsTr("Signed in successfully"))
             pageStack.pop(null)
         }
 
         function onFailure(status, statusText) {
             if (status === 0)
-                infoBanner.alert(qsTr("Server or connection error. Click the refresh button to try again."))
+                infoBanner.showText(qsTr("Server or connection error. Click the refresh button to try again."))
             else
-                infoBanner.alert(qsTr("Error: %1. Make sure the time/date of your phone is set correctly.").arg(statusText + "(" + status + ")"))
+                infoBanner.showText(qsTr("Error: %1. Make sure the time/date of your phone is set correctly.").arg(statusText + "(" + status + ")"))
             header.busy = false
         }
     }

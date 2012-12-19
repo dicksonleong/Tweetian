@@ -54,8 +54,8 @@ Page {
             enabled: tweetImagePreview.status == Image.Ready
             onClicked: {
                 var filePath = QMLUtils.saveImage(tweetImagePreview)
-                if (filePath) infoBanner.alert(qsTr("Image saved in %1").arg(filePath))
-                else infoBanner.alert(qsTr("Failed to save image"))
+                if (filePath) infoBanner.showText(qsTr("Image saved in %1").arg(filePath))
+                else infoBanner.showText(qsTr("Failed to save image"))
             }
         }
     }

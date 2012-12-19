@@ -160,7 +160,7 @@ Page {
 
         function __getLangCodesOnSuccess(langCodesArray) {
             if (!Array.isArray(langCodesArray)) {
-                infoBanner.alert("Error: " + langCodesArray)
+                infoBanner.showText("Error: " + langCodesArray)
                 loadingRect.visible = false
                 return
             }
@@ -172,7 +172,7 @@ Page {
 
         function __getLangNamesOnSuccess(langNamesArray) {
             if (!Array.isArray(langNamesArray)) {
-                infoBanner.alert("Error: " + langNamesArray)
+                infoBanner.showText("Error: " + langNamesArray)
                 loadingRect.visible = false
                 return
             }

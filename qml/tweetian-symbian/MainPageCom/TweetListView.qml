@@ -153,7 +153,7 @@ Item {
                     if (tweetView.stayAtCurrentPosition || tweetView.indexAt(0, tweetView.contentY) > 0)
                         unreadCount += messageObject.count
                     if (type === "Mentions" && symbian.foreground && mainPage.status !== PageStatus.Active)
-                        infoBanner.alert(qsTr("%n new mention(s)", "", unreadCount))
+                        infoBanner.showText(qsTr("%n new mention(s)", "", unreadCount))
                 }
                 if (messageObject.screenNames.length > 0)
                     cache.screenNames = Database.storeScreenNames(messageObject.screenNames)

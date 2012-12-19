@@ -119,7 +119,7 @@ Twitter credential and app settings will not be reset. Continue?")
                 Database.initializeDirectMsg()
                 Database.clearTable("ScreenNames")
                 cache.clearAll()
-                infoBanner.alert(qsTr("All cache cleared"))
+                infoBanner.showText(qsTr("All cache cleared"))
             })
         }
 
@@ -127,7 +127,7 @@ Twitter credential and app settings will not be reset. Continue?")
             var message = qsTr("Delete all cached thumbnails?")
             dialog.createQueryDialog(qsTr("Clear Thumbnails Cache"), "", message, function() {
                 var deleteCount = thumbnailCacher.clearAll()
-                infoBanner.alert(qsTr("%1 thumbnails cache cleared").arg(deleteCount))
+                infoBanner.showText(qsTr("%1 thumbnails cache cleared").arg(deleteCount))
             })
         }
     }

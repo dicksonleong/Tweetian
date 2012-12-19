@@ -111,7 +111,7 @@ Page {
         function deleteDMOnSuccess(data) {
             mainPage.directMsg.parser.remove(data.id_str)
             parser.remove(data.id_str)
-            infoBanner.alert(qsTr("Direct message deleted successfully"))
+            infoBanner.showText(qsTr("Direct message deleted successfully"))
             header.busy = false
         }
 

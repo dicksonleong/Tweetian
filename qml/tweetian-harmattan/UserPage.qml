@@ -328,15 +328,15 @@ Page {
         }
 
         function userInfoOnFailure(status, statusText) {
-            if (status === 404) infoBanner.alert(qsTr("The user %1 does not exist").arg("@" + userPage.screenName))
+            if (status === 404) infoBanner.showText(qsTr("The user %1 does not exist").arg("@" + userPage.screenName))
             else infoBanner.showHttpError(status, statusText)
             loadingRect.visible = false
         }
 
         function followOnSuccess(data, isFollowing) {
             userInfoData.following = isFollowing
-            if (isFollowing) infoBanner.alert(qsTr("Followed the user %1 successfully").arg("@" + data.screen_name))
-            else infoBanner.alert(qsTr("Unfollowed the user %1 successfully").arg("@" + data.screen_name))
+            if (isFollowing) infoBanner.showText(qsTr("Followed the user %1 successfully").arg("@" + data.screen_name))
+            else infoBanner.showText(qsTr("Unfollowed the user %1 successfully").arg("@" + data.screen_name))
             loadingRect.visible = false
         }
 
@@ -346,7 +346,7 @@ Page {
         }
 
         function reportSpamOnSuccess(data) {
-            infoBanner.alert(qsTr("Reported and blocked the user %1 successfully").arg("@" + data.screen_name))
+            infoBanner.showText(qsTr("Reported and blocked the user %1 successfully").arg("@" + data.screen_name))
             loadingRect.visible = false
         }
 

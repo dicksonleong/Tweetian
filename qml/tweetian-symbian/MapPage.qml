@@ -224,7 +224,7 @@ Page {
             onButtonClicked: {
                 if (index === 0) {
                     QMLUtils.copyToClipboard(coordinateTextField.text)
-                    infoBanner.alert(qsTr("Coordinate copied to clipboard"))
+                    infoBanner.showText(qsTr("Coordinate copied to clipboard"))
                 }
             }
             Component.onCompleted: open()

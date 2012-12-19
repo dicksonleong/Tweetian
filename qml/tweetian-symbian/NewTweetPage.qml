@@ -448,10 +448,10 @@ Page {
 
         function postStatusOnSuccess(data) {
             switch (type) {
-            case "New": infoBanner.alert(qsTr("Tweet sent successfully")); break;
-            case "Reply": infoBanner.alert(qsTr("Reply sent successfully")); break;
-            case "DM":infoBanner.alert(qsTr("Direct message sent successfully")); break;
-            case "RT": infoBanner.alert(qsTr("Retweet sent successfully")); break;
+            case "New": infoBanner.showText(qsTr("Tweet sent successfully")); break;
+            case "Reply": infoBanner.showText(qsTr("Reply sent successfully")); break;
+            case "DM":infoBanner.showText(qsTr("Direct message sent successfully")); break;
+            case "RT": infoBanner.showText(qsTr("Retweet sent successfully")); break;
             }
             pageStack.pop()
         }
@@ -464,8 +464,8 @@ Page {
         function postTwitLongerStatusOnSuccess(data) {
             TwitLonger.postIDCallback(constant, twitLongerId, data.id_str)
             switch (type) {
-            case "New": infoBanner.alert(qsTr("Tweet sent successfully")); break;
-            case "Reply": infoBanner.alert(qsTr("Reply sent successfully")); break;
+            case "New": infoBanner.showText(qsTr("Tweet sent successfully")); break;
+            case "Reply": infoBanner.showText(qsTr("Reply sent successfully")); break;
             }
             pageStack.pop()
         }

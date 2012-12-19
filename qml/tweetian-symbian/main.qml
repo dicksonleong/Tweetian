@@ -55,15 +55,15 @@ PageStackWindow {
         id: infoBanner
         platformInverted: settings.invertedTheme
 
-        function alert(alertText) {
-            infoBanner.text = alertText
+        function showText(text) {
+            infoBanner.text = text
             infoBanner.open()
             infoBannerHapticEffect.play()
         }
 
         function showHttpError(errorCode, errorMessage) {
-            if (errorCode === 0) alert(qsTr("Server or connection error"))
-            else alert(qsTr("Error: %1").arg(errorMessage + " (" + errorCode + ")"))
+            if (errorCode === 0) showText(qsTr("Server or connection error"))
+            else showText(qsTr("Error: %1").arg(errorMessage + " (" + errorCode + ")"))
         }
 
         ThemeEffect { id: infoBannerHapticEffect; effect: ThemeEffect.NeutralTacticon }

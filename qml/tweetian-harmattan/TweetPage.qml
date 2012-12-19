@@ -155,7 +155,7 @@ Page {
                 text: qsTr("Copy tweet")
                 onClicked: {
                     QMLUtils.copyToClipboard("@" + currentTweet.screenName + ": " + currentTweet.tweetText)
-                    infoBanner.alert(qsTr("Tweet copied to clipboard"))
+                    infoBanner.showText(qsTr("Tweet copied to clipboard"))
                 }
             }
             MenuItem {
@@ -340,9 +340,9 @@ Page {
                                 else {
                                     if (model.link) {
                                         var success = Qt.openUrlExternally(model.link)
-                                        if (!success) infoBanner.alert(qsTr("Error opening link: %1").arg(model.link))
+                                        if (!success) infoBanner.showText(qsTr("Error opening link: %1").arg(model.link))
                                     }
-                                    else infoBanner.alert(qsTr("Streaming link is not available"))
+                                    else infoBanner.showText(qsTr("Streaming link is not available"))
                                 }
                             }
                         }

@@ -90,7 +90,7 @@ function reconnectStream(statusCode, errorText) {
     reconnectTimer.restart()
     var logText = "Disconnected from streaming (" + statusCode + " " + errorText + "). Reconnect in "
             + reconnectTimer.interval / 1000 + " seconds."
-    infoBanner.alert(logText)
+    infoBanner.showText(logText)
     log(logText)
 }
 

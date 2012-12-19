@@ -49,7 +49,7 @@ ContextMenu {
             text: qsTr("Open link in web browser")
             onClicked: {
                 Qt.openUrlExternally(link)
-                infoBanner.alert(qsTr("Launching web browser..."))
+                infoBanner.showText(qsTr("Launching web browser..."))
             }
         }
         MenuItem {
@@ -61,7 +61,7 @@ ContextMenu {
             text: qsTr("Copy link")
             onClicked: {
                 QMLUtils.copyToClipboard(link)
-                infoBanner.alert(qsTr("Link copied to clipboard"))
+                infoBanner.showText(qsTr("Link copied to clipboard"))
             }
             platformStyle: MenuItemStyle { position: sendToPocketButton.visible ? "vertical-center" : "vertical-bottom" }
         }

@@ -59,7 +59,7 @@ AbstractUserPage {
                 loadingRect.visible = true
             }
             else {
-                infoBanner.alert(qsTr("Error: No user to load?!"))
+                infoBanner.showText(qsTr("Error: No user to load?!"))
                 loadingRect.visible = false
             }
         }

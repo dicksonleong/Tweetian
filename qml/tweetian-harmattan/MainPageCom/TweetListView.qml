@@ -162,7 +162,7 @@ Item {
                             harmattanUtils.clearNotification("tweetian.mention")
                             harmattanUtils.publishNotification("tweetian.mention", "Tweetian", body, unreadCount)
                         }
-                        else if (mainPage.status !== PageStatus.Active) infoBanner.alert(body)
+                        else if (mainPage.status !== PageStatus.Active) infoBanner.showText(body)
                     }
                 }
                 if (messageObject.screenNames.length > 0)

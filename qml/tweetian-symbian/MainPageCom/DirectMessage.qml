@@ -41,7 +41,7 @@ Item {
             if (createNotification) {
                 unreadCount += count
                 if (symbian.foreground && mainPage.status !== PageStatus.Active)
-                    infoBanner.alert(qsTr("%n new message(s)", "", unreadCount))
+                    infoBanner.showText(qsTr("%n new message(s)", "", unreadCount))
             }
             busy = false
         }
