@@ -49,8 +49,6 @@ Page {
         header.busy = true
     }
 
-    onStatusChanged: if (status === PageStatus.Deactivating) settings.settingsLoaded()
-
     Flickable {
         id: webViewFlickable
         anchors { top: header.bottom; left: parent.left; right: parent.right; bottom: parent.bottom }
@@ -98,6 +96,7 @@ Page {
             settings.oauthTokenSecret = tokenSecret
             settings.userScreenName = screenName
             infoBanner.showText(qsTr("Signed in successfully"))
+            settings.settingsLoaded()
             pageStack.pop(null)
         }
 

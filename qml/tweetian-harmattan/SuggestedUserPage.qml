@@ -74,7 +74,7 @@ Page {
 
         function onSuccess(data) {
             backButton.enabled = false
-            header.headerText += " - " + data.name
+            header.headerText += ": " + data.name
             var msg = {
                 data: data.users,
                 reloadType: "all",

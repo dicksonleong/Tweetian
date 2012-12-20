@@ -60,6 +60,7 @@ Page {
         id: searchListView
         property bool stayAtCurrentPosition: internal.reloadType === "newer"
         anchors { top: header.bottom; left: parent.left; right: parent.right; bottom: parent.bottom }
+        enabled: !header.busy || count > 0
         footer: LoadMoreButton {
             visible: searchListView.count > 0
             enabled: !header.busy

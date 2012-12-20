@@ -361,7 +361,7 @@ Page {
                                 case "video":
                                     return settings.invertedTheme ? "Image/video_inverse.svg" : "Image/video.svg"
                                 default:
-                                    throw new Error("Invalid type:" + model.type)
+                                    console.log("Invalid type: " + model.type); return ""
                                 }
                             }
                             onClicked: {
@@ -410,6 +410,7 @@ Page {
         source: "WorkerScript/ConversationParser.js"
         onMessage: {
             backButton.enabled = true
+            header.busy = false
             if (messageObject.action === "callAPI") {
                 ancestorRepeater.model = ancestorModel
                 descendantRepeater.model = descendantModel
@@ -418,7 +419,6 @@ Page {
                     header.busy = true
                 }
             }
-            else header.busy = false
         }
     }
 
