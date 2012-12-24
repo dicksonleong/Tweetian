@@ -147,7 +147,7 @@ function createPicThumb() {
     }
 
     // Flickr pic
-    var flickrLinks = currentTweet.displayTweetText.match(/http:\/\/flic.kr\/p\/\w+/ig)
+    var flickrLinks = currentTweet.displayTweetText.match(Flickr.FLICKR_LINK_REGEXP)
     if (flickrLinks != null) {
         for (var iFlickr=0; iFlickr<flickrLinks.length; iFlickr++) {
             Flickr.getSizes(constant, flickrLinks[iFlickr], function(full, thumb, link) {
@@ -168,27 +168,11 @@ function createPicThumb() {
 }
 
 function createYoutubeThumb() {
-    var youtubeLinks = currentTweet.displayTweetText.match(/https?:\/\/(youtu.be\/[\w-]{11,}|www.youtube.com\/watch\?[\w-=&]{11,})/ig)
+    var youtubeLinks = currentTweet.displayTweetText.match(YouTube.YOUTUBE_LINK_REGEXP)
     if (youtubeLinks == null) return
 
     for (var i=0; i<youtubeLinks.length; i++) {
-        var videoId = ""
-        var link = youtubeLinks[i].replace("https://", "http://")
-
-        if (link.indexOf("http://youtu.be/") === 0) {
-            videoId = link.substring(16)
-        }
-        else if (link.indexOf("http://www.youtube.com/watch?") === 0) {
-            var queryArray = link.substring(29).split('&')
-            for (var iQuery=0; iQuery<queryArray.length; iQuery++) {
-                if (queryArray[iQuery].indexOf('v=') === 0) {
-                    videoId = queryArray[iQuery].substring(2)
-                    break
-                }
-            }
-        }
-        else console.log("[Youtube] Unable to parse YouTube link:", link)
-        YouTube.getVideoThumbnailAndLink(constant, videoId, function(thumb, rstpLink) {
+        YouTube.getVideoThumbnailAndLink(constant, youtubeLinks[i], function(thumb, rstpLink) {
             thumbnailModel.append({type: "video", thumb: thumb, full: "", link: rstpLink})
         })
     }
@@ -209,7 +193,6 @@ function expandTwitLonger() {
     TwitLonger.getFullTweet(constant, twitLongerLink[0], getTwitLongerTextOnSuccess, commonOnFailure)
     header.busy = true
 }
-
 
 function deleteTweetOnSuccess(data) {
     mainPage.timeline.parseData("delete", data)

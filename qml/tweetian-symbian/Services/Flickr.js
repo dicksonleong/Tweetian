@@ -19,14 +19,20 @@
 .pragma library
 
 var BASE_URL = "http://api.flickr.com/services/rest/"
+var FLICKR_LINK_REGEXP = /http:\/\/(flic.kr\/p\/\w+|www.flickr.com\/photos\/[\w\-\d@]+\/\d+\/)/ig
 
+/**
+ * Only 2 format of Flickr link will be accepted:
+ * - http://flic.kr/p/{base-58-encoded-photo-id}
+ * - http://www.flickr.com/photos/{user-id}/{photo-id}/
+ */
 function getSizes(constant, link, onSuccess) {
     var parameters = {
         method: "flickr.photos.getSizes",
         api_key: constant.flickrAPIKey,
         format: "json",
         nojsoncallback: 1,
-        photo_id: __base58Decode(link.substring(17))
+        photo_id: __getPhotoId(link)
     }
     var url = BASE_URL + "?" + constant.encodeParameters(parameters)
     var request = new XMLHttpRequest()
@@ -49,6 +55,17 @@ function getSizes(constant, link, onSuccess) {
 
     request.setRequestHeader("User-Agent", constant.userAgent)
     request.send()
+}
+
+function __getPhotoId(link) {
+    if (link.indexOf("http://flic.kr/p/") === 0) {
+        return __base58Decode(link.substring(17))
+    }
+    else if (link.indexOf("http://www.flickr.com/photos/") === 0) {
+        var id = link.substring(29)
+        return id.substring(id.indexOf("/") + 1, id.length - 1)
+    }
+    throw new Error("Invalid Flickr link: " + link)
 }
 
 function __base58Decode( snipcode ) {

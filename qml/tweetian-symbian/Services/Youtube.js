@@ -19,10 +19,17 @@
 .pragma library
 
 var URL = "https://gdata.youtube.com/feeds/api/videos/"
+var YOUTUBE_LINK_REGEXP = /https?:\/\/(youtu.be\/[\w-]{11,}|www.youtube.com\/watch\?[\w-=&]{11,})/ig
 
-function getVideoThumbnailAndLink(constant, videoId, onSuccess) {
+/**
+ * Only 2 format of YouTube link is accepted:
+ * - http(s)://youtu.be/{video-id}
+ * - http(s)://www.youtube.com/watch?v={video-id}
+ * (additional query string after /watch? also accepted)
+ */
+function getVideoThumbnailAndLink(constant, link, onSuccess) {
     var request = new XMLHttpRequest()
-    request.open("GET", URL + videoId + "?v=2&alt=json")
+    request.open("GET", URL + __getVideoId(link) + "?v=2&alt=json")
     request.setRequestHeader("X-GData-Key", "key=" + constant.youtubeDevKey)
     request.setRequestHeader("User-Agent", constant.userAgent)
 
@@ -50,4 +57,21 @@ function getVideoThumbnailAndLink(constant, videoId, onSuccess) {
     }
 
     request.send()
+}
+
+function __getVideoId(link) {
+    link = link.replace("https://", "http://")
+
+    if (link.indexOf("http://youtu.be/") === 0) {
+        return link.substring(16)
+    }
+    else if (link.indexOf("http://www.youtube.com/watch?") === 0) {
+        var queryArray = link.substring(29).split('&')
+        for (var iQuery=0; iQuery<queryArray.length; iQuery++) {
+            if (queryArray[iQuery].indexOf('v=') === 0) {
+                return queryArray[iQuery].substring(2)
+            }
+        }
+    }
+    throw new Error("Invalid YouTube link: " + link)
 }
