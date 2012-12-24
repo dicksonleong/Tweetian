@@ -25,61 +25,61 @@ WorkerScript.onMessage = function(msg) {
     var screenNames = []
 
     function getTweetObject(index) {
-		msg.data[index].source = unlink(msg.data[index].source)
+        msg.data[index].source = unlink(msg.data[index].source)
 
         if (msg.muteString && isMuted(msg.muteString, msg.data[index])) {
             console.log("[Mute] Muted one tweet, id:", msg.data[index].id_str)
-			return ""
-		}
+            return ""
+        }
 
-		var tweetObject = {
-			tweetId: msg.data[index].id_str,
-			screenName: msg.data[index].user.screen_name,
-			createdAt: new Date(msg.data[index].created_at),
-			timeDiff: timeDiff(msg.data[index].created_at),
+        var tweetObject = {
+            tweetId: msg.data[index].id_str,
+            screenName: msg.data[index].user.screen_name,
+            createdAt: new Date(msg.data[index].created_at),
+            timeDiff: timeDiff(msg.data[index].created_at),
             source: msg.data[index].source,
             mediaUrl: ""
-		}
+        }
 
-		// Collecting screen name for autofill
+        // Collecting screen name for autofill
         if (msg.data[index].user.following && screenNames.indexOf(msg.data[index].user.screen_name) == -1) {
-			screenNames.push(msg.data[index].user.screen_name)
-		}
+            screenNames.push(msg.data[index].user.screen_name)
+        }
 
-		// For retweeted status
+        // For retweeted status
         if (msg.data[index].retweeted_status) msg.data[index] = msg.data[index].retweeted_status
 
-		tweetObject.retweetId = msg.data[index].id_str
-		tweetObject.displayScreenName = msg.data[index].user.screen_name
-		tweetObject.userName = msg.data[index].user.name
+        tweetObject.retweetId = msg.data[index].id_str
+        tweetObject.displayScreenName = msg.data[index].user.screen_name
+        tweetObject.userName = msg.data[index].user.name
         tweetObject.tweetText = unescapeHtml(msg.data[index].text)
-		tweetObject.displayTweetText = msg.data[index].text.parseUsername().parseHashtag(hashtags)
-		tweetObject.profileImageUrl = msg.data[index].user.profile_image_url
-		tweetObject.favourited = msg.data[index].favorited
-		tweetObject.inReplyToScreenName = msg.data[index].in_reply_to_screen_name
-		tweetObject.inReplyToStatusId = msg.data[index].in_reply_to_status_id_str
-		tweetObject.latitude = msg.data[index].geo ? msg.data[index].geo.coordinates[0] : ""
-		tweetObject.longitude = msg.data[index].geo ? msg.data[index].geo.coordinates[1] : ""
+        tweetObject.displayTweetText = msg.data[index].text.parseUsername().parseHashtag(hashtags)
+        tweetObject.profileImageUrl = msg.data[index].user.profile_image_url
+        tweetObject.favourited = msg.data[index].favorited
+        tweetObject.inReplyToScreenName = msg.data[index].in_reply_to_screen_name
+        tweetObject.inReplyToStatusId = msg.data[index].in_reply_to_status_id_str
+        tweetObject.latitude = msg.data[index].geo ? msg.data[index].geo.coordinates[0] : ""
+        tweetObject.longitude = msg.data[index].geo ? msg.data[index].geo.coordinates[1] : ""
 
-		// URL parsing
+        // URL parsing
         if (msg.data[index].entities.urls) {
             for (var i2=0; i2<msg.data[index].entities.urls.length; i2++) {
-				tweetObject.displayTweetText = tweetObject.displayTweetText.parseURL(msg.data[index].entities.urls[i2].url,
-																					 msg.data[index].entities.urls[i2].display_url,
-																					 msg.data[index].entities.urls[i2].expanded_url)
-			}
-		}
+        tweetObject.displayTweetText = tweetObject.displayTweetText.parseURL(msg.data[index].entities.urls[i2].url,
+                                                                             msg.data[index].entities.urls[i2].display_url,
+                                                                             msg.data[index].entities.urls[i2].expanded_url)
+            }
+        }
 
-		// Media parsing
+        // Media parsing
         if (Array.isArray(msg.data[index].entities.media) && msg.data[index].entities.media.length > 0) {
             tweetObject.mediaUrl = msg.data[index].entities.media[0].media_url
-			tweetObject.displayTweetText = tweetObject.displayTweetText.parseURL(msg.data[index].entities.media[0].url,
-																				 msg.data[index].entities.media[0].display_url,
-																				 msg.data[index].entities.media[0].expanded_url)
-		}
+            tweetObject.displayTweetText = tweetObject.displayTweetText.parseURL(msg.data[index].entities.media[0].url,
+                                                                                 msg.data[index].entities.media[0].display_url,
+                                                                                 msg.data[index].entities.media[0].expanded_url)
+        }
 
-		return tweetObject
-	}
+        return tweetObject
+            }
 
     switch (msg.reloadType) {
     case "all":
