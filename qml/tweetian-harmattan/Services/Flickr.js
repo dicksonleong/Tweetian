@@ -20,13 +20,13 @@
 
 var BASE_URL = "http://api.flickr.com/services/rest/"
 
-function getSizes(constant, photoId, onSuccess) {
+function getSizes(constant, link, onSuccess) {
     var parameters = {
         method: "flickr.photos.getSizes",
         api_key: constant.flickrAPIKey,
         format: "json",
         nojsoncallback: 1,
-        photo_id: __base58Decode(photoId)
+        photo_id: __base58Decode(link.substring(17))
     }
     var url = BASE_URL + "?" + constant.encodeParameters(parameters)
     var request = new XMLHttpRequest()
@@ -43,7 +43,7 @@ function getSizes(constant, photoId, onSuccess) {
             }
             // if full is not available, use medium
             if (!full) full = medium
-            onSuccess(full, thumb)
+            onSuccess(full, thumb, link)
         }
     }
 

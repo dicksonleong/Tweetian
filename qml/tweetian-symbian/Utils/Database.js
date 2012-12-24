@@ -55,6 +55,9 @@ function getAllSettings() {
     return res
 }
 
+// TODO: remove mediaExpandedUrl & mediaThumbnail column and rename medieViewUrl column to mediaUrl
+// This will involve database change so must be done carefully
+
 function initializeTweetsTable(tableName) {
     db.transaction(function(tx) {
         tx.executeSql('CREATE TABLE IF NOT EXISTS '+ tableName +'(' +
@@ -88,8 +91,7 @@ function storeTweets(tableName, model) {
                            model.get(i).displayTweetText, (model.get(i).favourited ? 1 : 0),
                            model.get(i).inReplyToScreenName, model.get(i).inReplyToStatusId,
                            model.get(i).latitude, model.get(i).longitude,
-                           model.get(i).mediaExpandedUrl, model.get(i).mediaViewUrl,
-                           model.get(i).mediaThumbnail, model.get(i).profileImageUrl,
+                           "", model.get(i).mediaUrl, "", model.get(i).profileImageUrl,
                            model.get(i).retweetId, model.get(i).screenName,
                            model.get(i).source, model.get(i).tweetId,
                            model.get(i).tweetText, model.get(i).userName]
@@ -103,7 +105,12 @@ function getTweets(tableName) {
     db.readTransaction(function(tx) {
         var rs = tx.executeSql('SELECT * FROM '+ tableName +' ORDER BY tweetId DESC;')
         for (var i=0; i<rs.rows.length; i++) {
-            tweets.push(rs.rows.item(i))
+            var tweetObj = rs.rows.item(i)
+            tweetObj.mediaUrl = tweetObj.mediaViewUrl
+            delete tweetObj.mediaViewUrl
+            delete tweetObj.mediaExpandedUrl
+            delete tweetObj.mediaThumbnail
+            tweets.push(tweetObj)
         }
     })
     return tweets

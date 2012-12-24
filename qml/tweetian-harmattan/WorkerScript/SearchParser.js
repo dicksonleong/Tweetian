@@ -39,7 +39,8 @@ WorkerScript.onMessage = function(msg) {
             favourited: false,
             retweetId: msg.data.results[index].id_str,
             latitude: (msg.data.results[index].geo ? msg.data.results[index].geo.coordinates[0] : ""),
-            longitude: (msg.data.results[index].geo ? msg.data.results[index].geo.coordinates[1] : "")
+            longitude: (msg.data.results[index].geo ? msg.data.results[index].geo.coordinates[1] : ""),
+            mediaUrl: ""
         }
 
         if (msg.data.results[index].entities && msg.data.results[index].entities.urls) {
@@ -50,21 +51,13 @@ WorkerScript.onMessage = function(msg) {
             }
         }
 
-        /**Media entities**/
         if (msg.data.results[index].entities && msg.data.results[index].entities.media) {
-            tweetObject.mediaExpandedUrl = msg.data.results[index].entities.media[0].expanded_url
-            tweetObject.mediaViewUrl = msg.data.results[index].entities.media[0].media_url
-            tweetObject.mediaThumbnail = msg.data.results[index].entities.media[0].media_url + ":thumb"
+            tweetObject.mediaUrl = msg.data.results[index].entities.media[0].media_url
             tweetObject.displayTweetText = tweetObject.displayTweetText.parseURL(msg.data.results[index].entities.media[0].url,
                                                                                  msg.data.results[index].entities.media[0].display_url,
                                                                                  msg.data.results[index].entities.media[0].expanded_url)
         }
-        else {
-            var picURL = parsePic(tweetObject.displayTweetText)
-            tweetObject.mediaExpandedUrl = picURL[0]
-            tweetObject.mediaViewUrl = picURL[1]
-            tweetObject.mediaThumbnail = picURL[2]
-        }
+
         return tweetObject
     }
 

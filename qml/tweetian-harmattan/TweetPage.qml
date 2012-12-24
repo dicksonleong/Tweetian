@@ -42,9 +42,7 @@ Page {
                 "inReplyToStatusId": "",
                 "latitude": "",
                 "longitude": "",
-                "mediaExpandedUrl": "",
-                "mediaViewUrl": "",
-                "mediaThumbnail": "",
+                "mediaUrl": "",
                 "profileImageUrl": "",
                 "retweetId": "",
                 "screenName": "",
@@ -60,29 +58,11 @@ Page {
 
     Component.onCompleted: {
         favouritedTweet = currentTweet.favourited
-        // Process image thumbnail
-        if (currentTweet.mediaViewUrl) {
-            if (currentTweet.mediaViewUrl === "flickr") {
-                Flickr.getSizes(constant, currentTweet.mediaExpandedUrl.substring(17), function(full, thumb) {
-                    thumbnailModel.append({"type": "image", "thumb": thumb,"full": full, "link": currentTweet.mediaExpandedUrl})
-                })
-            }
-            else thumbnailModel.append({"type": "image", "thumb": currentTweet.mediaThumbnail,"full": currentTweet.mediaViewUrl,
-                                           "link": currentTweet.mediaExpandedUrl})
-        }
-        // Process location thumbnail
-        if (currentTweet.latitude && currentTweet.longitude) {
-            var thumbnailURL = Maps.getMaps(constant, currentTweet.latitude, currentTweet.longitude,
-                                            constant.thumbnailSize, constant.thumbnailSize)
-            thumbnailModel.append({"type": "map", "thumb": thumbnailURL, "full": "", "link": ""})
-        }
-        // Process Youtube thumbnail
-        var youtubeLink = currentTweet.displayTweetText.match(/https?:\/\/(youtu.be\/[\w-]{11,}|www.youtube.com\/watch\?[\w-=&]{11,})/)
-        if (youtubeLink != null) {
-            YouTube.getVideoThumbnailAndLink(constant, JS.getYouTubeVideoId(youtubeLink[0]), function(thumb, rstpLink) {
-                thumbnailModel.append({type: "video", thumb: thumb, full: "", link: rstpLink})
-            })
-        }
+        JS.createPicThumb()
+        JS.createYoutubeThumb()
+        JS.createMapThumb()
+        JS.expandTwitLonger()
+
         // Load conversation
         if (currentTweet.inReplyToStatusId) {
             backButton.enabled = false
@@ -93,12 +73,6 @@ Page {
                 inReplyToStatusId: currentTweet.inReplyToStatusId
             }
             conversationParser.sendMessage(obj)
-        }
-        // check for TwitLonger
-        var twitLongerLink = currentTweet.displayTweetText.match(/http:\/\/tl.gd\/\w+/)
-        if (twitLongerLink != null) {
-            TwitLonger.getFullTweet(constant, twitLongerLink[0], JS.getTwitLongerTextOnSuccess, JS.commonOnFailure)
-            header.busy = true
         }
     }
 
@@ -309,10 +283,8 @@ Page {
                     }
                 }
 
-                Row {
-                    id: thumbnailRow
+                Flow {
                     anchors { left: parent.left; right: parent.right }
-                    height: childrenRect.height
                     spacing: constant.paddingMedium
 
                     Repeater {

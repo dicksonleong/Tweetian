@@ -37,7 +37,8 @@ WorkerScript.onMessage = function(msg) {
 			screenName: msg.data[index].user.screen_name,
 			createdAt: new Date(msg.data[index].created_at),
 			timeDiff: timeDiff(msg.data[index].created_at),
-			source: msg.data[index].source
+            source: msg.data[index].source,
+            mediaUrl: ""
 		}
 
 		// Collecting screen name for autofill
@@ -70,20 +71,13 @@ WorkerScript.onMessage = function(msg) {
 		}
 
 		// Media parsing
-        if (msg.data[index].entities.media instanceof Array && msg.data[index].entities.media[0]) {
-			tweetObject.mediaExpandedUrl = msg.data[index].entities.media[0].expanded_url
-			tweetObject.mediaViewUrl = msg.data[index].entities.media[0].media_url
-			tweetObject.mediaThumbnail = msg.data[index].entities.media[0].media_url + ":thumb"
+        if (Array.isArray(msg.data[index].entities.media) && msg.data[index].entities.media.length > 0) {
+            tweetObject.mediaUrl = msg.data[index].entities.media[0].media_url
 			tweetObject.displayTweetText = tweetObject.displayTweetText.parseURL(msg.data[index].entities.media[0].url,
 																				 msg.data[index].entities.media[0].display_url,
 																				 msg.data[index].entities.media[0].expanded_url)
 		}
-        else {
-			var picURL = parsePic(tweetObject.displayTweetText)
-			tweetObject.mediaExpandedUrl = picURL[0]
-			tweetObject.mediaViewUrl = picURL[1]
-			tweetObject.mediaThumbnail = picURL[2]
-		}
+
 		return tweetObject
 	}
 

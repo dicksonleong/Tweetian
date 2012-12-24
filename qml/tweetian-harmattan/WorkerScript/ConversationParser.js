@@ -42,9 +42,7 @@ WorkerScript.onMessage = function(msg) {
                         "favourited": msg.timelineModel.get(iTimeline).favourited,
                         "inReplyToScreenName": msg.timelineModel.get(iTimeline).inReplyToScreenName,
                         "inReplyToStatusId": msg.timelineModel.get(iTimeline).inReplyToStatusId,
-                        "mediaExpandedUrl": msg.timelineModel.get(iTimeline).mediaExpandedUrl,
-                        "mediaViewUrl": msg.timelineModel.get(iTimeline).mediaViewUrl,
-                        "mediaThumbnail": msg.timelineModel.get(iTimeline).mediaThumbnail,
+                        "mediaUrl": msg.timelineModel.get(iTimeline).mediaUrl,
                         "latitude": msg.timelineModel.get(iTimeline).latitude,
                         "longitude": msg.timelineModel.get(iTimeline).longitude,
                         "timeDiff": timeDiff(msg.timelineModel.get(iTimeline).createdAt)
@@ -72,9 +70,7 @@ WorkerScript.onMessage = function(msg) {
                         "favourited": msg.mentionsModel.get(iMentions).favourited,
                         "inReplyToScreenName": msg.mentionsModel.get(iMentions).inReplyToScreenName,
                         "inReplyToStatusId": msg.mentionsModel.get(iMentions).inReplyToStatusId,
-                        "mediaExpandedUrl": msg.mentionsModel.get(iMentions).mediaExpandedUrl,
-                        "mediaViewUrl": msg.mentionsModel.get(iMentions).mediaViewUrl,
-                        "mediaThumbnail": msg.mentionsModel.get(iMentions).mediaThumbnail,
+                        "mediaUrl": msg.mentionsModel.get(iMentions).mediaUrl,
                         "latitude": msg.mentionsModel.get(iMentions).latitude,
                         "longitude": msg.mentionsModel.get(iMentions).longitude,
                         "timeDiff": timeDiff(msg.mentionsModel.get(iMentions).createdAt)
@@ -112,10 +108,10 @@ WorkerScript.onMessage = function(msg) {
             }
             else model = msg.descendantModel
 
-            // construct a object to be insert into model
             var tweetObject = {
-                "tweetId": msg.data[0].results[i].value.id_str,
-                "screenName": msg.data[0].results[i].value.user.screen_name
+                tweetId: msg.data[0].results[i].value.id_str,
+                screenName: msg.data[0].results[i].value.user.screen_name,
+                mediaUrl: ""
             }
 
             if (msg.data[0].results[i].value.retweeted_status) {
@@ -143,20 +139,12 @@ WorkerScript.onMessage = function(msg) {
                 }
             }
 
-            if (msg.data[0].results[i].value.entities.media instanceof Array
-                    && msg.data[0].results[i].value.entities.media[0]) {
-                tweetObject.mediaExpandedUrl = msg.data[0].results[i].value.entities.media[0].expanded_url
-                tweetObject.mediaViewUrl = msg.data[0].results[i].value.entities.media[0].media_url
-                tweetObject.mediaThumbnail = msg.data[0].results[i].value.entities.media[0].media_url + ":thumb"
+            if (Array.isArray(msg.data[0].results[i].value.entities.media)
+                    && msg.data[0].results[i].value.entities.media.length > 0) {
+                tweetObject.mediaUrl = msg.data[0].results[i].value.entities.media[0].media_url
                 tweetObject.displayTweetText = tweetObject.displayTweetText.parseURL(msg.data[0].results[i].value.entities.media[0].url,
                                                                                      msg.data[0].results[i].value.entities.media[0].display_url,
                                                                                      msg.data[0].results[i].value.entities.media[0].expanded_url)
-            }
-            else {
-                var picURL = parsePic(tweetObject.displayTweetText)
-                tweetObject.mediaExpandedUrl = picURL[0]
-                tweetObject.mediaViewUrl = picURL[1]
-                tweetObject.mediaThumbnail = picURL[2]
             }
 
             if (msg.data[0].results[i].value.geo) {
