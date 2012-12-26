@@ -2,7 +2,7 @@ TEMPLATE = app
 TARGET = tweetian
 
 # Application version
-VERSION = 1.6.1
+VERSION = 1.7.0
 DEFINES += APP_VERSION=\\\"$$VERSION\\\"
 
 # Qt Library
