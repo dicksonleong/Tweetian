@@ -35,7 +35,7 @@ Item {
     signal clicked
     signal pressAndHold
 
-    implicitWidth: parent.width
+    implicitWidth: parent ? parent.width : 0
     implicitHeight: imageAnchorAtCenter ? 0 : imageLoader.height + 2 * imageLoader.anchors.margins
 
     Image {

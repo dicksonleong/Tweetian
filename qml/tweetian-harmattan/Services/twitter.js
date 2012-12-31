@@ -58,8 +58,12 @@ var GET_SUGGESTED_USER_CATERGORIES = "https://api.twitter.com/1/users/suggestion
 var GET_SUGGESTED_USER = "https://api.twitter.com/1/users/suggestions/"
 var GET_PRIVACY_URL = "https://api.twitter.com/1/legal/privacy.json"
 var GET_TOS_URL = "https://api.twitter.com/1/legal/tos.json"
-var GET_RELATED_RESULTS = "https://api.twitter.com/1/related_results/show/"
+
 var GET_USER_STREAM_URL = "https://userstream.twitter.com/2/user.json"
+
+// Undocumented
+var GET_RELATED_RESULTS_URL = "https://api.twitter.com/1/related_results/show/"
+var GET_TWEET_ACTIVITY_SUMMARY_URL = "https://api.twitter.com/i/statuses/%1/activity/summary.json"
 
 // POST
 var POST_STATUS_URL = "https://api.twitter.com/1/statuses/update.json"
@@ -292,12 +296,6 @@ function getUserLookup(userId, onSuccess, onFailure) {
     userLookupRequest.sendRequest(onSuccess, onFailure)
 }
 
-function getConversation(id, onSuccess, onFailure) {
-    var conversationRequest = new OAuthRequest("GET", GET_RELATED_RESULTS + id + ".json")
-    conversationRequest.setParameters([["include_entities", true]])
-    conversationRequest.sendRequest(onSuccess, onFailure)
-}
-
 function getSuggestedUserCategories(onSuccess, onFailure) {
     var userCategoriesRequest = new OAuthRequest("GET", GET_SUGGESTED_USER_CATERGORIES)
     userCategoriesRequest.sendRequest(onSuccess, onFailure)
@@ -321,6 +319,19 @@ function getTermsOfService(onSuccess, onFailure) {
 function getVerifyCredentials(onSuccess, onFailure) {
     var verifyCrendtialsRequest = new OAuthRequest("GET", GET_VERIFY_CREDENTIALS_URL)
     verifyCrendtialsRequest.sendRequest(onSuccess, onFailure)
+}
+
+// Undocumented!
+function getConversation(id, onSuccess, onFailure) {
+    var conversationRequest = new OAuthRequest("GET", GET_RELATED_RESULTS_URL + id + ".json")
+    conversationRequest.setParameters([["include_entities", true]])
+    conversationRequest.sendRequest(onSuccess, onFailure)
+}
+
+// Undocumented!
+function getTweetActivitySummary(id, onSuccess, onFailure) {
+    var tweetActivityRequest = new OAuthRequest("GET", GET_TWEET_ACTIVITY_SUMMARY_URL.arg(id))
+    tweetActivityRequest.sendRequest(onSuccess, onFailure)
 }
 
 function postRequestToken(onSuccess, onFailure) {
