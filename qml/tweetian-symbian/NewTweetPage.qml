@@ -126,8 +126,8 @@ Page {
 
             function __replaceLink(w) {
                 if (w.indexOf("https://") === 0)
-                    return "https://t.co/xxxxxxxx"
-                else return "http://t.co/xxxxxxxx"
+                    return "https://t.co/xxxxxxxxxx" // Length: 23
+                else return "http://t.co/xxxxxxxxxx" // Length: 22
             }
 
             anchors { right: parent.right; bottom: parent.bottom; margins: constant.paddingMedium }

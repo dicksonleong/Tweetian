@@ -61,7 +61,7 @@ QtObject {
     property int borderSizeMedium: platformStyle.borderSizeMedium
     property int headerHeight: inPortrait ? 50 : 45
 
-    property int charReservedPerMedia: 22
+    property int charReservedPerMedia: 23
     property url twitterBirdIcon: platformInverted ? "Image/twitter-bird-light.png" : "Image/twitter-bird-dark.png"
 
     property string userAgent: QMLUtils.userAgent()
