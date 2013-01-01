@@ -250,6 +250,7 @@ Page {
                              || !userInfoData.protectedUser
                              || userInfoData.following
                              || userPage.screenName === settings.userScreenName
+                    platformInverted: settings.invertedTheme
                     onClicked: if (model.clickedString) eval(model.clickedString)
                     // TODO: Remove eval() if possible
 
