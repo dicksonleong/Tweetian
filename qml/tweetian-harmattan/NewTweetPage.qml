@@ -65,21 +65,21 @@ Page {
                     if (type == "New" || type == "Reply") {
                         if (addImageButton.checked) imageUploader.run()
                         else {
-                            if (tweetTextArea.errorHighlight) script.createUseTwitLongerDialog()
+                            if (tweetTextArea.errorHighlight) internal.createUseTwitLongerDialog()
                             else {
                                 Twitter.postStatus(tweetTextArea.text, tweetId ,latitude, longitude,
-                                                   script.postStatusOnSuccess, script.commonOnFailure)
+                                                   internal.postStatusOnSuccess, internal.commonOnFailure)
                                 header.busy = true
                             }
                         }
                     }
                     else if (type == "RT") {
-                        Twitter.postRetweet(tweetId, script.postStatusOnSuccess, script.commonOnFailure)
+                        Twitter.postRetweet(tweetId, internal.postStatusOnSuccess, internal.commonOnFailure)
                         header.busy = true
                     }
                     else if (type == "DM") {
                         Twitter.postDirectMsg(tweetTextArea.text, screenName,
-                                              script.postStatusOnSuccess, script.commonOnFailure)
+                                              internal.postStatusOnSuccess, internal.commonOnFailure)
                         header.busy = true
                     }
                 }
@@ -115,16 +115,7 @@ Page {
                 PropertyChanges { target: tweetTextArea; height: Math.max(implicitHeight, 120) }
             }
         ]
-
-        onTextChanged: {
-            var word = script.getWordAt(tweetTextArea.text, tweetTextArea.cursorPosition)
-            autoCompleter.model.clear()
-            if (/^(@|#)\w*$/.test(word) && newTweetPage.status === PageStatus.Active) {
-                inputMethodHints = Qt.ImhNoPredictiveText
-                autoCompleterWorkerScript.run(word)
-            }
-            else inputMethodHints = Qt.ImhNone
-        }
+        onTextChanged: internal.updateAutoCompleter()
 
         Text {
             id: charLeftText
@@ -184,28 +175,29 @@ Page {
             id: autoCompleter
             anchors { left: parent.left; right: parent.right }
             height: constant.graphicSizeMedium
+            model: ListModel {}
             visible: inputContext.softwareInputPanelVisible || screen.keyboardOpen
             delegate: ListButton {
                 height: ListView.view.height
-                text: buttonText
+                text: model.completeWord
                 onClicked: {
-                    var completeText = buttonText
+                    var word = model.completeWord
                     var leftIndex = tweetTextArea.text.slice(0, tweetTextArea.cursorPosition).search(/\S+$/)
                     if (leftIndex < 0) leftIndex = tweetTextArea.cursorPosition
                     var rightIndex = tweetTextArea.text.slice(tweetTextArea.cursorPosition).search(/\s/)
                     if (rightIndex < 0) {
                         rightIndex = 0
-                        completeText += " "
+                        word += " "
                     }
-                    tweetTextArea.text = tweetTextArea.text.slice(0, leftIndex) + completeText
+                    tweetTextArea.text = tweetTextArea.text.slice(0, leftIndex) + word
                             + tweetTextArea.text.slice(rightIndex + tweetTextArea.cursorPosition)
-                    tweetTextArea.cursorPosition = leftIndex + completeText.length
+                    tweetTextArea.cursorPosition = leftIndex + word.length
                     tweetTextArea.forceActiveFocus()
+                    autoCompleter.model.clear()
                 }
             }
             orientation: ListView.Horizontal
             spacing: constant.paddingSmall
-            model: ListModel {}
         }
 
         Row {
@@ -358,21 +350,7 @@ Page {
         }
     }
 
-    WorkerScript {
-        id: autoCompleterWorkerScript
-
-        function run(str) {
-            var obj = {
-                word: str,
-                model: autoCompleter.model,
-                screenNames: cache.screenNames,
-                hashtags: cache.hashtags
-            }
-            sendMessage(obj)
-        }
-
-        source: "WorkerScript/AutoCompleter.js"
-    }
+    WorkerScript { id: autoCompleterWorkerScript; source: "WorkerScript/AutoCompleter.js" }
 
     PositionSource {
         id: positionSource
@@ -392,17 +370,17 @@ Page {
         id: imageUploader
         service: settings.imageUploadService
         onSuccess: {
-            if (service == ImageUploader.Twitter) script.postStatusOnSuccess(JSON.parse(replyData))
+            if (service == ImageUploader.Twitter) internal.postStatusOnSuccess(JSON.parse(replyData))
             else {
                 var imageLink = ""
                 if (service == ImageUploader.TwitPic) imageLink = JSON.parse(replyData).url
                 else if (service == ImageUploader.MobyPicture) imageLink = JSON.parse(replyData).media.mediaurl
                 else if (service == ImageUploader.Imgly) imageLink = JSON.parse(replyData).url
                 Twitter.postStatus(tweetTextArea.text+" "+imageLink, tweetId, latitude, longitude,
-                                   script.postStatusOnSuccess, script.commonOnFailure)
+                                   internal.postStatusOnSuccess, internal.commonOnFailure)
             }
         }
-        onFailure: script.commonOnFailure(status, statusText)
+        onFailure: internal.commonOnFailure(status, statusText)
 
         function run() {
             imageUploader.setFile(imagePath)
@@ -427,9 +405,25 @@ Page {
     }
 
     QtObject {
-        id: script
+        id: internal
 
         property string twitLongerId: ""
+
+        function updateAutoCompleter() {
+            if (newTweetPage.status !== PageStatus.Active || !tweetTextArea.activeFocus) return
+            autoCompleter.model.clear()
+            var fullText = tweetTextArea.text.substring(0, tweetTextArea.cursorPosition)
+                    + tweetTextArea.platformPreedit + tweetTextArea.text.substring(tweetTextArea.cursorPosition)
+            var currentWord = getWordAt(fullText, tweetTextArea.cursorPosition)
+            if (!/^(@|#)\w*$/.test(currentWord)) return
+            var msg = {
+                word: currentWord,
+                model: autoCompleter.model,
+                screenNames: cache.screenNames,
+                hashtags: cache.hashtags
+            }
+            autoCompleterWorkerScript.sendMessage(msg)
+        }
 
         /**
           Extract a word from str at the specificed pos.
@@ -464,9 +458,9 @@ Page {
         }
 
         function twitLongerOnSuccess(twitLongerId, shortenTweet) {
-            script.twitLongerId = twitLongerId
+            internal.twitLongerId = twitLongerId
             Twitter.postStatus(shortenTweet, tweetId ,latitude, longitude,
-                               postTwitLongerStatusOnSuccess, script.commonOnFailure)
+                               postTwitLongerStatusOnSuccess, commonOnFailure)
         }
 
         function postTwitLongerStatusOnSuccess(data) {
