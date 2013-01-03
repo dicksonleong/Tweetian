@@ -423,13 +423,13 @@ Page {
     Component {
         id: inReplyToHeading
 
-        SectionHeader { width: mainColumn.width; text: qsTr("In-reply-to ↑") }
+        SectionHeader { width: mainColumn.width; text: qsTr("In-reply-to") }
     }
 
     Component {
         id: replyHeading
 
-        SectionHeader { width: mainColumn.width; text: qsTr("Reply ↓") }
+        SectionHeader { width: mainColumn.width; text: qsTr("Reply") }
     }
 
     Component {

@@ -104,7 +104,7 @@ Page {
                 onInfoClicked: dialog.createMessageDialog(qsTr("About TwitLonger"), infoText.twitLonger)
             }
 
-            SectionHeader { text: "Translation" }
+            SectionHeader { text: qsTr("Translation") }
 
             Item {
                 anchors { left: parent.left; right: parent.right }

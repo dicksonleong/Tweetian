@@ -45,7 +45,7 @@ Page {
     tools: ToolBarLayout {
         ToolButtonWithTip {
             iconSource: "toolbar-back"
-            toolTipText: "Back"
+            toolTipText: qsTr("Back")
             enabled: backButtonEnabled
             opacity: enabled ? 1 : 0.25
             onClicked: pageStack.pop()

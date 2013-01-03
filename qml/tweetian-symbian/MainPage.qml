@@ -37,7 +37,7 @@ Page {
         ToolButtonWithTip {
             property Component __exitDialog: null
             iconSource: platformInverted ? "Image/close_stop_inverse.svg" : "Image/close_stop.svg"
-            toolTipText: "Exit"
+            toolTipText: qsTr("Exit")
             onClicked: {
                 if (!__exitDialog) __exitDialog = Qt.createComponent("Dialog/ExitDialog.qml")
                 __exitDialog.createObject(mainPage)

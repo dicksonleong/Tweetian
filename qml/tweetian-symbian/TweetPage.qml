@@ -456,13 +456,13 @@ Page {
     Component {
         id: inReplyToHeading
 
-        SectionHeader { text: qsTr("In-reply-to ↑") }
+        SectionHeader { text: qsTr("In-reply-to") }
     }
 
     Component {
         id: replyHeading
 
-        SectionHeader { text: qsTr("Reply ↓") }
+        SectionHeader { text: qsTr("Reply") }
     }
 
     Component {

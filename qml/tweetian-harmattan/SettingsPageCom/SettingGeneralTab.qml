@@ -100,7 +100,7 @@ Page {
                 onCheckedChanged: settings.enableTwitLonger = checked
             }
 
-            SectionHeader { text: "Translation" }
+            SectionHeader { text: qsTr("Translation") }
 
             Item {
                 anchors { left: parent.left; right: parent.right }
