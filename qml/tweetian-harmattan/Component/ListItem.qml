@@ -32,6 +32,7 @@ Item {
     property Item imageItem: imageLoader
     property int listItemRightMargin: subItemIndicator ? iconLoader.width + iconLoader.anchors.rightMargin : 0
 
+    signal pressed
     signal clicked
     signal pressAndHold
 
@@ -105,6 +106,7 @@ Item {
     MouseArea {
         id: mouseArea
         anchors.fill: parent
+        onPressed: root.pressed()
         onClicked: root.clicked()
         onPressAndHold: root.pressAndHold()
     }
@@ -115,17 +117,5 @@ Item {
         duration: 250
         easing.type: Easing.OutBack
         from: 0.25; to: 1
-    }
-
-    ListView.onRemove: SequentialAnimation {
-        PropertyAction { target: root; property: "ListView.delayRemove"; value: true }
-        NumberAnimation {
-            target: root
-            property: "scale"
-            duration: 250
-            easing.type: Easing.InBack
-            from: 1; to: 0.25
-        }
-        PropertyAction { target: root; property: "ListView.delayRemove"; value: false }
     }
 }

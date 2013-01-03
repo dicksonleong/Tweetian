@@ -240,7 +240,7 @@ Page {
                         if (link.indexOf("@") === 0)
                             pageStack.push(Qt.resolvedUrl("UserPage.qml"), {screenName: link.substring(1)})
                         else if (link.indexOf("#") === 0)
-                            pageStack.push(Qt.resolvedUrl("SearchPage.qml"), {searchName: link})
+                            pageStack.push(Qt.resolvedUrl("SearchPage.qml"), {searchString: link})
                         else if (link.indexOf("http") === 0)
                             dialog.createOpenLinkDialog(link, JS.addToPocket, JS.addToInstapaper)
                     }

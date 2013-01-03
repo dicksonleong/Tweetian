@@ -19,21 +19,21 @@
 import QtQuick 1.1
 import com.nokia.meego 1.0
 import "Services/Twitter.js" as Twitter
-import "Utils/Calculations.js" as Calculate
 import "Component"
-import "Delegate"
+import "SearchPageCom"
 
 Page {
     id: searchPage
 
-    property string searchName
+    property string searchString
 
     property bool isSavedSearch: false
     property string savedSearchId: ""
 
-    onSearchNameChanged: internal.refresh("all")
-
-    Component.onCompleted: if (!isSavedSearch || !savedSearchId) internal.checkIsSavedSearch()
+    Component.onCompleted: {
+        if (!isSavedSearch || !savedSearchId) internal.checkIsSavedSearch()
+        if (!searchListView.currentItem.firstTimeLoaded) searchListView.currentItem.refresh("all")
+    }
 
     tools: ToolBarLayout {
         ToolIcon {
@@ -45,109 +45,106 @@ Page {
             platformIconId: isSavedSearch ? "toolbar-delete" : "toolbar-add"
             onClicked: isSavedSearch ? internal.createRemoveSavedSearchDialog() : internal.createSaveSearchDialog()
         }
-        ToolIcon {
-            platformIconId: "toolbar-view-menu"
-            onClicked: menu.open()
-        }
+        Item { width: 80; height: 64 }
     }
 
-    Menu {
-        id: menu
-
-        MenuLayout {
-            MenuItem {
-                text: qsTr("Refresh cache")
-                enabled: !header.busy
-                onClicked: internal.refresh("all")
-            }
-        }
-    }
-
-    PullDownListView {
+    ListView {
         id: searchListView
-        property bool stayAtCurrentPosition: internal.reloadType === "newer"
-        anchors { top: header.bottom; left: parent.left; right: parent.right; bottom: parent.bottom }
-        footer: LoadMoreButton {
-            visible: searchListView.count > 0
-            enabled: !header.busy
-            onClicked: internal.refresh("older")
+
+        function moveToColumn(index) {
+            columnMovingAnimation.to = index * width
+            columnMovingAnimation.restart()
         }
-        delegate: TweetDelegate {}
-        model: ListModel {}
-        onPulledDown: internal.refresh("newer")
-        onAtYBeginningChanged: if (atYBeginning) header.countBubbleValue = 0
-        onContentYChanged: refreshUnreadCountTimer.running = true
+
+        anchors {
+            top: searchTextFieldContainer.bottom; bottom: parent.bottom
+            left: parent.left; right: parent.right
+        }
+        highlightRangeMode: ListView.StrictlyEnforceRange
+        snapMode: ListView.SnapOneItem
+        orientation: ListView.Horizontal
+        boundsBehavior: Flickable.StopAtBounds
+        model: VisualItemModel {
+            TweetSearchColumn {}
+            UserSearchColumn {}
+        }
+        onCurrentIndexChanged: if (!currentItem.firstTimeLoaded) currentItem.refresh("all")
+
+        NumberAnimation {
+            id: columnMovingAnimation
+            target: searchListView
+            property: "contentX"
+            duration: 500
+            easing.type: Easing.InOutExpo
+        }
+    }
+
+    Item {
+        id: searchTextFieldContainer
+        anchors { top: searchPageHeader.bottom; left: parent.left; right: parent.right }
+        height: searchTextField.height + 2 * searchTextField.anchors.margins
+
+        BorderImage {
+            anchors.fill: parent
+            border { left: 22; top: 22; right: 22; bottom: 22 }
+            source: "image://theme/meegotouch-button" + (settings.invertedTheme ? "" : "-inverted")
+                    + "-background-horizontal-center"
+        }
+
+        TextField {
+            id: searchTextField
+            anchors { top: parent.top; left: parent.left; right: searchButton.left; margins: constant.paddingMedium }
+            placeholderText: qsTr("Search for tweets or users")
+            text: searchString
+            platformSipAttributes: SipAttributes {
+                actionKeyEnabled: searchTextField.text || searchTextField.platformPreedit
+                actionKeyHighlighted: true
+                actionKeyLabel: qsTr("Search")
+            }
+            onAccepted: {
+                parent.focus = true // remove activeFocus on searchTextField
+                internal.changeSearch()
+            }
+            onActiveFocusChanged: if (!activeFocus) resetSearchTextTimer.start()
+        }
 
         Timer {
-            id: refreshUnreadCountTimer
-            interval: 250
-            repeat: false
-            onTriggered: header.countBubbleValue = Math.min(searchListView.indexAt(0, searchListView.contentY + 5) + 1,
-                                                            header.countBubbleValue)
+            id: resetSearchTextTimer
+            interval: 100
+            onTriggered: searchTextField.text = searchString
+        }
+
+        Button {
+            id: searchButton
+            anchors { top: parent.top; bottom: parent.bottom; right: parent.right; margins: constant.paddingMedium }
+            width: height
+            // the following line will cause the button can not be clicked when there is pre-edit text
+            // in textField because it will set enabled to false when keyboard closing
+            //enabled: searchTextField.text || searchTextField.platformPreedit
+            //opacity: enabled ? 1 : 0.25
+            iconSource: "image://theme/icon-m-toolbar-search" + (settings.invertedTheme ? "" : "-white-selected")
+            onClicked: internal.changeSearch()
         }
     }
 
-    Text {
-        anchors.centerIn: parent
-        font.pixelSize: constant.fontSizeXXLarge
-        color: constant.colorMid
-        text: qsTr("No search result")
-        visible: searchListView.count == 0 && !header.busy
-    }
-
-    ScrollDecorator { flickableItem: searchListView }
-
-    PageHeader {
-        id: header
-        headerIcon: "image://theme/icon-m-toolbar-search-white-selected"
-        headerText: qsTr("Search: %1").arg("\"" + searchName + "\"")
-        onClicked: searchListView.positionViewAtBeginning()
-    }
-
-    WorkerScript {
-        id: searchParser
-        source: "WorkerScript/SearchParser.js"
-        onMessage: {
-            backButton.enabled = true
-            if (internal.reloadType === "newer") {
-                header.countBubbleVisible = true
-                header.countBubbleValue = messageObject.count
-            }
-            else {
-                header.countBubbleVisible = false
-                header.countBubbleValue = 0
-            }
-            header.busy = false
-        }
+    TabPageHeader {
+        id: searchPageHeader
+        listView: searchListView
+        iconArray: [Qt.resolvedUrl("Image/chat.png"), "image://theme/icon-m-toolbar-contact-white-selected"]
     }
 
     QtObject {
         id: internal
 
-        property string reloadType: "all"
-
-        function refresh(type) {
-            var sinceId = "", maxId = ""
-            if (searchListView.count > 0) {
-                if (type === "newer") sinceId = searchListView.model.get(0).tweetId
-                else if (type === "older") maxId =  searchListView.model.get(searchListView.count - 1).tweetId
-                else if (type === "all") searchListView.model.clear()
+        function changeSearch() {
+            searchString = searchTextField.text
+            for (var i=0; i<searchListView.model.children.length; i++) {
+                searchListView.model.children[i].firstTimeLoaded = false
             }
-            else type = "all"
-            internal.reloadType = type
-            Twitter.getSearch(searchName, sinceId, Calculate.minusOne(maxId), searchOnSuccess, searchOnFailure)
-            header.busy = true
-        }
-
-        function searchOnSuccess(data) {
-            if (reloadType != "older") searchListView.lastUpdate = new Date().toString()
-            backButton.enabled = false
-            searchParser.sendMessage({'model': searchListView.model, 'data': data, 'reloadType': reloadType})
-        }
-
-        function searchOnFailure(status, statusText) {
-            infoBanner.showHttpError(status, statusText)
-            header.busy = false
+            searchListView.currentItem.refresh("all")
+            isSavedSearch = false
+            savedSearchId = ""
+            checkIsSavedSearch()
         }
 
         function savedSearchOnSuccess(data) {
@@ -186,7 +183,7 @@ Page {
             for (var i=0; i<cache.trendsModel.count; i++) {
                 if (cache.trendsModel.get(i).type !== qsTr("Saved Searches"))
                     break
-                if (cache.trendsModel.get(i).title === searchName) {
+                if (cache.trendsModel.get(i).title === searchString) {
                     isSavedSearch = true
                     savedSearchId = cache.trendsModel.get(i).id
                     break
@@ -195,15 +192,15 @@ Page {
         }
 
         function createSaveSearchDialog() {
-            var message = qsTr("Do you want to save the search %1?").arg("\""+searchName+"\"")
+            var message = qsTr("Do you want to save the search %1?").arg("\""+searchString+"\"")
             dialog.createQueryDialog(qsTr("Save Search"), "", message, function() {
-                Twitter.postSavedSearches(searchName, savedSearchOnSuccess, savedSearchOnFailure)
+                Twitter.postSavedSearches(searchString, savedSearchOnSuccess, savedSearchOnFailure)
                 loadingRect.visible = true
             })
         }
 
         function createRemoveSavedSearchDialog() {
-            var message = qsTr("Do you want to remove the saved search %1?").arg("\""+searchName+"\"")
+            var message = qsTr("Do you want to remove the saved search %1?").arg("\""+searchString+"\"")
             dialog.createQueryDialog(qsTr("Remove Saved Search"), "", message, function() {
                 Twitter.postRemoveSavedSearch(searchPage.savedSearchId, removeSearchOnSuccess, removeSearchOnFailure)
                 loadingRect.visible = true

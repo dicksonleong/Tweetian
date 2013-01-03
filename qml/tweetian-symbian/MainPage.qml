@@ -105,7 +105,7 @@ Page {
             easing.type: Easing.InOutExpo
         }
 
-        anchors { top: header.bottom; left: parent.left; right: parent.right; bottom: parent.bottom }
+        anchors { top: mainPageHeader.bottom; left: parent.left; right: parent.right; bottom: parent.bottom }
         highlightRangeMode: ListView.StrictlyEnforceRange
         model: VisualItemModel {
             TweetListView { id: timeline; type: "Timeline" }
@@ -134,7 +134,12 @@ Page {
         }
     }
 
-    MainPageHeader { id: header }
+    TabPageHeader {
+        id: mainPageHeader
+        listView: mainView
+        iconArray: [Qt.resolvedUrl("Image/home.svg"), Qt.resolvedUrl("Image/mail.svg"),
+            Qt.resolvedUrl("Image/inbox.svg")]
+    }
 
     UserStream {
         id: userStream

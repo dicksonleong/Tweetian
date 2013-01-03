@@ -19,21 +19,20 @@
 import QtQuick 1.1
 import com.nokia.symbian 1.1
 import "Services/Twitter.js" as Twitter
-import "Utils/Calculations.js" as Calculate
 import "Component"
-import "Delegate"
+import "SearchPageCom"
 
 Page {
     id: searchPage
 
-    property string searchName
+    property string searchString
 
     property bool isSavedSearch: false
     property string savedSearchId: ""
 
-    onSearchNameChanged: internal.refresh("all")
+    onSearchStringChanged: if (!searchListView.currentItem.firstTimeLoaded) searchListView.currentItem.refresh("all")
 
-    Component.onCompleted: if (searchName && (!isSavedSearch || !savedSearchId)) internal.checkIsSavedSearch()
+    Component.onCompleted: if (searchString && (!isSavedSearch || !savedSearchId)) internal.checkIsSavedSearch()
 
     tools: ToolBarLayout {
         ToolButtonWithTip {
@@ -47,83 +46,85 @@ Page {
             toolTipText: isSavedSearch ? qsTr("Remove saved search") : qsTr("Add to saved search")
             onClicked: isSavedSearch ? internal.createRemoveSavedSearchDialog() : internal.createSaveSearchDialog()
         }
-        ToolButtonWithTip {
-            iconSource: "toolbar-menu"
-            toolTipText: qsTr("Menu")
-            onClicked: menu.open()
-        }
+        ToolButton { visible: false }
     }
 
-    Menu {
-        id: menu
-        platformInverted: settings.invertedTheme
-
-        MenuLayout {
-            MenuItem {
-                text: qsTr("Refresh cache")
-                platformInverted: menu.platformInverted
-                enabled: !header.busy
-                onClicked: internal.refresh("all")
-            }
-        }
-    }
-
-    PullDownListView {
+    ListView {
         id: searchListView
-        property bool stayAtCurrentPosition: internal.reloadType === "newer"
-        anchors { top: header.bottom; left: parent.left; right: parent.right; bottom: parent.bottom }
-        footer: LoadMoreButton {
-            visible: searchListView.count > 0
-            enabled: !header.busy
-            onClicked: internal.refresh("older")
-        }
-        delegate: TweetDelegate {}
-        model: ListModel {}
-        onPulledDown: internal.refresh("newer")
-        onAtYBeginningChanged: if (atYBeginning) header.countBubbleValue = 0
-        onContentYChanged: refreshUnreadCountTimer.running = true
 
-        Timer {
-            id: refreshUnreadCountTimer
-            interval: 250
-            repeat: false
-            onTriggered: header.countBubbleValue = Math.min(searchListView.indexAt(0, searchListView.contentY + 5) + 1,
-                                                            header.countBubbleValue)
+        function moveToColumn(index) {
+            columnMovingAnimation.to = index * width
+            columnMovingAnimation.restart()
+        }
+
+        anchors {
+            top: searchTextFieldContainer.bottom; bottom: parent.bottom
+            left: parent.left; right: parent.right
+        }
+        highlightRangeMode: ListView.StrictlyEnforceRange
+        snapMode: ListView.SnapOneItem
+        orientation: ListView.Horizontal
+        boundsBehavior: Flickable.StopAtBounds
+        model: VisualItemModel {
+            TweetSearchColumn {}
+            UserSearchColumn {}
+        }
+        onCurrentIndexChanged: if (searchString && !currentItem.firstTimeLoaded) currentItem.refresh("all")
+
+        NumberAnimation {
+            id: columnMovingAnimation
+            target: searchListView
+            property: "contentX"
+            duration: 500
+            easing.type: Easing.InOutExpo
         }
     }
 
-    Text {
-        anchors.centerIn: parent
-        font.pixelSize: constant.fontSizeXXLarge
-        color: constant.colorMid
-        text: qsTr("No search result")
-        visible: searchListView.count == 0 && !header.busy
-    }
+    Item {
+        id: searchTextFieldContainer
+        anchors { top: searchPageHeader.bottom; left: parent.left; right: parent.right }
+        height: searchTextField.height + 2 * searchTextField.anchors.margins
 
-    ScrollDecorator { platformInverted: settings.invertedTheme; flickableItem: searchListView }
-
-    PageHeader {
-        id: header
-        headerIcon: "image://theme/toolbar-search"
-        headerText: qsTr("Search: %1").arg("\"" + searchName + "\"")
-        onClicked: searchListView.positionViewAtBeginning()
-    }
-
-    WorkerScript {
-        id: searchParser
-        source: "WorkerScript/SearchParser.js"
-        onMessage: {
-            backButton.enabled = true
-            if (internal.reloadType === "newer") {
-                header.countBubbleVisible = true
-                header.countBubbleValue = messageObject.count
-            }
-            else {
-                header.countBubbleVisible = false
-                header.countBubbleValue = 0
-            }
-            header.busy = false
+        BorderImage {
+            anchors.fill: parent
+            border { left: 20; top: 20; right: 20; bottom: 20 }
+            source: "image://theme/qtg_fr_pushbutton_segmented_c_normal" + (settings.invertedTheme ? "_inverse" : "")
         }
+
+        TextField {
+            id: searchTextField
+            anchors { top: parent.top; left: parent.left; right: searchButton.left; margins: constant.paddingMedium }
+            platformInverted: settings.invertedTheme
+            // disable predictive text because there is no way to get pre-edit text in Symbian
+            inputMethodHints: Qt.ImhNoPredictiveText
+            placeholderText: qsTr("Search for tweets or users")
+            text: searchString
+            onActiveFocusChanged: if (!activeFocus) searchTextField.text = searchString
+        }
+
+        // When keyboard is closed, searchTextField still on activeFocus
+        // The following connection is to remove activeFocus on searchTextField when keyboard is closed
+        Connections {
+            target: inputContext
+            onVisibleChanged: if (!inputContext.visible) searchTextField.parent.focus = true
+        }
+
+        Button {
+            id: searchButton
+            anchors { top: parent.top; bottom: parent.bottom; right: parent.right; margins: constant.paddingMedium }
+            platformInverted: settings.invertedTheme
+            width: height
+            enabled: searchTextField.text
+            opacity: enabled ? 1 : 0.25
+            iconSource: "image://theme/toolbar-search" + (platformInverted ? "_inverse" : "")
+            onClicked: internal.changeSearch()
+        }
+    }
+
+    TabPageHeader {
+        id: searchPageHeader
+        listView: searchListView
+        iconArray: [Qt.resolvedUrl("Image/chat.png"), Qt.resolvedUrl("Image/contacts.svg")]
     }
 
     QtObject {
@@ -131,17 +132,16 @@ Page {
 
         property string reloadType: "all"
 
-        function refresh(type) {
-            var sinceId = "", maxId = ""
-            if (searchListView.count > 0) {
-                if (type === "newer") sinceId = searchListView.model.get(0).tweetId
-                else if (type === "older") maxId =  searchListView.model.get(searchListView.count - 1).tweetId
-                else if (type === "all") searchListView.model.clear()
+        function changeSearch() {
+            searchString = searchTextField.text
+            searchTextField.parent.focus = true // remove activeFocus on searchTextField
+            for (var i=0; i<searchListView.model.children.length; i++) {
+                searchListView.model.children[i].firstTimeLoaded = false
             }
-            else type = "all"
-            internal.reloadType = type
-            Twitter.getSearch(searchName, sinceId, Calculate.minusOne(maxId), searchOnSuccess, searchOnFailure)
-            header.busy = true
+            searchListView.currentItem.refresh("all")
+            isSavedSearch = false
+            savedSearchId = ""
+            checkIsSavedSearch()
         }
 
         function searchOnSuccess(data) {
@@ -154,7 +154,6 @@ Page {
             infoBanner.showHttpError(status, statusText)
             header.busy = false
         }
-
 
         function savedSearchOnSuccess(data) {
             if (cache.trendsModel.count > 0)
@@ -192,7 +191,7 @@ Page {
             for (var i=0; i<cache.trendsModel.count; i++) {
                 if (cache.trendsModel.get(i).type !== qsTr("Saved Searches"))
                     break
-                if (cache.trendsModel.get(i).title === searchName) {
+                if (cache.trendsModel.get(i).title === searchString) {
                     isSavedSearch = true
                     savedSearchId = cache.trendsModel.get(i).id
                     break
@@ -202,9 +201,9 @@ Page {
 
         function createSaveSearchDialog() {
             var icon = settings.invertedTheme ? "Image/save_inverse.svg" : "Image/save.svg"
-            var message = qsTr("Do you want to save the search %1?").arg("\""+searchName+"\"")
+            var message = qsTr("Do you want to save the search %1?").arg("\""+searchString+"\"")
             dialog.createQueryDialog(qsTr("Save Search"), icon, message, function() {
-                Twitter.postSavedSearches(searchName, savedSearchOnSuccess, savedSearchOnFailure)
+                Twitter.postSavedSearches(searchString, savedSearchOnSuccess, savedSearchOnFailure)
                 loadingRect.visible = true
             })
         }
@@ -212,7 +211,7 @@ Page {
         function createRemoveSavedSearchDialog() {
             var icon = settings.invertedTheme ? "image://theme/toolbar-delete_inverse"
                                               : "image://theme/toolbar-delete"
-            var message = qsTr("Do you want to remove the saved search %1?").arg("\""+searchName+"\"")
+            var message = qsTr("Do you want to remove the saved search %1?").arg("\""+searchString+"\"")
             dialog.createQueryDialog(qsTr("Remove Saved Search"), icon, message, function() {
                 Twitter.postRemoveSavedSearch(searchPage.savedSearchId, removeSearchOnSuccess, removeSearchOnFailure)
                 loadingRect.visible = true

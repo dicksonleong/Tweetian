@@ -98,7 +98,7 @@ Page {
 
     PageHeader {
         id: header
-        headerIcon: "Image/location_mark" + (settings.invertedTheme ? "_inverse.svg" : ".svg")
+        headerIcon: "Image/location_mark.svg"
         headerText: positionSource.active ? qsTr("Getting location...") : qsTr("Nearby Tweets")
         onClicked: searchListView.positionViewAtBeginning()
     }

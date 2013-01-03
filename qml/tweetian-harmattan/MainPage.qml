@@ -125,7 +125,12 @@ Page {
         }
     }
 
-    MainPageHeader { id: mainPageHeader }
+    TabPageHeader {
+        id: mainPageHeader
+        listView: mainView
+        iconArray: [Qt.resolvedUrl("Image/home.svg"), Qt.resolvedUrl("Image/mail.svg"),
+            Qt.resolvedUrl("Image/inbox.svg")]
+    }
 
     UserStream {
         id: userStream

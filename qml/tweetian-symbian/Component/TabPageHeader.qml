@@ -21,7 +21,17 @@ import com.nokia.symbian 1.1
 import "../Component"
 
 Item {
-    id: mainPageHeader
+    id: tabPageHeader
+
+    // listView must have:
+    // VisualItemModel as model
+    // function - moveToColumn(index)
+    // Each children of VisualItemModel must have:
+    // properties - busy (bool) and unreadCount (int)
+    // method - positionAtTop()
+    property ListView listView: null
+    property variant iconArray: []
+
     anchors { top: parent.top; left: parent.left; right: parent.right }
     height: constant.headerHeight
 
@@ -46,16 +56,16 @@ Item {
 
         Repeater {
             id: sectionRepeater
-            model: mainView.count
+            model: iconArray
             delegate: Item {
-                width: mainPageHeader.width / sectionRepeater.count
-                height: mainPageHeader.height
+                width: tabPageHeader.width / sectionRepeater.count
+                height: tabPageHeader.height
 
                 Image {
                     id: icon
                     anchors.centerIn: parent
                     sourceSize { height: constant.graphicSizeSmall; width: constant.graphicSizeSmall }
-                    source: index == 0 ? "../Image/home.svg" : index == 1 ? "../Image/mail.svg" : "../Image/inbox.svg"
+                    source: modelData
                 }
 
                 CountBubble {
@@ -64,12 +74,12 @@ Item {
                         left: icon.right; leftMargin: -constant.paddingMedium
                     }
                     visible: value > 0
-                    value: mainView.model.children[index].unreadCount
+                    value: listView.model.children[index].unreadCount
                 }
 
                 Loader {
                     anchors.fill: parent
-                    sourceComponent: mainView.model.children[index].busy
+                    sourceComponent: listView.model.children[index].busy
                                      ? busyIndicator : (sectionMouseArea.pressed ? pressingIndicator : undefined)
                     Component {
                         id: busyIndicator
@@ -105,8 +115,8 @@ Item {
                 MouseArea {
                     id: sectionMouseArea
                     anchors.fill: parent
-                    onClicked: mainView.currentIndex === index ? mainView.currentItem.positionAtTop()
-                                                               : mainView.moveToColumn(index)
+                    onClicked: listView.currentIndex === index ? listView.currentItem.positionAtTop()
+                                                               : listView.moveToColumn(index)
                     onPressed: basicHapticEffect.play()
                     onReleased: basicHapticEffect.play()
                 }
@@ -119,7 +129,7 @@ Item {
         anchors.bottom: parent.bottom
         color: "white"
         height: constant.paddingSmall
-        width: mainView.visibleArea.widthRatio * parent.width
-        x: mainView.visibleArea.xPosition * parent.width
+        width: listView.visibleArea.widthRatio * parent.width
+        x: listView.visibleArea.xPosition * parent.width
     }
 }

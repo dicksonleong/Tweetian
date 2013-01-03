@@ -93,7 +93,7 @@ Page {
 
     PageHeader {
         id: header
-        headerIcon: "image://theme/icon-m-common-location-inverse"
+        headerIcon: "image://theme/icon-s-location-picker-inverse"
         headerText: positionSource.active ? qsTr("Getting location...") : qsTr("Nearby Tweets")
         onClicked: searchListView.positionViewAtBeginning()
     }

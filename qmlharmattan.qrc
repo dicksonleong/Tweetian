@@ -9,6 +9,7 @@
         <file>qml/tweetian-harmattan/main.qml</file>
         <file>qml/tweetian-harmattan/MainPage.qml</file>
         <file>qml/tweetian-harmattan/MapPage.qml</file>
+        <file>qml/tweetian-harmattan/NearbyTweetsPage.qml</file>
         <file>qml/tweetian-harmattan/NewTweetPage.qml</file>
         <file>qml/tweetian-harmattan/SearchPage.qml</file>
         <file>qml/tweetian-harmattan/SelectImagePage.qml</file>
@@ -21,10 +22,8 @@
         <file>qml/tweetian-harmattan/TweetImage.qml</file>
         <file>qml/tweetian-harmattan/TweetPage.qml</file>
         <file>qml/tweetian-harmattan/TweetPageJS.js</file>
-        <file>qml/tweetian-harmattan/Services/Twitter.js</file>
         <file>qml/tweetian-harmattan/UserCategoryPage.qml</file>
         <file>qml/tweetian-harmattan/UserPage.qml</file>
-        <file>qml/tweetian-harmattan/UserSearchPage.qml</file>
         <file>qml/tweetian-harmattan/Component/AboutPageItem.qml</file>
         <file>qml/tweetian-harmattan/Component/FastScroll.js</file>
         <file>qml/tweetian-harmattan/Component/FastScroll.qml</file>
@@ -37,6 +36,7 @@
         <file>qml/tweetian-harmattan/Component/PullDownListView.qml</file>
         <file>qml/tweetian-harmattan/Component/PullToRefreshHeader.qml</file>
         <file>qml/tweetian-harmattan/Component/SectionHeader.qml</file>
+        <file>qml/tweetian-harmattan/Component/TabPageHeader.qml</file>
         <file>qml/tweetian-harmattan/Component/ThumbnailItem.qml</file>
         <file>qml/tweetian-harmattan/Delegate/AbstractDelegate.qml</file>
         <file>qml/tweetian-harmattan/Delegate/DirectMsgDelegate.qml</file>
@@ -49,11 +49,11 @@
         <file>qml/tweetian-harmattan/Dialog/LongPressMenu.qml</file>
         <file>qml/tweetian-harmattan/Dialog/MessageDialog.qml</file>
         <file>qml/tweetian-harmattan/Dialog/OpenLinkDialog.qml</file>
-        <file>qml/tweetian-harmattan/Dialog/SearchDialog.qml</file>
         <file>qml/tweetian-harmattan/Dialog/SignInDialog.qml</file>
         <file>qml/tweetian-harmattan/Dialog/TrendsLocationDialog.qml</file>
         <file>qml/tweetian-harmattan/Image/add_my_location.svg</file>
         <file>qml/tweetian-harmattan/Image/add_my_location_inverse.svg</file>
+        <file>qml/tweetian-harmattan/Image/banner_empty.jpg</file>
         <file>qml/tweetian-harmattan/Image/chat.png</file>
         <file>qml/tweetian-harmattan/Image/choice_list_indicator.svg</file>
         <file>qml/tweetian-harmattan/Image/choice_list_indicator_inverse.svg</file>
@@ -94,16 +94,18 @@
         <file>qml/tweetian-harmattan/MainPageCom/DirectMessage.qml</file>
         <file>qml/tweetian-harmattan/MainPageCom/DMDialog.qml</file>
         <file>qml/tweetian-harmattan/MainPageCom/DMThreadPage.qml</file>
-        <file>qml/tweetian-harmattan/MainPageCom/MainPageHeader.qml</file>
         <file>qml/tweetian-harmattan/MainPageCom/StreamingHeader.qml</file>
         <file>qml/tweetian-harmattan/MainPageCom/TweetListView.qml</file>
         <file>qml/tweetian-harmattan/MainPageCom/UserStream.js</file>
+        <file>qml/tweetian-harmattan/SearchPageCom/TweetSearchColumn.qml</file>
+        <file>qml/tweetian-harmattan/SearchPageCom/UserSearchColumn.qml</file>
         <file>qml/tweetian-harmattan/Services/Flickr.js</file>
         <file>qml/tweetian-harmattan/Services/Instapaper.js</file>
         <file>qml/tweetian-harmattan/Services/NokiaMaps.js</file>
         <file>qml/tweetian-harmattan/Services/Pocket.js</file>
         <file>qml/tweetian-harmattan/Services/Translation.js</file>
         <file>qml/tweetian-harmattan/Services/TwitLonger.js</file>
+        <file>qml/tweetian-harmattan/Services/Twitter.js</file>
         <file>qml/tweetian-harmattan/Services/Youtube.js</file>
         <file>qml/tweetian-harmattan/SettingsPageCom/AccountItem.qml</file>
         <file>qml/tweetian-harmattan/SettingsPageCom/AccountTab.qml</file>
@@ -114,6 +116,13 @@
         <file>qml/tweetian-harmattan/SettingsPageCom/SettingSlider.qml</file>
         <file>qml/tweetian-harmattan/SettingsPageCom/SettingSwitch.qml</file>
         <file>qml/tweetian-harmattan/SettingsPageCom/SettingTextField.qml</file>
+        <file>qml/tweetian-harmattan/UserPageCom/AbstractUserPage.qml</file>
+        <file>qml/tweetian-harmattan/UserPageCom/UserFavouritesPage.qml</file>
+        <file>qml/tweetian-harmattan/UserPageCom/UserFollowersPage.qml</file>
+        <file>qml/tweetian-harmattan/UserPageCom/UserFollowingPage.qml</file>
+        <file>qml/tweetian-harmattan/UserPageCom/UserListedPage.qml</file>
+        <file>qml/tweetian-harmattan/UserPageCom/UserSubscribedListsPage.qml</file>
+        <file>qml/tweetian-harmattan/UserPageCom/UserTweetsPage.qml</file>
         <file>qml/tweetian-harmattan/Utils/Calculations.js</file>
         <file>qml/tweetian-harmattan/Utils/Database.js</file>
         <file>qml/tweetian-harmattan/Utils/Parser.js</file>
@@ -124,15 +133,6 @@
         <file>qml/tweetian-harmattan/WorkerScript/SearchParser.js</file>
         <file>qml/tweetian-harmattan/WorkerScript/TweetsParser.js</file>
         <file>qml/tweetian-harmattan/WorkerScript/UserParser.js</file>
-        <file>qml/tweetian-harmattan/NearbyTweetsPage.qml</file>
-        <file>qml/tweetian-harmattan/UserPageCom/AbstractUserPage.qml</file>
-        <file>qml/tweetian-harmattan/UserPageCom/UserFavouritesPage.qml</file>
-        <file>qml/tweetian-harmattan/UserPageCom/UserFollowersPage.qml</file>
-        <file>qml/tweetian-harmattan/UserPageCom/UserFollowingPage.qml</file>
-        <file>qml/tweetian-harmattan/UserPageCom/UserListedPage.qml</file>
-        <file>qml/tweetian-harmattan/UserPageCom/UserSubscribedListsPage.qml</file>
-        <file>qml/tweetian-harmattan/UserPageCom/UserTweetsPage.qml</file>
-        <file>qml/tweetian-harmattan/Image/banner_empty.jpg</file>
         <file>i18n/tweetian_ca.qm</file>
         <file>i18n/tweetian_de.qm</file>
         <file>i18n/tweetian_en.qm</file>

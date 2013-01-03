@@ -24,8 +24,6 @@ import "SettingsPageCom"
 Page {
     id: advSearchPage
 
-    property string searchQuery: ""
-
     function __contructQuery() {
         var query = ""
 
@@ -69,7 +67,7 @@ Page {
         ToolButton {
             platformInverted: settings.invertedTheme
             text: qsTr("Search")
-            onClicked: pageStack.push(Qt.resolvedUrl("SearchPage.qml"), {searchName: __contructQuery()})
+            onClicked: pageStack.push(Qt.resolvedUrl("SearchPage.qml"), {searchString: __contructQuery()})
         }
         ToolButton {
             platformInverted: settings.invertedTheme
@@ -95,7 +93,6 @@ Page {
             SettingTextField {
                 id: allOfTheseWordsField
                 settingText: qsTr("All of these words")
-                textFieldText: searchQuery
                 validator: RegExpValidator { regExp: /(^$|^\S$|^\S.*\S$)/ }
                 placeHolderText: qsTr("eg. %1").arg("Tweetian Symbian Harmattan")
             }
