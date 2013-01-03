@@ -33,7 +33,7 @@ simulator{
     qml_symbian.target = qml
     DEPLOYMENTFOLDERS = qml_harmattan qml_symbian
 
-    RESOURCES += qmlsymbian.qrc qmlharmattan.qrc
+    RESOURCES += harmattan-res.qrc symbian-res.qrc
 }
 
 simulator|contains(MEEGO_EDITION,harmattan){
@@ -52,7 +52,7 @@ contains(MEEGO_EDITION,harmattan){
     QT += dbus
     CONFIG += qdeclarative-boostable shareuiinterface-maemo-meegotouch share-ui-plugin share-ui-common mdatauri
     DEFINES += Q_OS_HARMATTAN
-    RESOURCES += qmlharmattan.qrc
+    RESOURCES += harmattan-res.qrc
 
     HEADERS += src/tweetianif.h
     SOURCES += src/tweetianif.cpp
@@ -69,7 +69,7 @@ symbian{
     DEPLOYMENT += my_deployment
     DEPLOYMENT.display_name = Tweetian
     ICON = Tweetian.svg
-    RESOURCES += qmlsymbian.qrc
+    RESOURCES += symbian-res.qrc
 
     # Symbian have a different syntax
     DEFINES -= APP_VERSION=\\\"$$VERSION\\\"
