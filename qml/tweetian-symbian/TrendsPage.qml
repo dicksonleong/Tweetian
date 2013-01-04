@@ -113,6 +113,7 @@ Page {
                     if (model.completeWord.charAt(0) === "@")
                         pageStack.push(Qt.resolvedUrl("UserPage.qml"), {screenName: model.completeWord.slice(1)})
                     else pageStack.push(Qt.resolvedUrl("SearchPage.qml"), {searchString: model.completeWord})
+                    searchTextField.parent.focus = true // remove activeFocus on searchTextField
                 }
             }
             onPressAndHold: {
@@ -148,6 +149,11 @@ Page {
                 else trendsPageListView.model = cache.trendsModel
             }
             onTextChanged: internal.updateAutoCompleter()
+            Keys.onEnterPressed: {
+                event.accepted = true
+                searchTextField.parent.focus = true // remove activeFocus on searchTextField
+                pageStack.push(Qt.resolvedUrl("SearchPage.qml"), { searchString: searchTextField.text })
+            }
         }
 
         // When keyboard is closed, searchTextField still on activeFocus

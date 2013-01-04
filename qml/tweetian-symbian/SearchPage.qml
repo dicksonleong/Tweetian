@@ -100,6 +100,10 @@ Page {
             placeholderText: qsTr("Search for tweets or users")
             text: searchString
             onActiveFocusChanged: if (!activeFocus) searchTextField.text = searchString
+            Keys.onEnterPressed: {
+                event.accepted = true
+                internal.changeSearch()
+            }
         }
 
         // When keyboard is closed, searchTextField still on activeFocus
