@@ -92,10 +92,24 @@ Page {
     ListView {
         id: mainView
 
+        property int __contentXOffset: 0
+
         function moveToColumn(index) {
-            columnMovingAnimation.to = index * mainView.width
+            columnMovingAnimation.to = (index * width) + __contentXOffset
             columnMovingAnimation.restart()
         }
+
+        anchors { top: mainPageHeader.bottom; left: parent.left; right: parent.right; bottom: parent.bottom }
+        highlightRangeMode: ListView.StrictlyEnforceRange
+        snapMode: ListView.SnapOneItem
+        orientation: ListView.Horizontal
+        boundsBehavior: Flickable.StopAtBounds
+        model: VisualItemModel {
+            TweetListView { id: timeline; type: "Timeline" }
+            TweetListView { id: mentions; type: "Mentions" }
+            DirectMessage { id: directMsg }
+        }
+        onWidthChanged: __contentXOffset = contentX - (currentIndex * width)
 
         NumberAnimation {
             id: columnMovingAnimation
@@ -104,17 +118,6 @@ Page {
             duration: 500
             easing.type: Easing.InOutExpo
         }
-
-        anchors { top: mainPageHeader.bottom; left: parent.left; right: parent.right; bottom: parent.bottom }
-        highlightRangeMode: ListView.StrictlyEnforceRange
-        model: VisualItemModel {
-            TweetListView { id: timeline; type: "Timeline" }
-            TweetListView { id: mentions; type: "Mentions" }
-            DirectMessage { id: directMsg }
-        }
-        snapMode: ListView.SnapOneItem
-        orientation: ListView.Horizontal
-        boundsBehavior: Flickable.StopAtBounds
     }
 
     Connections {

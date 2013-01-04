@@ -52,8 +52,10 @@ Page {
     ListView {
         id: searchListView
 
+        property int __contentXOffset: 0
+
         function moveToColumn(index) {
-            columnMovingAnimation.to = index * width
+            columnMovingAnimation.to = (index * width) + __contentXOffset
             columnMovingAnimation.restart()
         }
 
@@ -70,6 +72,7 @@ Page {
             UserSearchColumn {}
         }
         onCurrentIndexChanged: if (searchString && !currentItem.firstTimeLoaded) currentItem.refresh("all")
+        onWidthChanged: __contentXOffset = contentX - (currentIndex * width)
 
         NumberAnimation {
             id: columnMovingAnimation
