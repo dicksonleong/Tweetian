@@ -65,18 +65,7 @@ Page {
             JS.expandTwitLonger()
             JS.getRTAndFavCount()
         }
-
-        // Load conversation
-        if (currentTweet.inReplyToStatusId) {
-            backButton.enabled = false
-            header.busy = true
-            var obj = {
-                ancestorModel: ancestorModel, descendantModel: descendantModel,
-                timelineModel: mainPage.timeline.model, mentionsModel: mainPage.mentions.model,
-                inReplyToStatusId: currentTweet.inReplyToStatusId
-            }
-            conversationParser.sendMessage(obj)
-        }
+        JS.getConversationFromTimelineAndMentions()
     }
 
     tools: ToolBarLayout {
@@ -89,24 +78,15 @@ Page {
             id: replyButton
             platformIconId: "toolbar-reply"
             onClicked: {
-                var prop = {
-                    type: "Reply",
-                    placedText: JS.getAllMentions(currentTweet.displayTweetText)
-                                + JS.getAllHashtags(currentTweet.displayTweetText),
-                    tweetId: currentTweet.tweetId
-                }
+                var prop = { type: "Reply", placedText: JS.contructReplyText(), tweetId: currentTweet.tweetId }
                 pageStack.push(Qt.resolvedUrl("NewTweetPage.qml"), prop)
             }
         }
         ToolIcon {
             iconSource: settings.invertedTheme ? "Image/retweet_inverse.png" : "Image/retweet.png"
             onClicked: {
-                var text
-                if (currentTweet.retweetId === currentTweet.tweetId)
-                    text = "RT @"+currentTweet.screenName + ": " + currentTweet.tweetText
-                else
-                    text = "RT @"+currentTweet.screenName+": RT @"+currentTweet.displayScreenName+": "+currentTweet.tweetText
-                pageStack.push(Qt.resolvedUrl("NewTweetPage.qml"), {type: "RT", placedText: text, tweetId: currentTweet.retweetId})
+                var prop = { type: "RT", placedText: JS.contructRetweetText(), tweetId: currentTweet.retweetId }
+                pageStack.push(Qt.resolvedUrl("NewTweetPage.qml"), prop)
             }
         }
         ToolIcon {
@@ -412,10 +392,7 @@ Page {
             if (messageObject.action === "callAPI") {
                 ancestorRepeater.model = ancestorModel
                 descendantRepeater.model = descendantModel
-                if (networkMonitor.online) {
-                    Twitter.getConversation(currentTweet.tweetId, JS.conversationOnSuccess, JS.commonOnFailure)
-                    header.busy = true
-                }
+                JS.getConversationFromTwitter()
             }
         }
     }

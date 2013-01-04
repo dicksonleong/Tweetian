@@ -226,6 +226,67 @@ function getRTAndFavCount() {
     })
 }
 
+function getConversationFromTimelineAndMentions() {
+    if (!currentTweet.inReplyToStatusId) return
+    backButton.enabled = false
+    var msg = {
+        ancestorModel: ancestorModel, descendantModel: descendantModel,
+        timelineModel: mainPage.timeline.model, mentionsModel: mainPage.mentions.model,
+        inReplyToStatusId: currentTweet.inReplyToStatusId
+    }
+    conversationParser.sendMessage(msg)
+    header.busy = true
+}
+
+function getConversationFromTwitter() {
+    if (!networkMonitor.online) return
+    Twitter.getConversation(currentTweet.tweetId, function(data) {
+        if (tweetPage.status === PageStatus.Deactivating) return
+        backButton.enabled = false
+        conversationParser.sendMessage({data: data, ancestorModel: ancestorModel, descendantModel:descendantModel})
+    }, function(status, statusText) {
+        console.log("Error caliing Twitter.getConversation():", status, statusText)
+        header.busy = false
+    })
+    header.busy = true
+}
+
+function contructReplyText() {
+    var replyText = "@" + currentTweet.screenName + " "
+
+    // if this is a retweet, include the original author screen name
+    if (currentTweet.screenName !== currentTweet.displayScreenName)
+        replyText += "@" + currentTweet.displayScreenName + " "
+
+    // check for other mentions in the tweet
+    var mentionsArray = currentTweet.displayTweetText.match(/href="@\w+/g) || []
+    mentionsArray.forEach(function(mentions) {
+        mentions = mentions.substring(6)
+        if (mentions.toLowerCase() !== "@" + settings.userScreenName.toLowerCase())
+            replyText += mentions + " "
+    })
+
+    // check for hashtag in the tweet if hashtagsInReply is enabled
+    if (settings.hashtagsInReply) {
+        var hashtagsArray = currentTweet.displayTweetText.match(/href="#[^"\s]+/g) || []
+        hashtagsArray.forEach(function(hashtag) {
+            replyText += hashtag.substring(6) + " "
+        })
+    }
+    return replyText
+}
+
+function contructRetweetText() {
+    var retweetText = "RT @" + currentTweet.screenName + ": "
+
+    // if it is a retweet, include the original author screen name
+    if (currentTweet.screenName !== currentTweet.displayScreenName)
+        retweetText += "RT @" + currentTweet.displayScreenName + ": "
+
+    retweetText += currentTweet.tweetText
+    return retweetText
+}
+
 function deleteTweetOnSuccess(data) {
     mainPage.timeline.parseData("delete", data)
     loadingRect.visible = false
@@ -247,46 +308,6 @@ function getTwitLongerTextOnSuccess(fullTweetText, link) {
     header.busy = false
 }
 
-function commonOnFailure(status, statusText) {
-    infoBanner.showHttpError(status, statusText)
-    header.busy = false
-    loadingRect.visible = false
-}
-
-function getAllMentions(text) {
-    var mentionsText = "@" + currentTweet.screenName + " "
-
-    if (currentTweet.screenName !== currentTweet.displayScreenName)
-        mentionsText += "@" + currentTweet.displayScreenName + " "
-
-    var mentionsArray = text.match(/href="@\w+/g)
-    if (mentionsArray != null) {
-        for (var i=0; i<mentionsArray.length; i++) {
-            var name = mentionsArray[i].substring(6)
-            if (name.toLowerCase() !== "@" + settings.userScreenName.toLowerCase()) mentionsText += name + " "
-        }
-    }
-
-    return mentionsText
-}
-
-function getAllHashtags(text) {
-    if (!settings.hashtagsInReply) return ""
-    var hashtags = ""
-    var hashtagsArray = text.match(/href="#[^"\s]+/g)
-    if (hashtagsArray != null)
-        for (var i=0; i<hashtagsArray.length; i++) hashtags += hashtagsArray[i].substring(6) + " "
-
-    return hashtags
-}
-
-function conversationOnSuccess(data) {
-    if (tweetPage.status !== PageStatus.Deactivating) {
-        backButton.enabled = false
-        conversationParser.sendMessage({"data": data, "ancestorModel": ancestorModel, "descendantModel":descendantModel})
-    }
-}
-
 function translateTokenOnSuccess(token) {
     cache.translationToken = token
     Translation.translate(constant, cache.translationToken, currentTweet.tweetText, settings.translateLangCode,
@@ -304,6 +325,12 @@ function translateOnSuccess(data) {
     header.busy = false
 }
 
+function commonOnFailure(status, statusText) {
+    infoBanner.showHttpError(status, statusText)
+    header.busy = false
+    loadingRect.visible = false
+}
+
 function addToPocket(link) {
     if (!settings.pocketUsername || !settings.pocketPassword) {
         var message = qsTr("You are not sign in to your Pocket account. Please sign in to your Pocket account first under the \"Account\" tab in the Settings.")
@@ -312,7 +339,13 @@ function addToPocket(link) {
     }
 
     Pocket.addPage(constant, settings.pocketUsername, settings.pocketPassword, link, currentTweet.tweetText,
-                   currentTweet.tweetId, pocketSuccessCallback, pocketFailureCallback)
+                   currentTweet.tweetId, function() {
+                       loadingRect.visible = false
+                       infoBanner.showText(qsTr("The link has been sent to Pocket successfully"))
+                   }, function(errorCode) {
+                       loadingRect.visible = false
+                       infoBanner.showText(qsTr("Error sending link to Pocket (%1)").arg(errorCode))
+                   })
     loadingRect.visible = true
 }
 
@@ -324,28 +357,14 @@ function addToInstapaper(link) {
     }
 
     Instapaper.addBookmark(constant, settings.instapaperToken, settings.instapaperTokenSecret, link,
-                           currentTweet.tweetText, instapaperSuccessCallback, instapaperFailureCallback)
+                           currentTweet.tweetText, function() {
+                               loadingRect.visible = false
+                               infoBanner.showText(qsTr("The link has been sent to Instapaper successfully"))
+                           }, function(errorCode) {
+                               loadingRect.visible = false
+                               infoBanner.showText(qsTr("Error sending link to Instapaper (%1)").arg(errorCode))
+                           })
     loadingRect.visible = true
-}
-
-function pocketSuccessCallback() {
-    loadingRect.visible = false
-    infoBanner.showText(qsTr("The link has been sent to Pocket successfully"))
-}
-
-function pocketFailureCallback(errorCode) {
-    loadingRect.visible = false
-    infoBanner.showText(qsTr("Error sending link to Pocket (%1)").arg(errorCode))
-}
-
-function instapaperSuccessCallback() {
-    loadingRect.visible = false
-    infoBanner.showText(qsTr("The link has been sent to Instapaper successfully"))
-}
-
-function instapaperFailureCallback(errorCode) {
-    loadingRect.visible = false
-    infoBanner.showText(qsTr("Error sending link to Instapaper (%1)").arg(errorCode))
 }
 
 function createDeleteTweetDialog() {
