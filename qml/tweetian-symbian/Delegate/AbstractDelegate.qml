@@ -22,28 +22,28 @@ import com.nokia.symbian 1.1
 Item {
     id: root
 
-    property string sideRectColor: ""
+    default property alias content: contentColumn.children
+    property color sideRectColor: "transparent"
     property string imageSource: profileImageUrl
+    property bool subItemIndicator: false
 
-    // read-only
-    property bool highlighted: highlight.opacity === 1
-    property Item profileImage: profileImageItem
+    property bool highlighted: highlight.opacity === 1 // read-only
 
     signal clicked
     signal pressAndHold
 
-    property int __originalHeight: height
+    property int __originalHeight: height // private
 
     implicitWidth: ListView.view ? ListView.view.width : 0
-    implicitHeight: constant.graphicSizeLarge // should be override by height
+    implicitHeight: Math.max(contentColumn.height, profileImage.height) + 2 * constant.paddingLarge
 
     BorderImage {
         id: highlight
         border {
-            left: constant.borderSizeMedium
-            top: constant.borderSizeMedium
-            right: constant.borderSizeMedium
-            bottom: constant.borderSizeMedium
+            left: platformStyle.borderSizeMedium
+            top: platformStyle.borderSizeMedium
+            right: platformStyle.borderSizeMedium
+            bottom: platformStyle.borderSizeMedium
         }
         opacity: 0
         anchors.fill: parent
@@ -60,31 +60,46 @@ Item {
 
     Rectangle {
         id: bottomLine
-        anchors { left: root.left; right: root.right }
+        anchors { left: root.left; right: root.right; bottom: parent.bottom }
         height: 1
         color: constant.colorMarginLine
-        anchors.bottom: parent.bottom
     }
 
     Loader {
         id: sideRectLoader
         anchors { left: parent.left; top: parent.top }
-        sourceComponent: sideRectColor ? sideRect : undefined
+        sourceComponent: sideRectColor == "transparent" ? undefined : sideRect
+
+        Component {
+            id: sideRect
+
+            Rectangle {
+                height: root.height - 1
+                width: constant.paddingSmall
+                color: sideRectColor ? sideRectColor : "transparent"
+            }
+        }
     }
 
-    Component {
-        id: sideRect
+    Loader {
+        id: subIconLoader
+        anchors { verticalCenter: parent.verticalCenter; right: parent.right; rightMargin: constant.paddingSmall }
+        sourceComponent: subItemIndicator ? subIconComponent : undefined
 
-        Rectangle {
-            height: root.height - 1
-            width: constant.paddingSmall
-            color: sideRectColor ? sideRectColor : "transparent"
+        Component {
+            id: subIconComponent
+
+            Image {
+                height: sourceSize.height; width: sourceSize.width
+                sourceSize { height: constant.graphicSizeSmall; width: constant.graphicSizeSmall }
+                source: "image://theme/qtg_graf_drill_down_indicator" + (settings.invertedTheme ? "_inverse" : "")
+            }
         }
     }
 
     Image {
-        id: profileImageItem
-        anchors { left: parent.left; top: parent.top; margins: constant.paddingMedium }
+        id: profileImage
+        anchors { top: parent.top; left: parent.left; margins: constant.paddingLarge }
         height: constant.graphicSizeMedium; width: constant.graphicSizeMedium
         sourceSize { height: height; width: width }
         asynchronous: true
@@ -99,7 +114,7 @@ Item {
 
         Binding {
             id: imageSourceBinding
-            target: profileImageItem
+            target: profileImage
             property: "source"
             value: thumbnailCacher.get(root.imageSource)
                    || (networkMonitor.online ? root.imageSource : constant.twitterBirdIcon)
@@ -129,10 +144,22 @@ Item {
         }
     }
 
+    Column {
+        id: contentColumn
+        anchors {
+            top: parent.top; topMargin: constant.paddingLarge
+            left: profileImage.right; leftMargin: constant.paddingMedium
+            right: parent.right
+            rightMargin: subIconLoader.status == Loader.Ready
+                         ? (constant.paddingSmall + subIconLoader.width + constant.paddingSmall)
+                         : constant.paddingMedium
+        }
+        height: childrenRect.height
+    }
+
     MouseArea {
         anchors.fill: parent
         enabled: root.enabled
-        z: 1
         onClicked: root.clicked()
         onPressed: {
             listItemHapticEffect.play()

@@ -21,58 +21,47 @@ import com.nokia.symbian 1.1
 
 AbstractDelegate {
     id: root
-    height: Math.max(textColumn.height, profileImage.height) + 2 * constant.paddingMedium
 
-    Column {
-        id: textColumn
-        anchors {
-            top: parent.top
-            left: profileImage.right; leftMargin: constant.paddingSmall
-            right: parent.right
-            margins: constant.paddingMedium
-        }
-        height: childrenRect.height
-
-        Item {
-            id: titleContainer
-            anchors { left: parent.left; right: parent.right }
-            height: listNameText.height
-
-            Text {
-                id: listNameText
-                anchors.left: parent.left
-                width: Math.min(parent.width, implicitWidth)
-                font.bold: true
-                font.pixelSize: settings.largeFontSize ? constant.fontSizeMedium : constant.fontSizeSmall
-                color: highlighted ? constant.colorHighlighted : constant.colorLight
-                elide: Text.ElideRight
-                text: listName
-            }
-
-            Text {
-                anchors { left: listNameText.right; leftMargin: constant.paddingSmall; right: parent.right }
-                font.pixelSize: settings.largeFontSize ? constant.fontSizeMedium : constant.fontSizeSmall
-                color: highlighted ? constant.colorHighlighted : constant.colorMid
-                elide: Text.ElideRight
-                text: qsTr("By %1").arg(ownerUserName)
-            }
-        }
+    Item {
+        id: titleContainer
+        anchors { left: parent.left; right: parent.right }
+        height: listNameText.height
 
         Text {
-            anchors { left: parent.left; right: parent.right }
-            visible: text != ""
-            wrapMode: Text.Wrap
+            id: listNameText
+            anchors.left: parent.left
+            width: Math.min(parent.width, implicitWidth)
+            font.bold: true
             font.pixelSize: settings.largeFontSize ? constant.fontSizeMedium : constant.fontSizeSmall
             color: highlighted ? constant.colorHighlighted : constant.colorLight
-            text: listDescription
+            elide: Text.ElideRight
+            text: listName
         }
 
         Text {
-            anchors { left: parent.left; right: parent.right }
+            anchors { left: listNameText.right; leftMargin: constant.paddingSmall; right: parent.right }
             font.pixelSize: settings.largeFontSize ? constant.fontSizeMedium : constant.fontSizeSmall
             color: highlighted ? constant.colorHighlighted : constant.colorMid
-            text: qsTr("%1 members | %2 subscribers").arg(memberCount).arg(subscriberCount)
+            elide: Text.ElideRight
+            text: qsTr("By %1").arg(ownerUserName)
         }
+    }
+
+    Text {
+        anchors { left: parent.left; right: parent.right }
+        visible: text != ""
+        wrapMode: Text.Wrap
+        font.pixelSize: settings.largeFontSize ? constant.fontSizeMedium : constant.fontSizeSmall
+        color: highlighted ? constant.colorHighlighted : constant.colorLight
+        text: listDescription
+    }
+
+    Text {
+        anchors { left: parent.left; right: parent.right }
+        font.pixelSize: settings.largeFontSize ? constant.fontSizeMedium : constant.fontSizeSmall
+        color: highlighted ? constant.colorHighlighted : constant.colorMid
+        elide: Text.ElideRight
+        text: qsTr("%1 members | %2 subscribers").arg(memberCount).arg(subscriberCount)
     }
 
     onClicked: {

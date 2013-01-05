@@ -53,7 +53,6 @@ QtObject {
     property int thumbnailSize: 150
 
     // other
-    property int borderSizeMedium: 20
     property int headerHeight: inPortrait ? 65 : 55
 
     property int charReservedPerMedia: 23

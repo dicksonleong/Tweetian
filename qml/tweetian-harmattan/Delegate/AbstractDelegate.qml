@@ -23,25 +23,25 @@ import com.nokia.extras 1.1
 Item {
     id: root
 
-    property string sideRectColor: ""
+    default property alias content: contentColumn.children
+    property color sideRectColor: "transparent"
     property string imageSource: profileImageUrl
+    property bool subItemIndicator: false
 
-    // read-only
-    property bool highlighted: highlight.visible
-    property Item profileImage: profileImageItem
+    property bool highlighted: highlight.visible // read-only
 
     signal clicked
     signal pressAndHold
 
-    property int __originalHeight: height
+    property int __originalHeight: height // private
 
     implicitWidth: ListView.view ? ListView.view.width : 0
-    implicitHeight: constant.graphicSizeLarge // should be override by height
+    implicitHeight: Math.max(contentColumn.height, profileImage.height) + 2 * constant.paddingLarge
 
     Image {
         id: highlight
         anchors.fill: parent
-        visible: delegateMouseArea.pressed
+        visible: mouseArea.pressed
         source: settings.invertedTheme ? "image://theme/meegotouch-panel-background-pressed"
                                        : "image://theme/meegotouch-panel-inverted-background-pressed"
     }
@@ -56,22 +56,38 @@ Item {
     Loader {
         id: sideRectLoader
         anchors { left: parent.left; top: parent.top }
-        sourceComponent: sideRectColor ? sideRect : undefined
+        sourceComponent: sideRectColor == "transparent" ? undefined : sideRect
+
+        Component {
+            id: sideRect
+
+            Rectangle {
+                height: root.height - bottomLine.height
+                width: constant.paddingSmall
+                color: sideRectColor
+            }
+        }
     }
 
-    Component {
-        id: sideRect
+    Loader {
+        id: subIconLoader
+        anchors { verticalCenter: parent.verticalCenter; right: parent.right; rightMargin: constant.paddingSmall }
+        sourceComponent: subItemIndicator ? subIconComponent : undefined
 
-        Rectangle {
-            height: root.height - bottomLine.height
-            width: constant.paddingSmall
-            color: sideRectColor ? sideRectColor : "transparent"
+        Component {
+            id: subIconComponent
+
+            Image {
+                height: sourceSize.height; width: sourceSize.width
+                sourceSize { width: constant.graphicSizeSmall; height: constant.graphicSizeSmall }
+                source: "image://theme/icon-m-common-drilldown-arrow" + (settings.invertedTheme ? "" : "-inverse")
+            }
         }
     }
 
     MaskedItem {
-        id: profileImageItem
-        anchors { left: parent.left; top: parent.top; margins: constant.paddingMedium }
+        id: profileImageMaskedItem
+        anchors { top: parent.top; left: parent.left; margins: constant.paddingLarge }
         width: constant.graphicSizeMedium; height: constant.graphicSizeMedium
         mask: Image { source: "../Image/pic_mask.png"}
 
@@ -122,11 +138,23 @@ Item {
         }
     }
 
+    Column {
+        id: contentColumn
+        anchors {
+            top: parent.top; topMargin: constant.paddingLarge
+            left: profileImageMaskedItem.right; leftMargin: constant.paddingMedium
+            right: parent.right
+            rightMargin: subIconLoader.status == Loader.Ready
+                         ? (constant.paddingSmall + subIconLoader.width + constant.paddingSmall)
+                         : constant.paddingMedium
+        }
+        height: childrenRect.height
+    }
+
     MouseArea {
-        id: delegateMouseArea
+        id: mouseArea
         anchors.fill: parent
         enabled: root.enabled
-        z: 1
         onClicked: root.clicked()
         onPressAndHold: root.pressAndHold()
     }

@@ -21,84 +21,63 @@ import com.nokia.symbian 1.1
 
 AbstractDelegate {
     id: root
-    height: Math.max(textColumn.height, profileImage.height) + 2 * constant.paddingMedium
-    sideRectColor: followersCount == 0 ? "Red" : ""
+    sideRectColor: followersCount == 0 ? "red" : "transparent"
 
-    Loader {
-        id: iconLoader
-        anchors {
-            right: parent.right
-            top: parent.top
-            margins: constant.paddingMedium
-        }
-        sourceComponent: protectedUser ? protectedIcon : undefined
-    }
-
-    Component {
-        id: protectedIcon
-
-        Image {
-            sourceSize { height: constant.graphicSizeTiny; width: constant.graphicSizeTiny }
-            source: settings.invertedTheme ? "../Image/lock_inverse.svg" : "../Image/lock.svg"
-        }
-    }
-
-    Column {
-        id: textColumn
-        anchors {
-            top: parent.top
-            left: profileImage.right; leftMargin: constant.paddingSmall
-            right: parent.right
-            margins: constant.paddingMedium
-        }
-        height: childrenRect.height
-
-        Item {
-            anchors { left: parent.left; right: parent.right }
-            height: userNameText.height
-
-            Text {
-                id: userNameText
-                anchors.left: parent.left
-                width: Math.min(implicitWidth, parent.width)
-                font.bold: true
-                font.pixelSize: settings.largeFontSize ? constant.fontSizeMedium : constant.fontSizeSmall
-                color: highlighted ? constant.colorHighlighted : constant.colorLight
-                elide: Text.ElideRight
-                text: userName
-            }
-
-            Text {
-                anchors { left: userNameText.right; right: lockIconLoader.left; margins: constant.paddingSmall }
-                width: parent.width - userNameText
-                font.pixelSize: settings.largeFontSize ? constant.fontSizeMedium : constant.fontSizeSmall
-                color: highlighted ? constant.colorHighlighted : constant.colorMid
-                elide: Text.ElideRight
-                text: "@" + screenName
-            }
-
-            Loader {
-                id: lockIconLoader
-                anchors.right: parent.right
-                sourceComponent: protectedUser ? protectedIcon : undefined
-            }
-        }
+    Item {
+        anchors { left: parent.left; right: parent.right }
+        height: userNameText.height
 
         Text {
-            anchors { left: parent.left; right: parent.right }
+            id: userNameText
+            anchors.left: parent.left
+            width: Math.min(implicitWidth, parent.width)
+            font.bold: true
             font.pixelSize: settings.largeFontSize ? constant.fontSizeMedium : constant.fontSizeSmall
-            visible: text != ""
-            wrapMode: Text.Wrap
             color: highlighted ? constant.colorHighlighted : constant.colorLight
-            text: bio
+            elide: Text.ElideRight
+            text: userName
         }
 
         Text {
-            anchors { left: parent.left; right: parent.right }
+            anchors { left: userNameText.right; right: lockIconLoader.left; margins: constant.paddingSmall }
+            width: parent.width - userNameText
             font.pixelSize: settings.largeFontSize ? constant.fontSizeMedium : constant.fontSizeSmall
             color: highlighted ? constant.colorHighlighted : constant.colorMid
-            text: qsTr("%1 following | %2 followers").arg(followingCount).arg(followersCount)
+            elide: Text.ElideRight
+            text: "@" + screenName
         }
+
+        Loader {
+            id: lockIconLoader
+            anchors.right: parent.right
+            sourceComponent: protectedUser ? protectedIcon : undefined
+
+            Component {
+                id: protectedIcon
+
+                Image {
+                    sourceSize { height: constant.graphicSizeTiny; width: constant.graphicSizeTiny }
+                    source: settings.invertedTheme ? "../Image/lock_inverse.svg" : "../Image/lock.svg"
+                }
+            }
+        }
+    }
+
+    Text {
+        anchors { left: parent.left; right: parent.right }
+        font.pixelSize: settings.largeFontSize ? constant.fontSizeMedium : constant.fontSizeSmall
+        visible: text != ""
+        wrapMode: Text.Wrap
+        color: highlighted ? constant.colorHighlighted : constant.colorLight
+        text: bio
+    }
+
+    Text {
+        anchors { left: parent.left; right: parent.right }
+        font.pixelSize: settings.largeFontSize ? constant.fontSizeMedium : constant.fontSizeSmall
+        color: highlighted ? constant.colorHighlighted : constant.colorMid
+        elide: Text.ElideRight
+        text: qsTr("%1 following | %2 followers").arg(followingCount).arg(followersCount)
     }
 
     onClicked: {

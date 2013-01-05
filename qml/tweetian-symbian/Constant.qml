@@ -58,7 +58,6 @@ QtObject {
     property int thumbnailSize: platformStyle.graphicSizeLarge * 1.5
 
     // other
-    property int borderSizeMedium: platformStyle.borderSizeMedium
     property int headerHeight: inPortrait ? 50 : 45
 
     property int charReservedPerMedia: 23

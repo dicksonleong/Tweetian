@@ -21,66 +21,48 @@ import com.nokia.symbian 1.1
 
 AbstractDelegate {
     id: root
-    height: Math.max(textColumn.height, profileImage.height) + 2 * constant.paddingMedium
-    sideRectColor: newMsg ? constant.colorTextSelection : ""
+    subItemIndicator: true
+    sideRectColor: newMsg ? constant.colorTextSelection : "transparent"
 
-    Column {
-        id: textColumn
-        anchors {
-            top: parent.top; topMargin: constant.paddingMedium
-            left: profileImage.right; leftMargin: constant.paddingSmall
-            right: subIcon.left
-        }
-        height: childrenRect.height
-
-        Item {
-            anchors { left: parent.left; right: parent.right }
-            height: userNameText.height
-
-            Text {
-                id: userNameText
-                anchors.left: parent.left
-                width: Math.min(implicitWidth, parent.width)
-                font.pixelSize: settings.largeFontSize ? constant.fontSizeMedium : constant.fontSizeSmall
-                font.bold: true
-                color: highlighted ? constant.colorHighlighted : constant.colorLight
-                elide: Text.ElideRight
-                text: userName
-            }
-
-            Text {
-                anchors { left: userNameText.right; leftMargin: constant.paddingSmall; right: parent.right }
-                font.pixelSize: settings.largeFontSize ? constant.fontSizeMedium : constant.fontSizeSmall
-                color: highlighted ? constant.colorHighlighted : constant.colorMid
-                elide: Text.ElideRight
-                text: "@" + screenName
-            }
-        }
+    Item {
+        anchors { left: parent.left; right: parent.right }
+        height: userNameText.height
 
         Text {
-            anchors { left: parent.left; right: parent.right }
-            wrapMode: Text.Wrap
+            id: userNameText
+            anchors.left: parent.left
+            width: Math.min(implicitWidth, parent.width)
             font.pixelSize: settings.largeFontSize ? constant.fontSizeMedium : constant.fontSizeSmall
+            font.bold: true
             color: highlighted ? constant.colorHighlighted : constant.colorLight
-            text: tweetText
+            elide: Text.ElideRight
+            text: userName
         }
 
         Text {
-            anchors { left: parent.left; right: parent.right }
-            horizontalAlignment: Text.AlignRight
-            font.pixelSize: settings.largeFontSize ? constant.fontSizeSmall : constant.fontSizeXSmall
+            anchors { left: userNameText.right; leftMargin: constant.paddingSmall; right: parent.right }
+            font.pixelSize: settings.largeFontSize ? constant.fontSizeMedium : constant.fontSizeSmall
             color: highlighted ? constant.colorHighlighted : constant.colorMid
-            text: timeDiff
+            elide: Text.ElideRight
+            text: "@" + screenName
         }
     }
 
-    Image {
-        id: subIcon
-        anchors { verticalCenter: parent.verticalCenter; right: parent.right; rightMargin: constant.paddingMedium }
-        height: sourceSize.height; width: sourceSize.width
-        sourceSize { height: constant.graphicSizeSmall; width: constant.graphicSizeSmall }
-        source: settings.invertedTheme ? "image://theme/qtg_graf_drill_down_indicator_inverse"
-                                       : "image://theme/qtg_graf_drill_down_indicator"
+    Text {
+        anchors { left: parent.left; right: parent.right }
+        wrapMode: Text.Wrap
+        font.pixelSize: settings.largeFontSize ? constant.fontSizeMedium : constant.fontSizeSmall
+        color: highlighted ? constant.colorHighlighted : constant.colorLight
+        text: tweetText
+    }
+
+    Text {
+        anchors { left: parent.left; right: parent.right }
+        horizontalAlignment: Text.AlignRight
+        font.pixelSize: settings.largeFontSize ? constant.fontSizeSmall : constant.fontSizeXSmall
+        color: highlighted ? constant.colorHighlighted : constant.colorMid
+        elide: Text.ElideRight
+        text: timeDiff
     }
 
     onClicked: {
