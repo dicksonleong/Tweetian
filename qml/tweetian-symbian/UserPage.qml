@@ -244,7 +244,7 @@ Page {
                 model: ListModel {}
                 delegate: ListItem {
                     id: listItem
-                    height: Math.max(listItemColumn.height + 2 * constant.paddingMedium, implicitHeight)
+                    height: Math.max(listItemColumn.height + 2 * constant.paddingLarge, implicitHeight)
                     subItemIndicator: model.clickedString
                     enabled: (!subItemIndicator || title === "Website")
                              || !userInfoData.protectedUser

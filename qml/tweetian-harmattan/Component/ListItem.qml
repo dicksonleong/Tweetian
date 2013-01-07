@@ -25,7 +25,6 @@ Item {
 
     property bool marginLineVisible: true
     property bool subItemIndicator: false
-    property bool imageAnchorAtCenter: false
     property url imageSource: ""
 
     // READ-ONLY
@@ -37,7 +36,7 @@ Item {
     signal pressAndHold
 
     implicitWidth: parent ? parent.width : 0
-    implicitHeight: imageAnchorAtCenter ? 0 : imageLoader.height + 2 * imageLoader.anchors.margins
+    implicitHeight: imageSource ? imageLoader.height + 2 * imageLoader.anchors.margins : 0
 
     Image {
         id: background
@@ -45,6 +44,14 @@ Item {
         visible: mouseArea.pressed
         source: settings.invertedTheme ? "image://theme/meegotouch-panel-background-pressed"
                                        : "image://theme/meegotouch-panel-inverted-background-pressed"
+    }
+
+    Rectangle {
+        id: bottomLine
+        height: 1
+        anchors { left: root.left; right: root.right; bottom: parent.bottom }
+        color: constant.colorDisabled
+        visible: root.marginLineVisible
     }
 
     Loader {
@@ -69,10 +76,9 @@ Item {
     Loader {
         id: imageLoader
         anchors {
-            top: imageAnchorAtCenter ? undefined : parent.top
+            verticalCenter: parent.verticalCenter
             left: parent.left
-            verticalCenter: imageAnchorAtCenter ? parent.verticalCenter : undefined
-            margins: constant.paddingMedium
+            margins: constant.paddingLarge
         }
         sourceComponent: imageSource ? imageComponent : undefined
     }
@@ -93,14 +99,6 @@ Item {
                 source: root.imageSource
             }
         }
-    }
-
-    Rectangle {
-        id: bottomLine
-        height: 1
-        anchors { left: root.left; right: root.right; bottom: parent.bottom }
-        color: constant.colorDisabled
-        visible: root.marginLineVisible
     }
 
     MouseArea {

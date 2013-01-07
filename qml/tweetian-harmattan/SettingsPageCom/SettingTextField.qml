@@ -35,7 +35,7 @@ Item {
         id: column
         anchors {
             left: parent.left; leftMargin: constant.paddingMedium
-            right: parent.right; rightMargin: constant.paddingXLarge
+            right: parent.right; rightMargin: constant.paddingLarge
         }
         height: childrenRect.height
         spacing: constant.paddingMedium

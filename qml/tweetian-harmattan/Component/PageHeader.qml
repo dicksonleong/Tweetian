@@ -65,7 +65,7 @@ Item {
 
     Loader {
         id: busyIndicatorLoader
-        anchors { right: parent.right; rightMargin: constant.paddingXLarge; verticalCenter: parent.verticalCenter }
+        anchors { right: parent.right; rightMargin: constant.paddingLarge; verticalCenter: parent.verticalCenter }
         sourceComponent: busy ? busyIndicatorComponent : (countBubbleVisible ? countBubbleComponent : undefined)
     }
 

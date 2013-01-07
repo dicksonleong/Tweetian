@@ -178,7 +178,6 @@ Page {
                     anchors { left: parent.left; right: parent.right }
                     height: usernameColumn.height + 2 * usernameColumn.anchors.margins
                     subItemIndicator: true
-                    imageAnchorAtCenter: true
                     onClicked: {
                         pageStack.push(Qt.resolvedUrl("UserPage.qml"), {screenName: currentTweet.displayScreenName})
                     }
@@ -324,13 +323,13 @@ Page {
                     model: ListModel {}
 
                     ListItem {
-                        height: rtAndFavCountText.paintedHeight + 2 * constant.paddingXLarge
+                        height: rtAndFavCountText.paintedHeight + 2 * constant.paddingLarge
                         width: rtAndFavCountColumn.width
                         subItemIndicator: true
 
                         Row {
                             anchors {
-                                left: parent.left; right: parent.right; margins: constant.paddingMedium
+                                left: parent.left; right: parent.right; margins: constant.paddingLarge
                                 verticalCenter: parent.verticalCenter
                             }
                             height: childrenRect.height

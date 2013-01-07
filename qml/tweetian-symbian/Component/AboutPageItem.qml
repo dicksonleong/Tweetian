@@ -26,13 +26,13 @@ ListItem {
     property string text: ""
 
     width: parent.width
-    height: pic.height + 2 * constant.paddingMedium
+    height: pic.height + 2 * constant.paddingLarge
     subItemIndicator: true
     platformInverted: settings.invertedTheme
 
     Image {
         id: pic
-        anchors { top: parent.top; left: parent.left; margins: constant.paddingMedium }
+        anchors { verticalCenter: parent.verticalCenter; left: parent.paddingItem.left }
         sourceSize { width: constant.graphicSizeMedium; height: constant.graphicSizeMedium }
         cache: false
         source: root.imageSource
@@ -40,13 +40,10 @@ ListItem {
 
     Text {
         anchors {
-            top: parent.top
-            bottom: parent.bottom
-            left: pic.right
-            right: parent.righ
-            margins: constant.paddingMedium
+            verticalCenter: parent.verticalCenter
+            left: pic.right; leftMargin: constant.paddingMedium
+            right: parent.paddingItem.right
         }
-        verticalAlignment: Text.AlignVCenter
         elide: Text.ElideRight
         font.pixelSize: constant.fontSizeMedium
         color: constant.colorLight

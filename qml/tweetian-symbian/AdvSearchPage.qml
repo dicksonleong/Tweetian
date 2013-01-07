@@ -121,12 +121,16 @@ Page {
             ListItem {
                 id: languageListItem
                 platformInverted: settings.invertedTheme
-                height: textColumn.height + 2 * textColumn.anchors.margins
+                height: textColumn.height + 2 * constant.paddingLarge
 
                 Column {
                     id: textColumn
+                    anchors {
+                        verticalCenter: parent.verticalCenter
+                        left: parent.paddingItem.left
+                        right: choiceListIcon.left; rightMargin: constant.paddingMedium
+                    }
                     height: childrenRect.height
-                    anchors { left: parent.left; right: parent.right; top: parent.top; margins: constant.paddingLarge }
 
                     ListItemText {
                         platformInverted: languageListItem.platformInverted
@@ -144,10 +148,8 @@ Page {
                 }
 
                 Image {
-                    anchors {
-                        right: parent.right; rightMargin: constant.paddingMedium
-                        verticalCenter: parent.verticalCenter
-                    }
+                    id: choiceListIcon
+                    anchors { verticalCenter: parent.verticalCenter; right: parent.paddingItem.right }
                     source: languageListItem.platformInverted ? "image://theme/qtg_graf_choice_list_indicator_inverse"
                                                               : "image://theme/qtg_graf_choice_list_indicator"
                 }

@@ -33,7 +33,7 @@ Item {
     }
 
     anchors { left: parent.left; right: parent.right; bottom: parent.bottom; margins: constant.paddingMedium }
-    height: constant.paddingXXLarge
+    height: constant.paddingXLarge
 
     SequentialAnimation {
         id: fadeOut

@@ -29,7 +29,7 @@ Item {
     signal infoClicked
 
     width: parent.width
-    height: switchItem.height + 2 * switchItem.anchors.topMargin
+    height: switchItem.height + 2 * switchItem.anchors.margins
 
     Text {
         anchors {
@@ -48,7 +48,7 @@ Item {
 
     Loader {
         id: infoIconLoader
-        anchors { right: switchItem.left; rightMargin: constant.paddingLarge; verticalCenter: parent.verticalCenter }
+        anchors { right: switchItem.left; rightMargin: constant.paddingMedium; verticalCenter: parent.verticalCenter }
         sourceComponent: infoButtonVisible ? infoIcon : undefined
 
         MouseArea {
@@ -71,9 +71,6 @@ Item {
 
     Switch {
         id: switchItem
-        anchors {
-            top: parent.top; topMargin: constant.paddingXLarge
-            right: parent.right; rightMargin: constant.paddingXLarge
-        }
+        anchors { verticalCenter: parent.verticalCenter; right: parent.right; margins: constant.paddingLarge }
     }
 }

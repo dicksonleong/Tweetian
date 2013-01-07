@@ -51,14 +51,17 @@ Item {
         header: SectionHeader { id: sectionHeader; text: qsTr("List Info") }
         delegate: ListItem {
             id: listItem
-            height: listItemColumn.height + 2 * constant.paddingMedium
+            height: listItemColumn.height + 2 * constant.paddingLarge
             platformInverted: settings.invertedTheme
             subItemIndicator: model.clickedString
             onClicked: if (model.clickedString) eval(model.clickedString)
 
             Column {
                 id: listItemColumn
-                anchors { top: parent.paddingItem.top; left: parent.paddingItem.left; right: parent.paddingItem.right }
+                anchors {
+                    verticalCenter: parent.verticalCenter
+                    left: parent.paddingItem.left; right: parent.paddingItem.right
+                }
                 height: childrenRect.height
 
                 ListItemText {

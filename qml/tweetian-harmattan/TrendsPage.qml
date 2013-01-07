@@ -85,7 +85,11 @@ Page {
 
             Text {
                 id: titleText
-                anchors { top: parent.top; left: parent.left; right: parent.right; margins: constant.paddingXLarge }
+                anchors {
+                    verticalCenter: parent.verticalCenter
+                    left: parent.left; right: parent.right
+                    margins: constant.paddingLarge
+                }
                 font.pixelSize: constant.fontSizeMedium
                 color: constant.colorLight
                 elide: Text.ElideRight

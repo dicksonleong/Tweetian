@@ -26,8 +26,6 @@ ListItem {
 
     marginLineVisible: false
     subItemIndicator: true
-    imageAnchorAtCenter: true
-    height: imageItem.height + 2 * constant.paddingXXLarge
 
     Text {
         anchors { left: imageItem.right; leftMargin: constant.paddingMedium; verticalCenter: parent.verticalCenter }

@@ -29,7 +29,7 @@ Item {
         id: line
         anchors {
             left: parent.left
-            right: text.left; rightMargin: constant.paddingXLarge
+            right: text.left; rightMargin: constant.paddingLarge
             verticalCenter: parent.verticalCenter
         }
         color: constant.colorMid
@@ -38,7 +38,7 @@ Item {
 
     Text {
         id: text
-        anchors { right: parent.right; rightMargin: constant.paddingXLarge }
+        anchors { right: parent.right; rightMargin: constant.paddingLarge }
         color: constant.colorMid
         elide: Text.ElideRight
         horizontalAlignment: Text.AlignRight

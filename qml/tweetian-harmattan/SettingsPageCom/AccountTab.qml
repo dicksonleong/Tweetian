@@ -27,7 +27,7 @@ Page {
     id: accountTab
 
     Column {
-        anchors { top: parent.top; topMargin: constant.paddingLarge; left: parent.left; right: parent.right }
+        anchors { top: parent.top; topMargin: constant.paddingMedium; left: parent.left; right: parent.right }
         height: childrenRect.height
         spacing: constant.paddingLarge
 

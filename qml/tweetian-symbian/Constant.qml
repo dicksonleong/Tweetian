@@ -39,7 +39,6 @@ QtObject {
     property int paddingMedium: platformStyle.paddingMedium
     property int paddingLarge: platformStyle.paddingLarge
     property int paddingXLarge: platformStyle.paddingLarge + platformStyle.paddingSmall
-    property int paddingXXLarge: platformStyle.paddingLarge + platformStyle.paddingMedium
 
     // font size
     property int fontSizeXSmall: platformStyle.fontSizeSmall - 2

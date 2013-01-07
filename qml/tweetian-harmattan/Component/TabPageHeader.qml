@@ -118,7 +118,7 @@ Item {
         id: currentSectionIndicator
         anchors.bottom: parent.bottom
         color: "white"
-        height: constant.paddingMedium
+        height: constant.paddingSmall
         width: listView.visibleArea.widthRatio * parent.width
         x: listView.visibleArea.xPosition * parent.width
     }

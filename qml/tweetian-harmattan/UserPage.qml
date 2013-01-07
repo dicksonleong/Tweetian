@@ -239,7 +239,7 @@ Page {
                 delegate: ListItem {
                     id: listItem
                     parent: userInfoRepeater
-                    height: Math.max(listItemColumn.height + 2 * constant.paddingMedium, 80)
+                    height: Math.max(listItemColumn.height + 2 * constant.paddingLarge, 80)
                     subItemIndicator: model.clickedString
                     enabled: (!subItemIndicator || title === "Website")
                              || !userInfoData.protectedUser
@@ -252,11 +252,9 @@ Page {
                         id: listItemColumn
                         anchors {
                             verticalCenter: parent.verticalCenter
-                            left: parent.left
+                            left: parent.left; leftMargin: constant.paddingLarge
                             right: parent.right
-                            margins: constant.paddingLarge
-                            rightMargin: listItem.subItemIndicator ? constant.graphicSizeSmall + 2 * constant.paddingMedium
-                                                                   : anchors.margins
+                            rightMargin: listItem.listItemRightMargin + constant.paddingMedium
                         }
                         height: childrenRect.height
 

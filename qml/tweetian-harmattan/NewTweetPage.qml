@@ -144,7 +144,7 @@ Page {
             Rectangle {
                 color: "white"
                 opacity: 0.9
-                radius: constant.paddingLarge
+                radius: constant.paddingMedium
 
                 Text {
                     color: "black"

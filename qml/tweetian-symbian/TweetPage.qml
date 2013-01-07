@@ -353,7 +353,7 @@ Page {
 
                         Row {
                             anchors {
-                                left: parent.left; right: parent.right; margins: constant.paddingMedium
+                                left: parent.paddingItem.left; right: parent.paddingItem.right
                                 verticalCenter: parent.verticalCenter
                             }
                             height: childrenRect.height

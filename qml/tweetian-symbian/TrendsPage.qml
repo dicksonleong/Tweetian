@@ -93,7 +93,10 @@ Page {
 
             ListItemText {
                 id: titleText
-                anchors { top: parent.paddingItem.top; left: parent.paddingItem.left; right: parent.paddingItem.right }
+                anchors {
+                    verticalCenter: parent.verticalCenter
+                    left: parent.paddingItem.left; right: parent.paddingItem.right
+                }
                 platformInverted: parent.platformInverted
                 mode: trendsListItem.mode
                 role: "Title"

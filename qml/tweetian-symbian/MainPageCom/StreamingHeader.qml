@@ -26,12 +26,10 @@ Item {
 
     Row {
         id: headerRow
-        anchors.horizontalCenter: parent.horizontalCenter
-        anchors.bottom: parent.top
-        anchors.bottomMargin: constant.paddingXXLarge
+        anchors { horizontalCenter: parent.horizontalCenter; bottom: parent.top; bottomMargin: constant.paddingXLarge }
         width: childrenRect.width
         visible: root.ListView.view.__wasAtYBeginning && root.ListView.view.__initialContentY - root.ListView.view.contentY > 10
-        spacing: constant.paddingLarge
+        spacing: constant.paddingMedium
 
         Loader {
             id: iconLoader

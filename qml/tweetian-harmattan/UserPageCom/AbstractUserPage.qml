@@ -79,7 +79,7 @@ Page {
     PageHeader {
         id: header
         headerIcon: userInfoData.profileImageUrl
-        headerText: "<b>@" + userInfoData.screenName + "</b>: " + root.headerText
+        headerText: "@" + userInfoData.screenName + ": " + root.headerText
         countBubbleVisible: true
         countBubbleValue: root.headerNumber
         onClicked: listView.positionViewAtBeginning()

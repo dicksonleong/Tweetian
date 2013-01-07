@@ -52,7 +52,7 @@ Item {
         delegate: ListItem {
             id: listItem
             width: ListView.view.width
-            height: listItemColumn.height + 2 * constant.paddingMedium
+            height: listItemColumn.height + 2 * listItemColumn.anchors.margins
             subItemIndicator: model.clickedString
             onClicked: if (model.clickedString) eval(model.clickedString)
 

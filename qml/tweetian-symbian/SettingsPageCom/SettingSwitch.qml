@@ -29,7 +29,7 @@ Item {
     signal infoClicked
 
     width: parent.width
-    height: switchItem.height + 2 * constant.paddingMedium
+    height: switchItem.height + 2 * switchItem.anchors.margins
 
     Text {
         anchors {
@@ -70,7 +70,7 @@ Item {
 
     Switch {
         id: switchItem
-        anchors { right: parent.right; top: parent.top; margins: constant.paddingMedium }
+        anchors { verticalCenter: parent.verticalCenter; right: parent.right; margins: constant.paddingMedium }
         platformInverted: settings.invertedTheme
     }
 }

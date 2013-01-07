@@ -181,8 +181,7 @@ Page {
                 Text {
                     anchors {
                         horizontalCenter: parent.horizontalCenter
-                        top: imageLoadingIndicator.bottom
-                        topMargin: constant.paddingXLarge
+                        top: imageLoadingIndicator.bottom; topMargin: constant.paddingLarge
                     }
                     font.pixelSize: constant.fontSizeLarge
                     color: constant.colorLight

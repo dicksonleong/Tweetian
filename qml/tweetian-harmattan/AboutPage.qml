@@ -44,11 +44,15 @@ Page {
 
             Item {
                 anchors { left: parent.left; right: parent.right }
-                height: aboutText.height + 2 * constant.paddingMedium
+                height: aboutText.height + 2 * aboutText.anchors.margins
 
                 Text {
                     id: aboutText
-                    anchors { left: parent.left; right: parent.right; top: parent.top; margins: constant.paddingMedium }
+                    anchors {
+                        verticalCenter: parent.verticalCenter
+                        left: parent.left; right: parent.right
+                        margins: constant.paddingMedium
+                    }
                     wrapMode: Text.Wrap
                     font.pixelSize: constant.fontSizeMedium
                     color: constant.colorLight
@@ -62,11 +66,15 @@ smartphone. Tweetian is open source and licensed under GPL v3.")
 
             Item {
                 anchors { left: parent.left; right: parent.right }
-                height: versionText.height + 2 * constant.paddingMedium
+                height: versionText.height + 2 * versionText.anchors.margins
 
                 Text {
                     id: versionText
-                    anchors { left: parent.left; right: parent.right; top: parent.top; margins: constant.paddingMedium }
+                    anchors {
+                        verticalCenter: parent.verticalCenter
+                        left: parent.left; right: parent.right
+                        margins: constant.paddingMedium
+                    }
                     font.pixelSize: constant.fontSizeMedium
                     color: constant.colorLight
                     wrapMode: Text.Wrap

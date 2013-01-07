@@ -26,7 +26,7 @@ Item {
 
     Item {
         id: container
-        anchors { horizontalCenter: parent.horizontalCenter; bottom: parent.top; bottomMargin: constant.paddingXXLarge }
+        anchors { horizontalCenter: parent.horizontalCenter; bottom: parent.top; bottomMargin: constant.paddingXLarge }
         height: pullIcon.height
         width: pullIcon.width + textColumn.width + textColumn.anchors.leftMargin
         visible: root.ListView.view.__wasAtYBeginning && root.ListView.view.__initialContentY - root.ListView.view.contentY > 10
@@ -43,7 +43,7 @@ Item {
 
         Column {
             id: textColumn
-            anchors { verticalCenter: parent.verticalCenter; left: pullIcon.right; leftMargin: constant.paddingLarge }
+            anchors { verticalCenter: parent.verticalCenter; left: pullIcon.right; leftMargin: constant.paddingMedium }
             width: Math.max(pullText.width, lastUpdateText.width)
             height: childrenRect.height
 

@@ -56,7 +56,7 @@ Item {
 
     Loader {
         id: infoIconLoader
-        anchors { right: signInButton.left; rightMargin: constant.paddingLarge; verticalCenter: parent.verticalCenter }
+        anchors { right: signInButton.left; rightMargin: constant.paddingMedium; verticalCenter: parent.verticalCenter }
         sourceComponent: infoButtonVisible ? infoIcon : undefined
 
         MouseArea {

@@ -31,10 +31,9 @@ QtObject {
 
     // padding size
     property int paddingSmall: 4
-    property int paddingMedium: 6
-    property int paddingLarge: 8
-    property int paddingXLarge: 12
-    property int paddingXXLarge: 16
+    property int paddingMedium: 8
+    property int paddingLarge: 12
+    property int paddingXLarge: 16
 
     // font size
     property int fontSizeXSmall: 20

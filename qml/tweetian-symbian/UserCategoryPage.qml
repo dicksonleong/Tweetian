@@ -80,15 +80,15 @@ Page {
             id: userCategoryItem
             platformInverted: settings.invertedTheme
             width: ListView.view.width
-            height: categoryText.height + categoryText.anchors.topMargin * 2
+            height: Math.max(categoryText.height + 2 * constant.paddingLarge, implicitHeight)
             subItemIndicator: true
 
             Text {
                 id: categoryText
                 anchors {
-                    top: userCategoryItem.top; topMargin: constant.paddingXLarge
-                    left: userCategoryItem.left; leftMargin: constant.paddingMedium
-                    right: countBubble.left
+                    verticalCenter: parent.verticalCenter
+                    left: userCategoryItem.paddingItem.left
+                    right: countBubble.left; rightMargin: constant.paddingMedium
                 }
                 elide: Text.ElideRight
                 text: model.name
@@ -98,7 +98,7 @@ Page {
 
             CountBubble {
                 id: countBubble
-                anchors { right: paddingItem.right; verticalCenter: parent.verticalCenter }
+                anchors { right: userCategoryItem.paddingItem.right; verticalCenter: parent.verticalCenter }
                 value: model.size
             }
 

@@ -130,7 +130,11 @@ Page {
                 Column {
                     id: textColumn
                     height: childrenRect.height
-                    anchors { left: parent.left; right: parent.right; top: parent.top; margins: constant.paddingLarge }
+                    anchors {
+                        verticalCenter: parent.verticalCenter
+                        left: parent.left; right: parent.right
+                        margins: constant.paddingLarge
+                    }
 
                     Text {
                         text: qsTr("Language")
@@ -147,8 +151,8 @@ Page {
 
                 Image {
                     anchors {
-                        right: parent.right; rightMargin: constant.paddingMedium
                         verticalCenter: parent.verticalCenter
+                        right: parent.right; rightMargin: constant.paddingMedium
                     }
                     sourceSize { width: 40; height: 40 }
                     source: settings.invertedTheme ? "Image/choice_list_indicator_inverse.svg"
