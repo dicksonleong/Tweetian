@@ -33,27 +33,28 @@ function tweetsFrequency(date, tweetsCount) {
 
 function timeDiff(tweetTimeStr) {
     var tweetTime = new Date(tweetTimeStr)
-    var diff = new Date().getTime() - tweetTime.getTime()
+    var diff = new Date().getTime() - tweetTime.getTime() // milliseconds
 
     if (diff <= 0) return qsTr("Now")
 
-    var daysDiff = Math.floor(diff/1000/60/60/24)
-    diff -= daysDiff * 1000 * 60 * 60 * 24
+    diff = Math.round(diff / 1000) // seconds
 
-    var hoursDiff = Math.floor(diff/1000/60/60)
-    diff -= hoursDiff * 1000 * 60 * 60
+    if (diff < 60) return qsTr("Just now")
 
-    var minutesDiff = Math.floor(diff/1000/60)
-    diff -= minutesDiff * 1000 * 60
+    diff = Math.round(diff / 60) // minutes
 
-    var secondsDiff = Math.floor(diff/1000)
+    if (diff < 60) return qsTr("%n min(s)", "", diff)
 
-    if (daysDiff >= 7) return Qt.formatDate(tweetTime, Qt.SystemLocaleShortDate).toString()
-    else if (daysDiff > 1) return Qt.formatDate(tweetTime, "ddd d MMM").toString()
-    else if (daysDiff == 1) return qsTr("Yesterday %1").arg(Qt.formatTime(tweetTime, "h:mm AP").toString())
-    else if (hoursDiff >= 1) return qsTr("%n hr(s)", "", hoursDiff)
-    else if (minutesDiff >= 1) return qsTr("%n min(s)", "", minutesDiff)
-    else return qsTr("Just now")
+    diff = Math.round(diff / 60) // hours
+
+    if (diff < 24) return qsTr("%n hr(s)", "", diff)
+
+    diff = Math.round(diff / 24) // days
+
+    if (diff === 1) return qsTr("Yesterday %1").arg(Qt.formatTime(tweetTime, "h:mm AP").toString())
+    if (diff < 7 ) return Qt.formatDate(tweetTime, "ddd d MMM").toString()
+
+    return Qt.formatDate(tweetTime, Qt.SystemLocaleShortDate).toString()
 }
 
 function toDegree(latitude, longitude) {
