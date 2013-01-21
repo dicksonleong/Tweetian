@@ -315,9 +315,10 @@ function translateTokenOnSuccess(token) {
 }
 
 function translateOnSuccess(data) {
-    if (data.indexOf("ArgumentOutOfRangeException") === 0) {
+    if (data.indexOf("ArgumentOutOfRangeException") === 0)
         infoBanner.showText(qsTr("Unable to translate tweet"))
-    }
+    else if (data.indexOf("TranslateApiException") === 0)
+        infoBanner.showText(qsTr("Translation limit reached"))
     else {
         translatedTweetLoader.sourceComponent = translatedTweetComponent
         translatedTweetLoader.item.translatedText = data
