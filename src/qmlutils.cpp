@@ -18,21 +18,29 @@
 
 #include "qmlutils.h"
 
+#include <QtCore/QDateTime>
 #include <QtGui/QApplication>
 #include <QtGui/QClipboard>
-#include <QtDeclarative/QDeclarativeItem>
 #include <QtGui/QImage>
 #include <QtGui/QStyleOptionGraphicsItem>
 #include <QtGui/QPainter>
 #include <QtGui/QDesktopServices>
-#include <QtCore/QDateTime>
+#include <QtDeclarative/QDeclarativeItem>
+#include <QtDeclarative/QDeclarativeView>
 
-namespace {
-    const QString IMAGE_SAVING_PATH = QDesktopServices::storageLocation(QDesktopServices::PicturesLocation);
-}
+static const QString IMAGE_SAVING_PATH = QDesktopServices::storageLocation(QDesktopServices::PicturesLocation);
+#if defined(Q_OS_HARMATTAN)
+static const QString USER_AGENT = "Tweetian/" + QLatin1String(APP_VERSION) + " (Nokia; Qt; MeeGo/1.2; Harmattan)";
+#elif defined(Q_OS_SYMBIAN)
+static const QString USER_AGENT = "Tweetian/" + QLatin1String(APP_VERSION) + " (Nokia; Qt; Symbian/3)";
+#elif defined(Q_WS_SIMULATOR)
+static const QString USER_AGENT = "Tweetian/" + QLatin1String(APP_VERSION) + " (Qt; QtSimulator)";
+#else
+static const QString USER_AGENT = "Tweetian/" + QLatin1String(APP_VERSION) + " (Qt; Unknown)";
+#endif
 
-QMLUtils::QMLUtils(QObject *parent) :
-    QObject(parent), clipboard(QApplication::clipboard())
+QMLUtils::QMLUtils(QDeclarativeView *view, QObject *parent) :
+    QObject(parent), m_view(view), clipboard(QApplication::clipboard())
 {
 }
 
@@ -65,19 +73,16 @@ QString QMLUtils::saveImage(QDeclarativeItem *imageObject)
     return filePath;
 }
 
+void QMLUtils::minimizeApp()
+{
+#ifdef Q_OS_SYMBIAN
+    m_view->lower();
+#else
+    qWarning("QMLUtils::minimizeApp(): this function only works on Symbian");
+#endif
+}
+
 QString QMLUtils::userAgent()
 {
-    QString ua = "Tweetian/" + QLatin1String(APP_VERSION);
-
-#if defined(Q_OS_HARMATTAN)
-    ua += " (Nokia; Qt; MeeGo/1.2; Harmattan)";
-#elif defined(Q_OS_SYMBIAN)
-    ua += " (Nokia; Qt; Symbian/3)";
-#elif defined(Q_WS_SIMULATOR)
-    ua += " (Qt; QtSimulator)";
-#else
-    ua += " (Qt; Unknown)";
-#endif
-
-    return ua;
+    return USER_AGENT;
 }

@@ -37,7 +37,7 @@ CommonDialog {
 
     onButtonClicked: {
         if (index === 0) Qt.quit()
-        else if (index === 1) appQmlView.lower()
+        else if (index === 1) QMLUtils.minimizeApp()
     }
 
     Component.onCompleted: open()
