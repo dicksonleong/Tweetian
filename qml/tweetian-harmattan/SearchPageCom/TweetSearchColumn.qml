@@ -34,8 +34,8 @@ Item {
         firstTimeLoaded = true
         var sinceId = "", maxId = ""
         if (tweetSearchListView.count > 0) {
-            if (type === "newer") sinceId = tweetSearchListView.model.get(0).tweetId
-            else if (type === "older") maxId =  tweetSearchListView.model.get(tweetSearchListView.count - 1).tweetId
+            if (type === "newer") sinceId = tweetSearchListView.model.get(0).id
+            else if (type === "older") maxId =  tweetSearchListView.model.get(tweetSearchListView.count - 1).id
             else if (type === "all") tweetSearchListView.model.clear()
         }
         else type = "all"
@@ -90,7 +90,7 @@ Item {
         source: "../WorkerScript/SearchParser.js"
         onMessage: {
             backButton.enabled = true
-            if (internal.reloadType === "newer") unreadCount = messageObject.count
+            if (internal.reloadType === "newer") unreadCount = messageObject.newTweetCount
             else unreadCount = 0
             busy = false
         }
@@ -104,7 +104,7 @@ Item {
         function searchOnSuccess(data) {
             if (reloadType != "older") tweetSearchListView.lastUpdate = new Date().toString()
             backButton.enabled = false
-            searchParser.sendMessage({'model': tweetSearchListView.model, 'data': data, 'reloadType': reloadType})
+            searchParser.sendMessage({ type: reloadType, model: tweetSearchListView.model, data: data })
         }
 
         function searchOnFailure(status, statusText) {

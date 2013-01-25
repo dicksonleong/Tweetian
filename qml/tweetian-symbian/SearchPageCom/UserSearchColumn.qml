@@ -90,7 +90,7 @@ Item {
 
         function userSearchOnSuccess(data) {
             backButton.enabled = false
-            userSearchParser.sendMessage({reloadType: reloadType, data: data, model: userSearchListView.model})
+            userSearchParser.sendMessage({ type: reloadType, data: data, model: userSearchListView.model })
         }
 
         function userSearchOnFailure(status, statusText) {

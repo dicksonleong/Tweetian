@@ -32,8 +32,8 @@ AbstractListPageItem {
     onRefresh: {
         var sinceId = "", maxId = "", mType = type
         if (model.count > 0) {
-            if (mType === "newer") sinceId = model.get(0).tweetId
-            else if (mType === "older") maxId = model.get(model.count - 1).tweetId
+            if (mType === "newer") sinceId = model.get(0).id
+            else if (mType === "older") maxId = model.get(model.count - 1).id
             else if (mType === "all") model.clear()
         }
         else mType = "all"

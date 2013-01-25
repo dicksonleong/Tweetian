@@ -106,15 +106,17 @@ function getFullTweet(constant, twitLongerLink, onSuccess, onFailure) {
                     }
                 }
                 if (fullTweetText) {
-                    var linksArray = fullTweetText.match(/http:\/\/\S+/)
-                    if (linksArray != null) {
-                        for (var iLink=0; iLink < linksArray.length; iLink++) {
-                            fullTweetText = fullTweetText.parseURL(linksArray[iLink],
-                                                                   linksArray[iLink].substring(7),
-                                                                   linksArray[iLink])
-                        }
-                    }
-                    onSuccess(fullTweetText.parseUsername().parseHashtag(), twitLongerLink)
+                    fullTweetText += " - " + twitLongerLink;
+                    fullTweetText = fullTweetText.replace(/http:\/\/\S+/g, function(url) {
+                        return linkText(url.substring(7), url, true);
+                    })
+                    fullTweetText = fullTweetText.replace(/@\w+/g, function(mentions) {
+                        return linkText(mentions, mentions, false);
+                    })
+                    fullTweetText = fullTweetText.replace(/#\w+/g, function(hashtag) {
+                        return linkText(hashtag, hashtag, false);
+                    })
+                    onSuccess(fullTweetText, twitLongerLink)
                 }
                 else onFailure(-1, "Response parsing error")
             }

@@ -41,7 +41,7 @@ Item {
 
     function initialize() {
         reloadType = "database"
-        var tweets = Database.getTweets(type)
+        var tweets = type === "Timeline" ? Database.getTimeline() : Database.getMentions()
         parseData(reloadType, tweets)
         busy = true
     }
@@ -49,8 +49,8 @@ Item {
     function refresh(type) {
         var sinceId = "", maxId = ""
         if (tweetView.count > 0) {
-            if (type === "newer") sinceId = tweetView.model.get(0).tweetId
-            else if (type === "older") maxId = tweetView.model.get(tweetView.count - 1).tweetId
+            if (type === "newer") sinceId = tweetView.model.get(0).id
+            else if (type === "older") maxId = tweetView.model.get(tweetView.count - 1).id
             else if (type === "all") tweetView.model.clear()
         }
         else type = "all"
@@ -68,7 +68,7 @@ Item {
         var msg = {
             model: tweetView.model,
             data: data,
-            reloadType: method,
+            type: method,
             muteString: (type === "Timeline" ? settings.muteString : "")
         }
         tweetParser.sendMessage(msg)
@@ -107,24 +107,6 @@ Item {
 
     ScrollDecorator { platformInverted: settings.invertedTheme; flickableItem: tweetView }
 
-    QtObject {
-        id: internal
-
-        function successCallback(data) {
-            networkMonitor.setToOnline()
-            if (reloadType == "newer" || reloadType == "all") {
-                parseData(reloadType, data, true)
-                if (autoRefreshTimer.running) autoRefreshTimer.restart()
-            }
-            else parseData(reloadType, data)
-        }
-
-        function failureCallback(status, statusText) {
-            infoBanner.showHttpError(status, statusText)
-            busy = false
-        }
-    }
-
     // Timer used for refresh the timestamp of every tweet every minute. triggeredOnStart is set to true
     // so that the timestamp is refreshed when the app is switch from background to foreground.
     Timer {
@@ -147,24 +129,44 @@ Item {
     WorkerScript {
         id: tweetParser
         source: "../WorkerScript/TweetsParser.js"
-        onMessage: {
-            if (messageObject.type === "newer") {
-                if (messageObject.count > 0) {
+        onMessage: internal.onParseComplete(messageObject)
+    }
+
+    QtObject {
+        id: internal
+
+        function successCallback(data) {
+            networkMonitor.setToOnline()
+            if (reloadType == "newer" || reloadType == "all") {
+                parseData(reloadType, data, true)
+                if (autoRefreshTimer.running) autoRefreshTimer.restart()
+            }
+            else parseData(reloadType, data)
+        }
+
+        function failureCallback(status, statusText) {
+            infoBanner.showHttpError(status, statusText)
+            busy = false
+        }
+
+        function onParseComplete(msg) {
+            if (msg.type === "newer") {
+                if (msg.newTweetCount > 0) {
                     if (tweetView.stayAtCurrentPosition || tweetView.indexAt(0, tweetView.contentY) > 0)
-                        unreadCount += messageObject.count
+                        unreadCount += msg.newTweetCount
                     if (type === "Mentions" && symbian.foreground && mainPage.status !== PageStatus.Active)
                         infoBanner.showText(qsTr("%n new mention(s)", "", unreadCount))
                 }
-                if (messageObject.screenNames.length > 0)
-                    cache.screenNames = Database.storeScreenNames(messageObject.screenNames)
+                if (msg.screenNames.length > 0)
+                    cache.screenNames = Database.storeScreenNames(msg.screenNames)
                 busy = false
             }
-            else if (messageObject.type === "all" || messageObject.type === "older") {
-                if (messageObject.screenNames.length > 0)
-                    cache.screenNames = Database.storeScreenNames(messageObject.screenNames)
+            else if (msg.type === "all" || msg.type === "older") {
+                if (msg.screenNames.length > 0)
+                    cache.screenNames = Database.storeScreenNames(msg.screenNames)
                 busy = false
             }
-            else if (messageObject.type === "database") {
+            else if (msg.type === "database") {
                 if (tweetView.count > 0) {
                     if (type === "Timeline") tweetView.lastUpdate = Database.getSetting("timelineLastUpdate")
                     else tweetView.lastUpdate = Database.getSetting("mentionsLastUpdate")
@@ -172,13 +174,18 @@ Item {
                 }
                 else refresh("all")
             }
-            cache.pushToHashtags(messageObject.hashtags)
+            cache.pushToHashtags(msg.hashtags)
         }
     }
 
     Component.onDestruction: {
-        if (type === "Timeline") Database.setSetting({"timelineLastUpdate": tweetView.lastUpdate})
-        else Database.setSetting({"mentionsLastUpdate": tweetView.lastUpdate})
-        Database.storeTweets(type, tweetView.model)
+        if (type === "Timeline") {
+            Database.setSetting({"timelineLastUpdate": tweetView.lastUpdate})
+            Database.storeTimeline(tweetView.model);
+        }
+        else {
+            Database.setSetting({"mentionsLastUpdate": tweetView.lastUpdate})
+            Database.storeMentions(tweetView.model);
+        }
     }
 }

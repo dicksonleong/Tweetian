@@ -48,7 +48,7 @@ var GET_LIST_SUBSCRIBERS_URL = "https://api.twitter.com/1/lists/subscribers.json
 var GET_TRENDS_URL = "https://api.twitter.com/1/trends/"
 var GET_TRENDS_AVAILABLE_URL = "https://api.twitter.com/1/trends/available.json"
 var GET_SAVED_SEARCHES_URL = "https://api.twitter.com/1/saved_searches.json"
-var GET_SEARCH_URL = "https://search.twitter.com/search.json"
+var GET_SEARCH_URL = "https://api.twitter.com/1.1/search/tweets.json"
 var GET_FOLLOWING_ID_URL = "https://api.twitter.com/1/friends/ids.json"
 var GET_FOLLOWERS_ID_URL = "https://api.twitter.com/1/followers/ids.json"
 var GET_USERS_LOOKUP_URL = "https://api.twitter.com/1/users/lookup.json"
@@ -255,7 +255,7 @@ function getSavedSearches(onSuccess, onFailure) {
 
 function getSearch(query, sinceId, maxId, onSuccess, onFailure) {
     var searchRequest = new OAuthRequest("GET", GET_SEARCH_URL)
-    var parameters = [["q", query], ["rpp", 50], ["include_entities", true]]
+    var parameters = [["q", query], ["count", 50]]
     if (maxId) parameters.push(["max_id", maxId])
     else if (sinceId) parameters.push(["since_id", sinceId])
     searchRequest.setParameters(parameters)
@@ -265,7 +265,7 @@ function getSearch(query, sinceId, maxId, onSuccess, onFailure) {
 function getNearbyTweets(latitude, longitude, sinceId, maxId, onSuccess, onFailure) {
     var geocode = latitude + "," + longitude + ",1km"
     var nearbyTweetsRequest = new OAuthRequest("GET", GET_SEARCH_URL)
-    var parameters = [["geocode", geocode], ["rpp", 50], ["include_entities", true]]
+    var parameters = [["geocode", geocode], ["count", 50]]
     if (maxId) parameters.push(["max_id", maxId])
     else if (sinceId) parameters.push(["since_id", sinceId])
     nearbyTweetsRequest.setParameters(parameters)

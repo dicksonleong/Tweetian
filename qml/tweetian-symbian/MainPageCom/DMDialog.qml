@@ -24,7 +24,7 @@ ContextMenu {
     id: root
 
     property string screenName
-    property string tweetId
+    property string id
     property string dmText
 
     property bool __isClosing: false
@@ -45,7 +45,7 @@ ContextMenu {
         MenuItemWithIcon {
             iconSource: platformInverted ? "image://theme/toolbar-delete_inverse" : "image://theme/toolbar-delete"
             text: qsTr("Delete")
-            onClicked: internal.createDeleteDMDialog(tweetId)
+            onClicked: internal.createDeleteDMDialog(id)
         }
         MenuItemWithIcon {
             iconSource: platformInverted ? "../Image/contacts_inverse.svg" : "../Image/contacts.svg"

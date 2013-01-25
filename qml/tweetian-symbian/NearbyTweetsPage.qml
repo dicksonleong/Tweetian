@@ -143,8 +143,8 @@ Page {
         function refresh(type) {
             var sinceId = "", maxId = ""
             if (searchListView.count > 0) {
-                if (type === "newer") sinceId = searchListView.model.get(0).tweetId
-                else if (type === "older") maxId = searchListView.model.get(searchListView.count - 1).tweetId
+                if (type === "newer") sinceId = searchListView.model.get(0).id
+                else if (type === "older") maxId = searchListView.model.get(searchListView.count - 1).id
                 else if (type === "all") searchListView.model.clear()
             }
             else type = "all"
@@ -156,7 +156,7 @@ Page {
         function onSuccess(data) {
             if (reloadType != "older") searchListView.lastUpdate = new Date().toString()
             backButton.enabled = false
-            searchParser.sendMessage({'model': searchListView.model, 'data': data, 'reloadType': reloadType})
+            searchParser.sendMessage({ type: reloadType, model: searchListView.model, data: data})
         }
 
         function onFailure(status, statusText) {

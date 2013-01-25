@@ -52,7 +52,7 @@ Item {
     }
 
     function sendToWorkerScript(data) {
-        workerScript.sendMessage({data: data, reloadType: reloadType, model: tweetView.model})
+        workerScript.sendMessage({ type: reloadType, data: data, model: tweetView.model })
     }
 
     function positionAtTop() {

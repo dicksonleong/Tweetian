@@ -22,7 +22,7 @@ Qt.include("../Utils/Calculations.js")
 WorkerScript.onMessage = function(msg) {
     var screenNames = []
 
-    if (msg.reloadType === "all") {
+    if (msg.type === "all") {
         msg.model.clear()
         msg.model.sync()
     }

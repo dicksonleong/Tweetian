@@ -65,8 +65,5 @@ QtObject {
 
     property string translationToken: ""
 
-    Component.onCompleted: {
-        Database.initializeScreenNames()
-        screenNames = Database.getScreenNames()
-    }
+    Component.onCompleted: screenNames = Database.getScreenNames()
 }

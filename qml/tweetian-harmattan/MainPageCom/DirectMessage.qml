@@ -29,48 +29,44 @@ Item {
 
     property string reloadType: "all"
     property ListModel fullModel: ListModel {}
-    property WorkerScript parser: directMsgParser
 
     property bool busy: true
     property int unreadCount: 0
 
-    signal dataParsed(string type, int count, bool createNotification)
+    signal dmParsed(int newDMCount)
 
-    onDataParsed: {
-        if (type === "insert") {
-            if (createNotification) {
-                unreadCount += count
-                if (settings.messageNotification) {
-                    var body = qsTr("%n new message(s)", "", unreadCount)
-                    if (!platformWindow.active) {
-                        harmattanUtils.clearNotification("tweetian.message")
-                        harmattanUtils.publishNotification("tweetian.message", "Tweetian", body, unreadCount)
-                    }
-                    else if (mainPage.status !== PageStatus.Active) {
-                        infoBanner.showText(body)
-                    }
-                }
-            }
-            busy = false
-        }
-        else if (type === "clearAndInsert") {
-            busy = false
-        }
-        else if (type === "database") {
-            if (fullModel.count > 0) {
-                directMsgView.lastUpdate = Database.getSetting("directMsgLastUpdate")
-                refresh("newer")
-            }
-            else {
-                refresh("all")
-            }
-        }
-    }
+    onUnreadCountChanged: if (unreadCount === 0) harmattanUtils.clearNotification("tweetian.message")
 
     function initialize() {
-        var directMsg = Database.getDM()
-        parser.insertFromDatabase(directMsg)
+        var msg = {
+            type: "database",
+            model: fullModel,
+            threadModel: directMsgView.model,
+            data: Database.getDMs()
+        }
+        dmParser.sendMessage(msg)
         busy = true
+    }
+
+    function insertDM(receivedDM, sentDM) {
+        var msg = {
+            type: reloadType,
+            model: fullModel,
+            threadModel: directMsgView.model,
+            receivedDM: receivedDM,
+            sentDM: sentDM
+        }
+        dmParser.sendMessage(msg)
+        directMsgView.lastUpdate = new Date().toString()
+    }
+
+    function removeDM(id) {
+        dmParser.sendMessage({type: "delete", model: fullModel, id: id})
+    }
+
+    function removeAllDM() {
+        reloadType = "all";
+        insertDM([], []);
     }
 
     function positionAtTop() {
@@ -80,7 +76,7 @@ Item {
     function refresh(type) {
         var sinceId = ""
         if (directMsgView.count > 0) {
-            if (type === "newer") sinceId = fullModel.get(0).tweetId
+            if (type === "newer") sinceId = fullModel.get(0).id
             else if (type === "all") directMsgView.model.clear()
         }
         else type = "all"
@@ -88,8 +84,6 @@ Item {
         Twitter.getDirectMsg(sinceId, "", internal.successCallback, internal.failureCallback)
         busy = true
     }
-
-    onUnreadCountChanged: if (unreadCount === 0) harmattanUtils.clearNotification("tweetian.message")
 
     PullDownListView {
         id: directMsgView
@@ -119,7 +113,7 @@ Item {
         repeat: true
         running: platformWindow.active
         triggeredOnStart: true
-        onTriggered: if (directMsgView.count > 0) parser.refreshTime()
+        onTriggered: if (directMsgView.count > 0) internal.refreshDMTime()
     }
 
     Timer {
@@ -131,69 +125,25 @@ Item {
     }
 
     WorkerScript {
-        id: directMsgParser
-        source: "../WorkerScript/DirectMsgParser.js"
-        onMessage: dataParsed(messageObject.type, messageObject.count, messageObject.createNotification)
-
-        function insert(recieveMsg, sentMsg) {
-            var msg = {
-                type: "insert",
-                model: fullModel,
-                threadModel: directMsgView.model,
-                recieveMsg: recieveMsg,
-                sentMsg: sentMsg
-            }
-            sendMessage(msg)
-            directMsgView.lastUpdate = new Date().toString()
-        }
-
-        function clearAndInsert(receiveMsg, sentMsg) {
-            var msg = {
-                type: "clearAndInsert",
-                model: fullModel,
-                threadModel: directMsgView.model,
-                recieveMsg: receiveMsg,
-                sentMsg: sentMsg
-            }
-            sendMessage(msg)
-        }
-
-        function refreshTime() {
-            sendMessage({type: "time", threadModel: directMsgView.model})
-        }
-
-        function insertFromDatabase(data) {
-            var msg = {
-                type: "database",
-                model: fullModel,
-                threadModel: directMsgView.model,
-                data: data
-            }
-            sendMessage(msg)
-        }
-
-        function remove(id) {
-            sendMessage({type: "delete", model: fullModel, id: id})
-        }
-
-        function setProperty(index, propertyString, value) {
-            var msg = {
-                type: "setProperty",
-                threadModel: directMsgView.model,
-                index: index,
-                property: propertyString,
-                value: value
-            }
-            sendMessage(msg)
-        }
+        id: dmParser
+        source: "../WorkerScript/DMParser.js"
+        onMessage: internal.onParseComplete(messageObject.type, messageObject.newDMCount,
+                                            messageObject.showNotification)
     }
 
     QtObject {
         id: internal
 
+        function setDMThreadReaded(index) {
+            dmParser.sendMessage({type: "setReaded", index: index, threadModel: directMsgView.model})
+        }
+
+        function refreshDMTime() {
+            dmParser.sendMessage({type: "time", threadModel: directMsgView.model})
+        }
+
         function successCallback(dmRecieve, dmSent) {
-            if (reloadType == "all") parser.clearAndInsert(dmRecieve, dmSent)
-            else if (reloadType == "newer") parser.insert(dmRecieve, dmSent)
+            insertDM(dmRecieve, dmSent)
             if (autoRefreshTimer.running) autoRefreshTimer.restart()
         }
 
@@ -201,10 +151,40 @@ Item {
             infoBanner.showHttpError(status, statusText)
             busy = false
         }
+
+        function onParseComplete(type, newDMCount, showNotification) {
+            if (type === "newer") {
+                if (showNotification) {
+                    unreadCount += newDMCount
+                    if (settings.messageNotification) {
+                        var body = qsTr("%n new message(s)", "", unreadCount)
+                        if (!platformWindow.active) {
+                            harmattanUtils.clearNotification("tweetian.message")
+                            harmattanUtils.publishNotification("tweetian.message", "Tweetian", body, unreadCount)
+                        }
+                        else if (mainPage.status !== PageStatus.Active) {
+                            infoBanner.showText(body)
+                        }
+                    }
+                }
+                busy = false
+                dmParsed(newDMCount)
+            }
+            else if (type === "all") {
+                busy = false
+            }
+            else if (type === "database") {
+                if (fullModel.count > 0) {
+                    directMsgView.lastUpdate = Database.getSetting("directMsgLastUpdate")
+                    refresh("newer")
+                }
+                else refresh("all")
+            }
+        }
     }
 
     Component.onDestruction: {
         Database.setSetting({"directMsgLastUpdate": directMsgView.lastUpdate})
-        Database.storeDM(fullModel)
+        Database.storeDMs(fullModel)
     }
 }

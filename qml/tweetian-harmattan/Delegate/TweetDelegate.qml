@@ -23,8 +23,8 @@ AbstractDelegate {
     id: root
     sideRectColor: {
         switch (settings.userScreenName) {
-        case inReplyToScreenName: return constant.colorTextSelection
-        case screenName: return constant.colorLight
+        case model.inReplyToScreenName: return constant.colorTextSelection
+        case model.screenName: return constant.colorLight
         default: return "transparent"
         }
     }
@@ -44,7 +44,7 @@ AbstractDelegate {
             font.bold: true
             color: highlighted ? constant.colorHighlighted : constant.colorLight
             elide: Text.ElideRight
-            text: userName
+            text: model.name
         }
 
         Text {
@@ -52,14 +52,14 @@ AbstractDelegate {
             font.pixelSize: settings.largeFontSize ? constant.fontSizeMedium : constant.fontSizeSmall
             color: highlighted ? constant.colorHighlighted : constant.colorMid
             elide: Text.ElideRight
-            text: "@" + displayScreenName
+            text: "@" + model.screenName
         }
 
         Loader {
             id: favouriteIconLoader
             anchors.right: parent.right
             width: sourceComponent ? item.sourceSize.height : 0
-            sourceComponent: favourited ? favouriteIcon : undefined
+            sourceComponent: model.isFavourited ? favouriteIcon : undefined
 
             Component {
                 id: favouriteIcon
@@ -79,13 +79,13 @@ AbstractDelegate {
         font.pixelSize: settings.largeFontSize ? constant.fontSizeMedium : constant.fontSizeSmall
         wrapMode: Text.Wrap
         color: highlighted ? constant.colorHighlighted : constant.colorLight
-        text: displayTweetText
+        text: model.richText
     }
 
     Loader {
         id: retweetLoader
         anchors { left: parent.left; right: parent.right }
-        sourceComponent: retweetId == tweetId ? undefined : retweetText
+        sourceComponent: model.isRetweet ? retweetText : undefined
 
         Component {
             id: retweetText
@@ -94,7 +94,7 @@ AbstractDelegate {
                 font.pixelSize: settings.largeFontSize ? constant.fontSizeMedium : constant.fontSizeSmall
                 wrapMode: Text.Wrap
                 color: highlighted ? constant.colorHighlighted : constant.colorMid
-                text: qsTr("Retweeted by %1").arg("@" + screenName)
+                text: qsTr("Retweeted by %1").arg("@" + model.retweetScreenName)
             }
         }
     }
@@ -105,9 +105,9 @@ AbstractDelegate {
         font.pixelSize: settings.largeFontSize ? constant.fontSizeSmall : constant.fontSizeXSmall
         color: highlighted ? constant.colorHighlighted : constant.colorMid
         elide: Text.ElideRight
-        text: source + " | " + timeDiff
+        text: model.source + " | " + model.timeDiff
     }
 
-    onClicked: pageStack.push(Qt.resolvedUrl("../TweetPage.qml"), {currentTweet: model})
+    onClicked: pageStack.push(Qt.resolvedUrl("../TweetPage.qml"), { tweet: model })
     onPressAndHold: dialog.createTweetLongPressMenu(model)
 }

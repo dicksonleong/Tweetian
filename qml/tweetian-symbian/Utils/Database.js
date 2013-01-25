@@ -18,19 +18,46 @@
 
 .pragma library
 
-var db = openDatabaseSync("Tweetian", "1.0", "Tweetian Database", 1000000);
-
-function initializeSettings() {
-    db.transaction(function(tx) {
-        tx.executeSql('CREATE TABLE IF NOT EXISTS settings(setting TEXT UNIQUE, value TEXT);');
-    })
+var QUERY = {
+    CREATE_SETTINGS_TABLE: 'CREATE TABLE Settings(setting TEXT UNIQUE, value TEXT);',
+    CREATE_TIMELINE_TABLE: 'CREATE TABLE Timeline(id INTEGER UNIQUE, plainText TEXT, richText TEXT, ' +
+                           'name TEXT, screenName TEXT, profileImageUrl TEXT, inReplyToScreenName TEXT, ' +
+                           'inReplyToStatusId TEXT, latitude REAL, longitude REAL, mediaUrl TEXT, source TEXT, ' +
+                           'createdAt TEXT, isFavourited INTEGER, isRetweet INTEGER, retweetScreenName TEXT);',
+    CREATE_MENTIONS_TABLE: 'CREATE TABLE Mentions(id INTEGER UNIQUE, plainText TEXT, richText TEXT, ' +
+                           'name TEXT, screenName TEXT, profileImageUrl TEXT, inReplyToScreenName TEXT, ' +
+                           'inReplyToStatusId TEXT, latitude REAL, longitude REAL, mediaUrl TEXT, source TEXT, ' +
+                           'createdAt TEXT, isFavourited INTEGER, isRetweet INTEGER, retweetScreenName TEXT);',
+    CREATE_DM_TABLE: 'CREATE TABLE DM(id INTEGER UNIQUE, richText TEXT, name TEXT, ' +
+                     'screenName TEXT, profileImageUrl TEXT, createdAt TEXT, isReceiveDM INTEGER)',
+    CREATE_SCREEN_NAMES_TABLE: 'CREATE TABLE ScreenNames(screenNames TEXT UNIQUE);'
 }
 
-// @param settings - key/value pair object of settings eg. { setting1: value1, setting2: value2 }
+var db = openDatabaseSync("Tweetian", "", "Tweetian Database", 1000000, function(db) {
+    db.changeVersion(db.version, "1.1", function(tx) {
+        tx.executeSql(QUERY.CREATE_SETTINGS_TABLE);
+        tx.executeSql(QUERY.CREATE_TIMELINE_TABLE);
+        tx.executeSql(QUERY.CREATE_MENTIONS_TABLE);
+        tx.executeSql(QUERY.CREATE_DM_TABLE);
+        tx.executeSql(QUERY.CREATE_SCREEN_NAMES_TABLE);
+    })
+});
+
+if (db.version === "1.0") {
+    db.changeVersion(db.version, "1.1", function(tx) {
+        tx.executeSql('DROP TABLE Timeline');
+        tx.executeSql('DROP TABLE Mentions');
+        tx.executeSql('DROP TABLE DirectMsg');
+        tx.executeSql(QUERY.CREATE_TIMELINE_TABLE);
+        tx.executeSql(QUERY.CREATE_MENTIONS_TABLE);
+        tx.executeSql(QUERY.CREATE_DM_TABLE);
+    });
+}
+
 function setSetting(settings) {
     db.transaction(function(tx) {
         for (var s in settings) {
-            tx.executeSql('INSERT OR REPLACE INTO settings VALUES (?,?);', [s, settings[s]])
+            tx.executeSql('INSERT OR REPLACE INTO Settings VALUES(?,?);', [s, settings[s]])
         }
     })
 }
@@ -38,7 +65,7 @@ function setSetting(settings) {
 function getSetting(setting) {
     var res = ""
     db.readTransaction(function(tx) {
-        var rs = tx.executeSql('SELECT value FROM settings WHERE setting=?;', [setting])
+        var rs = tx.executeSql('SELECT value FROM Settings WHERE setting=?;', [setting])
         if (rs.rows.length > 0) res = rs.rows.item(0).value
     })
     return res
@@ -47,7 +74,7 @@ function getSetting(setting) {
 function getAllSettings() {
     var res = {}
     db.readTransaction(function(tx) {
-        var rs = tx.executeSql('SELECT * FROM settings;')
+        var rs = tx.executeSql('SELECT * FROM Settings;')
         for (var i=0; i<rs.rows.length; i++) {
             res[rs.rows.item(i).setting] = rs.rows.item(i).value
         }
@@ -55,123 +82,58 @@ function getAllSettings() {
     return res
 }
 
-// TODO: remove mediaExpandedUrl & mediaThumbnail column and rename medieViewUrl column to mediaUrl
-// This will involve database change so must be done carefully
-
-function initializeTweetsTable(tableName) {
-    db.transaction(function(tx) {
-        tx.executeSql('CREATE TABLE IF NOT EXISTS '+ tableName +'(' +
-                      'createdAt TEXT,' +
-                      'displayScreenName TEXT,' +
-                      'displayTweetText TEXT,' +
-                      'favourited INTEGER,' +
-                      'inReplyToScreenName TEXT,' +
-                      'inReplyToStatusId TEXT,' +
-                      'latitude REAL,' +
-                      'longitude REAL,' +
-                      'mediaExpandedUrl TEXT,' +
-                      'mediaViewUrl TEXT,' +
-                      'mediaThumbnail TEXT,' +
-                      'profileImageUrl TEXT,' +
-                      'retweetId TEXT,' +
-                      'screenName TEXT,' +
-                      'source TEXT,' +
-                      'tweetId INTEGER UNIQUE,' +
-                      'tweetText TEXT,' +
-                      'userName TEXT);')}
-    )
+function storeTimeline(model) {
+    __storeTweetsShared("Timeline", model);
 }
 
-function storeTweets(tableName, model) {
+function getTimeline() {
+    return __getTweetsShared("Timeline");
+}
+
+function storeMentions(model) {
+    __storeTweetsShared("Mentions", model);
+}
+
+function getMentions() {
+    return __getTweetsShared("Mentions");
+}
+
+function storeDMs(model) {
     db.transaction(function(tx) {
-        tx.executeSql('DELETE FROM ' + tableName)
-        for (var i=0; i<Math.min(model.count, 100); i++) {
-            var sqlText = 'INSERT INTO ' + tableName + ' VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?);'
-            var binding = [model.get(i).createdAt.toString(), model.get(i).displayScreenName,
-                           model.get(i).displayTweetText, (model.get(i).favourited ? 1 : 0),
-                           model.get(i).inReplyToScreenName, model.get(i).inReplyToStatusId,
-                           model.get(i).latitude, model.get(i).longitude,
-                           "", model.get(i).mediaUrl, "", model.get(i).profileImageUrl,
-                           model.get(i).retweetId, model.get(i).screenName,
-                           model.get(i).source, model.get(i).tweetId,
-                           model.get(i).tweetText, model.get(i).userName]
+        tx.executeSql('DELETE FROM DM;')
+        for (var i = 0; i < Math.min(model.count, 100); i++) {
+            var sqlText = 'INSERT INTO DM VALUES(?,?,?,?,?,?,?);'
+            var dm = model.get(i);
+            var binding = [dm.id, dm.richText, dm.name, dm.screenName, dm.profileImageUrl,
+                           dm.createdAt.toString(), (dm.isReceiveDM ? 1 : 0)];
             tx.executeSql(sqlText, binding)
         }
     })
 }
 
-function getTweets(tableName) {
-    var tweets = []
+function getDMs() {
+    var dms = []
     db.readTransaction(function(tx) {
-        var rs = tx.executeSql('SELECT * FROM '+ tableName +' ORDER BY tweetId DESC;')
+        var rs = tx.executeSql('SELECT * FROM DM ORDER BY id DESC;')
         for (var i=0; i<rs.rows.length; i++) {
-            var tweetObj = rs.rows.item(i)
-            tweetObj.mediaUrl = tweetObj.mediaViewUrl
-            delete tweetObj.mediaViewUrl
-            delete tweetObj.mediaExpandedUrl
-            delete tweetObj.mediaThumbnail
-            tweets.push(tweetObj)
+            dms.push(rs.rows.item(i));
         }
     })
-    return tweets
-}
-
-function initializeDirectMsg() {
-    db.transaction(function(tx) {
-        tx.executeSql('CREATE TABLE IF NOT EXISTS DirectMsg(' +
-                      'tweetId INTEGER UNIQUE,' +
-                      'userName TEXT,' +
-                      'screenName TEXT,' +
-                      'tweetText TEXT,' +
-                      'profileImageUrl TEXT,' +
-                      'createdAt TEXT,' +
-                      'sentMsg INTEGER);')}
-    )
-}
-
-function storeDM(model) {
-    db.transaction(function(tx) {
-        tx.executeSql('DELETE FROM DirectMsg')
-        for (var i=0; i<Math.min(model.count, 100); i++) {
-            var sqlText = 'INSERT INTO DirectMsg VALUES (?,?,?,?,?,?,?);'
-            var binding = [model.get(i).tweetId, model.get(i).userName,
-                           model.get(i).screenName, model.get(i).tweetText,
-                           model.get(i).profileImageUrl, model.get(i).createdAt.toString(),
-                           (model.get(i).sentMsg ? 1 : 0)]
-            tx.executeSql(sqlText, binding)
-        }
-    })
-}
-
-function getDM() {
-    var dm = []
-    db.readTransaction(function(tx) {
-        var rs = tx.executeSql('SELECT * FROM DirectMsg ORDER BY tweetId DESC;')
-        for (var i=0; i<rs.rows.length; i++) {
-            dm.push(rs.rows.item(i))
-        }
-    })
-    return dm
-}
-
-function initializeScreenNames() {
-    db.transaction(function(tx) {
-        tx.executeSql('CREATE TABLE IF NOT EXISTS ScreenNames(screenNames TEXT UNIQUE);')
-    })
+    return dms
 }
 
 function storeScreenNames(screenNames) {
-    var totalScreenNames = []
+    var allScreenNames = []
     db.transaction(function(tx) {
-        for (var i=0;i<screenNames.length;i++) {
-            tx.executeSql('INSERT OR REPLACE INTO ScreenNames VALUES(?)', screenNames[i])
+        for (var i = 0; i < screenNames.length; i++) {
+            tx.executeSql('INSERT OR REPLACE INTO ScreenNames VALUES(?);', screenNames[i])
         }
         var rs = tx.executeSql('SELECT * FROM ScreenNames ORDER BY screenNames ASC;')
         for (var i2=0; i2<rs.rows.length; i2++) {
-            totalScreenNames[i2] = rs.rows.item(i2).screenNames
+            allScreenNames.push(rs.rows.item(i2).screenNames);
         }
     })
-    return totalScreenNames
+    return allScreenNames;
 }
 
 function getScreenNames() {
@@ -179,7 +141,7 @@ function getScreenNames() {
     db.readTransaction(function(tx) {
         var rs = tx.executeSql('SELECT * FROM ScreenNames ORDER BY screenNames ASC;')
         for (var i=0; i<rs.rows.length; i++) {
-            screenNames[i] = rs.rows.item(i).screenNames
+            screenNames.push(rs.rows.item(i).screenNames);
         }
     })
     return screenNames
@@ -196,3 +158,30 @@ function dropTable(tableName) {
         tx.executeSql('DROP TABLE ' + tableName)
     })
 }
+
+function __storeTweetsShared(tableName, model) {
+    db.transaction(function(tx) {
+        tx.executeSql('DELETE FROM ' + tableName)
+        for (var i=0; i<Math.min(model.count, 100); i++) {
+            var sqlText = 'INSERT INTO ' + tableName + ' VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?);'
+            var tweet = model.get(i);
+            var binding = [tweet.id, tweet.plainText, tweet.richText, tweet.name, tweet.screenName,
+                           tweet.profileImageUrl, tweet.inReplyToScreenName, tweet.inReplyToStatusId,
+                           tweet.latitude, tweet.longitude, tweet.mediaUrl, tweet.source, tweet.createdAt.toString(),
+                           (tweet.isFavourited ? 1 : 0), (tweet.isRetweet ? 1 : 0), tweet.retweetScreenName];
+            tx.executeSql(sqlText, binding)
+        }
+    })
+}
+
+function __getTweetsShared(tableName) {
+    var tweets = []
+    db.readTransaction(function(tx) {
+        var rs = tx.executeSql('SELECT * FROM ' + tableName + ' ORDER BY id DESC;')
+        for (var i=0; i<rs.rows.length; i++) {
+            tweets.push(rs.rows.item(i));
+        }
+    })
+    return tweets
+}
+

@@ -118,13 +118,10 @@ when streaming is connected. It is not recommended to enable streaming when you 
             var message = qsTr("This action will clear all temporary caches and database. \
 Twitter credential and app settings will not be reset. Continue?")
             dialog.createQueryDialog(qsTr("Clear Cache & Database"), icon, message, function() {
-                Database.dropTable("Timeline")
-                Database.dropTable("Mentions")
-                Database.dropTable("DirectMsg")
-                Database.initializeTweetsTable("Timeline")
-                Database.initializeTweetsTable("Mentions")
-                Database.initializeDirectMsg()
-                Database.clearTable("ScreenNames")
+                Database.clearTable("Timeline");
+                Database.clearTable("Mentions");
+                Database.clearTable("DM");
+                Database.clearTable("ScreenNames");
                 cache.clearAll()
                 infoBanner.showText(qsTr("All cache cleared"))
             })

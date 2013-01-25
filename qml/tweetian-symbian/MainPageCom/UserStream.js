@@ -46,9 +46,9 @@ function streamRecieved(rawData) {
         else if (prop === "direct_message") {
             log("DMs response recieved")
             if (data.direct_message.recipient_screen_name === settings.userScreenName)
-                directMsg.parser.insert([data.direct_message], [])
+                directMsg.insertDM([data.direct_message], [])
             else
-                directMsg.parser.insert([], [data.direct_message])
+                directMsg.insertDM([], [data.direct_message])
             break
         }
         else if (prop === "text") {
@@ -70,7 +70,7 @@ function streamRecieved(rawData) {
         else if (prop === "delete") {
             log("Delete response recieved")
             if (data["delete"].direct_message) {
-                directMsg.parser.remove(data["delete"].direct_message.id_str)
+                directMsg.removeDM(data["delete"].direct_message.id_str)
             }
             else {
                 timeline.parseData("delete", data["delete"].status)

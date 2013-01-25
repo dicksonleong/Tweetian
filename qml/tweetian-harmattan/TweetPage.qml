@@ -33,31 +33,14 @@ import "TweetPageJS.js" as JS
 Page {
     id: tweetPage
 
-    property variant currentTweet: {
-                "createdAt": "",
-                "displayScreenName": "",
-                "displayTweetText": "",
-                "favourited": false,
-                "inReplyToScreenName": "",
-                "inReplyToStatusId": "",
-                "latitude": "",
-                "longitude": "",
-                "mediaUrl": "",
-                "profileImageUrl": "",
-                "retweetId": "",
-                "screenName": "",
-                "source": "",
-                "tweetId": "",
-                "tweetText": "",
-                "userName": ""
-    }
+    property variant tweet
     property bool favouritedTweet: false
 
     property ListModel ancestorModel: ListModel {}
     property ListModel descendantModel: ListModel {}
 
     Component.onCompleted: {
-        favouritedTweet = currentTweet.favourited
+        favouritedTweet = tweet.isFavourited
         JS.createPicThumb()
         JS.createMapThumb()
         if (networkMonitor.online) {
@@ -78,14 +61,14 @@ Page {
             id: replyButton
             platformIconId: "toolbar-reply"
             onClicked: {
-                var prop = { type: "Reply", placedText: JS.contructReplyText(), tweetId: currentTweet.tweetId }
+                var prop = { type: "Reply", placedText: JS.contructReplyText(), tweetId: tweet.id }
                 pageStack.push(Qt.resolvedUrl("NewTweetPage.qml"), prop)
             }
         }
         ToolIcon {
             iconSource: settings.invertedTheme ? "Image/retweet_inverse.png" : "Image/retweet.png"
             onClicked: {
-                var prop = { type: "RT", placedText: JS.contructRetweetText(), tweetId: currentTweet.retweetId }
+                var prop = { type: "RT", placedText: JS.contructRetweetText(), tweetId: tweet.id }
                 pageStack.push(Qt.resolvedUrl("NewTweetPage.qml"), prop)
             }
         }
@@ -93,8 +76,8 @@ Page {
             platformIconId: favouritedTweet ? "toolbar-favorite-unmark" : "toolbar-favorite-mark"
             onClicked: {
                 if (favouritedTweet)
-                    Twitter.postUnfavourite(currentTweet.tweetId, JS.favouriteOnSuccess, JS.commonOnFailure)
-                else Twitter.postFavourite(currentTweet.tweetId, JS.favouriteOnSuccess, JS.commonOnFailure)
+                    Twitter.postUnfavourite(tweet.id, JS.favouriteOnSuccess, JS.commonOnFailure)
+                else Twitter.postFavourite(tweet.id, JS.favouriteOnSuccess, JS.commonOnFailure)
                 header.busy = true
             }
         }
@@ -111,7 +94,7 @@ Page {
             MenuItem {
                 text: qsTr("Copy tweet")
                 onClicked: {
-                    QMLUtils.copyToClipboard("@" + currentTweet.screenName + ": " + currentTweet.tweetText)
+                    QMLUtils.copyToClipboard("@" + tweet.screenName + ": " + tweet.plainText)
                     infoBanner.showText(qsTr("Tweet copied to clipboard"))
                 }
             }
@@ -120,7 +103,7 @@ Page {
                 onClicked: {
                     if (translatedTweetLoader.sourceComponent) translatedTweetLoader.sourceComponent = undefined
                     else if (cache.isTranslationTokenValid()) {
-                        Translation.translate(constant, cache.translationToken, currentTweet.tweetText,
+                        Translation.translate(constant, cache.translationToken, tweet.plainText,
                                               settings.translateLangCode, JS.translateOnSuccess, JS.commonOnFailure)
                         header.busy = true
                     }
@@ -133,7 +116,7 @@ Page {
             MenuItem {
                 text: qsTr("Tweet permalink")
                 onClicked: {
-                    var permalink = "http://twitter.com/" + currentTweet.screenName + "/status/" + currentTweet.tweetId
+                    var permalink = "http://twitter.com/" + tweet.retweetScreenName + "/status/" + tweet.id
                     dialog.createOpenLinkDialog(permalink)
                 }
                 platformStyle: MenuItemStyle { position: deleteTweetButton.visible ? "vertical-center" : "vertical-bottom" }
@@ -141,7 +124,7 @@ Page {
             MenuItem {
                 id: deleteTweetButton
                 text: qsTr("Delete tweet")
-                visible: currentTweet.screenName === settings.userScreenName
+                visible: tweet.retweetScreenName === settings.userScreenName
                 onClicked: JS.createDeleteTweetDialog()
             }
         }
@@ -178,12 +161,10 @@ Page {
                     anchors { left: parent.left; right: parent.right }
                     height: usernameColumn.height + 2 * usernameColumn.anchors.margins
                     subItemIndicator: true
-                    onClicked: {
-                        pageStack.push(Qt.resolvedUrl("UserPage.qml"), {screenName: currentTweet.displayScreenName})
-                    }
+                    onClicked: pageStack.push(Qt.resolvedUrl("UserPage.qml"), {screenName: tweet.screenName})
                     Component.onCompleted: {
-                        imageSource = thumbnailCacher.get(currentTweet.profileImageUrl)
-                                || (networkMonitor.online ? currentTweet.profileImageUrl : constant.twitterBirdIcon)
+                        imageSource = thumbnailCacher.get(tweet.profileImageUrl)
+                                || (networkMonitor.online ? tweet.profileImageUrl : constant.twitterBirdIcon)
                     }
 
                     Column {
@@ -195,13 +176,13 @@ Page {
                             font.pixelSize: constant.fontSizeMedium
                             color: constant.colorLight
                             font.bold: true
-                            text: currentTweet.userName
+                            text: tweet.name
                         }
 
                         Text {
                             font.pixelSize: constant.fontSizeSmall
                             color: userItem.highlighted ? constant.colorHighlighted : constant.colorMid
-                            text: "@" + currentTweet.displayScreenName
+                            text: "@" + tweet.screenName
                         }
                     }
                 }
@@ -213,7 +194,7 @@ Page {
                     color: constant.colorLight
                     textFormat: Text.RichText
                     wrapMode: Text.Wrap
-                    text: currentTweet.displayTweetText
+                    text: tweet.richText
                     onLinkActivated: {
                         basicHapticEffect.play()
                         if (link.indexOf("@") === 0)
@@ -227,10 +208,10 @@ Page {
 
                 Text {
                     anchors { left: parent.left; right: parent.right }
-                    visible: currentTweet.retweetId !== currentTweet.tweetId
+                    visible: tweet.isRetweet
                     font.pixelSize: settings.largeFontSize ? constant.fontSizeLarge : constant.fontSizeMedium
                     color: constant.colorMid
-                    text: qsTr("Retweeted by %1").arg("@" + currentTweet.screenName)
+                    text: qsTr("Retweeted by %1").arg("@" + tweet.retweetScreenName)
                 }
 
                 Item {
@@ -260,7 +241,7 @@ Page {
                         font.pixelSize: settings.largeFontSize ? constant.fontSizeMedium : constant.fontSizeSmall
                         horizontalAlignment: Text.AlignRight
                         color: constant.colorMid
-                        text: currentTweet.source + " | " + Qt.formatDateTime(currentTweet.createdAt, "h:mm AP d MMM yy")
+                        text: tweet.source + " | " + Qt.formatDateTime(tweet.createdAt, "h:mm AP d MMM yy")
                         elide: Text.ElideRight
                     }
                 }
@@ -290,7 +271,7 @@ Page {
                                 if (model.type === "image")
                                     pageStack.push(Qt.resolvedUrl("TweetImage.qml"), {"imageLink": model.link,"imageUrl": model.full})
                                 else if (model.type === "map")
-                                    pageStack.push(Qt.resolvedUrl("MapPage.qml"), {latitude: currentTweet.latitude, longitude: currentTweet.longitude})
+                                    pageStack.push(Qt.resolvedUrl("MapPage.qml"), {latitude: tweet.latitude, longitude: tweet.longitude})
                                 else {
                                     if (model.link) {
                                         var success = Qt.openUrlExternally(model.link)

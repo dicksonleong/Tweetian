@@ -34,7 +34,7 @@ Page {
     //Component.onCompleted: {
     onUserIdsArrayChanged: {
         Twitter.getUserLookup(userIdsArray.join(","), function(data) {
-            var obj = { reloadType: "all", data: data, model: usersListView.model }
+            var obj = { type: "all", data: data, model: usersListView.model }
             usersParser.sendMessage(obj)
         }, function(status, statusText) {
             infoBanner.showHttpError(status, statusText)

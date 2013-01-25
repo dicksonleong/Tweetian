@@ -69,7 +69,7 @@ function createTwitterSignOutDialog() {
         Database.clearTable("Mentions")
         mainPage.mentions.parseData("all", [])
         Database.clearTable("DirectMsg")
-        mainPage.directMsg.parser.clearAndInsert([],[])
+        mainPage.directMsg.removeAllDM()
         Database.clearTable("ScreenNames")
         settings.resetAll()
         cache.clearAll()

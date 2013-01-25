@@ -16,119 +16,86 @@
     along with this program. If not, see <http://www.gnu.org/licenses/>.
 */
 
+/*
+  Every tweet object contain 16 properties:
+
+  - id (String) : id of the tweet/retweet
+  - plainText* (String) : text of the tweet, without any formatting
+  - richText* (String) : text of the tweet, with urls, hashtags, @mentions formatted with html
+  - name* (String) : full name of the user who create this tweet
+  - screenName* (String) : screen name of the user who create this tweet
+  - profileImageUrl* (String) : profile image url of the user who create this tweet
+  - inReplyToScreenName* (String) : screen name of the user of this tweet reply to
+  - inReplyToStatusId* (String) : id of the tweet of this tweet reply to
+  - latitude* (real) : latitude of the geo-tagged tweet
+  - longitude* (real) : longitude of the geo-tagged tweet
+  - mediaUrl* (String) : url of the Twitter pic, if there is pic uploaded with this tweet
+  - source (String) : source of the tweet (html removed)
+  - createdAt (String) : the date of this tweet created
+  - isFavourited (bool) : indicate this tweet is favourited by the user
+  - isRetweet (bool) : indicate this tweeet is a retweet
+  - retweetScreenName (String) : screen name of the user who made the retweet
+
+  Derived property:
+  - timeDiff (String): user-visible string describing the time different of when this is created
+
+  Note: Properties marked with '*' means those value is belong to the retweeted_status if this is a retweet
+*/
+
 Qt.include("../Utils/Parser.js")
-Qt.include("../Utils/Calculations.js")
 
 WorkerScript.onMessage = function(msg) {
-    var count = 0
+    var newTweetCount = 0
     var hashtags = []
     var screenNames = []
 
-    function getTweetObject(index) {
-        msg.data[index].source = unlink(msg.data[index].source)
-
-        if (msg.muteString && isMuted(msg.muteString, msg.data[index])) {
-            console.log("[Mute] Muted one tweet, id:", msg.data[index].id_str)
-            return ""
-        }
-
-        var tweetObject = {
-            tweetId: msg.data[index].id_str,
-            screenName: msg.data[index].user.screen_name,
-            createdAt: new Date(msg.data[index].created_at),
-            timeDiff: timeDiff(msg.data[index].created_at),
-            source: msg.data[index].source,
-            mediaUrl: ""
-        }
-
-        // Collecting screen name for autofill
-        if (msg.data[index].user.following && screenNames.indexOf(msg.data[index].user.screen_name) == -1) {
-            screenNames.push(msg.data[index].user.screen_name)
-        }
-
-        // For retweeted status
-        if (msg.data[index].retweeted_status) msg.data[index] = msg.data[index].retweeted_status
-
-        tweetObject.retweetId = msg.data[index].id_str
-        tweetObject.displayScreenName = msg.data[index].user.screen_name
-        tweetObject.userName = msg.data[index].user.name
-        tweetObject.tweetText = unescapeHtml(msg.data[index].text)
-        tweetObject.displayTweetText = msg.data[index].text.parseUsername().parseHashtag(hashtags)
-        tweetObject.profileImageUrl = msg.data[index].user.profile_image_url
-        tweetObject.favourited = msg.data[index].favorited
-        tweetObject.inReplyToScreenName = msg.data[index].in_reply_to_screen_name
-        tweetObject.inReplyToStatusId = msg.data[index].in_reply_to_status_id_str
-        tweetObject.latitude = msg.data[index].geo ? msg.data[index].geo.coordinates[0] : ""
-        tweetObject.longitude = msg.data[index].geo ? msg.data[index].geo.coordinates[1] : ""
-
-        // URL parsing
-        if (msg.data[index].entities.urls) {
-            for (var i2=0; i2<msg.data[index].entities.urls.length; i2++) {
-        tweetObject.displayTweetText = tweetObject.displayTweetText.parseURL(msg.data[index].entities.urls[i2].url,
-                                                                             msg.data[index].entities.urls[i2].display_url,
-                                                                             msg.data[index].entities.urls[i2].expanded_url)
-            }
-        }
-
-        // Media parsing
-        if (Array.isArray(msg.data[index].entities.media) && msg.data[index].entities.media.length > 0) {
-            tweetObject.mediaUrl = msg.data[index].entities.media[0].media_url
-            tweetObject.displayTweetText = tweetObject.displayTweetText.parseURL(msg.data[index].entities.media[0].url,
-                                                                                 msg.data[index].entities.media[0].display_url,
-                                                                                 msg.data[index].entities.media[0].expanded_url)
-        }
-
-        return tweetObject
-            }
-
-    switch (msg.reloadType) {
+    switch (msg.type) {
     case "all":
         msg.model.clear()
         msg.model.sync()
-        //fallthrough
+        // fallthrough
     case "older":
-        for (var iAll=0; iAll < msg.data.length; iAll++) {
-            var tweetObjAll = getTweetObject(iAll)
-            if (tweetObjAll) {
-                msg.model.append(tweetObjAll)
-                count++
-            }
-        }
+        if (msg.data.length === 0)
+            break;
 
+        msg.data.forEach(function(tweetJson) {
+            collectScreenNamesAndHashtags(tweetJson, screenNames, hashtags);
+        });
+
+        appendTweetsFromJson(msg.data, msg.model, msg.muteString);
         break
     case "newer":
-        for (var iNew=msg.data.length - 1; iNew >= 0; iNew--) {
-            var tweetObjNew = getTweetObject(iNew)
-            if (tweetObjNew) {
-                msg.model.insert(0, tweetObjNew)
-                count++
-                if (count === 1) msg.model.sync()
-            }
-        }
+        if (msg.data.length === 0)
+            break;
 
-        break
+        msg.data.forEach(function(tweetJson) {
+            collectScreenNamesAndHashtags(tweetJson, screenNames, hashtags);
+        });
+
+        newTweetCount = prependTweetsFromJson(msg.data, msg.model, msg.muteString);
+        break;
     case "database":
-        for (var iDB=0; iDB<msg.data.length; iDB++) {
-            msg.data[iDB].tweetText.parseHashtag(hashtags)
+        msg.data.forEach(function(tweetDB) {
+                var matchedHashtags = tweetDB.richText.match(/#\w+/g) || [];
+                matchedHashtags.forEach(function(hashtag) {
+                hashtags.push(hashtag.substring(1));
+            })
+        })
 
-            msg.data[iDB].createdAt = new Date(msg.data[iDB].createdAt)
-            msg.data[iDB].favourited = msg.data[iDB].favourited == 1
-            msg.data[iDB].timeDiff = timeDiff(msg.data[iDB].createdAt)
-            msg.model.append(msg.data[iDB])
-        }
-        break
+        appendTweetsFromDB(msg.data, msg.model);
+        break;
     case "delete":
         for (var iDelete=0; iDelete<msg.model.count; iDelete++) {
-            if (msg.model.get(iDelete).tweetId == msg.data.id_str) {
-                msg.model.remove(iDelete)
-                break
+            if (msg.model.get(iDelete).id == msg.data.id_str) {
+                msg.model.remove(iDelete);
+                break;
             }
         }
-        break
+        break;
     case "favourite":
         for (var iFav=0; iFav<msg.model.count; iFav++) {
-            if (msg.model.get(iFav).tweetId == msg.data.id_str) {
-                msg.model.setProperty(iFav, "favourited", !msg.model.get(iFav).favourited)
+            if (msg.model.get(iFav).id == msg.data.id_str) {
+                msg.model.setProperty(iFav, "isFavourited", !msg.model.get(iFav).isFavourited);
             }
         }
         break
@@ -138,44 +105,119 @@ WorkerScript.onMessage = function(msg) {
         }
         break
     default:
-        throw new Error("Invalid method: "+ msg.reloadType)
+        throw new Error("Invalid method: "+ msg.type)
     }
 
     msg.model.sync()
-    WorkerScript.sendMessage({"type": msg.reloadType, "count": count, "screenNames": screenNames, "hashtags": hashtags})
+    var returnObj = {type: msg.type, newTweetCount: newTweetCount, screenNames: screenNames, hashtags: hashtags}
+    WorkerScript.sendMessage(returnObj);
 }
 
-function isMuted(muteString, tweetObject) {
+function collectScreenNamesAndHashtags(tweetJson, screenNames, hashtags) {
+    if (tweetJson.following && screenNames.indexOf(tweetJson.user.screen_name) == -1)
+        screenNames.push(tweetJson.user.screen_name);
+
+    if (tweetJson.hasOwnProperty("entities")) {
+        tweetJson.entities.hashtags.forEach(function(hashtagObj) {
+            if (hashtags.indexOf(hashtagObj.text) == -1)
+                hashtags.push(hashtagObj.text);
+        })
+    }
+}
+
+function appendTweetsFromJson(tweetsJson, model, muteString) {
+    var tweetsArray = [];
+
+    tweetsJson.forEach(function(tweetJson) {
+        tweetsArray.push(parseTweet(tweetJson));
+    })
+
+    if (muteString) {
+        tweetsArray = tweetsArray.filter(function(tweet) {
+            return filterMute(tweet, muteString);
+        })
+    }
+
+    tweetsArray.forEach(function(tweet) { model.append(tweet); })
+}
+
+function prependTweetsFromJson(tweetsJson, model, muteString) {
+    var tweetsArray = [];
+
+    tweetsJson.forEach(function(tweetJson) {
+        tweetsArray.push(parseTweet(tweetJson));
+    })
+
+    if (muteString) {
+        tweetsArray = tweetsArray.filter(function(tweet) {
+            return filterMute(tweet, muteString);
+        })
+    }
+
+    var newTweetCount = tweetsArray.length;
+
+    var lastTweet = tweetsArray.pop();
+    model.insert(0, lastTweet);
+    model.sync();
+
+    tweetsArray.reverse();
+
+    tweetsArray.forEach(function(tweet) {
+        model.insert(0, tweet);
+    })
+
+    return newTweetCount;
+}
+
+function appendTweetsFromDB(tweetsDB, model) {
+    var tweetsArray = [];
+
+    tweetsDB.forEach(function(tweetDB) {
+        var tweet = tweetDB;
+        tweet.createdAt = new Date(tweet.createdAt);
+        tweet.isFavourited = (tweet.isFavourited == 1 ? true : false);
+        tweet.isRetweet = (tweet.isRetweet == 1 ? true : false);
+        tweet.timeDiff = timeDiff(tweet.createdAt);
+        tweetsArray.push(tweet);
+    })
+
+    tweetsArray.forEach(function(tweet) {
+        model.append(tweet);
+    })
+}
+
+function filterMute(tweet, muteString) {
 
     function checkMute(muteKeyword) {
         if (muteKeyword.indexOf("@") === 0) { // @user
-            if (tweetObject.user.screen_name.toLowerCase() === muteKeyword.substring(1).toLowerCase())
-                return true
-            else if (new RegExp(muteKeyword.toLowerCase().concat("(\\s|$)")).test(tweetObject.text.toLowerCase()))
-                return true
+            if (tweet.screenName.toLowerCase() === muteKeyword.substring(1).toLowerCase())
+                return true;
+
+            var mentionsRegexp = new RegExp("@\\b" + muteKeyword.substring(1) + "\\b", "i");
+            if (mentionsRegexp.test(tweet.richText))
+                return true;
+        }
+        else if (muteKeyword.indexOf("#") === 0) {
+            var hashRegExp = new RegExp("#\\b" + muteKeyword.substring(1) + "\\b", "i");
+            if (hashRegExp.test(tweet.richText))
+                return true;
         }
         else if (muteKeyword.indexOf("source:") === 0) { // source:Tweet_Button
-            if (tweetObject.source.toLowerCase() === muteKeyword.substring(7).toLowerCase().replace(/_/g, " "))
-                return true
+            if (tweet.source.toLowerCase() === muteKeyword.substring(7).toLowerCase().replace(/_/g, " "))
+                return true;
         }
-        else { // plain words
-            if (new RegExp(muteKeyword.toLowerCase().concat("(\\s|$)")).test(tweetObject.text.toLowerCase()))
-                return true
+        else { // plain word
+            var wordRegexp = new RegExp("\\b" + muteKeyword + "\\b", "i");
+            if (wordRegexp.test(tweet.richText))
+                return true;
         }
-        return false
+        return false;
     }
 
-    var muteArrayOR = muteString.split("\n")
-    for (var orIndex = 0; orIndex < muteArrayOR.length ; orIndex++) {
-        var muteArrayAND = muteArrayOR[orIndex].split(" ")
-        var passedAND = true
-        for (var andIndex=0; andIndex < muteArrayAND.length ; andIndex++) {
-            if (!checkMute(muteArrayAND[andIndex])) {
-                passedAND = false
-                break
-            }
-        }
-        if (passedAND) return true
-    }
-    return false
+    var muteArrayOR = muteString.split("\n");
+    var isMuted = muteArrayOR.some(function(muteLine) {
+        var muteArrayAND = muteLine.split(" ");
+        return muteArrayAND.every(checkMute);
+    })
+    return !isMuted;
 }

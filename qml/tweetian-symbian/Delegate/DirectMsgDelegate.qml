@@ -21,7 +21,7 @@ import com.nokia.symbian 1.1
 
 AbstractDelegate {
     id: root
-    imageSource: sentMsg ? settings.userProfileImage : profileImageUrl
+    imageSource: model.isReceiveDM ? model.profileImageUrl : settings.userProfileImage
 
     Item {
         anchors { left: parent.left; right: parent.right }
@@ -35,7 +35,7 @@ AbstractDelegate {
             font.bold: true
             color: highlighted ? constant.colorHighlighted : constant.colorLight
             elide: Text.ElideRight
-            text: sentMsg ? settings.userFullName : userName
+            text: model.isReceiveDM ? model.name : settings.userFullName
         }
 
         Text {
@@ -43,7 +43,7 @@ AbstractDelegate {
             font.pixelSize: settings.largeFontSize ? constant.fontSizeMedium : constant.fontSizeSmall
             color: highlighted ? constant.colorHighlighted : constant.colorMid
             elide: Text.ElideRight
-            text: "@" + (sentMsg ? settings.userScreenName : screenName)
+            text: "@" + (model.isReceiveDM ? model.screenName : settings.userScreenName)
         }
     }
 
@@ -52,7 +52,7 @@ AbstractDelegate {
         font.pixelSize: settings.largeFontSize ? constant.fontSizeMedium : constant.fontSizeSmall
         wrapMode: Text.Wrap
         color: highlighted ? constant.colorHighlighted : constant.colorLight
-        text: tweetText
+        text: richText
     }
 
     Text {

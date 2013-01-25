@@ -158,7 +158,7 @@
         <file>qml/tweetian-symbian/Utils/Parser.js</file>
         <file>qml/tweetian-symbian/WorkerScript/AutoCompleter.js</file>
         <file>qml/tweetian-symbian/WorkerScript/ConversationParser.js</file>
-        <file>qml/tweetian-symbian/WorkerScript/DirectMsgParser.js</file>
+        <file>qml/tweetian-symbian/WorkerScript/DMParser.js</file>
         <file>qml/tweetian-symbian/WorkerScript/DMConversationParser.js</file>
         <file>qml/tweetian-symbian/WorkerScript/SearchParser.js</file>
         <file>qml/tweetian-symbian/WorkerScript/TweetsParser.js</file>

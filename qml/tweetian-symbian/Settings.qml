@@ -26,16 +26,12 @@ QtObject {
 
     // TODO: Use QSettings but some of the values like oauthToken & pocketPassword can not store as plain text
     function loadSettings() {
-        Database.initializeSettings()
         var results = Database.getAllSettings()
         for (var s in results) {
             if (settings.hasOwnProperty(s)) {
                 settings[s] = results[s]
             }
         }
-        Database.initializeTweetsTable("Timeline")
-        Database.initializeTweetsTable("Mentions")
-        Database.initializeDirectMsg()
         settingsLoaded()
     }
 

@@ -135,22 +135,22 @@ var PIC_SERVICES = {
 
 function createPicThumb() {
     // if there is no link in the tweet, just return
-    if (currentTweet.displayTweetText.indexOf("href=\"http") < 0)
+    if (tweet.richText.indexOf("href=\"http") < 0)
         return
 
     // Twitter pic
-    if (currentTweet.mediaUrl) {
+    if (tweet.mediaUrl) {
         var twitterPic = {
             type: "image",
-            full: currentTweet.mediaUrl,
-            thumb: currentTweet.mediaUrl + ":thumb",
-            link: "http://" + currentTweet.displayTweetText.match(/pic.twitter.com\/\w+/)[0]
+            full: tweet.mediaUrl,
+            thumb: tweet.mediaUrl + ":thumb",
+            link: "http://" + tweet.richText.match(/pic.twitter.com\/\w+/)[0]
         }
         thumbnailModel.append(twitterPic)
     }
 
     // Flickr pic
-    var flickrLinks = currentTweet.displayTweetText.match(Flickr.FLICKR_LINK_REGEXP)
+    var flickrLinks = tweet.richText.match(Flickr.FLICKR_LINK_REGEXP)
     if (flickrLinks != null) {
         for (var iFlickr=0; iFlickr<flickrLinks.length; iFlickr++) {
             Flickr.getSizes(constant, flickrLinks[iFlickr], function(full, thumb, link) {
@@ -160,7 +160,7 @@ function createPicThumb() {
     }
 
     for (var service in PIC_SERVICES) {
-        var links = currentTweet.displayTweetText.match(PIC_SERVICES[service].regexp)
+        var links = tweet.richText.match(PIC_SERVICES[service].regexp)
         if (links == null) continue
         for (var i=0; i<links.length; i++) {
             var urls = PIC_SERVICES[service].getPicUrl(links[i])
@@ -171,7 +171,7 @@ function createPicThumb() {
 }
 
 function createYoutubeThumb() {
-    var youtubeLinks = currentTweet.displayTweetText.match(YouTube.YOUTUBE_LINK_REGEXP)
+    var youtubeLinks = tweet.richText.match(YouTube.YOUTUBE_LINK_REGEXP)
     if (youtubeLinks == null) return
 
     for (var i=0; i<youtubeLinks.length; i++) {
@@ -182,15 +182,15 @@ function createYoutubeThumb() {
 }
 
 function createMapThumb() {
-    if (!currentTweet.latitude || !currentTweet.longitude) return
+    if (!tweet.latitude || !tweet.longitude) return
 
-    var thumbnailURL = Maps.getMaps(constant, currentTweet.latitude, currentTweet.longitude,
+    var thumbnailURL = Maps.getMaps(constant, tweet.latitude, tweet.longitude,
                                     constant.thumbnailSize, constant.thumbnailSize)
     thumbnailModel.append({type: "map", thumb: thumbnailURL, full: "", link: ""})
 }
 
 function expandTwitLonger() {
-    var twitLongerLink = currentTweet.displayTweetText.match(/http:\/\/tl.gd\/\w+/)
+    var twitLongerLink = tweet.richText.match(/http:\/\/tl.gd\/\w+/)
     if (twitLongerLink == null) return
 
     TwitLonger.getFullTweet(constant, twitLongerLink[0], getTwitLongerTextOnSuccess, commonOnFailure)
@@ -198,7 +198,7 @@ function expandTwitLonger() {
 }
 
 function getRTAndFavCount() {
-    Twitter.getTweetActivitySummary(currentTweet.retweetId || currentTweet.tweetId, function(data) {
+    Twitter.getTweetActivitySummary(tweet.id, function(data) {
         var rtCount = parseInt(data.retweeters_count, 10)
         var favCount = parseInt(data.favoriters_count, 10)
         if (rtCount > 0) {
@@ -227,12 +227,12 @@ function getRTAndFavCount() {
 }
 
 function getConversationFromTimelineAndMentions() {
-    if (!currentTweet.inReplyToStatusId) return
+    if (!tweet.inReplyToStatusId) return
     backButton.enabled = false
     var msg = {
         ancestorModel: ancestorModel, descendantModel: descendantModel,
         timelineModel: mainPage.timeline.model, mentionsModel: mainPage.mentions.model,
-        inReplyToStatusId: currentTweet.inReplyToStatusId
+        inReplyToStatusId: tweet.inReplyToStatusId
     }
     conversationParser.sendMessage(msg)
     header.busy = true
@@ -240,7 +240,7 @@ function getConversationFromTimelineAndMentions() {
 
 function getConversationFromTwitter() {
     if (!networkMonitor.online) return
-    Twitter.getConversation(currentTweet.tweetId, function(data) {
+    Twitter.getConversation(tweet.id, function(data) {
         if (tweetPage.status === PageStatus.Deactivating) return
         backButton.enabled = false
         conversationParser.sendMessage({data: data, ancestorModel: ancestorModel, descendantModel:descendantModel})
@@ -252,14 +252,14 @@ function getConversationFromTwitter() {
 }
 
 function contructReplyText() {
-    var replyText = "@" + currentTweet.screenName + " "
+    var replyText = "@" + tweet.retweetScreenName + " "
 
     // if this is a retweet, include the original author screen name
-    if (currentTweet.screenName !== currentTweet.displayScreenName)
-        replyText += "@" + currentTweet.displayScreenName + " "
+    if (tweet.isRetweet)
+        replyText += "@" + tweet.screenName + " "
 
     // check for other mentions in the tweet
-    var mentionsArray = currentTweet.displayTweetText.match(/href="@\w+/g) || []
+    var mentionsArray = tweet.richText.match(/href="@\w+/g) || []
     mentionsArray.forEach(function(mentions) {
         mentions = mentions.substring(6)
         if (mentions.toLowerCase() !== "@" + settings.userScreenName.toLowerCase())
@@ -268,7 +268,7 @@ function contructReplyText() {
 
     // check for hashtag in the tweet if hashtagsInReply is enabled
     if (settings.hashtagsInReply) {
-        var hashtagsArray = currentTweet.displayTweetText.match(/href="#[^"\s]+/g) || []
+        var hashtagsArray = tweet.richText.match(/href="#[^"\s]+/g) || []
         hashtagsArray.forEach(function(hashtag) {
             replyText += hashtag.substring(6) + " "
         })
@@ -277,13 +277,13 @@ function contructReplyText() {
 }
 
 function contructRetweetText() {
-    var retweetText = "RT @" + currentTweet.screenName + ": "
+    var retweetText = "RT @" + tweet.retweetScreenName + ": "
 
     // if it is a retweet, include the original author screen name
-    if (currentTweet.screenName !== currentTweet.displayScreenName)
-        retweetText += "RT @" + currentTweet.displayScreenName + ": "
+    if (tweet.isRetweet)
+        retweetText += "RT @" + tweet.screenName + ": "
 
-    retweetText += currentTweet.tweetText
+    retweetText += tweet.plainText
     return retweetText
 }
 
@@ -302,15 +302,14 @@ function favouriteOnSuccess(data, isFavourite) {
     header.busy = false
 }
 
-function getTwitLongerTextOnSuccess(fullTweetText, link) {
-    tweetTextText.text = fullTweetText + "<br><i>(" + qsTr("Expanded from TwitLonger") + " - "
-            + link.parseURL(link, link.substring(7), link) + ")</i>"
+function getTwitLongerTextOnSuccess(fullTweetText) {
+    tweetTextText.text = fullTweetText;
     header.busy = false
 }
 
 function translateTokenOnSuccess(token) {
     cache.translationToken = token
-    Translation.translate(constant, cache.translationToken, currentTweet.tweetText, settings.translateLangCode,
+    Translation.translate(constant, cache.translationToken, tweet.plainText, settings.translateLangCode,
                           translateOnSuccess, commonOnFailure)
 }
 
@@ -339,8 +338,8 @@ function addToPocket(link) {
         return
     }
 
-    Pocket.addPage(constant, settings.pocketUsername, settings.pocketPassword, link, currentTweet.tweetText,
-                   currentTweet.tweetId, function() {
+    Pocket.addPage(constant, settings.pocketUsername, settings.pocketPassword, link, tweet.plainText,
+                   tweet.id, function() {
                        loadingRect.visible = false
                        infoBanner.showText(qsTr("The link has been sent to Pocket successfully"))
                    }, function(errorCode) {
@@ -358,7 +357,7 @@ function addToInstapaper(link) {
     }
 
     Instapaper.addBookmark(constant, settings.instapaperToken, settings.instapaperTokenSecret, link,
-                           currentTweet.tweetText, function() {
+                           tweet.plainText, function() {
                                loadingRect.visible = false
                                infoBanner.showText(qsTr("The link has been sent to Instapaper successfully"))
                            }, function(errorCode) {
@@ -371,7 +370,7 @@ function addToInstapaper(link) {
 function createDeleteTweetDialog() {
     var message = qsTr("Do you want to delete this tweet?")
     dialog.createQueryDialog(qsTr("Delete Tweet"), "", message, function() {
-        Twitter.postDeleteStatus(currentTweet.tweetId, deleteTweetOnSuccess, commonOnFailure)
+        Twitter.postDeleteStatus(tweet.id, deleteTweetOnSuccess, commonOnFailure)
         loadingRect.visible = true
     })
 }

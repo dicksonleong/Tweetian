@@ -40,28 +40,32 @@ ContextMenu {
         MenuItem {
             text: qsTr("Reply")
             onClicked: {
-                var prop = {type: "Reply", tweetId: model.tweetId, placedText: "@"+model.screenName+" "+getAllHashtags(model.displayTweetText)}
+                var prop = {
+                    type: "Reply",
+                    tweetId: model.id,
+                    placedText: "@" + model.retweetScreenName + " " + getAllHashtags(model.richText)}
                 pageStack.push(Qt.resolvedUrl("../NewTweetPage.qml"), prop)
             }
         }
         MenuItem {
             text: qsTr("Retweet")
             onClicked: {
-                var text = model.retweetId == model.tweetId ? "RT @"+model.screenName+": "+model.tweetText
-                                                : "RT @"+model.screenName+": RT @"+model.displayScreenName+": "+model.tweetText
-                pageStack.push(Qt.resolvedUrl("../NewTweetPage.qml"), {type: "RT", placedText: text, tweetId: model.retweetId})
+                var text = "RT @" + model.retweetScreenName + ": ";
+                if (model.isRetweet) text += "RT @" + model.screenName + ": ";
+                text += model.plainText;
+                pageStack.push(Qt.resolvedUrl("../NewTweetPage.qml"), {type: "RT", placedText: text, tweetId: model.id})
             }
         }
         MenuItem {
-            text: qsTr("%1 Profile").arg("<font color=\"LightSeaGreen\">@" + model.screenName + "</font>")
-            onClicked: pageStack.push(Qt.resolvedUrl("../UserPage.qml"), {screenName: model.screenName})
+            text: qsTr("%1 Profile").arg("<font color=\"LightSeaGreen\">@" + model.retweetScreenName + "</font>")
+            onClicked: pageStack.push(Qt.resolvedUrl("../UserPage.qml"), { screenName: model.retweetScreenName })
             platformStyle: MenuItemStyle { position: rtScreenName.visible ? "vertical-center" : "vertical-bottom" }
         }
         MenuItem {
             id: rtScreenName
-            text: qsTr("%1 Profile").arg("<font color=\"LightSeaGreen\">@" + model.displayScreenName + "</font>")
-            visible: model.displayScreenName != model.screenName
-            onClicked: pageStack.push(Qt.resolvedUrl("../UserPage.qml"), {screenName: model.displayScreenName})
+            text: qsTr("%1 Profile").arg("<font color=\"LightSeaGreen\">@" + model.screenName + "</font>")
+            visible: model.isRetweet
+            onClicked: pageStack.push(Qt.resolvedUrl("../UserPage.qml"), { screenName: model.screenName })
         }
     }
 

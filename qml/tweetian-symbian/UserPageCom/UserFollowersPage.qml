@@ -54,7 +54,7 @@ AbstractUserPage {
                 Twitter.getUserLookup(currentRequestUserIds.join(), function(data) {
                 backButtonEnabled = false
                 userFollowingParser.sendMessage({model: listView.model, data: data,
-                    reloadType: reloadType, userIds: currentRequestUserIds})
+                    type: reloadType, userIds: currentRequestUserIds})
                 }, __failureCallback)
                 loadingRect.visible = true
             }

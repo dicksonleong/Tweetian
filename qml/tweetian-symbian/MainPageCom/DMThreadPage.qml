@@ -29,10 +29,10 @@ Page {
     property QtObject userStream: null
 
     property string screenName: ""
-    property WorkerScript parser: dMConversationParser
 
-    onScreenNameChanged: if (parser) parser.insert(mainPage.directMsg.fullModel.count) // Qt 4.7.4 compatibility
-    Component.onCompleted: if (screenName) parser.insert(mainPage.directMsg.fullModel.count)
+     // QQC 1.1.0 compatibility
+    onScreenNameChanged: if (dmConversationParser) internal.insertDMs(mainPage.directMsg.fullModel.count)
+    Component.onCompleted: if (screenName) internal.insertDMs(mainPage.directMsg.fullModel.count)
 
     tools: ToolBarLayout {
         ToolButtonWithTip {
@@ -76,37 +76,14 @@ Page {
     }
 
     WorkerScript {
-        id: dMConversationParser
+        id: dmConversationParser
         source: "../WorkerScript/DMConversationParser.js"
         onMessage: backButton.enabled = true
-
-        function insert(count) {
-            if (count > 0) {
-                backButton.enabled = false
-                var msg = {
-                    type: "insert",
-                    fullModel: mainPage.directMsg.fullModel,
-                    model: dMConversationView.model,
-                    screenName: screenName,
-                    count: count
-                }
-                sendMessage(msg)
-            }
-        }
-
-        function remove(tweetId) {
-            var msg = {
-                type: "remove",
-                model: dMConversationView.model,
-                tweetId: tweetId
-            }
-            sendMessage(msg)
-        }
     }
 
     Connections {
         target: mainPage.directMsg
-        onDataParsed: if (type === "insert") parser.insert(count)
+        onDmParsed: internal.insertDMs(newDMCount)
     }
 
     QtObject {
@@ -115,8 +92,8 @@ Page {
         property Component __dmDialog: null
 
         function deleteDMOnSuccess(data) {
-            mainPage.directMsg.parser.remove(data.id_str)
-            parser.remove(data.id_str)
+            removeDM(data.id_str)
+            mainPage.directMsg.removeDM(data.id_str)
             infoBanner.showText(qsTr("Direct message deleted successfully"))
             header.busy = false
         }
@@ -128,21 +105,37 @@ Page {
 
         function createDMDialog(model) {
             var prop = {
-                tweetId: model.tweetId,
+                id: model.id,
                 screenName: (model.sentMsg ? settings.userScreenName : model.screenName),
-                dmText: model.tweetText
+                dmText: model.richText
             }
             if (!__dmDialog) __dmDialog = Qt.createComponent("DMDialog.qml")
             __dmDialog.createObject(dMThreadPage, prop)
         }
 
-        function createDeleteDMDialog(tweetId) {
+        function createDeleteDMDialog(id) {
             var icon = platformInverted ? "image://theme/toolbar-delete_inverse" : "image://theme/toolbar-delete"
             var message = qsTr("Do you want to delete this direct message?")
             dialog.createQueryDialog(qsTr("Delete Message"), icon, message, function() {
-                Twitter.postDeleteDirectMsg(tweetId, deleteDMOnSuccess, deleteDMOnFailure)
+                Twitter.postDeleteDirectMsg(id, deleteDMOnSuccess, deleteDMOnFailure)
                 header.busy = true
             })
+        }
+
+        function insertDMs(count) {
+            var msg = {
+                type: "insert",
+                fullModel: mainPage.directMsg.fullModel,
+                model: dMConversationView.model,
+                screenName: screenName,
+                count: count
+            }
+            dmConversationParser.sendMessage(msg)
+        }
+
+        function removeDM(id) {
+            var msg = { type: "remove", model: dMConversationView.model, id: id }
+            dmConversationParser.sendMessage(msg)
         }
     }
 }

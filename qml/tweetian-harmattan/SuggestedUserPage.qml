@@ -76,8 +76,8 @@ Page {
             backButton.enabled = false
             header.headerText += ": " + data.name
             var msg = {
+                type: "all",
                 data: data.users,
-                reloadType: "all",
                 model: suggestedUserView.model
             }
             userParser.sendMessage(msg)

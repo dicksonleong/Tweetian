@@ -23,7 +23,7 @@ ContextMenu {
     id: root
 
     property string screenName
-    property string tweetId
+    property string id
     property string dmText
 
     property bool __isClosing: false
@@ -40,7 +40,7 @@ ContextMenu {
         }
         MenuItem {
             text: qsTr("Delete")
-            onClicked: internal.createDeleteDMDialog(tweetId)
+            onClicked: internal.createDeleteDMDialog(id)
         }
         MenuItem {
             text: qsTr("%1 Profile").arg("<font color=\"LightSeaGreen\">@" + screenName + "</font>")

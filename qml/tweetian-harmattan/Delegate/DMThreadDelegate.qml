@@ -22,7 +22,7 @@ import com.nokia.meego 1.0
 AbstractDelegate {
     id: root
     subItemIndicator: true
-    sideRectColor: newMsg ? constant.colorTextSelection : "transparent"
+    sideRectColor: model.isUnread ? constant.colorTextSelection : "transparent"
 
     Item {
         anchors { left: parent.left; right: parent.right }
@@ -36,7 +36,7 @@ AbstractDelegate {
             font.bold: true
             color: highlighted ? constant.colorHighlighted : constant.colorLight
             elide: Text.ElideRight
-            text: userName
+            text: model.name
         }
 
         Text {
@@ -44,7 +44,7 @@ AbstractDelegate {
             font.pixelSize: settings.largeFontSize ? constant.fontSizeMedium : constant.fontSizeSmall
             color: highlighted ? constant.colorHighlighted : constant.colorMid
             elide: Text.ElideRight
-            text: "@" + screenName
+            text: "@" + model.screenName
         }
     }
 
@@ -53,7 +53,7 @@ AbstractDelegate {
         wrapMode: Text.Wrap
         font.pixelSize: settings.largeFontSize ? constant.fontSizeMedium : constant.fontSizeSmall
         color: highlighted ? constant.colorHighlighted : constant.colorLight
-        text: tweetText
+        text: model.richText
     }
 
     Text {
@@ -62,13 +62,13 @@ AbstractDelegate {
         font.pixelSize: settings.largeFontSize ? constant.fontSizeSmall : constant.fontSizeXSmall
         color: highlighted ? constant.colorHighlighted : constant.colorMid
         elide: Text.ElideRight
-        text: timeDiff
+        text: model.timeDiff
     }
 
     onClicked: {
-        if (newMsg) parser.setProperty(index, "newMsg", false)
+        if (isUnread) internal.setDMThreadReaded(index)
         unreadCount = 0
-        var prop = { screenName: screenName, userStream: userStream }
+        var prop = { screenName: model.screenName, userStream: userStream }
         pageStack.push(Qt.resolvedUrl("../MainPageCom/DMThreadPage.qml"), prop)
     }
 }
