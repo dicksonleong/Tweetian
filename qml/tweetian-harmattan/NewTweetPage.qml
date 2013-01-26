@@ -62,6 +62,8 @@ Page {
                          && ((settings.enableTwitLonger && !addImageButton.checked) || !tweetTextArea.errorHighlight)
                          && !header.busy
                 onClicked: {
+                    // remove focus on text field for force commit pre-edit text
+                    tweetTextArea.parent.focus = true;
                     if (type == "New" || type == "Reply") {
                         if (addImageButton.checked) imageUploader.run()
                         else {
