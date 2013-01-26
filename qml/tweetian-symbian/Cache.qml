@@ -55,8 +55,8 @@ QtObject {
     onUserInfoChanged: {
         if (userInfo) {
             settings.userFullName = cache.userInfo.name
-            settings.userProfileImage = cache.userInfo.profile_image_url
-            settings.userScreenName = cache.userInfo.screen_name
+            settings.userScreenName = cache.userInfo.screenName
+            settings.userProfileImage = cache.userInfo.profileImageUrl
         }
     }
 

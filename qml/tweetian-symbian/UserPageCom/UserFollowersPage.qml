@@ -32,15 +32,15 @@ AbstractUserPage {
     property variant currentRequestUserIds
 
     headerText: qsTr("Followers")
-    headerNumber: userInfoData.followersCount
+    headerNumber: user.followersCount
     emptyText: qsTr("No follower")
-    loadMoreButtonVisible: listView.count > 0 && listView.count < userInfoData.followersCount
+    loadMoreButtonVisible: listView.count > 0 && listView.count < user.followersCount
     delegate: UserDelegate {}
 
     onReload: {
         if (reloadType === "all") {
             listView.model.clear()
-            Twitter.getFollowersId(userInfoData.screenName, function(data) {
+            Twitter.getFollowersId(user.screenName, function(data) {
                 userIdsData = data
                 reloadType = "older"
                 reload()
@@ -54,7 +54,7 @@ AbstractUserPage {
                 Twitter.getUserLookup(currentRequestUserIds.join(), function(data) {
                 backButtonEnabled = false
                 userFollowingParser.sendMessage({model: listView.model, data: data,
-                    type: reloadType, userIds: currentRequestUserIds})
+                    type: reloadType, userIdsArray: currentRequestUserIds})
                 }, __failureCallback)
                 loadingRect.visible = true
             }
@@ -70,7 +70,7 @@ AbstractUserPage {
         source: "../WorkerScript/UserParser.js"
         onMessage: {
             backButtonEnabled = true
-            if (userInfoData.screenName === settings.userScreenName)
+            if (user.screenName === settings.userScreenName)
                 cache.screenNames = Database.storeScreenNames(messageObject.screenNames)
             currentRequestUserIds = undefined
             loadingRect.visible = false

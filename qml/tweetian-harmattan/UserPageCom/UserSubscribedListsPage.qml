@@ -31,7 +31,7 @@ AbstractUserPage {
     delegate: ListDelegate {}
 
     onReload: {
-        Twitter.getUserLists(userInfoData.screenName, function(data) {
+        Twitter.getUserLists(user.screenName, function(data) {
             for (var i=0; i<data.length; i++) {
                 var obj = {
                         "listName": data[i].name,

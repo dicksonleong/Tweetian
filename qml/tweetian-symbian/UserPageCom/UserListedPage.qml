@@ -27,14 +27,14 @@ AbstractUserPage {
     property string nextCursor: ""
 
     headerText: qsTr("Listed")
-    headerNumber: userInfoData.listedCount
+    headerNumber: user.listedCount
     emptyText: qsTr("No list")
-    loadMoreButtonVisible: listView.count > 0 && listView.count < userInfoData.listedCount
+    loadMoreButtonVisible: listView.count > 0 && listView.count < user.listedCount
     delegate: ListDelegate {}
 
     onReload: {
         if (reloadType === "all") nextCursor = ""
-        Twitter.getUserListsMemberships(userInfoData.screenName, nextCursor, function(data) {
+        Twitter.getUserListsMemberships(user.screenName, nextCursor, function(data) {
             for (var i=0; i<data.lists.length; i++) {
                 var obj = {
                     "listName": data.lists[i].name,

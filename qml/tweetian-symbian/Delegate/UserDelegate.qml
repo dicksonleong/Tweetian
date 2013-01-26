@@ -35,7 +35,7 @@ AbstractDelegate {
             font.pixelSize: settings.largeFontSize ? constant.fontSizeMedium : constant.fontSizeSmall
             color: highlighted ? constant.colorHighlighted : constant.colorLight
             elide: Text.ElideRight
-            text: userName
+            text: model.name
         }
 
         Text {
@@ -44,13 +44,13 @@ AbstractDelegate {
             font.pixelSize: settings.largeFontSize ? constant.fontSizeMedium : constant.fontSizeSmall
             color: highlighted ? constant.colorHighlighted : constant.colorMid
             elide: Text.ElideRight
-            text: "@" + screenName
+            text: "@" + model.screenName
         }
 
         Loader {
             id: lockIconLoader
             anchors.right: parent.right
-            sourceComponent: protectedUser ? protectedIcon : undefined
+            sourceComponent: model.isProtected ? protectedIcon : undefined
 
             Component {
                 id: protectedIcon
@@ -69,7 +69,7 @@ AbstractDelegate {
         visible: text != ""
         wrapMode: Text.Wrap
         color: highlighted ? constant.colorHighlighted : constant.colorLight
-        text: bio
+        text: model.description
     }
 
     Text {
@@ -81,24 +81,6 @@ AbstractDelegate {
     }
 
     onClicked: {
-        pageStack.push(Qt.resolvedUrl("../UserPage.qml"), {
-                           userInfoRawData: {
-                               "profile_image_url": profileImageUrl,
-                               "profile_banner_url": profileBannerUrl,
-                               "screen_name": screenName,
-                               "name": userName,
-                               "protected": protectedUser,
-                               "description": bio,
-                               "url": website,
-                               "location": location,
-                               "created_at": createdAt,
-                               "statuses_count": tweetsCount,
-                               "friends_count": followingCount,
-                               "followers_count": followersCount,
-                               "favourites_count": favouritesCount,
-                               "following": followingUser,
-                               "listed_count": listedCount
-                           },
-                           screenName: screenName})
+        pageStack.push(Qt.resolvedUrl("../UserPage.qml"), { user: model, screenName: screenName })
     }
 }

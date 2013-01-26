@@ -32,15 +32,15 @@ Page {
     property bool backButtonEnabled: true
     property bool loadMoreButtonVisible: true
 
-    property QtObject userInfoData
+    property variant user
     property ListView listView: listView
 
     signal reload
 
     onStatusChanged: if (status === PageStatus.Deactivating) loadingRect.visible = false
 
-    onUserInfoDataChanged: if (root.listView) reload() // Qt 4.7.4 Compatibility
-    Component.onCompleted: if (userInfoData) reload()
+    onUserChanged: if (root.listView) reload() // QQC 1.1.0 Compatibility
+    Component.onCompleted: if (user) reload()
 
     tools: ToolBarLayout {
         ToolButtonWithTip {
@@ -82,8 +82,8 @@ Page {
 
     PageHeader {
         id: header
-        headerIcon: userInfoData.profileImageUrl
-        headerText: "@" + userInfoData.screenName + ": " + root.headerText
+        headerIcon: user ? user.profileImageUrl : ""
+        headerText: user ? "@" + user.screenName + ": " + root.headerText : ""
         countBubbleVisible: true
         countBubbleValue: root.headerNumber
         onClicked: listView.positionViewAtBeginning()

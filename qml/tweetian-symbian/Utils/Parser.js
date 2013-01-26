@@ -82,6 +82,27 @@ function parseDM(dmJson, isReceiveDM) {
     return dm;
 }
 
+function parseUser(userJson) {
+    var user = {
+        name: userJson.name,
+        screenName: userJson.screen_name,
+        description: userJson.description || "",
+        location: userJson.location || "",
+        url: userJson.url || "",
+        profileImageUrl: userJson.profile_image_url,
+        profileBannerUrl: userJson.profile_banner_url || "",
+        createdAt: new Date(userJson.created_at),
+        tweetsCount: userJson.statuses_count,
+        followersCount: userJson.followers_count,
+        followingCount: userJson.friends_count,
+        favouritesCount: userJson.favourites_count,
+        listedCount: userJson.listed_count,
+        isFollowing: userJson.following || false,
+        isProtected: userJson.protected
+    }
+    return user;
+}
+
 var __HTML_ENTITIES = {
     "&amp;": "&",
     "&lt;": "<",

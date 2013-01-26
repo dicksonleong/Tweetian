@@ -21,49 +21,41 @@ import com.nokia.symbian 1.1
 import "Services/Twitter.js" as Twitter
 import "Component"
 import "Utils/Calculations.js" as Calculate
+import "Utils/Parser.js" as Parser
 
 Page {
     id: userPage
 
     property string screenName
-    property variant userInfoRawData
+    property variant user: ({})
+    property bool isFollowing: false
 
-    QtObject {
-        id: userInfoData
-
-        property string profileImageUrl: ""
-        property string bannerImageUrl: ""
-        property string screenName: ""
-        property bool protectedUser: false
-        property string userName: ""
-        property int statusesCount: 0
-        property int friendsCount: 0
-        property int followersCount: 0
-        property int favouritesCount: 0
-        property int listedCount: 0
-        property bool following: false
-
-        function setData() {
-            profileImageUrl = userInfoRawData.profile_image_url
-            if (userInfoRawData.profile_banner_url) bannerImageUrl = userInfoRawData.profile_banner_url
-            screenName = userInfoRawData.screen_name
-            protectedUser = userInfoRawData.protected
-            userName = userInfoRawData.name
-            statusesCount = userInfoRawData.statuses_count
-            friendsCount = userInfoRawData.friends_count
-            followersCount = userInfoRawData.followers_count
-            favouritesCount = userInfoRawData.favourites_count
-            listedCount = userInfoRawData.listed_count
-            if (userInfoRawData.following) following = userInfoRawData.following
-            userInfoRawData = undefined
-        }
-    }
+    // QQC 1.1.0 Compatibility
+    property bool componentCompleted: false
 
     onScreenNameChanged: {
-        if (screenName === settings.userScreenName && cache.userInfo)
-            internal.userInfoOnSuccess(cache.userInfo)
-        else if (userInfoRawData) internal.userInfoOnSuccess(userInfoRawData)
-        else internal.refresh()
+        if (!componentCompleted) return;
+
+        if (user.hasOwnProperty("screenName"))
+            internal.showUserData();
+        else if (screenName === settings.userScreenName && cache.userInfo) {
+            user = cache.userInfo;
+            internal.showUserData();
+        }
+        else internal.refresh();
+    }
+
+    Component.onCompleted: {
+        componentCompleted = true;
+        if (!screenName) return;
+
+        if (user.hasOwnProperty("screenName"))
+            internal.showUserData();
+        else if (screenName === settings.userScreenName && cache.userInfo) {
+            user = cache.userInfo;
+            internal.showUserData();
+        }
+        else internal.refresh();
     }
 
     tools: ToolBarLayout {
@@ -103,8 +95,8 @@ Page {
 
         MenuLayout {
             MenuItem {
-                text: userInfoData.following ? qsTr("Unfollow %1").arg("@" + screenName)
-                                             : qsTr("Follow %1").arg("@" + screenName)
+                text: isFollowing ? qsTr("Unfollow %1").arg("@" + screenName)
+                                  : qsTr("Follow %1").arg("@" + screenName)
                 enabled: screenName !== settings.userScreenName
                 platformInverted: userPageMenu.platformInverted
                 onClicked: internal.createFollowUserDialog()
@@ -140,8 +132,8 @@ Page {
                     fillMode: Image.PreserveAspectCrop
                     clip: true
                     source: {
-                        if (userInfoData.bannerImageUrl)
-                            return userInfoData.bannerImageUrl.concat(inPortrait ? "/web" : "/mobile_retina")
+                        if (user.profileBannerUrl)
+                            return user.profileBannerUrl.concat(inPortrait ? "/web" : "/mobile_retina")
                         else
                             return "Image/banner_empty.jpg"
                     }
@@ -168,14 +160,14 @@ Page {
                             height: userNameText.height + screenNameText.height; width: height
                             cache: false
                             fillMode: Image.PreserveAspectCrop
-                            source: userInfoData.profileImageUrl.replace("_normal", "_bigger")
+                            source: user.profileImageUrl ? user.profileImageUrl.replace("_normal", "_bigger") : ""
                         }
 
                         MouseArea {
                             id: profileImageMouseArea
                             anchors.fill: parent
                             onClicked: {
-                                var prop = { imageUrl: userInfoData.profileImageUrl.replace("_normal", "") }
+                                var prop = { imageUrl: user.profileImageUrl.replace("_normal", "") }
                                 pageStack.push(Qt.resolvedUrl("TweetImage.qml"), prop)
                             }
                         }
@@ -194,7 +186,7 @@ Page {
                         color: "white"
                         style: Text.Outline
                         styleColor: "black"
-                        text: userInfoData.userName
+                        text: user.name || ""
                     }
 
                     Text {
@@ -208,7 +200,7 @@ Page {
                         color: "white"
                         style: Text.Outline
                         styleColor: "black"
-                        text: userInfoData.screenName ? "@" + userInfoData.screenName : ""
+                        text: user.screenName ? "@" + user.screenName : ""
                     }
                 }
 
@@ -229,6 +221,7 @@ Page {
                     color: "white"
                     style: Text.Outline
                     styleColor: "black"
+                    text: user.description || ""
                 }
             }
 
@@ -240,6 +233,16 @@ Page {
 
             Repeater {
                 id: userInfoRepeater
+
+                function append(title, subtitle, clickedString) {
+                    var item = {
+                        title: title,
+                        subtitle: subtitle,
+                        clickedString: clickedString || ""
+                    }
+                    model.append(item)
+                }
+
                 anchors { left: parent.left; right: parent.right }
                 model: ListModel {}
                 delegate: ListItem {
@@ -247,8 +250,8 @@ Page {
                     height: Math.max(listItemColumn.height + 2 * constant.paddingLarge, implicitHeight)
                     subItemIndicator: model.clickedString
                     enabled: (!subItemIndicator || title === "Website")
-                             || !userInfoData.protectedUser
-                             || userInfoData.following
+                             || !user.isProtected
+                             || isFollowing
                              || userPage.screenName === settings.userScreenName
                     platformInverted: settings.invertedTheme
                     onClicked: if (model.clickedString) eval(model.clickedString)
@@ -301,36 +304,32 @@ Page {
             loadingRect.visible = true
         }
 
-        function userInfoOnSuccess(data) {
-            if (userPage.screenName === settings.userScreenName) cache.userInfo = data
-            userInfoRawData = data
-            userInfoData.setData()
-            if (data.description) descriptionText.text = data.description
-            if (data.url) __addToUserInfo(qsTr("Website"), data.url, "dialog.createOpenLinkDialog(subtitle)")
-            if (data.location) __addToUserInfo(qsTr("Location"), data.location)
-            __addToUserInfo(qsTr("Joined"), Qt.formatDate(new Date(data.created_at), Qt.SystemLocaleShortDate))
-            __addToUserInfo(qsTr("Tweets"), data.statuses_count + " | " + Calculate.tweetsFrequency(data.created_at,data.statuses_count),
-                            "internal.pushUserPage(\"UserPageCom/UserTweetsPage.qml\")")
-            __addToUserInfo(qsTr("Following"), data.friends_count,
-                            "internal.pushUserPage(\"UserPageCom/UserFollowingPage.qml\")")
-            __addToUserInfo(qsTr("Followers"), data.followers_count,
-                            "internal.pushUserPage(\"UserPageCom/UserFollowersPage.qml\")")
-            __addToUserInfo(qsTr("Favourites"), data.favourites_count,
-                            "internal.pushUserPage(\"UserPageCom/UserFavouritesPage.qml\")")
-            __addToUserInfo(qsTr("Subscribed List"), "",
-                            "internal.pushUserPage(\"UserPageCom/UserSubscribedListsPage.qml\")")
-            __addToUserInfo(qsTr("Listed"), data.listed_count,
-                            "internal.pushUserPage(\"UserPageCom/UserListedPage.qml\")")
-            loadingRect.visible = false
+        function showUserData() {
+            if (user.url) userInfoRepeater.append(qsTr("Website"), user.url, "dialog.createOpenLinkDialog(subtitle)")
+            if (user.location) userInfoRepeater.append(qsTr("Location"), user.location)
+            userInfoRepeater.append(qsTr("Joined"), Qt.formatDate(new Date(user.createdAt), Qt.SystemLocaleShortDate))
+            userInfoRepeater.append(qsTr("Tweets"), user.tweetsCount + " | " +
+                                    Calculate.tweetsFrequency(user.createdAt, user.tweetsCount),
+                                    "internal.pushUserPage(\"UserPageCom/UserTweetsPage.qml\")")
+            userInfoRepeater.append(qsTr("Following"), user.followingCount,
+                                    "internal.pushUserPage(\"UserPageCom/UserFollowingPage.qml\")")
+            userInfoRepeater.append(qsTr("Followers"), user.followersCount,
+                                    "internal.pushUserPage(\"UserPageCom/UserFollowersPage.qml\")")
+            userInfoRepeater.append(qsTr("Favourites"), user.favouritesCount,
+                                    "internal.pushUserPage(\"UserPageCom/UserFavouritesPage.qml\")")
+            userInfoRepeater.append(qsTr("Subscribed List"), "",
+                                    "internal.pushUserPage(\"UserPageCom/UserSubscribedListsPage.qml\")")
+            userInfoRepeater.append(qsTr("Listed"), user.listedCount,
+                                    "internal.pushUserPage(\"UserPageCom/UserListedPage.qml\")")
+            isFollowing = user.isFollowing;
         }
 
-        function __addToUserInfo(title, subtitle, clickedString) {
-            var item = {
-                title: title,
-                subtitle: subtitle,
-                clickedString: clickedString || ""
-            }
-            userInfoRepeater.model.append(item)
+        function userInfoOnSuccess(data) {
+            user = Parser.parseUser(data);
+            if (userPage.screenName === settings.userScreenName)
+                cache.userInfo = user;
+            showUserData();
+            loadingRect.visible = false
         }
 
         function userInfoOnFailure(status, statusText) {
@@ -339,8 +338,8 @@ Page {
             loadingRect.visible = false
         }
 
-        function followOnSuccess(data, isFollowing) {
-            userInfoData.following = isFollowing
+        function followOnSuccess(data, following) {
+            isFollowing = following;
             if (isFollowing) infoBanner.showText(qsTr("Followed the user %1 successfully").arg("@" + data.screen_name))
             else infoBanner.showText(qsTr("Unfollowed the user %1 successfully").arg("@" + data.screen_name))
             loadingRect.visible = false
@@ -370,11 +369,11 @@ Page {
         }
 
         function createFollowUserDialog() {
-            var title = userInfoData.following ? qsTr("Unfollow user") : qsTr("Follow user")
-            var message = userInfoData.following ? qsTr("Do you want to unfollow the user %1 ?").arg("@" + screenName)
+            var title = isFollowing ? qsTr("Unfollow user") : qsTr("Follow user")
+            var message = isFollowing ? qsTr("Do you want to unfollow the user %1 ?").arg("@" + screenName)
                                                  : qsTr("Do you want to follow the user %1 ?").arg("@" + screenName)
             dialog.createQueryDialog(title, "", message, function() {
-                if (userInfoData.following)
+                if (isFollowing)
                     Twitter.postUnfollow(screenName, followOnSuccess, followOnFailure)
                 else
                     Twitter.postFollow(screenName, followOnSuccess, followOnFailure)
@@ -383,7 +382,7 @@ Page {
         }
 
         function pushUserPage(pageString) {
-            pageStack.push(Qt.resolvedUrl(pageString), { userInfoData: userInfoData })
+            pageStack.push(Qt.resolvedUrl(pageString), { user: user })
         }
     }
 }

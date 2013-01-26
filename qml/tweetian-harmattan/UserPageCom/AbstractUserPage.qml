@@ -32,7 +32,7 @@ Page {
     property bool backButtonEnabled: true
     property bool loadMoreButtonVisible: true
 
-    property QtObject userInfoData
+    property variant user
     property ListView listView: listView
 
     signal reload
@@ -78,8 +78,8 @@ Page {
 
     PageHeader {
         id: header
-        headerIcon: userInfoData.profileImageUrl
-        headerText: "@" + userInfoData.screenName + ": " + root.headerText
+        headerIcon: user.profileImageUrl
+        headerText: "@" + user.screenName + ": " + root.headerText
         countBubbleVisible: true
         countBubbleValue: root.headerNumber
         onClicked: listView.positionViewAtBeginning()
