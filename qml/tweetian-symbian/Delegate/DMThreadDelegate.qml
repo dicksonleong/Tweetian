@@ -53,6 +53,7 @@ AbstractDelegate {
         wrapMode: Text.Wrap
         font.pixelSize: settings.largeFontSize ? constant.fontSizeMedium : constant.fontSizeSmall
         color: highlighted ? constant.colorHighlighted : constant.colorLight
+        textFormat: Text.RichText
         text: model.richText
     }
 

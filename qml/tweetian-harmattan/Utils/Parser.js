@@ -118,7 +118,7 @@ function __unescapeHtml(text) {
 function __toRichText(text, entities) {
     if (!entities) return;
 
-    var richText = __unescapeHtml(text);
+    var richText = text;
 
     entities.urls.forEach(function(urlObject) {
         richText = richText.replace(urlObject.url, linkText(urlObject.display_url, urlObject.expanded_url, true));

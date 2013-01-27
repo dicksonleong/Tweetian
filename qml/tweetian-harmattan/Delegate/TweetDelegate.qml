@@ -75,10 +75,10 @@ AbstractDelegate {
 
     Text {
         anchors { left: parent.left; right: parent.right }
-        textFormat: Text.RichText
         font.pixelSize: settings.largeFontSize ? constant.fontSizeMedium : constant.fontSizeSmall
         wrapMode: Text.Wrap
         color: highlighted ? constant.colorHighlighted : constant.colorLight
+        textFormat: Text.RichText
         text: model.richText
     }
 
