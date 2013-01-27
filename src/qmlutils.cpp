@@ -27,6 +27,8 @@
 #include <QtGui/QDesktopServices>
 #include <QtDeclarative/QDeclarativeItem>
 #include <QtDeclarative/QDeclarativeView>
+#include <QtDeclarative/QDeclarativeEngine>
+#include <QtNetwork/QNetworkAccessManager>
 
 static const QString IMAGE_SAVING_PATH = QDesktopServices::storageLocation(QDesktopServices::PicturesLocation);
 #if defined(Q_OS_HARMATTAN)
@@ -53,7 +55,7 @@ void QMLUtils::copyToClipboard(const QString &text)
     clipboard->setText(text, QClipboard::Selection);
 }
 
-QString QMLUtils::saveImage(QDeclarativeItem *imageObject)
+QString QMLUtils::saveImage(QDeclarativeItem *imageObject) const
 {
     QString fileName = "tweetian_" + QDateTime::currentDateTime().toString("d-M-yy_h-m-s") + ".png";
     QString filePath = IMAGE_SAVING_PATH + "/" + fileName;
@@ -73,13 +75,21 @@ QString QMLUtils::saveImage(QDeclarativeItem *imageObject)
     return filePath;
 }
 
-void QMLUtils::minimizeApp()
+void QMLUtils::minimizeApp() const
 {
 #ifdef Q_OS_SYMBIAN
     m_view->lower();
 #else
     qWarning("QMLUtils::minimizeApp(): this function only works on Symbian");
 #endif
+}
+
+QObject *QMLUtils::networkAccessManager() const
+{
+    QNetworkAccessManager *manager = m_view->engine()->networkAccessManager();
+    // Not sure if this is necessary...
+    QDeclarativeEngine::setObjectOwnership(manager, QDeclarativeEngine::CppOwnership);
+    return manager;
 }
 
 QString QMLUtils::userAgent()

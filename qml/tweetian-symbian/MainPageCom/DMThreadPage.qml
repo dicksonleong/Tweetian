@@ -51,7 +51,7 @@ Page {
             iconSource: "toolbar-refresh"
             toolTipText: qsTr("Refresh")
             opacity: enabled ? 1 : 0.25
-            enabled: userStream.status === 0
+            enabled: !userStream.connected
             onClicked: mainPage.directMsg.refresh("newer")
         }
     }
@@ -60,9 +60,9 @@ Page {
         id: dMConversationView
         anchors { top: header.bottom; left: parent.left; right: parent.right; bottom: parent.bottom }
         model: ListModel {}
-        header: PullToRefreshHeader { visible: userStream.status === 0 }
+        header: PullToRefreshHeader { visible: !userStream.connected }
         delegate: DirectMsgDelegate {}
-        onPulledDown: if (userStream.status === 0) mainPage.directMsg.refresh("newer")
+        onPulledDown: if (!userStream.connected) mainPage.directMsg.refresh("newer")
     }
 
     ScrollDecorator { platformInverted: settings.invertedTheme; flickableItem: dMConversationView }

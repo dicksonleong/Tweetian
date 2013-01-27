@@ -14,17 +14,17 @@ MOBILITY += feedback location gallery
 
 HEADERS += \
     src/qmlutils.h \
-    src/qmluploader.h \
     src/thumbnailcacher.h \
     src/userstream.h \
-    src/networkmonitor.h
+    src/networkmonitor.h \
+    src/imageuploader.h
 
 SOURCES += main.cpp \
     src/qmlutils.cpp \
-    src/qmluploader.cpp \
     src/thumbnailcacher.cpp \
     src/userstream.cpp \
-    src/networkmonitor.cpp
+    src/networkmonitor.cpp \
+    src/imageuploader.cpp
 
 simulator{
     qml_harmattan.source = qml/tweetian-harmattan

@@ -89,7 +89,7 @@ Item {
         header: settings.enableStreaming ? streamingHeader : pullToRefreshHeader
         delegate: DMThreadDelegate {}
         model: ListModel {}
-        onPulledDown: if (userStream.status === 0) refresh("newer")
+        onPulledDown: if (!userStream.connected) refresh("newer")
 
         Component { id: pullToRefreshHeader; PullToRefreshHeader {} }
         Component { id: streamingHeader; StreamingHeader {} }

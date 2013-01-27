@@ -24,38 +24,27 @@
 #include "qmlutils.h"
 
 UserStream::UserStream(QObject *parent) :
-    QObject(parent), m_status(UserStream::Disconnected), m_reply(0)
+    QObject(parent), m_connected(false), m_networkAccessManager(0), m_reply(0)
 {
 }
 
-UserStream::Status UserStream::getStatus() const
+UserStream::~UserStream()
 {
-    return m_status;
-}
-
-void UserStream::setStatus(UserStream::Status status)
-{
-    if (m_status != status) {
-        m_status = status;
-        emit statusChanged();
+    if (m_reply != 0) {
+        m_reply->disconnect();
+        m_reply->deleteLater();
+        m_reply = 0;
     }
-}
-
-QDeclarativeListProperty<QObject> UserStream::resources()
-{
-    return QDeclarativeListProperty<QObject>(this, m_resources);
 }
 
 void UserStream::connectToStream(const QString &url, const QString &authHeader)
 {
-    if (m_reply != 0) {
-        m_reply->disconnect();
-        m_reply->abort();
-        m_reply->deleteLater();
-        m_reply = 0;
+    if (!m_networkAccessManager) {
+        qWarning("UserStream::connectToStream(): networkAccessManager not set");
+        return;
     }
 
-    if (!manager) manager = new QNetworkAccessManager(this);
+    disconnectFromStream();
 
     QNetworkRequest request;
     request.setUrl(QUrl(url));
@@ -64,27 +53,57 @@ void UserStream::connectToStream(const QString &url, const QString &authHeader)
     request.setRawHeader("Authorization", authHeader.toUtf8());
     request.setRawHeader("Connection", "close");
 
-    m_reply = manager->get(request);
+    m_reply = m_networkAccessManager->get(request);
     connect(m_reply, SIGNAL(readyRead()), this, SLOT(replyRecieved()));
     connect(m_reply, SIGNAL(finished()), this, SLOT(replyFinished()));
-
-    setStatus(UserStream::Connecting);
 }
 
 void UserStream::disconnectFromStream()
 {
     if (m_reply != 0) {
         m_reply->disconnect();
-        m_reply->abort();
         m_reply->deleteLater();
         m_reply = 0;
-        setStatus(UserStream::Disconnected);
     }
+    setConnected(false);
+}
+
+bool UserStream::isConnected() const
+{
+    return m_connected;
+}
+
+void UserStream::setConnected(bool connected)
+{
+    if (m_connected != connected) {
+        m_connected = connected;
+        emit connectedChanged();
+    }
+}
+
+QObject *UserStream::networkAccessManager() const
+{
+    return m_networkAccessManager;
+}
+
+void UserStream::setNetworkAccessManager(QObject *manager)
+{
+    if (m_networkAccessManager != 0) {
+        qWarning("UserStream::setNetworkAccessManager(): networkAccessManager can only set once");
+        return;
+    }
+
+    m_networkAccessManager = qobject_cast<QNetworkAccessManager*>(manager);
+}
+
+QDeclarativeListProperty<QObject> UserStream::resources()
+{
+    return QDeclarativeListProperty<QObject>(this, m_resources);
 }
 
 void UserStream::replyRecieved()
 {
-    setStatus(UserStream::Connected);
+    setConnected(true);
     QByteArray replyData = m_reply->readAll();
 
     if (replyData == "\r\n") { // Keep alive newline
@@ -110,17 +129,12 @@ void UserStream::replyRecieved()
 void UserStream::replyFinished()
 {   
     int statusCode = m_reply->attribute(QNetworkRequest::HttpStatusCodeAttribute).toInt();
-    QString statusText;
-
-    if (!m_reply->error())
-        statusText = m_reply->attribute(QNetworkRequest::HttpReasonPhraseAttribute).toString();
-    else
-        statusText = m_reply->errorString();
+    QString statusText = m_reply->errorString();
 
     emit disconnected(statusCode, statusText);
 
     m_reply->deleteLater();
     m_reply = 0;
 
-    setStatus(UserStream::Disconnected);
+    setConnected(false);
 }

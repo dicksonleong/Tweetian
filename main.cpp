@@ -31,7 +31,7 @@
 #endif
 
 #include "src/qmlutils.h"
-#include "src/qmluploader.h"
+#include "src/imageuploader.h"
 #include "src/thumbnailcacher.h"
 #include "src/userstream.h"
 #include "src/networkmonitor.h"
@@ -103,7 +103,7 @@ Q_DECL_EXPORT int main(int argc, char *argv[])
     view.rootContext()->setContextProperty("harmattanUtils", &harmattanUtils);
 #endif
 
-    qmlRegisterType<QMLUploader>("Uploader", 1, 0, "ImageUploader");
+    qmlRegisterType<ImageUploader>("Uploader", 1, 0, "ImageUploader");
     qmlRegisterType<UserStream>("UserStream", 1, 0, "UserStream");
 
 #if defined(Q_OS_HARMATTAN)

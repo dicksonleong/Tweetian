@@ -28,25 +28,29 @@ class QNetworkReply;
 class UserStream : public QObject
 {
     Q_OBJECT
-    Q_ENUMS(Status)
-    Q_PROPERTY(Status status READ getStatus NOTIFY statusChanged)
+
+    Q_PROPERTY(bool connected READ isConnected NOTIFY connectedChanged)
+    Q_PROPERTY(QObject* networkAccessManager READ networkAccessManager WRITE setNetworkAccessManager)
     Q_PROPERTY(QDeclarativeListProperty<QObject> resources READ resources DESIGNABLE false)
     Q_CLASSINFO("DefaultProperty", "resources")
 public:
-    enum Status { Disconnected, Connecting, Connected };
-
     explicit UserStream(QObject *parent = 0);
+    ~UserStream();
 
     Q_INVOKABLE void connectToStream(const QString &url, const QString &authHeader);
     Q_INVOKABLE void disconnectFromStream();
 
-    Status getStatus() const;
-    void setStatus(Status status);
+    bool isConnected() const;
+    void setConnected(bool connected);
+
+    QObject *networkAccessManager() const;
+    void setNetworkAccessManager(QObject *manager);
+
     QDeclarativeListProperty<QObject> resources();
 
 signals:
+    void connectedChanged();
     void dataRecieved(const QString &rawData);
-    void statusChanged();
     void disconnected(const int statusCode, const QString &errorText);
 
 private slots:
@@ -54,11 +58,12 @@ private slots:
     void replyFinished();
 
 private:
-    Status m_status;
-    QNetworkAccessManager *manager;
+    bool m_connected;
+    QNetworkAccessManager *m_networkAccessManager;
+    QList<QObject*> m_resources;
+
     QNetworkReply *m_reply;
     QByteArray m_cachedResponse;
-    QList<QObject*> m_resources;
 };
 
 #endif // USERSTREAM_H

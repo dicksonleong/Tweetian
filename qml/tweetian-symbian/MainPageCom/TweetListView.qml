@@ -78,8 +78,8 @@ Item {
     PullDownListView {
         id: tweetView
 
-        property bool stayAtCurrentPosition: (userStream.status === 2 && !active) ||
-                                             (userStream.status !== 2 && reloadType === "newer")
+        property bool stayAtCurrentPosition: (userStream.connected && !active) ||
+                                             (!userStream.connected && reloadType === "newer")
 
         anchors.fill: parent
         model: ListModel {}
@@ -90,7 +90,7 @@ Item {
             enabled: !busy
             onClicked: refresh("older")
         }
-        onPulledDown: if (userStream.status === 0) refresh("newer")
+        onPulledDown: if (!userStream.connected) refresh("newer")
         onAtYBeginningChanged: if (atYBeginning) root.unreadCount = 0
         onContentYChanged: refreshUnreadCountTimer.running = true
 

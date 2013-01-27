@@ -33,13 +33,13 @@ Item {
 
         Loader {
             id: iconLoader
-            sourceComponent: userStream.status === 2 ? streamingIcon : pullIcon
+            sourceComponent: userStream.connected ? streamingIcon : pullIcon
         }
 
         Text {
             font.pixelSize: constant.fontSizeMedium
             color: constant.colorLight
-            text: networkMonitor.online ? (userStream.status === 2 ? qsTr("Streaming...") : qsTr("Connecting to streaming"))
+            text: networkMonitor.online ? (userStream.connected ? qsTr("Streaming...") : qsTr("Connecting to streaming"))
                                         : qsTr("Offline")
         }
     }

@@ -137,10 +137,11 @@ Page {
 
     UserStream {
         id: userStream
+        networkAccessManager: QMLUtils.networkAccessManager()
         onDataRecieved: StreamScript.streamRecieved(rawData)
         onDisconnected: StreamScript.reconnectStream(statusCode, errorText)
         // make sure missed tweets is loaded after connected
-        onStatusChanged: if (status === UserStream.Connected) StreamScript.refreshAll()
+        onConnectedChanged: if (connected) StreamScript.refreshAll()
 
         property bool firstStart: true
 
@@ -161,7 +162,7 @@ Page {
         Timer {
             id: timeOutTimer
             interval: 90000 // 90 seconds as describe in <https://dev.twitter.com/docs/streaming-apis/connecting>
-            running: userStream.status == UserStream.Connected
+            running: userStream.connected
             onTriggered: {
                 reconnectTimer.interval = 5000
                 StreamScript.log("Timeout error, disconnect and reconnect in "+reconnectTimer.interval/1000+"s")

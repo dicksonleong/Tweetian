@@ -371,6 +371,7 @@ Page {
     ImageUploader {
         id: imageUploader
         service: settings.imageUploadService
+        networkAccessManager: QMLUtils.networkAccessManager()
         onSuccess: {
             if (service == ImageUploader.Twitter) internal.postStatusOnSuccess(JSON.parse(replyData))
             else {
