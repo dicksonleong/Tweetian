@@ -34,8 +34,8 @@ Item {
     Image {
         id: mainImage
         anchors.fill: parent
-        source: root.imageSource
         fillMode: Image.PreserveAspectCrop
+        source: networkMonitor.online ? root.imageSource : ""
     }
 
     Loader {

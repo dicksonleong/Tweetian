@@ -34,8 +34,8 @@ Page {
 
     tools: ToolBarLayout {
         ToolIcon {
-            id: backButton
             platformIconId: "toolbar-back" + (enabled ? "" : "-dimmed")
+            enabled: !internal.workerScriptRunning
             onClicked: pageStack.pop()
         }
         ToolIcon {
@@ -64,14 +64,14 @@ Page {
         id: header
         headerText: qsTr("DM: %1").arg("@" + screenName)
         headerIcon: "../Image/inbox.svg"
-        busy: mainPage.directMsg.busy
+        busy: internal.workerScriptRunning || mainPage.directMsg.busy
         onClicked: dMConversationView.positionViewAtBeginning()
     }
 
     WorkerScript {
         id: dmConversationParser
         source: "../WorkerScript/DMConversationParser.js"
-        onMessage: backButton.enabled = true
+        onMessage: internal.workerScriptRunning = false
     }
 
     Connections {
@@ -82,6 +82,7 @@ Page {
     QtObject {
         id: internal
 
+        property bool workerScriptRunning: false
         property Component __dmDialog: null
 
         function deleteDMOnSuccess(data) {
@@ -123,11 +124,13 @@ Page {
                 count: count
             }
             dmConversationParser.sendMessage(msg)
+            workerScriptRunning = true;
         }
 
         function removeDM(id) {
             var msg = { type: "remove", model: dMConversationView.model, id: id }
             dmConversationParser.sendMessage(msg)
+            workerScriptRunning = true;
         }
     }
 }
