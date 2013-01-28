@@ -84,18 +84,19 @@ WorkerScript.onMessage = function(msg) {
 
         appendTweetsFromDB(msg.data, msg.model);
         break;
-    case "delete":
-        for (var iDelete=0; iDelete<msg.model.count; iDelete++) {
-            if (msg.model.get(iDelete).id == msg.data.id_str) {
-                msg.model.remove(iDelete);
+    case "remove":
+        for (var iRemove=0; iRemove<msg.model.count; iRemove++) {
+            if (msg.model.get(iRemove).id === msg.id) {
+                msg.model.remove(iRemove);
                 break;
             }
         }
         break;
     case "favourite":
         for (var iFav=0; iFav<msg.model.count; iFav++) {
-            if (msg.model.get(iFav).id == msg.data.id_str) {
+            if (msg.model.get(iFav).id === msg.id) {
                 msg.model.setProperty(iFav, "isFavourited", !msg.model.get(iFav).isFavourited);
+                break;
             }
         }
         break

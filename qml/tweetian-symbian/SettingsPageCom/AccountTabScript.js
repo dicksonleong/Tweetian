@@ -65,10 +65,10 @@ function createTwitterSignOutDialog() {
     var message = qsTr("Do you want to sign out from your Twitter account? All other accounts will also automatically sign out. All settings will be reset.")
     dialog.createQueryDialog(qsTr("Twitter Sign Out"), "", message, function() {
         Database.clearTable("Timeline")
-        mainPage.timeline.parseData("all", [])
+        mainPage.timeline.removeAllTweet();
         Database.clearTable("Mentions")
-        mainPage.mentions.parseData("all", [])
-        Database.clearTable("DirectMsg")
+        mainPage.mentions.removeAllTweet();
+        Database.clearTable("DM")
         mainPage.directMsg.removeAllDM()
         Database.clearTable("ScreenNames")
         settings.resetAll()

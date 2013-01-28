@@ -23,6 +23,7 @@ import "Component"
 import "MainPageCom"
 import UserStream 1.0
 import "MainPageCom/UserStream.js" as StreamScript
+import "Utils/Parser.js" as Parser
 
 Page {
     id: mainPage

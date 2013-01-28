@@ -288,14 +288,15 @@ function contructRetweetText() {
 }
 
 function deleteTweetOnSuccess(data) {
-    mainPage.timeline.parseData("delete", data)
+    mainPage.timeline.removeTweet(data.id_str)
     loadingRect.visible = false
     infoBanner.showText(qsTr("Tweet deleted successfully"))
     pageStack.pop()
 }
 
 function favouriteOnSuccess(data, isFavourite) {
-    mainPage.timeline.parseData("favourite", data)
+    mainPage.timeline.favouriteTweet(data.id_str)
+    mainPage.mentions.favouriteTweet(data.id_str)
     favouritedTweet = isFavourite
     if (favouritedTweet) infoBanner.showText(qsTr("Tweet favourited succesfully"))
     else infoBanner.showText(qsTr("Tweet unfavourited successfully"))

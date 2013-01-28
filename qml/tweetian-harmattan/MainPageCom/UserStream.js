@@ -36,52 +36,46 @@ function streamRecieved(rawData) {
         return
     }
 
-    var data = JSON.parse(rawData)
-    for (var prop in data) {
-        if (prop === "friends") {
-            log("Friends response recieved with length " + data.friends.length)
-            friendIDList = data.friends
-            break
-        }
-        else if (prop === "direct_message") {
-            log("DMs response recieved")
-            if (data.direct_message.recipient_screen_name === settings.userScreenName)
-                directMsg.insertDM([data.direct_message], [])
-            else
-                directMsg.insertDM([], [data.direct_message])
-            break
-        }
-        else if (prop === "text") {
-            var isMention = false
-            if (data.entities && data.entities.user_mentions) { // check entities is exists
-                for (var i=0; i < data.entities.user_mentions.length; i++) {
-                    if (data.entities.user_mentions[i].screen_name === settings.userScreenName) {
-                        mentions.parseData("newer", [data], true)
-                        isMention = true
-                        break
-                    }
-                }
-            }
+    var data = JSON.parse(rawData);
 
-            if (!isMention || __isFollowingUser(data.user.id)) timeline.parseData("newer", [data], true)
-            log(isMention ? "Mentions recieved" : "Status recieved")
-            break
+    if (data.hasOwnProperty("friends")) {
+        log("Friends response recieved with length " + data.friends.length)
+        friendIDList = data.friends
+    }
+    else if (data.hasOwnProperty("direct_message")) {
+        log("DMs response recieved")
+        if (data.direct_message.recipient_screen_name === settings.userScreenName)
+            directMsg.insertDM([data.direct_message], [])
+        else
+            directMsg.insertDM([], [data.direct_message])
+    }
+    else if (data.hasOwnProperty("text")) {
+        var isMention = false;
+        if (data.hasOwnProperty("entities") && Array.isArray(data.entities.user_mentions)) {
+            isMention = data.entities.user_mentions.some(function(mentionsObject) {
+                if (mentionsObject.screen_name !== settings.userScreenName)
+                    return false;
+
+                mentions.prependNewTweets([data]);
+                return true;
+            })
         }
-        else if (prop === "delete") {
-            log("Delete response recieved")
-            if (data["delete"].direct_message) {
-                directMsg.removeDM(data["delete"].direct_message.id_str)
-            }
-            else {
-                timeline.parseData("delete", data["delete"].status)
-                mentions.parseData("delete", data["delete"].status)
-            }
-            break
+
+        if (!isMention || __isFollowingUser(data.user.id)) timeline.prependNewTweets([data])
+        log(isMention ? "Mentions recieved" : "Status recieved")
+    }
+    else if (data.hasOwnProperty("delete")) {
+        log("Delete response recieved")
+        if (data["delete"].direct_message) {
+            directMsg.removeDM(data["delete"].direct_message.id_str)
         }
-        else if (prop === "event") {
-            log("Event response recieved with event_name: " + data.event)
-            break
+        else {
+            timeline.removeTweet(data["delete"].status.id_str)
+            mentions.removeTweet(data["delete"].status.id_str)
         }
+    }
+    else if (data.hasOwnProperty("event")) {
+        log("Event response recieved with event_name: " + data.event)
     }
 }
 
@@ -118,7 +112,7 @@ function log(message) {
 function saveUserInfo() {
     if (!settings.userFullName || !settings.userProfileImage || !settings.userScreenName) {
         Twitter.getVerifyCredentials(
-            function(data) { cache.userInfo = data },
+            function(data) { cache.userInfo = Parser.parseUser(data) },
             function(status, statusText) {console.log("[SaveUserInfo] VerifyCredentials returns:", status, statusText)}
         )
     }

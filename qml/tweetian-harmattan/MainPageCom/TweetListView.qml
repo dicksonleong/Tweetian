@@ -40,9 +40,12 @@ Item {
                           mainView.currentIndex === (type === "Timeline" ? 0 : 1)
 
     function initialize() {
-        reloadType = "database"
-        var tweets = type === "Timeline" ? Database.getTimeline() : Database.getMentions()
-        parseData(reloadType, tweets)
+        var msg = {
+            type: "database",
+            data: (type === "Timeline" ? Database.getTimeline() : Database.getMentions()),
+            model: tweetView.model
+        }
+        tweetParser.sendMessage(msg)
         busy = true
     }
 
@@ -64,15 +67,42 @@ Item {
         tweetView.positionViewAtBeginning()
     }
 
-    function parseData(method, data, updateLastRefreshTime) {
+    function prependNewTweets(tweetsJson) {
         var msg = {
+            type: "newer",
+            data: tweetsJson,
             model: tweetView.model,
-            data: data,
-            type: method,
             muteString: (type === "Timeline" ? settings.muteString : "")
         }
         tweetParser.sendMessage(msg)
-        if (updateLastRefreshTime) tweetView.lastUpdate = new Date().toString()
+        tweetView.lastUpdate = new Date().toString()
+    }
+
+    function favouriteTweet(id) {
+        var msg = {
+            type: "favourite",
+            id: id,
+            model: tweetView.model
+        }
+        tweetParser.sendMessage(msg)
+    }
+
+    function removeTweet(id) {
+        var msg = {
+            type: "remove",
+            id: id,
+            model: tweetView.model
+        }
+        tweetParser.sendMessage(msg)
+    }
+
+    function removeAllTweet() {
+        var msg = {
+            type: "all",
+            data: [],
+            model: tweetView.model
+        }
+        tweetParser.sendMessage(msg)
     }
 
     onUnreadCountChanged: {
@@ -119,7 +149,7 @@ Item {
         repeat: true
         running: platformWindow.active
         triggeredOnStart: true
-        onTriggered: if (tweetView.count > 0) parseData("time")
+        onTriggered: internal.refreshTimeDiff()
     }
 
     Timer {
@@ -140,12 +170,24 @@ Item {
     QtObject {
         id: internal
 
+        function refreshTimeDiff() {
+            if (tweetView.count <= 0) return;
+            var msg = { type: "time", model: tweetView.model }
+            tweetParser.sendMessage(msg)
+        }
+
         function successCallback(data) {
+            var msg = {
+                type: reloadType,
+                data: data,
+                model: tweetView.model,
+                muteString: (type === "Timeline" ? settings.muteString : "")
+            }
+            tweetParser.sendMessage(msg);
             if (reloadType == "newer" || reloadType == "all") {
-                parseData(reloadType, data, true)
+                tweetView.lastUpdate = new Date().toString()
                 if (autoRefreshTimer.running) autoRefreshTimer.restart()
             }
-            else parseData(reloadType, data)
         }
 
         function failureCallback(status, statusText) {
