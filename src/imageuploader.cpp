@@ -9,7 +9,7 @@
 
 static const QByteArray BOUNDARY = "-----------485984513665493";
 
-static const QUrl TWITTER_UPLOAD_URL("https://upload.twitter.com/1/statuses/update_with_media.json");
+static const QUrl TWITTER_UPLOAD_URL("https://api.twitter.com/1.1/statuses/update_with_media.json");
 static const QUrl TWITPIC_UPLOAD_URL("http://api.twitpic.com/2/upload.json");
 static const QUrl MOBYPICTURE_UPLOAD_URL("https://api.mobypicture.com/2.0/upload.json");
 static const QUrl IMGLY_UPLOAD_URL("http://img.ly/api/2/upload.json");
@@ -106,7 +106,7 @@ void ImageUploader::send()
             request.setUrl(IMGLY_UPLOAD_URL);
 
         request.setRawHeader("X-Verify-Credentials-Authorization", m_authorizationHeader);
-        request.setRawHeader("X-Auth-Service-Provider", "https://api.twitter.com/1/account/verify_credentials.json");
+        request.setRawHeader("X-Auth-Service-Provider", "https://api.twitter.com/1.1/account/verify_credentials.json");
     }
 
     request.setRawHeader("Content-Type", "multipart/form-data; boundary=" + BOUNDARY);

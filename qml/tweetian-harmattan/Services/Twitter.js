@@ -31,57 +31,56 @@ var REQUEST_TOKEN_URL = "https://api.twitter.com/oauth/request_token"
 var ACCESS_TOKEN_URL = "https://api.twitter.com/oauth/access_token"
 
 // GET
-var GET_TIMELIME_URL = "https://api.twitter.com/1/statuses/home_timeline.json"
-var GET_MENTIONS_URL = "https://api.twitter.com/1/statuses/mentions.json"
-var GET_DIRECT_MSG_URL = "https://api.twitter.com/1/direct_messages.json"
-var GET_SENT_DIRECT_MSG_URL = "https://api.twitter.com/1/direct_messages/sent.json"
-var GET_RATE_LIMIT_URL = "https://api.twitter.com/1/account/rate_limit_status.json"
-var GET_SHOW_USERS_URL = "https://api.twitter.com/1/users/show.json"
-var GET_USER_TWEETS_URL = "https://api.twitter.com/1/statuses/user_timeline.json"
-var GET_VERIFY_CREDENTIALS_URL = "https://api.twitter.com/1/account/verify_credentials.json"
-var GET_USER_FAVOURITES_URL = "https://api.twitter.com/1/favorites.json"
-var GET_USER_LISTS_ALL_URL = "https://api.twitter.com/1/lists/all.json"
-var GET_USER_LISTS_MEMBERSHIPS_URL = "https://api.twitter.com/1/lists/memberships.json"
-var GET_LIST_TIMELINE_URL = "https://api.twitter.com/1/lists/statuses.json"
-var GET_LIST_MEMBER_URL = "https://api.twitter.com/1/lists/members.json"
-var GET_LIST_SUBSCRIBERS_URL = "https://api.twitter.com/1/lists/subscribers.json"
-var GET_TRENDS_URL = "https://api.twitter.com/1/trends/"
-var GET_TRENDS_AVAILABLE_URL = "https://api.twitter.com/1/trends/available.json"
-var GET_SAVED_SEARCHES_URL = "https://api.twitter.com/1/saved_searches.json"
+var GET_TIMELIME_URL = "https://api.twitter.com/1.1/statuses/home_timeline.json"
+var GET_MENTIONS_URL = "https://api.twitter.com/1.1/statuses/mentions_timeline.json"
+var GET_DIRECT_MSG_URL = "https://api.twitter.com/1.1/direct_messages.json"
+var GET_SENT_DIRECT_MSG_URL = "https://api.twitter.com/1.1/direct_messages/sent.json"
+var GET_SHOW_USERS_URL = "http://api.twitter.com/1.1/users/show.json"
+var GET_USER_TWEETS_URL = "https://api.twitter.com/1.1/statuses/user_timeline.json"
+var GET_VERIFY_CREDENTIALS_URL = "https://api.twitter.com/1.1/account/verify_credentials.json"
+var GET_USER_FAVOURITES_URL = "https://api.twitter.com/1.1/favorites/list.json"
+var GET_USER_LISTS_ALL_URL = "http://api.twitter.com/1.1/lists/list.json"
+var GET_USER_LISTS_MEMBERSHIPS_URL = "https://api.twitter.com/1.1/lists/memberships.json"
+var GET_LIST_TIMELINE_URL = "https://api.twitter.com/1.1/lists/statuses.json"
+var GET_LIST_MEMBER_URL = "https://api.twitter.com/1.1/lists/members.json"
+var GET_LIST_SUBSCRIBERS_URL = "https://api.twitter.com/1.1/lists/subscribers.json"
+var GET_TRENDS_URL = "https://api.twitter.com/1.1/trends/place.json"
+var GET_TRENDS_AVAILABLE_URL = "https://api.twitter.com/1.1/trends/available.json"
+var GET_SAVED_SEARCHES_URL = "https://api.twitter.com/1.1/saved_searches/list.json"
 var GET_SEARCH_URL = "https://api.twitter.com/1.1/search/tweets.json"
-var GET_FOLLOWING_ID_URL = "https://api.twitter.com/1/friends/ids.json"
-var GET_FOLLOWERS_ID_URL = "https://api.twitter.com/1/followers/ids.json"
-var GET_USERS_LOOKUP_URL = "https://api.twitter.com/1/users/lookup.json"
-var GET_USERS_SEARCH_URL = "https://api.twitter.com/1/users/search.json"
-var GET_STATUS_SHOW_URL = "https://api.twitter.com/1/statuses/show/"
-var GET_SUGGESTED_USER_CATERGORIES = "https://api.twitter.com/1/users/suggestions.json"
-var GET_SUGGESTED_USER = "https://api.twitter.com/1/users/suggestions/"
-var GET_PRIVACY_URL = "https://api.twitter.com/1/legal/privacy.json"
-var GET_TOS_URL = "https://api.twitter.com/1/legal/tos.json"
+var GET_FOLLOWING_ID_URL = "https://api.twitter.com/1.1/friends/ids.json"
+var GET_FOLLOWERS_ID_URL = "https://api.twitter.com/1.1/followers/ids.json"
+var GET_USERS_LOOKUP_URL = "https://api.twitter.com/1.1/users/lookup.json"
+var GET_USERS_SEARCH_URL = "https://api.twitter.com/1.1/users/search.json"
+var GET_STATUS_SHOW_URL = "https://api.twitter.com/1.1/statuses/show.json"
+var GET_SUGGESTED_USER_CATERGORIES = "https://api.twitter.com/1.1/users/suggestions.json"
+var GET_SUGGESTED_USER = "https://api.twitter.com/1.1/users/suggestions/%1.json"
+var GET_PRIVACY_URL = "https://api.twitter.com/1.1/help/privacy.json"
+var GET_TOS_URL = "https://api.twitter.com/1.1/help/tos.json"
 
-var GET_USER_STREAM_URL = "https://userstream.twitter.com/2/user.json"
+var GET_USER_STREAM_URL = "https://userstream.twitter.com/1.1/user.json"
 
 // Undocumented
-var GET_RELATED_RESULTS_URL = "https://api.twitter.com/1/related_results/show/"
+var GET_RELATED_RESULTS_URL = "https://api.twitter.com/1/related_results/show/%1.json"
 var GET_TWEET_ACTIVITY_SUMMARY_URL = "https://api.twitter.com/i/statuses/%1/activity/summary.json"
 
 // POST
-var POST_STATUS_URL = "https://api.twitter.com/1/statuses/update.json"
-var POST_RETWEET_URL = "https://api.twitter.com/1/statuses/retweet/"
-var POST_FAVOURITE_URL = "https://api.twitter.com/1/favorites/create/"
-var POST_UNFAVOURITE_URL = "https://api.twitter.com/1/favorites/destroy/"
-var POST_DIRECT_MSG_URL = "https://api.twitter.com/1/direct_messages/new.json"
-var POST_REPORT_SPAM_URL = "https://api.twitter.com/1/report_spam.json"
-var POST_SAVED_SEARCHES_URL = "https://api.twitter.com/1/saved_searches/create.json"
-var POST_REMOVE_SAVED_SEARCH_URL = "http://api.twitter.com/1/saved_searches/destroy/"
-var POST_DIRECT_MSG_DELETE_URL = "https://api.twitter.com/1/direct_messages/destroy/"
-var POST_FOLLOW_URL = "https://api.twitter.com/1/friendships/create.json"
-var POST_UNFOLLOW_URL = "https://api.twitter.com/1/friendships/destroy.json"
-var POST_DELETE_STATUS_URL = "https://api.twitter.com/1/statuses/destroy/"
-var POST_SUBSCRIBE_LIST_URL = "https://api.twitter.com/1/lists/subscribers/create.json"
-var POST_UNSUBSCRIBE_LIST_URL = "https://api.twitter.com/1/lists/subscribers/destroy.json"
-var POST_DELETE_LIST_URL = "https://api.twitter.com/1/lists/destroy.json"
-var TWITTER_IMAGE_UPLOAD_URL = "https://upload.twitter.com/1/statuses/update_with_media.json"
+var POST_STATUS_URL = "https://api.twitter.com/1.1/statuses/update.json"
+var POST_RETWEET_URL = "https://api.twitter.com/1.1/statuses/retweet/%1.json"
+var POST_FAVOURITE_URL = "https://api.twitter.com/1.1/favorites/create.json"
+var POST_UNFAVOURITE_URL = "https://api.twitter.com/1.1/favorites/destroy.json"
+var POST_DIRECT_MSG_URL = "https://api.twitter.com/1.1/direct_messages/new.json"
+var POST_REPORT_SPAM_URL = "https://api.twitter.com/1.1/users/report_spam.json"
+var POST_SAVED_SEARCHES_URL = "https://api.twitter.com/1.1/saved_searches/create.json"
+var POST_REMOVE_SAVED_SEARCH_URL = "https://api.twitter.com/1.1/saved_searches/destroy/%1.json"
+var POST_DIRECT_MSG_DELETE_URL = "https://api.twitter.com/1.1/direct_messages/destroy.json"
+var POST_FOLLOW_URL = "https://api.twitter.com/1.1/friendships/create.json"
+var POST_UNFOLLOW_URL = "https://api.twitter.com/1.1/friendships/destroy.json"
+var POST_DELETE_STATUS_URL = "https://api.twitter.com/1.1/statuses/destroy/%1.json"
+var POST_SUBSCRIBE_LIST_URL = "https://api.twitter.com/1.1/lists/subscribers/create.json"
+var POST_UNSUBSCRIBE_LIST_URL = "https://api.twitter.com/1.1/lists/subscribers/destroy.json"
+var POST_DELETE_LIST_URL = "https://api.twitter.com/1.1/lists/destroy.json"
+var TWITTER_IMAGE_UPLOAD_URL = "https://api.twitter.com/1.1/statuses/update_with_media.json"
 
 function init(constant, token, tokenSecret) {
     OAUTH_CONSUMER_KEY = constant.twitterConsumerKey
@@ -135,7 +134,7 @@ OAuthRequest.prototype.sendRequest = function(onSuccess, onFailure) {
 
 function getHomeTimeline(sinceId, maxId, onSuccess, onFailure) {
     var timelineRequest = new OAuthRequest("GET", GET_TIMELIME_URL)
-    var parameters = [["count", "200"], ["include_rts", true], ["include_entities", true]]
+    var parameters = [["count", "200"], ["include_rts", true]]
     if (maxId) parameters.push(["max_id", maxId])
     else if (sinceId) parameters.push(["since_id", sinceId])
     timelineRequest.setParameters(parameters)
@@ -144,7 +143,7 @@ function getHomeTimeline(sinceId, maxId, onSuccess, onFailure) {
 
 function getMentions(sinceId, maxId, onSuccess, onFailure) {
     var mentionsRequest = new OAuthRequest("GET", GET_MENTIONS_URL)
-    var parameters = [["count", "200"], ["include_rts", true], ["include_entities", true]]
+    var parameters = [["count", "200"], ["include_rts", true]]
     if (maxId) parameters.push(["max_id", maxId])
     else if (sinceId) parameters.push(["since_id", sinceId])
     mentionsRequest.setParameters(parameters)
@@ -153,7 +152,7 @@ function getMentions(sinceId, maxId, onSuccess, onFailure) {
 
 function getDirectMsg(sinceId, maxId, onSuccess, onFailure) {
     var directMsgRequest = new OAuthRequest("GET", GET_DIRECT_MSG_URL)
-    var parameters = [["count", "100"], ["include_entities", true]]
+    var parameters = [["count", "100"]]
     if (maxId) parameters.push(["max_id", maxId])
     else if (sinceId) parameters.push(["since_id", sinceId])
     directMsgRequest.setParameters(parameters)
@@ -164,7 +163,7 @@ function getDirectMsg(sinceId, maxId, onSuccess, onFailure) {
 
 function getSentDirectMsg(sinceId, maxId, dmRecieve, onSucces, onFailure) {
     var directMsgSent = new OAuthRequest("GET", GET_SENT_DIRECT_MSG_URL)
-    var parameters = [["count", "100"], ["include_entities", true]]
+    var parameters = [["count", "100"]]
     if (maxId) parameters.push(["max_id", maxId])
     else if (sinceId) parameters.push(["since_id", sinceId])
     directMsgSent.setParameters(parameters)
@@ -172,14 +171,9 @@ function getSentDirectMsg(sinceId, maxId, dmRecieve, onSucces, onFailure) {
 }
 
 function getStatus(statusId, onSuccess, onFailure) {
-    var statusRequest = new OAuthRequest("GET", GET_STATUS_SHOW_URL + statusId + ".json")
-    statusRequest.setParameters([["include_entities", true]])
+    var statusRequest = new OAuthRequest("GET", GET_STATUS_SHOW_URL)
+    statusRequest.setParameters([["id", statusId]])
     statusRequest.sendRequest(onSuccess, onFailure)
-}
-
-function getRateLimit(onSuccess, onFailure) {
-    var rateLimitRequest = new OAuthRequest("GET", GET_RATE_LIMIT_URL)
-    rateLimitRequest.sendRequest(onSuccess, onFailure)
 }
 
 function getUserInfo(screenName, onSuccess, onFailure) {
@@ -190,7 +184,7 @@ function getUserInfo(screenName, onSuccess, onFailure) {
 
 function getUserTweets(screenName, maxId, onSuccess, onFailure) {
     var userTweetsRequest = new OAuthRequest("GET", GET_USER_TWEETS_URL)
-    var parameters = [["screen_name", screenName], ["count", 50], ["include_rts", true], ["include_entities", true]]
+    var parameters = [["screen_name", screenName], ["count", 50], ["include_rts", true]]
     if (maxId) parameters.push(["max_id", maxId])
     userTweetsRequest.setParameters(parameters)
     userTweetsRequest.sendRequest(onSuccess, onFailure)
@@ -198,7 +192,7 @@ function getUserTweets(screenName, maxId, onSuccess, onFailure) {
 
 function getUserFavourites(screenName, maxId, onSuccess, onFailure) {
     var favouritesRequest = new OAuthRequest("GET", GET_USER_FAVOURITES_URL)
-    var parameters = [["screen_name", screenName], ["count", 50], ["include_entities", true]]
+    var parameters = [["screen_name", screenName], ["count", 50]]
     if (maxId) parameters.push(["max_id", maxId])
     favouritesRequest.setParameters(parameters)
     favouritesRequest.sendRequest(onSuccess, onFailure)
@@ -219,7 +213,7 @@ function getUserListsMemberships(screenName, cursor, onSuccess, onFailure) {
 
 function getListTimeline(listId, sinceId, maxId, onSuccess, onFailure) {
     var listTimelineRequest = new OAuthRequest("GET", GET_LIST_TIMELINE_URL)
-    var parameters = [["list_id", listId], ["per_page", 100], ["include_entities", true], ["include_rts", true]]
+    var parameters = [["list_id", listId], ["per_page", 100], ["include_rts", true]]
     if (sinceId) parameters.push(["since_id", sinceId])
     else if (maxId) parameters.push(["max_id", maxId])
     listTimelineRequest.setParameters(parameters)
@@ -239,7 +233,8 @@ function getListSubscribers(listId, cursor, onSuccess, onFailure) {
 }
 
 function getTrends(woeid, onSuccess, onFailure) {
-    var trendsRequest = new OAuthRequest("GET", GET_TRENDS_URL + woeid + ".json")
+    var trendsRequest = new OAuthRequest("GET", GET_TRENDS_URL)
+    trendsRequest.setParameters([["id", woeid]])
     trendsRequest.sendRequest(onSuccess, onFailure)
 }
 
@@ -302,7 +297,7 @@ function getSuggestedUserCategories(onSuccess, onFailure) {
 }
 
 function getSuggestedUser(slug, onSuccess, onFailure) {
-    var suggestedUserRequest = new OAuthRequest("GET", GET_SUGGESTED_USER + slug + ".json")
+    var suggestedUserRequest = new OAuthRequest("GET", GET_SUGGESTED_USER.arg(encodeURIComponent(slug)))
     suggestedUserRequest.sendRequest(onSuccess, onFailure)
 }
 
@@ -323,14 +318,14 @@ function getVerifyCredentials(onSuccess, onFailure) {
 
 // Undocumented!
 function getConversation(id, onSuccess, onFailure) {
-    var conversationRequest = new OAuthRequest("GET", GET_RELATED_RESULTS_URL + id + ".json")
+    var conversationRequest = new OAuthRequest("GET", GET_RELATED_RESULTS_URL.arg(id + ""))
     conversationRequest.setParameters([["include_entities", true]])
     conversationRequest.sendRequest(onSuccess, onFailure)
 }
 
 // Undocumented!
 function getTweetActivitySummary(id, onSuccess, onFailure) {
-    var tweetActivityRequest = new OAuthRequest("GET", GET_TWEET_ACTIVITY_SUMMARY_URL.arg(id))
+    var tweetActivityRequest = new OAuthRequest("GET", GET_TWEET_ACTIVITY_SUMMARY_URL.arg(id + ""))
     tweetActivityRequest.sendRequest(onSuccess, onFailure)
 }
 
@@ -414,7 +409,7 @@ function postAccessToken(token, tokenSecret, oauthVerifier, onSuccess, onFailure
 
 function postStatus(status, statusId, latitude, longitude, onSuccess, onFailure) {
     var postStatusRequest = new OAuthRequest("POST", POST_STATUS_URL)
-    var parameters = [["status", status], ["include_entities", true]]
+    var parameters = [["status", status]]
     if (statusId) parameters.push(["in_reply_to_status_id", statusId])
     if (latitude && longitude) {
         parameters.push(["lat", latitude])
@@ -425,34 +420,36 @@ function postStatus(status, statusId, latitude, longitude, onSuccess, onFailure)
 }
 
 function postDeleteStatus(statusId, onSuccess, onFailure) {
-    var deleteStatusRequest = new OAuthRequest("POST", POST_DELETE_STATUS_URL + statusId + ".json")
+    var deleteStatusRequest = new OAuthRequest("POST", POST_DELETE_STATUS_URL.arg(statusId + ""))
     deleteStatusRequest.sendRequest(onSuccess, onFailure)
 }
 
 function postDirectMsg(status, screenName, onSuccess, onFailure) {
     var postDirectMsgRequest = new OAuthRequest("POST", POST_DIRECT_MSG_URL)
-    postDirectMsgRequest.setParameters([["text", status], ["screen_name", screenName], ["include_entities", true]])
+    postDirectMsgRequest.setParameters([["text", status], ["screen_name", screenName]])
     postDirectMsgRequest.sendRequest(onSuccess, onFailure)
 }
 
 function postDeleteDirectMsg(statusId, onSuccess, onFailure) {
-    var deleteDirectMsg = new OAuthRequest("POST", POST_DIRECT_MSG_DELETE_URL + statusId + ".json")
+    var deleteDirectMsg = new OAuthRequest("POST", POST_DIRECT_MSG_DELETE_URL)
+    deleteDirectMsg.setParameters([["id", statusId]])
     deleteDirectMsg.sendRequest(onSuccess, onFailure)
 }
 
 function postRetweet(statusId, onSuccess, onFailure) {
-    var retweetRequest = new OAuthRequest("POST", POST_RETWEET_URL + statusId + ".json")
-    retweetRequest.setParameters([["include_entities", true]])
+    var retweetRequest = new OAuthRequest("POST", POST_RETWEET_URL.arg(statusId + ""))
     retweetRequest.sendRequest(onSuccess, onFailure)
 }
 
 function postFavourite(statusId, onSuccess, onFailure) {
-    var favouriteRequest = new OAuthRequest("POST", POST_FAVOURITE_URL + statusId + ".json")
+    var favouriteRequest = new OAuthRequest("POST", POST_FAVOURITE_URL)
+    favouriteRequest.setParameters([["id", statusId]])
     favouriteRequest.sendRequest(function(data) {onSuccess(data, true)}, onFailure)
 }
 
 function postUnfavourite(statusId, onSuccess, onFailure) {
-    var unfavouriteRequest = new OAuthRequest("POST", POST_UNFAVOURITE_URL + statusId + ".json")
+    var unfavouriteRequest = new OAuthRequest("POST", POST_UNFAVOURITE_URL)
+    unfavouriteRequest.setParameters([["id", statusId]])
     unfavouriteRequest.sendRequest(function(data) {onSuccess(data, false)}, onFailure)
 }
 
@@ -475,7 +472,7 @@ function postSavedSearches(query, onSuccess, onFailure) {
 }
 
 function postRemoveSavedSearch(id, onSuccess, onFailure) {
-    var removeSearchRequest = new OAuthRequest("POST", POST_REMOVE_SAVED_SEARCH_URL + id + ".json")
+    var removeSearchRequest = new OAuthRequest("POST", POST_REMOVE_SAVED_SEARCH_URL.arg(id + ""))
     removeSearchRequest.sendRequest(onSuccess, onFailure)
 }
 
@@ -529,7 +526,7 @@ function getUserStreamURLAndHeader() {
     var message = {
         action: GET_USER_STREAM_URL,
         method: "GET",
-        parameters: [["delimited", "length"], ["stall_warnings", true], ["with", "followings"]]
+        parameters: [["delimited", "length"], ["with", "followings"]]
     }
     var url = OAuth.addToURL(message.action, message.parameters)
     OAuth.completeRequest(message, accessor)

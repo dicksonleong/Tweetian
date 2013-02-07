@@ -50,7 +50,7 @@ Page {
                 text: qsTr("Timeline") + ": " +
                       (enabled ? (value === 0 ? qsTr("Off") : qsTr("%n min(s)", "", value)) : qsTr("Disabled"))
                 maximumValue: 30
-                stepSize: 1
+                stepSize: 5
                 value: settings.timelineRefreshFreq
                 onReleased: settings.timelineRefreshFreq = value
             }
@@ -60,7 +60,7 @@ Page {
                 text: qsTr("Mentions") + ": " +
                       (enabled ? (value === 0 ? qsTr("Off") : qsTr("%n min(s)", "", value)) : qsTr("Disabled"))
                 maximumValue: 30
-                stepSize: 1
+                stepSize: 5
                 value: settings.mentionsRefreshFreq
                 onReleased: settings.mentionsRefreshFreq = value
             }
@@ -70,7 +70,7 @@ Page {
                 text: qsTr("Direct messages") + ": " +
                       (enabled ? (value === 0 ? qsTr("Off") : qsTr("%n min(s)", "", value)) : qsTr("Disabled"))
                 maximumValue: 30
-                stepSize: 1
+                stepSize: 5
                 value: settings.directMsgRefreshFreq
                 onReleased: settings.directMsgRefreshFreq = value
             }

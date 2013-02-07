@@ -44,6 +44,7 @@ PageStackWindow {
 
         function showHttpError(errorCode, errorMessage) {
             if (errorCode === 0) showText(qsTr("Server or connection error"))
+            else if (errorCode === 429) showText(qsTr("Rate limit reached, please try again later"))
             else showText(qsTr("Error: %1").arg(errorMessage + " (" + errorCode + ")"))
         }
     }
