@@ -100,6 +100,15 @@ function parseUser(userJson) {
         isFollowing: userJson.following || false,
         isProtected: userJson.protected
     }
+
+    var userUrlExpanded = null;
+    try {
+        userUrlExpanded = userJson.entities.url.urls[0].expanded_url;
+    } catch (e) {}
+
+    if (userUrlExpanded !== null)
+        user.url = userUrlExpanded;
+
     return user;
 }
 
