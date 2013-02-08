@@ -206,7 +206,7 @@ function getRTAndFavCount() {
                 text: qsTr("%n retweet(s)", "", rtCount),
                 headerText: qsTr("Retweeters"),
                 count: rtCount,
-                icon: settings.invertedTheme ? "Image/retweet_inverse.png" : "Image/retweet.png",
+                icon: settings.invertedTheme ? "Image/retweet_inverse.png" : "Image/retweet.png"
             }
             rtAndFavCountRepeater.model.append(rtObj)
         }
@@ -215,7 +215,7 @@ function getRTAndFavCount() {
                 text: qsTr("%n favourite(s)", "", favCount),
                 headerText: qsTr("Favouriters"),
                 count: favCount,
-                icon: settings.invertedTheme ? "Image/favourite_inverse.svg" : "Image/favourite.svg",
+                icon: settings.invertedTheme ? "Image/favourite_inverse.svg" : "Image/favourite.svg"
             }
             rtAndFavCountRepeater.model.append(favObj)
         }
