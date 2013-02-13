@@ -153,7 +153,7 @@ Item {
         function onParseComplete(type, newDMCount, showNotification) {
             if (type === "newer") {
                 if (showNotification) {
-                    unreadCount += count
+                    unreadCount += newDMCount
                     if (symbian.foreground && mainPage.status !== PageStatus.Active)
                         infoBanner.showText(qsTr("%n new message(s)", "", unreadCount))
                 }
