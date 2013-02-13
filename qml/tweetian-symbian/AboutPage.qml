@@ -80,8 +80,7 @@ smartphone. Tweetian is open source and licensed under GPL v3.")
                     font.pixelSize: constant.fontSizeMedium
                     color: constant.colorLight
                     wrapMode: Text.Wrap
-                    text: APP_VERSION + " Pre-release\n\
-This is a pre-release version and only used for debug, you are trying at your own risk."
+                    text: APP_VERSION
                 }
             }
 

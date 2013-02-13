@@ -1,7 +1,11 @@
-tweetian (1.7.1) unstable; urgency=normal
-  * Pre-release version
+tweetian (1.8.0) stable; urgency=high
+  * Move to Twitter API 1.1
+  * Show retweets and favourites count for each tweet
+  * Improve search UI
+  * Bugs fix
+  * Lot of backend improvement
 
- -- Dickson <dicksonleong8@gmail.com>  Mon, 31 Dec 2012 23:23:16 +0800
+ -- Dickson <dicksonleong8@gmail.com>  Wed, 13 Feb 2013 14:14:25 +0800
 
 tweetian (1.7.0) stable; urgency=normal
   * Support 14 languages including English
