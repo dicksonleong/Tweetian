@@ -119,10 +119,6 @@ Page {
                     searchTextField.parent.focus = true // remove activeFocus on searchTextField
                 }
             }
-            onPressAndHold: {
-                if (trendsPageListView.model === cache.trendsModel && type === qsTr("Saved Searches"))
-                    savedSearchMenuComponent.createObject(trendsPage, { id: id, searchString: title })
-            }
         }
         onPulledDown: if (model === cache.trendsModel) internal.refresh()
     }
@@ -220,22 +216,6 @@ Page {
             autoCompleterWorker.sendMessage(msg)
         }
 
-        function removeSearchOnSuccess(data) {
-            for (var i=0; i<cache.trendsModel.count; i++) {
-                if (cache.trendsModel.get(i).title === data.name) {
-                    cache.trendsModel.remove(i)
-                    break
-                }
-            }
-            infoBanner.showText(qsTr("The saved search %1 is removed successfully").arg("\""+data.name+"\""))
-            savedSearchLoading = false
-        }
-
-        function removeSearchOnFailure(status, statusText) {
-            infoBanner.showHttpError(status, statusText)
-            savedSearchLoading = false
-        }
-
         function trendsOnSuccess(data) {
             cache.trendsLastUpdate = new Date().toString()
             var hashtagsArray = []
@@ -296,16 +276,6 @@ Page {
             loadingRect.visible = false
         }
 
-        function createRemoveSavedSearchDialog(id, searchString) {
-            var icon = settings.invertedTheme ? "image://theme/toolbar-delete_inverse"
-                                                 : "image://theme/toolbar-delete"
-            var message = qsTr("Do you want to remove the saved search %1?").arg("\""+searchString+"\"")
-            dialog.createQueryDialog(qsTr("Remove Saved Search"), icon, message, function() {
-                Twitter.postRemoveSavedSearch(id, removeSearchOnSuccess, removeSearchOnFailure)
-                savedSearchLoading = true
-            })
-        }
-
         function createTrendsLocationDialog() {
             if (!__trendsLocationDialog) __trendsLocationDialog = Qt.createComponent("Dialog/TrendsLocationDialog.qml")
             var dialog = __trendsLocationDialog.createObject(trendsPage, { model: trendsLocationModel })
@@ -317,32 +287,4 @@ Page {
     }
 
     WorkerScript { id: autoCompleterWorker; source: "WorkerScript/AutoCompleter.js" }
-
-    Component {
-        id: savedSearchMenuComponent
-
-        ContextMenu {
-            id: savedSearchMenu
-
-            property int id
-            property string searchString: ""
-            property bool __isClosing: false
-
-            platformInverted: settings.invertedThemes
-
-            MenuLayout {
-                MenuItemWithIcon {
-                    iconSource: platformInverted ? "image://theme/toolbar-delete_inverse" : "image://theme/toolbar-delete"
-                    text: qsTr("Remove saved search")
-                    onClicked: internal.createRemoveSavedSearchDialog(savedSearchMenu.id, savedSearchMenu.searchString)
-                }
-            }
-
-            Component.onCompleted: open()
-            onStatusChanged: {
-                if (status === DialogStatus.Closing) __isClosing = true
-                else if (status === DialogStatus.Closed && __isClosing) savedSearchMenu.destroy()
-            }
-        }
-    }
 }
