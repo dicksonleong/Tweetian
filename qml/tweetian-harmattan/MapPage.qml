@@ -44,7 +44,7 @@ Page {
 
         MenuLayout {
             MenuItem {
-                text: qsTr("View coordinate")
+                text: qsTr("View coordinates")
                 onClicked: coordinateDialogComponent.createObject(mapPage)
             }
             MenuItem {
@@ -180,7 +180,7 @@ Page {
         CommonDialog {
             id: coordinateDialog
             property bool __isClosing: false
-            titleText: qsTr("Location Coordinate")
+            titleText: qsTr("Location Coordinates")
             titleIcon: "image://theme/icon-l-location-test"
             buttonTexts: [qsTr("Copy"), qsTr("Close")]
             content: Column {
@@ -197,7 +197,7 @@ Page {
                     anchors { left: parent.left; right: parent.right }
                     Button {
                         id: degree
-                        text: qsTr("Degree")
+                        text: qsTr("Degrees")
                     }
                     Button {
                         id: decimal
@@ -214,7 +214,7 @@ Page {
             onButtonClicked: {
                 if (index === 0) {
                     QMLUtils.copyToClipboard(coordinateTextField.text)
-                    infoBanner.showText(qsTr("Coordinate copied to clipboard"))
+                    infoBanner.showText(qsTr("Coordinates copied to clipboard"))
                 }
             }
             Component.onCompleted: open()

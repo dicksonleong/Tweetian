@@ -47,7 +47,7 @@ Page {
 
         MenuLayout {
             MenuItem {
-                text: qsTr("View coordinate")
+                text: qsTr("View coordinates")
                 platformInverted: menu.platformInverted
                 onClicked: coordinateDialogComponent.createObject(mapPage)
             }
@@ -191,7 +191,7 @@ Page {
         CommonDialog {
             id: coordinateDialog
             property bool __isClosing: false
-            titleText: qsTr("Location Coordinate")
+            titleText: qsTr("Location Coordinates")
             titleIcon: platformInverted ? "Image/location_mark_inverse.svg" : "Image/location_mark.svg"
             buttonTexts: [qsTr("Copy"), qsTr("Close")]
             platformInverted: settings.invertedTheme
@@ -204,7 +204,7 @@ Page {
                     anchors { left: parent.left; right: parent.right }
                     Button {
                         id: degree
-                        text: qsTr("Degree")
+                        text: qsTr("Degrees")
                         platformInverted: coordinateDialog.platformInverted
                     }
                     Button {
@@ -224,7 +224,7 @@ Page {
             onButtonClicked: {
                 if (index === 0) {
                     QMLUtils.copyToClipboard(coordinateTextField.text)
-                    infoBanner.showText(qsTr("Coordinate copied to clipboard"))
+                    infoBanner.showText(qsTr("Coordinates copied to clipboard"))
                 }
             }
             Component.onCompleted: open()

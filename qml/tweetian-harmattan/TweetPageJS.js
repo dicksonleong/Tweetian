@@ -334,7 +334,7 @@ function commonOnFailure(status, statusText) {
 
 function addToPocket(link) {
     if (!settings.pocketUsername || !settings.pocketPassword) {
-        var message = qsTr("You are not sign in to your Pocket account. Please sign in to your Pocket account first under the \"Account\" tab in the Settings.")
+        var message = qsTr("You are not signed in to your Pocket account. Please sign in to your Pocket account first under the \"Account\" tab in Settings.")
         dialog.createMessageDialog(qsTr("Pocket - Not Signed In"), message)
         return
     }
