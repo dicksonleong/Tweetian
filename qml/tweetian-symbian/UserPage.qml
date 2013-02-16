@@ -361,7 +361,7 @@ Page {
         }
 
         function createReportSpamDialog() {
-            var message = qsTr("Do you want to report and block the user %1 ?").arg("@" + screenName)
+            var message = qsTr("Do you want to report and block the user %1?").arg("@" + screenName)
             dialog.createQueryDialog(qsTr("Report Spammer"), "", message, function() {
                 Twitter.postReportSpam(screenName, reportSpamOnSuccess, reportSpamOnFailure)
                 loadingRect.visible = true
@@ -370,8 +370,8 @@ Page {
 
         function createFollowUserDialog() {
             var title = isFollowing ? qsTr("Unfollow user") : qsTr("Follow user")
-            var message = isFollowing ? qsTr("Do you want to unfollow the user %1 ?").arg("@" + screenName)
-                                                 : qsTr("Do you want to follow the user %1 ?").arg("@" + screenName)
+            var message = isFollowing ? qsTr("Do you want to unfollow the user %1?").arg("@" + screenName)
+                                                 : qsTr("Do you want to follow the user %1?").arg("@" + screenName)
             dialog.createQueryDialog(title, "", message, function() {
                 if (isFollowing)
                     Twitter.postUnfollow(screenName, followOnSuccess, followOnFailure)
