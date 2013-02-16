@@ -24,7 +24,6 @@ import "../Utils/Database.js" as Database
 import "../Services/Twitter.js" as Twitter
 
 Item {
-    id: root
     implicitHeight: mainView.height; implicitWidth: mainView.width
 
     property string reloadType: "all"
@@ -33,7 +32,9 @@ Item {
     property bool busy: true
     property int unreadCount: 0
 
+    // For DMThreadPage
     signal dmParsed(int newDMCount)
+    signal dmRemoved(string id)
 
     function initialize() {
         var msg = {
@@ -46,9 +47,9 @@ Item {
         busy = true
     }
 
-    function insertDM(receivedDM, sentDM) {
+    function insertNewDMs(receivedDM, sentDM) {
         var msg = {
-            type: reloadType,
+            type: "newer",
             model: fullModel,
             threadModel: directMsgView.model,
             receivedDM: receivedDM,
@@ -58,13 +59,30 @@ Item {
         directMsgView.lastUpdate = new Date().toString()
     }
 
+    function setDMThreadReaded(indexOrScreenName) {
+        unreadCount = 0;
+        var msg = { type: "setReaded", threadModel: directMsgView.model, index: -1 }
+        switch (typeof indexOrScreenName) {
+        case "number": msg.index = indexOrScreenName; break;
+        case "string": msg.screenName = indexOrScreenName; break;
+        default: throw new TypeError();
+        }
+        dmParser.sendMessage(msg)
+    }
+
     function removeDM(id) {
         dmParser.sendMessage({type: "delete", model: fullModel, id: id})
+        dmRemoved(id)
     }
 
     function removeAllDM() {
-        reloadType = "all";
-        insertDM([], []);
+        var msg = {
+            type: "all",
+            model: fullModel,
+            threadModel: directMsgView.model,
+            receivedDM: [], sentDM: []
+        }
+        dmParser.sendMessage(msg)
     }
 
     function positionAtTop() {
@@ -132,16 +150,19 @@ Item {
     QtObject {
         id: internal
 
-        function setDMThreadReaded(index) {
-            dmParser.sendMessage({type: "setReaded", index: index, threadModel: directMsgView.model})
-        }
-
         function refreshDMTime() {
             dmParser.sendMessage({type: "time", threadModel: directMsgView.model})
         }
 
         function successCallback(dmRecieve, dmSent) {
-            insertDM(dmRecieve, dmSent)
+            var msg = {
+                type: reloadType,
+                model: fullModel,
+                threadModel: directMsgView.model,
+                receivedDM: dmRecieve,
+                sentDM: dmSent
+            }
+            dmParser.sendMessage(msg)
             if (autoRefreshTimer.running) autoRefreshTimer.restart()
         }
 
@@ -158,6 +179,7 @@ Item {
                         infoBanner.showText(qsTr("%n new message(s)", "", unreadCount))
                 }
                 busy = false
+                dmParsed(newDMCount)
             }
             else if (type === "all") {
                 busy = false

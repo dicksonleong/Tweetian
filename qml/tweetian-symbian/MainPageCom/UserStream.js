@@ -39,15 +39,15 @@ function streamRecieved(rawData) {
     var data = JSON.parse(rawData);
 
     if (data.hasOwnProperty("friends")) {
-        log("Friends response recieved with length " + data.friends.length)
+        log("Friends response received with length " + data.friends.length)
         friendIDList = data.friends
     }
     else if (data.hasOwnProperty("direct_message")) {
-        log("DMs response recieved")
+        log("DMs response received")
         if (data.direct_message.recipient_screen_name === settings.userScreenName)
-            directMsg.insertDM([data.direct_message], [])
+            directMsg.insertNewDMs([data.direct_message], [])
         else
-            directMsg.insertDM([], [data.direct_message])
+            directMsg.insertNewDMs([], [data.direct_message])
     }
     else if (data.hasOwnProperty("text")) {
         var isMention = false;
@@ -62,11 +62,11 @@ function streamRecieved(rawData) {
         }
 
         if (!isMention || __isFollowingUser(data.user.id)) timeline.prependNewTweets([data])
-        log(isMention ? "Mentions recieved" : "Status recieved")
+        log(isMention ? "Mentions received" : "Status received")
     }
     else if (data.hasOwnProperty("delete")) {
-        log("Delete response recieved")
-        if (data["delete"].direct_message) {
+        log("Delete response received")
+        if (data["delete"].hasOwnProperty("direct_message")) {
             directMsg.removeDM(data["delete"].direct_message.id_str)
         }
         else {
@@ -75,7 +75,7 @@ function streamRecieved(rawData) {
         }
     }
     else if (data.hasOwnProperty("event")) {
-        log("Event response recieved with event_name: " + data.event)
+        log("Event response received with event_name: " + data.event)
     }
 }
 

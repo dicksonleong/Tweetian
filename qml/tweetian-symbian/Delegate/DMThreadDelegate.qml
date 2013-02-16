@@ -67,8 +67,7 @@ AbstractDelegate {
     }
 
     onClicked: {
-        if (isUnread) internal.setDMThreadReaded(index)
-        unreadCount = 0
+        if (isUnread) setDMThreadReaded(index)
         var prop = { screenName: model.screenName, userStream: userStream }
         pageStack.push(Qt.resolvedUrl("../MainPageCom/DMThreadPage.qml"), prop)
     }

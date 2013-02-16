@@ -76,7 +76,11 @@ Page {
 
     Connections {
         target: mainPage.directMsg
-        onDmParsed: internal.insertDMs(newDMCount)
+        onDmParsed: {
+            internal.insertDMs(newDMCount);
+            mainPage.directMsg.setDMThreadReaded(screenName);
+        }
+        onDmRemoved: internal.removeDM(id)
     }
 
     QtObject {

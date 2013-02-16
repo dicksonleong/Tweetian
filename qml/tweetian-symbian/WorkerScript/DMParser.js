@@ -49,7 +49,10 @@ WorkerScript.onMessage = function(msg) {
         }
         break;
     case "setReaded":
-        msg.threadModel.setProperty(msg.index, "isUnread", false);
+        var index = msg.index;
+        if (msg.hasOwnProperty("screenName"))
+            index = getIndex(msg.screenName, msg.threadModel);
+        msg.threadModel.setProperty(index, "isUnread", false);
         break;
     default:
         throw new Error("Invalid type: " + msg.type)
@@ -134,4 +137,13 @@ function insertDMFromDB(dbDMArray, dmModel, dmThreadModel) {
         dmThread.isUnread = false;
         dmThreadModel.append(dmThread);
     })
+}
+
+function getIndex(screenName, model) {
+    for (var i = 0; i < model.count; ++i) {
+        if (model.get(i).screenName === screenName)
+            return i;
+    }
+    console.log("DMParser.js: index for screenName", screenName, "not found!");
+    return -1;
 }
