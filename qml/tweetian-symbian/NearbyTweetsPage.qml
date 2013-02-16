@@ -141,13 +141,15 @@ Page {
         property string reloadType: "all"
 
         function refresh(type) {
-            var sinceId = "", maxId = ""
-            if (searchListView.count > 0) {
-                if (type === "newer") sinceId = searchListView.model.get(0).id
-                else if (type === "older") maxId = searchListView.model.get(searchListView.count - 1).id
-                else if (type === "all") searchListView.model.clear()
+            if (searchListView.count <= 0)
+                type = "all";
+            var sinceId = "", maxId = "";
+            switch (type) {
+            case "newer": sinceId = searchListView.model.get(0).id; break;
+            case "older": maxId =  searchListView.model.get(searchListView.count - 1).id; break;
+            case "all": searchListView.model.clear(); break;
+            default: throw new Error("Invalid type");
             }
-            else type = "all"
             internal.reloadType = type
             Twitter.getNearbyTweets(latitude, longitude, sinceId, Calculate.minusOne(maxId), onSuccess, onFailure)
             header.busy = true

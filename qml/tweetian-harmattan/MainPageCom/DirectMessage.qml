@@ -47,6 +47,7 @@ Item {
         }
         dmParser.sendMessage(msg)
         busy = true
+        directMsgView.lastUpdate = Database.getSetting("directMsgLastUpdate")
     }
 
     function insertNewDMs(receivedDM, sentDM) {
@@ -92,12 +93,14 @@ Item {
     }
 
     function refresh(type) {
-        var sinceId = ""
-        if (directMsgView.count > 0) {
-            if (type === "newer") sinceId = fullModel.get(0).id
-            else if (type === "all") directMsgView.model.clear()
+        if (directMsgView.count <= 0)
+            type = "all";
+        var sinceId = "";
+        switch (type) {
+        case "newer": sinceId = fullModel.get(0).id; break;
+        case "all": directMsgView.model.clear(); break;
+        default: throw new Error("Invalid type");
         }
-        else type = "all"
         reloadType = type
         Twitter.getDirectMsg(sinceId, "", internal.successCallback, internal.failureCallback)
         busy = true
@@ -145,8 +148,7 @@ Item {
     WorkerScript {
         id: dmParser
         source: "../WorkerScript/DMParser.js"
-        onMessage: internal.onParseComplete(messageObject.type, messageObject.newDMCount,
-                                            messageObject.showNotification)
+        onMessage: internal.onParseComplete(messageObject);
     }
 
     QtObject {
@@ -173,33 +175,34 @@ Item {
             busy = false
         }
 
-        function onParseComplete(type, newDMCount, showNotification) {
-            if (type === "newer") {
-                if (showNotification) {
-                    unreadCount += newDMCount
-                    if (settings.messageNotification) {
-                        var body = qsTr("%n new message(s)", "", unreadCount)
-                        if (!platformWindow.active) {
-                            harmattanUtils.clearNotification("tweetian.message")
-                            harmattanUtils.publishNotification("tweetian.message", "Tweetian", body, unreadCount)
-                        }
-                        else if (mainPage.status !== PageStatus.Active) {
-                            infoBanner.showText(body)
-                        }
-                    }
-                }
-                busy = false
-                dmParsed(newDMCount)
+        function onParseComplete(msg) {
+            switch (msg.type) {
+            case "newer":
+                if (msg.showNotification) __createNotification(msg.newDMCount);
+                dmParsed(msg.newDMCount)
+                // fallthrough
+            case "all":
+                busy = false;
+                break;
+            case "database":
+                refresh("newer");
+                break;
             }
-            else if (type === "all") {
-                busy = false
+        }
+
+        function __createNotification(newDMCount) {
+            if (newDMCount <= 0) return;
+            unreadCount += newDMCount;
+            var body = qsTr("%n new message(s)", "", unreadCount);
+            if (!platformWindow.active) {
+                if (mainPage.status !== PageStatus.Active)
+                    infoBanner.showText(body)
             }
-            else if (type === "database") {
-                if (fullModel.count > 0) {
-                    directMsgView.lastUpdate = Database.getSetting("directMsgLastUpdate")
-                    refresh("newer")
+            else {
+                if (settings.messageNotification) {
+                    harmattanUtils.clearNotification("tweetian.message")
+                    harmattanUtils.publishNotification("tweetian.message", "Tweetian", body, unreadCount)
                 }
-                else refresh("all")
             }
         }
     }

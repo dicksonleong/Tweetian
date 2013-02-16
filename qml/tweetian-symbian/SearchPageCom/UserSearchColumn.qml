@@ -30,16 +30,14 @@ Item {
     property bool firstTimeLoaded: false
 
     function refresh(type) {
-        firstTimeLoaded = true
-        if (type === "all") {
-            internal.page = 1
-            userSearchListView.model.clear()
+        firstTimeLoaded = true;
+        if (userSearchListView.count <= 0)
+            type = "all";
+        switch (type) {
+        case "all": internal.page = 1; userSearchListView.model.clear(); break;
+        case "older": ++internal.page; break;
+        default: throw new Error("Invalid type");
         }
-        else if (type === "older")
-            internal.page++
-        else
-            throw new Error("Invalid type: " + type)
-
         internal.reloadType = type
         Twitter.getUserSearch(searchString, internal.page, internal.userSearchOnSuccess, internal.userSearchOnFailure)
         busy = true

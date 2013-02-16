@@ -47,16 +47,20 @@ Item {
         }
         tweetParser.sendMessage(msg)
         busy = true
+        if (type === "Timeline") tweetView.lastUpdate = Database.getSetting("timelineLastUpdate")
+        else tweetView.lastUpdate = Database.getSetting("mentionsLastUpdate")
     }
 
     function refresh(type) {
-        var sinceId = "", maxId = ""
-        if (tweetView.count > 0) {
-            if (type === "newer") sinceId = tweetView.model.get(0).id
-            else if (type === "older") maxId = tweetView.model.get(tweetView.count - 1).id
-            else if (type === "all") tweetView.model.clear()
+        if (tweetView.count <= 0)
+            type = "all";
+        var sinceId = "", maxId = "";
+        switch (type) {
+        case "newer": sinceId = tweetView.model.get(0).id; break;
+        case "older": maxId = tweetView.model.get(tweetView.count - 1).id; break;
+        case "all": tweetView.model.clear(); break;
+        default: throw new Error("Invalid type");
         }
-        else type = "all"
         reloadType = type
         if (root.type == "Timeline") Twitter.getHomeTimeline(sinceId, Calculate.minusOne(maxId), internal.successCallback, internal.failureCallback)
         else Twitter.getMentions(sinceId, Calculate.minusOne(maxId), internal.successCallback, internal.failureCallback)
@@ -196,37 +200,40 @@ Item {
         }
 
         function onParseComplete(msg) {
-            if (msg.type === "newer") {
-                if (msg.newTweetCount > 0) {
-                    if (tweetView.stayAtCurrentPosition || tweetView.indexAt(0, tweetView.contentY) > 0)
-                        unreadCount += msg.newTweetCount
-                    if (type === "Mentions" && settings.mentionNotification) {
-                        var body = qsTr("%n new mention(s)", "", unreadCount)
-                        if (!platformWindow.active) {
-                            harmattanUtils.clearNotification("tweetian.mention")
-                            harmattanUtils.publishNotification("tweetian.mention", "Tweetian", body, unreadCount)
-                        }
-                        else if (mainPage.status !== PageStatus.Active) infoBanner.showText(body)
-                    }
+            switch (msg.type) {
+            case "newer":
+                __createNotification(msg.newTweetCount);
+                // fallthrough
+            case "all": case "older":
+                cache.storeScreenNames(msg.screenNames);
+                busy = false;
+                break;
+            case "database":
+                refresh("newer");
+                break;
+            }
+            cache.storeHashtags(msg.hashtags)
+        }
+
+        function __createNotification(newTweetCount) {
+            if (newTweetCount <= 0) return;
+
+            if (tweetView.stayAtCurrentPosition || tweetView.indexAt(0, tweetView.contentY) > 0)
+                unreadCount += newTweetCount;
+
+            if (type !== "Mentions") return;
+
+            var body = qsTr("%n new mention(s)", "", unreadCount)
+            if (platformWindow.active) {
+                if (mainPage.status !== PageStatus.Active)
+                    infoBanner.showText(body);
+            }
+            else {
+                if (settings.mentionNotification) {
+                    harmattanUtils.clearNotification("tweetian.mention")
+                    harmattanUtils.publishNotification("tweetian.mention", "Tweetian", body, unreadCount)
                 }
-                if (msg.screenNames.length > 0)
-                    cache.screenNames = Database.storeScreenNames(msg.screenNames)
-                busy = false
             }
-            else if (msg.type === "all" || msg.type === "older") {
-                if (msg.screenNames.length > 0)
-                    cache.screenNames = Database.storeScreenNames(msg.screenNames)
-                busy = false
-            }
-            else if (msg.type === "database") {
-                if (tweetView.count > 0) {
-                    if (type === "Timeline") tweetView.lastUpdate = Database.getSetting("timelineLastUpdate")
-                    else tweetView.lastUpdate = Database.getSetting("mentionsLastUpdate")
-                    refresh("newer")
-                }
-                else refresh("all")
-            }
-            cache.pushToHashtags(msg.hashtags)
         }
     }
 

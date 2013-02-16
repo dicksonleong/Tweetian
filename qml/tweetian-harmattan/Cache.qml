@@ -31,14 +31,23 @@ QtObject {
         translationToken = ""
     }
 
-    function pushToHashtags(newHashtags) {
-        if (newHashtags instanceof Array && newHashtags.length > 0) {
-            var tempArray = hashtags
-            for (var i=0; i<newHashtags.length; i++) {
-                if (tempArray.indexOf(newHashtags[i]) === -1) tempArray.push(newHashtags[i])
-            }
-            hashtags = tempArray
-        }
+    function storeHashtags(newHashtags) {
+        if (!Array.isArray(newHashtags) || newHashtags.length === 0)
+            return;
+
+        var tempArray = hashtags;
+        newHashtags.forEach(function(newHashtag) {
+            if (tempArray.indexOf(newHashtag) === -1)
+                tempArray.push(newHashtag);
+        });
+        hashtags = tempArray;
+    }
+
+    function storeScreenNames(newScreenNames) {
+        if (!Array.isArray(newScreenNames) || newScreenNames.length === 0)
+            return;
+
+        screenNames = Database.storeScreenNames(newScreenNames);
     }
 
     function isTranslationTokenValid() {

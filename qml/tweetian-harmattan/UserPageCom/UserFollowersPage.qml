@@ -71,7 +71,7 @@ AbstractUserPage {
         onMessage: {
             backButtonEnabled = true
             if (user.screenName === settings.userScreenName)
-                cache.screenNames = Database.storeScreenNames(messageObject.screenNames)
+                cache.storeScreenNames(messageObject.screenNames);
             currentRequestUserIds = undefined
             loadingRect.visible = false
         }

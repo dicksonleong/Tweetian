@@ -31,14 +31,16 @@ Item {
     property bool firstTimeLoaded: false
 
     function refresh(type) {
-        firstTimeLoaded = true
+        firstTimeLoaded = true;
+        if (tweetSearchListView.count <= 0)
+            type = "all";
         var sinceId = "", maxId = ""
-        if (tweetSearchListView.count > 0) {
-            if (type === "newer") sinceId = tweetSearchListView.model.get(0).id
-            else if (type === "older") maxId =  tweetSearchListView.model.get(tweetSearchListView.count - 1).id
-            else if (type === "all") tweetSearchListView.model.clear()
+        switch (type) {
+        case "newer": sinceId = tweetSearchListView.model.get(0).id; break;
+        case "older": maxId =  tweetSearchListView.model.get(tweetSearchListView.count - 1).id; break;
+        case "all": tweetSearchListView.model.clear(); break;
+        default: throw new Error("Invalid type");
         }
-        else type = "all"
         internal.reloadType = type
         Twitter.getSearch(searchString, sinceId, Calculate.minusOne(maxId),
                           internal.searchOnSuccess, internal.searchOnFailure)

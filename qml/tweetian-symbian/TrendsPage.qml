@@ -228,7 +228,7 @@ Page {
                 cache.trendsModel.append(obj)
                 if (data[0].trends[i].name.indexOf('#') === 0) hashtagsArray.push(data[0].trends[i].name.substring(1))
             }
-            cache.pushToHashtags(hashtagsArray)
+            cache.storeHashtags(hashtagsArray);
             trendingLoading = false
         }
 
