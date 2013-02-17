@@ -207,7 +207,7 @@ Page {
 
             SettingSwitch {
                 id: positiveAttitudeSwitch
-                text: qsTr("Position attitude :)")
+                text: qsTr("Positive attitude :)")
             }
 
             SettingSwitch {

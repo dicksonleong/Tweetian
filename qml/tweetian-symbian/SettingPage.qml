@@ -79,15 +79,15 @@ Page {
     QtObject {
         id: infoText
 
-        property string twitLonger: qsTr("TwitLonger is a third party service that allow you to post long tweet \
-having more than 140 characters.<br>\
+        property string twitLonger: qsTr("TwitLonger is a third-party service that allows you to post tweets \
+longer than 140 characters.<br>\
 More info about TwitLonger:<br>\
 <a href=\"http://www.twitlonger.com/about\">www.twitlonger.com/about</a><br>\
-By enable this service, you agree to TwitLonger privacy policy:<br>\
+By enabling this service, you agree to the TwitLonger privacy policy:<br>\
 <a href=\"http://www.twitlonger.com/privacy\">www.twitlonger.com/privacy</a>")
 
-        property string pocket: qsTr("Pocket is a third party service for saving web page links \
-so that you can read it later.<br>\
+        property string pocket: qsTr("Pocket is a third-party service for saving web page links \
+so you can read them later.<br>\
 More about Pocket:<br>\
 <a href=\"http://getpocket.com/about\">http://getpocket.com/about</a><br>\
 By signing in, you agree to Pocket privacy policy:<br>\
@@ -103,7 +103,7 @@ Separate the keywords by space to mute tweet when ALL of the keywords are matche
 to mute tweet when ANY of the keywords are matched.\n\
 Keywords format: @user, #hashtag, source:Tweet_Button or plain words.")
 
-        property string streaming: qsTr("Streaming enable Tweetian to deliver real time update of timeline, mentions \
+        property string streaming: qsTr("Streaming enables Tweetian to deliver real-time updates of timeline, mentions \
 and direct messages without the needs of refreshing periodically. Auto refresh and manual refresh will be disabled \
 when streaming is connected. It is not recommended to enable streaming when you are on a weak internet connection \
 (eg. mobile data).")
@@ -115,7 +115,7 @@ when streaming is connected. It is not recommended to enable streaming when you 
         function createClearCacheDialog() {
             var icon = settings.invertedTheme ? "image://theme/toolbar-delete_inverse"
                                               : "image://theme/toolbar-delete"
-            var message = qsTr("This action will clear all temporary caches and database. \
+            var message = qsTr("This action will clear the temporary cache and database. \
 Twitter credential and app settings will not be reset. Continue?")
             dialog.createQueryDialog(qsTr("Clear Cache & Database"), icon, message, function() {
                 Database.clearTable("Timeline");
@@ -123,7 +123,7 @@ Twitter credential and app settings will not be reset. Continue?")
                 Database.clearTable("DM");
                 Database.clearTable("ScreenNames");
                 cache.clearAll()
-                infoBanner.showText(qsTr("All cache cleared"))
+                infoBanner.showText(qsTr("Cache and database cleared"))
             })
         }
 
@@ -133,7 +133,7 @@ Twitter credential and app settings will not be reset. Continue?")
             var message = qsTr("Delete all cached thumbnails?")
             dialog.createQueryDialog(qsTr("Clear Thumbnails Cache"), icon, message, function() {
                 var deleteCount = thumbnailCacher.clearAll()
-                infoBanner.showText(qsTr("%1 thumbnails cache cleared").arg(deleteCount))
+                infoBanner.showText(qsTr("%1 thumbnails deleted").arg(deleteCount))
             })
         }
     }
