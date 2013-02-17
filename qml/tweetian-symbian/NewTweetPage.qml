@@ -479,7 +479,7 @@ Page {
 
         function createUseTwitLongerDialog() {
             var message = qsTr("Your tweet is more than 140 characters. Do you want to use TwitLonger to post your tweet?\n\
-Note: The tweet content will be publicly visible even your tweet is private.")
+Note: The tweet content will be publicly visible even if your tweet is private.")
             dialog.createQueryDialog(qsTr("Use TwitLonger?"), "", message, function() {
                 var replyScreenName = placedText ? placedText.substring(1, placedText.indexOf(" ")) : ""
                 TwitLonger.postTweet(constant, settings.userScreenName, tweetTextArea.text, tweetId, replyScreenName,
