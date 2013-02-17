@@ -128,6 +128,7 @@ function __toRichText(text, entities) {
     if (!entities) return;
 
     var richText = text;
+    richText = __linkHashtags(richText, entities.hashtags);
 
     entities.urls.forEach(function(urlObject) {
         richText = richText.replace(urlObject.url, linkText(urlObject.display_url, urlObject.expanded_url, true));
@@ -141,7 +142,6 @@ function __toRichText(text, entities) {
     }
 
     richText = __linkUserMentions(richText, entities.user_mentions);
-    richText = __linkHashtags(richText, entities.hashtags);
     return richText;
 }
 
@@ -164,13 +164,18 @@ function __linkHashtags(text, hashtagsEntities) {
     if (!Array.isArray(hashtagsEntities) || hashtagsEntities.length === 0)
         return text;
 
-    var hashtagsArray = [];
+    // TODO: better algorithm?
+    var hashtagsArray = hashtagsEntities;
+    hashtagsArray.sort(function(a, b) { return a.indices[0] - b.indices[0] });
 
-    hashtagsEntities.forEach(function(hashtagObject) {
-        hashtagsArray.push(hashtagObject.text);
+    var linkedText = text;
+    var offset = 0;
+    hashtagsArray.forEach(function(hashtag) {
+        var linkedHashtag = linkText("#" + hashtag.text, "#" + hashtag.text, false);
+        linkedText = linkedText.substring(0, hashtag.indices[0] + offset) +
+            linkedHashtag + linkedText.substring(hashtag.indices[1] + offset);
+        offset = (offset - (hashtag.indices[1] - hashtag.indices[0])) + linkedHashtag.length;
     })
 
-    var hashtagsRegexp = new RegExp("#\\b(" + hashtagsArray.join("|") + ")\\b", "ig");
-    var linkedText = text.replace(hashtagsRegexp, function (t) { return linkText(t, t, false) })
     return linkedText;
 }
