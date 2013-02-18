@@ -19,11 +19,12 @@
 .pragma library
 
 var BASE_URL = "http://api.flickr.com/services/rest/"
-var FLICKR_LINK_REGEXP = /http:\/\/(flic.kr\/p\/\w+|www.flickr.com\/photos\/[\w\-\d@]+\/\d+\/)/ig
+var FLICKR_LINK_REGEXP = /http:\/\/(flic\.kr\/p\/\w+|(www\.)flickr\.com\/photos\/[\w\-\d@]+\/\d+\/)/ig
 
 /**
- * Only 2 format of Flickr link will be accepted:
+ * Only three formats of Flickr link will be accepted:
  * - http://flic.kr/p/{base-58-encoded-photo-id}
+ * - http://flickr.com/photos/{user-id}/{photo-id}/
  * - http://www.flickr.com/photos/{user-id}/{photo-id}/
  */
 function getSizes(constant, link, onSuccess) {
@@ -60,6 +61,10 @@ function getSizes(constant, link, onSuccess) {
 function __getPhotoId(link) {
     if (link.indexOf("http://flic.kr/p/") === 0) {
         return __base58Decode(link.substring(17))
+    }
+    else if (link.indexOf("http://flickr.com/photos/") === 0) {
+        var id = link.substring(25)
+        return id.substring(id.indexOf("/") + 1, id.length - 1)
     }
     else if (link.indexOf("http://www.flickr.com/photos/") === 0) {
         var id = link.substring(29)
