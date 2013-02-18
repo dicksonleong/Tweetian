@@ -34,12 +34,11 @@ Page {
         }
     }
 
-    PullDownListView {
+    ListView {
         id: userCategoryView
         anchors { top: header.bottom; bottom: parent.bottom; left: parent.left; right: parent.right }
         delegate: userCategoryDelegate
         model: ListModel {}
-        onPulledDown: script.refresh()
     }
 
     ScrollDecorator { flickableItem: userCategoryView }
