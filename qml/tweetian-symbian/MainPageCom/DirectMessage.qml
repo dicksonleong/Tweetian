@@ -165,7 +165,10 @@ Item {
                 sentDM: dmSent
             }
             dmParser.sendMessage(msg)
-            if (autoRefreshTimer.running) autoRefreshTimer.restart()
+            if (reloadType == "newer" || reloadType == "all") {
+                directMsgView.lastUpdate = new Date().toString()
+                if (autoRefreshTimer.running) autoRefreshTimer.restart()
+            }
         }
 
         function failureCallback(status, statusText) {
