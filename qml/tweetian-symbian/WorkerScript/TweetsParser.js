@@ -115,7 +115,7 @@ WorkerScript.onMessage = function(msg) {
 }
 
 function collectScreenNamesAndHashtags(tweetJson, screenNames, hashtags) {
-    if (tweetJson.following && screenNames.indexOf(tweetJson.user.screen_name) == -1)
+    if (tweetJson.user.following && screenNames.indexOf(tweetJson.user.screen_name) == -1)
         screenNames.push(tweetJson.user.screen_name);
 
     if (tweetJson.hasOwnProperty("entities")) {
