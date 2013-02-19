@@ -32,6 +32,11 @@ Page {
     property alias headerIcon: header.headerIcon
 
     Component.onCompleted: {
+        if (userIdsArray.length === 0) {
+            noUserText.visible = true;
+            return;
+        }
+
         Twitter.getUserLookup(userIdsArray.join(","), function(data) {
             var obj = { type: "all", data: data, model: usersListView.model }
             usersParser.sendMessage(obj)
@@ -55,6 +60,15 @@ Page {
         anchors { top: header.bottom; left: parent.left; right: parent.right; bottom: parent.bottom }
         delegate: UserDelegate {}
         model: ListModel {}
+    }
+
+    Text {
+        id: noUserText
+        anchors.centerIn: parent
+        visible: false
+        font.pixelSize: constant.fontSizeXXLarge
+        color: constant.colorMid
+        text: qsTr("No user")
     }
 
     ScrollDecorator { flickableItem: usersListView }

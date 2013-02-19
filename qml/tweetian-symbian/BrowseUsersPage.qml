@@ -31,8 +31,12 @@ Page {
     property alias headerCount: header.countBubbleValue
     property alias headerIcon: header.headerIcon
 
-    //Component.onCompleted: {
     onUserIdsArrayChanged: {
+        if (userIdsArray.length === 0) {
+            noUserText.visible = true;
+            return;
+        }
+
         Twitter.getUserLookup(userIdsArray.join(","), function(data) {
             var obj = { type: "all", data: data, model: usersListView.model }
             usersParser.sendMessage(obj)
@@ -60,6 +64,15 @@ Page {
     }
 
     ScrollDecorator { platformInverted: settings.invertedTheme; flickableItem: usersListView }
+
+    Text {
+        id: noUserText
+        anchors.centerIn: parent
+        visible: false
+        font.pixelSize: constant.fontSizeXXLarge
+        color: constant.colorMid
+        text: qsTr("No user")
+    }
 
     PageHeader {
         id: header
