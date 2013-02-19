@@ -19,12 +19,13 @@
 .pragma library
 
 var BASE_URL = "http://api.flickr.com/services/rest/"
-var FLICKR_LINK_REGEXP = /http:\/\/(flic.kr\/p\/\w+|www.flickr.com\/photos\/[\w\-\d@]+\/\d+\/)/ig
+var FLICKR_LINK_REGEXP = /http:\/\/(flic\.kr\/p\/\w+|(www\.)?flickr\.com\/photos\/[\w\-\d@]+\/\d+)/ig
 
 /**
- * Only 2 format of Flickr link will be accepted:
+ * Only the following format of Flickr link will be accepted:
  * - http://flic.kr/p/{base-58-encoded-photo-id}
- * - http://www.flickr.com/photos/{user-id}/{photo-id}/
+ * - http://www.flickr.com/photos/{user-id}/{photo-id}
+ * - http://flickr.com/photos/{user-id}/{photo-id}
  */
 function getSizes(constant, link, onSuccess) {
     var parameters = {
@@ -41,12 +42,15 @@ function getSizes(constant, link, onSuccess) {
     request.onreadystatechange = function() {
         if (request.readyState === XMLHttpRequest.DONE && request.status == 200) {
             var data = JSON.parse(request.responseText)
-            var thumb = "",full = "", medium
-            for (var i=0; i<data.sizes.size.length; i++) {
-                if (data.sizes.size[i].label === "Square") thumb = data.sizes.size[i].source
-                else if (data.sizes.size[i].label === "Medium 640") full = data.sizes.size[i].source
-                else if (data.sizes.size[i].label === "Medium") medium = data.sizes.size[i].source
-            }
+            var thumb = "", full = "", medium = "";
+            data.sizes.size.forEach(function(sizeObject) {
+                switch (sizeObject.label) {
+                case "Large Square": thumb = sizeObject.source; break;
+                case "Medium 640": full = sizeObject.source; break;
+                case "Medium": medium = sizeObject.source; break;
+                }
+            })
+
             // if full is not available, use medium
             if (!full) full = medium
             onSuccess(full, thumb, link)
@@ -58,14 +62,18 @@ function getSizes(constant, link, onSuccess) {
 }
 
 function __getPhotoId(link) {
-    if (link.indexOf("http://flic.kr/p/") === 0) {
-        return __base58Decode(link.substring(17))
-    }
-    else if (link.indexOf("http://www.flickr.com/photos/") === 0) {
-        var id = link.substring(29)
-        return id.substring(id.indexOf("/") + 1, id.length - 1)
-    }
-    throw new Error("Invalid Flickr link: " + link)
+    var extracted = "";
+
+    if (link.indexOf("http://flic.kr/p/") === 0)
+        return __base58Decode(link.substring(17));
+    else if (link.indexOf("http://www.flickr.com/photos/") === 0)
+        extracted = link.substring(29);
+    else if (link.indexOf("http://flickr.com/photos/") === 0)
+        extracted = link.substring(25);
+    else
+        throw new Error("Invalid Flickr link: " + link);
+
+    return extracted.substring(extracted.indexOf("/") + 1);
 }
 
 function __base58Decode( snipcode ) {
