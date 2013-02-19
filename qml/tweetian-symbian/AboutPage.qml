@@ -92,20 +92,6 @@ smartphone. Tweetian is open source and licensed under GPL v3.")
                 onClicked: pageStack.push(Qt.resolvedUrl("UserPage.qml"), {screenName: "DicksonBeta"})
             }
 
-            SectionHeader { text: qsTr("Special Thanks") }
-
-            AboutPageItem {
-                imageSource: "Image/knobtvikerDP.jpg"
-                text: "@knobtviker"
-                onClicked: pageStack.push(Qt.resolvedUrl("UserPage.qml"), {screenName: "knobtviker"})
-            }
-
-            AboutPageItem {
-                imageSource: "Image/Mandeep_ThemesDP.png"
-                text: "@Mandeep_Themes"
-                onClicked: pageStack.push(Qt.resolvedUrl("UserPage.qml"), {screenName: "Mandeep_Themes"})
-            }
-
             SectionHeader { text: qsTr("Powered By") }
 
             AboutPageItem {
