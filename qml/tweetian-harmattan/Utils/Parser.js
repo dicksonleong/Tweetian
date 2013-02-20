@@ -142,6 +142,7 @@ function __toRichText(text, entities) {
     }
 
     richText = __linkUserMentions(richText, entities.user_mentions);
+    richText = __linkCashtag(richText);
     return richText;
 }
 
@@ -178,4 +179,20 @@ function __linkHashtags(text, hashtagsEntities) {
     })
 
     return linkedText;
+}
+
+// Following RegExp took and modified from:
+// https://github.com/twitter/twitter-text-js/blob/b93ae29/twitter-text.js#L279
+var CASHTAG_REGEXP = /(?:^|\s)(\$[a-z]{1,6}(?:[._][a-z]{1,2})?)(?=$|[\s\!'#%&"\(\)*\+,\\\-\.\/:;<=>\?@\[\]\^_{|}~\$])/gi;
+
+function __linkCashtag(text) {
+    return text.replace(CASHTAG_REGEXP, function(matched) {
+        var text = matched;
+        var firstChar = text.charAt(0);
+        if (/\s/.test(firstChar)) {
+            text = text.substring(1);
+            return firstChar + linkText(text, text, false);
+        }
+        return linkText(text, text, false);
+    })
 }
