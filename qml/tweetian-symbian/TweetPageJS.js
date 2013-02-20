@@ -63,19 +63,6 @@ var PIC_SERVICES = {
            return url
        }
     },
-    NineGag: {
-        regexp: /http:\/\/(m.)?9gag.com\/gag\/[^"]+/ig,
-        getPicUrl: function(link) {
-           var ques = link.indexOf('?')
-           var idEndPos = ques === -1 ? undefined : ques
-           var gagId = link.substring(link.indexOf("9gag.com/gag/") + 13, idEndPos)
-           var url = {
-               full: "http://d24w6bsrhbeh9d.cloudfront.net/photo/" + gagId + "_460s.jpg",
-               thumb: "http://d24w6bsrhbeh9d.cloudfront.net/photo/" + gagId + "_220x145.jpg"
-           }
-           return url
-       }
-    },
     MobyPicture: {
         regexp: /http:\/\/moby.to\/\w+/ig,
         getPicUrl: function(link) {
@@ -157,6 +144,15 @@ function createPicThumb() {
                 thumbnailModel.append({type: "image", full: full, thumb: thumb, link: link})
             })
         }
+    }
+
+    var gagLinks = tweet.richText.match(NineGag.NINEGAG_URL_REGEXP);
+    if (gagLinks !== null) {
+        gagLinks.forEach(function(url) {
+            NineGag.getImageUrl(constant, url, function(full, thumb, link) {
+                thumbnailModel.append({type: "image", full: full, thumb: thumb, link: link})
+            })
+        })
     }
 
     for (var service in PIC_SERVICES) {

@@ -100,6 +100,7 @@
         <file>qml/tweetian-harmattan/Services/Flickr.js</file>
         <file>qml/tweetian-harmattan/Services/Instapaper.js</file>
         <file>qml/tweetian-harmattan/Services/NokiaMaps.js</file>
+        <file>qml/tweetian-harmattan/Services/NineGag.js</file>
         <file>qml/tweetian-harmattan/Services/Pocket.js</file>
         <file>qml/tweetian-harmattan/Services/Translation.js</file>
         <file>qml/tweetian-harmattan/Services/TwitLonger.js</file>
