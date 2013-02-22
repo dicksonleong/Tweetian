@@ -19,8 +19,8 @@
 var retweeters = []
 var favoriters = []
 
-var PIC_SERVICES = {
-    TwitPic: {
+var PIC_SERVICES = [
+    {
         regexp: /http:\/\/twitpic.com\/\w+/ig,
         getPicUrl: function(link) {
            var twitpicId = link.substring(19)
@@ -31,7 +31,7 @@ var PIC_SERVICES = {
            return url
        }
     },
-    YFrog: {
+    {
         regexp: /http:\/\/(twitter.)?yfrog.com\/\w+/ig,
         getPicUrl: function(link) {
            var yfrogId = link.substring(link.indexOf("yfrog.com/") + 10)
@@ -42,7 +42,7 @@ var PIC_SERVICES = {
            return url
         }
     },
-    Instagram: {
+    {
         regexp: /http:\/\/instagr.am\/p\/[^\/]+\//ig,
         getPicUrl: function(link) {
             var url = {
@@ -52,7 +52,7 @@ var PIC_SERVICES = {
             return url
         }
     },
-    Imgly: {
+    {
         regexp: /http:\/\/img.ly\/\w+/ig,
         getPicUrl: function(link) {
            var imglyId = link.substring(14)
@@ -63,14 +63,14 @@ var PIC_SERVICES = {
            return url
        }
     },
-    MobyPicture: {
+    {
         regexp: /http:\/\/moby.to\/\w+/ig,
         getPicUrl: function(link) {
             var url = { full: link + ":full", thumb: link + ":square" }
             return url
         }
     },
-    Lockerz: {
+    {
         regexp: /http:\/\/lockerz.com\/[^"]+/ig,
         getPicUrl: function(link) {
             var url = {
@@ -80,7 +80,7 @@ var PIC_SERVICES = {
             return url
         }
     },
-    Molome: {
+    {
         regexp: /http:\/\/molo.me\/p\/\w+/ig,
         getPicUrl: function(link) {
             var molomeId = link.substring(17)
@@ -91,24 +91,14 @@ var PIC_SERVICES = {
             return url
         }
     },
-    TwitGoo: {
+    {
         regexp: /http:\/\/twitgoo.com\/\w+/ig,
         getPicUrl: function(link) {
             var url = { full: link + "/img", thumb: link + "/thumb" }
             return url
         }
     },
-    Imgur: {
-        regexp: /http:\/\/i.imgur.com\/[^"]+/ig,
-        getPicUrl: function(link) {
-            var url = {
-                full: link,
-                thumb: "http://i.imgur.com/" + link.substring(19).replace(".", "s.")
-            }
-            return url
-        }
-    },
-    SkyDrive: {
+    {
         regexp: /http:\/\/sdrv.ms\/[^"]+/ig,
         getPicUrl: function(link) {
             var url = {
@@ -117,8 +107,12 @@ var PIC_SERVICES = {
             }
             return url
         }
+    },
+    {
+        regexp: /https?:\/\/[^"]+?\.(?:jpe?g|png|gif)(?=")/gi,
+        getPicUrl: function (link) { return { full: link, thumb: link }; }
     }
-}
+]
 
 function createPicThumb() {
     // if there is no link in the tweet, just return
@@ -138,12 +132,12 @@ function createPicThumb() {
 
     // Flickr pic
     var flickrLinks = tweet.richText.match(Flickr.FLICKR_LINK_REGEXP)
-    if (flickrLinks != null) {
-        for (var iFlickr=0; iFlickr<flickrLinks.length; iFlickr++) {
-            Flickr.getSizes(constant, flickrLinks[iFlickr], function(full, thumb, link) {
+    if (flickrLinks !== null) {
+        flickrLinks.forEach(function(url) {
+            Flickr.getSizes(constant, url, function(full, thumb, link) {
                 thumbnailModel.append({type: "image", full: full, thumb: thumb, link: link})
             })
-        }
+        })
     }
 
     var gagLinks = tweet.richText.match(NineGag.NINEGAG_URL_REGEXP);
@@ -155,15 +149,15 @@ function createPicThumb() {
         })
     }
 
-    for (var service in PIC_SERVICES) {
-        var links = tweet.richText.match(PIC_SERVICES[service].regexp)
-        if (links == null) continue
-        for (var i=0; i<links.length; i++) {
-            var urls = PIC_SERVICES[service].getPicUrl(links[i])
-            var picObj = { type: "image", full: urls.full, thumb: urls.thumb, link: links[i] }
+    PIC_SERVICES.forEach(function(service) {
+        var links = tweet.richText.match(service.regexp)
+        if (links === null) return
+        links.forEach(function(link) {
+            var urls = service.getPicUrl(link)
+            var picObj = { type: "image", full: urls.full, thumb: urls.thumb, link: link }
             thumbnailModel.append(picObj)
-        }
-    }
+        })
+    })
 }
 
 function createYoutubeThumb() {
