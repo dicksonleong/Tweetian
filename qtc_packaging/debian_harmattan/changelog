@@ -1,3 +1,8 @@
+tweetian (1.8.1) stable; urgency=normal
+  * Mainly bug fix and minor improvements
+
+ -- Dickson <dicksonleong8@gmail.com>  Wed, 27 Feb 2013 17:02:35 +0800
+
 tweetian (1.8.0) stable; urgency=high
   * Move to Twitter API 1.1
   * Show retweets and favourites count for each tweet
