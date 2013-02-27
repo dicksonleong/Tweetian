@@ -337,7 +337,7 @@ function postRequestToken(onSuccess, onFailure) {
     var message = {
         action: REQUEST_TOKEN_URL,
         method: "POST",
-        parameters: [["oauth_callback", "http://twitter.com"]]
+        parameters: [["oauth_callback", "oob"]]
     }
     OAuth.completeRequest(message, accessor)
     var authorizationHeader = OAuth.getAuthorizationHeader(message.action, message.parameters)
@@ -352,10 +352,8 @@ function postRequestToken(onSuccess, onFailure) {
                 for (var i=0; i<tokenArray.length; i++) {
                     if (tokenArray[i].indexOf("oauth_token=") == 0) token = tokenArray[i].substring(12)
                     else if (tokenArray[i].indexOf("oauth_token_secret=") == 0) tokenSecret = tokenArray[i].substring(19)
-                    else if (tokenArray[i].indexOf("oauth_callback_confirmed=") == 0) callbackConfirmed = tokenArray[i].substring(25)
                 }
-                if (callbackConfirmed == "true") onSuccess(token, tokenSecret)
-                else onFailure(request.status, "oauth_callback_confirmed value is not true")
+                onSuccess(token, tokenSecret)
             }
             else onFailure(request.status, request.statusText)
         }
