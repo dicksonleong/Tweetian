@@ -3,9 +3,9 @@
     <name>AboutPage</name>
     <message>
         <location filename="../qml/tweetian-harmattan/AboutPage.qml" line="43"/>
-        <location filename="../qml/tweetian-harmattan/AboutPage.qml" line="157"/>
+        <location filename="../qml/tweetian-harmattan/AboutPage.qml" line="156"/>
         <location filename="../qml/tweetian-symbian/AboutPage.qml" line="45"/>
-        <location filename="../qml/tweetian-symbian/AboutPage.qml" line="159"/>
+        <location filename="../qml/tweetian-symbian/AboutPage.qml" line="158"/>
         <source>About Tweetian</source>
         <translation>关于Tweetian</translation>
     </message>
@@ -22,38 +22,38 @@
         <translation>版本</translation>
     </message>
     <message>
-        <location filename="../qml/tweetian-harmattan/AboutPage.qml" line="86"/>
-        <location filename="../qml/tweetian-symbian/AboutPage.qml" line="88"/>
+        <location filename="../qml/tweetian-harmattan/AboutPage.qml" line="85"/>
+        <location filename="../qml/tweetian-symbian/AboutPage.qml" line="87"/>
         <source>Developed By</source>
         <translation>开发者</translation>
     </message>
     <message>
-        <location filename="../qml/tweetian-harmattan/AboutPage.qml" line="94"/>
-        <location filename="../qml/tweetian-symbian/AboutPage.qml" line="96"/>
+        <location filename="../qml/tweetian-harmattan/AboutPage.qml" line="93"/>
+        <location filename="../qml/tweetian-symbian/AboutPage.qml" line="95"/>
         <source>Special Thanks</source>
         <translation>特别感谢</translation>
     </message>
     <message>
-        <location filename="../qml/tweetian-harmattan/AboutPage.qml" line="108"/>
-        <location filename="../qml/tweetian-symbian/AboutPage.qml" line="110"/>
+        <location filename="../qml/tweetian-harmattan/AboutPage.qml" line="107"/>
+        <location filename="../qml/tweetian-symbian/AboutPage.qml" line="109"/>
         <source>Powered By</source>
         <translation>制作者</translation>
     </message>
     <message>
-        <location filename="../qml/tweetian-harmattan/AboutPage.qml" line="128"/>
-        <location filename="../qml/tweetian-symbian/AboutPage.qml" line="130"/>
+        <location filename="../qml/tweetian-harmattan/AboutPage.qml" line="127"/>
+        <location filename="../qml/tweetian-symbian/AboutPage.qml" line="129"/>
         <source>Legal</source>
         <translation>法律</translation>
     </message>
     <message>
-        <location filename="../qml/tweetian-harmattan/AboutPage.qml" line="133"/>
-        <location filename="../qml/tweetian-symbian/AboutPage.qml" line="135"/>
+        <location filename="../qml/tweetian-harmattan/AboutPage.qml" line="132"/>
+        <location filename="../qml/tweetian-symbian/AboutPage.qml" line="134"/>
         <source>Twitter Privacy Policy</source>
         <translation>Twitter隐私政策</translation>
     </message>
     <message>
-        <location filename="../qml/tweetian-harmattan/AboutPage.qml" line="143"/>
-        <location filename="../qml/tweetian-symbian/AboutPage.qml" line="145"/>
+        <location filename="../qml/tweetian-harmattan/AboutPage.qml" line="142"/>
+        <location filename="../qml/tweetian-symbian/AboutPage.qml" line="144"/>
         <source>Twitter Terms of Service</source>
         <translation>Twitter服务条款</translation>
     </message>
@@ -335,7 +335,7 @@
     <message>
         <location filename="../qml/tweetian-harmattan/AdvSearchPage.qml" line="215"/>
         <location filename="../qml/tweetian-symbian/AdvSearchPage.qml" line="210"/>
-        <source>Position attitude :)</source>
+        <source>Positive attitude :)</source>
         <translation>积极 :)</translation>
     </message>
     <message>
@@ -464,20 +464,20 @@
         <translation>私信： %1</translation>
     </message>
     <message>
-        <location filename="../qml/tweetian-harmattan/MainPageCom/DMThreadPage.qml" line="91"/>
-        <location filename="../qml/tweetian-symbian/MainPageCom/DMThreadPage.qml" line="98"/>
+        <location filename="../qml/tweetian-harmattan/MainPageCom/DMThreadPage.qml" line="95"/>
+        <location filename="../qml/tweetian-symbian/MainPageCom/DMThreadPage.qml" line="102"/>
         <source>Direct message deleted successfully</source>
         <translation>成功删除私信</translation>
     </message>
     <message>
-        <location filename="../qml/tweetian-harmattan/MainPageCom/DMThreadPage.qml" line="111"/>
-        <location filename="../qml/tweetian-symbian/MainPageCom/DMThreadPage.qml" line="119"/>
+        <location filename="../qml/tweetian-harmattan/MainPageCom/DMThreadPage.qml" line="115"/>
+        <location filename="../qml/tweetian-symbian/MainPageCom/DMThreadPage.qml" line="123"/>
         <source>Do you want to delete this direct message?</source>
         <translation>你是否要删除这个私信？</translation>
     </message>
     <message>
-        <location filename="../qml/tweetian-harmattan/MainPageCom/DMThreadPage.qml" line="112"/>
-        <location filename="../qml/tweetian-symbian/MainPageCom/DMThreadPage.qml" line="120"/>
+        <location filename="../qml/tweetian-harmattan/MainPageCom/DMThreadPage.qml" line="116"/>
+        <location filename="../qml/tweetian-symbian/MainPageCom/DMThreadPage.qml" line="124"/>
         <source>Delete Message</source>
         <translation>删除私信</translation>
     </message>
@@ -500,14 +500,14 @@
 <context>
     <name>DirectMessage</name>
     <message numerus="yes">
-        <location filename="../qml/tweetian-harmattan/MainPageCom/DirectMessage.qml" line="160"/>
-        <location filename="../qml/tweetian-symbian/MainPageCom/DirectMessage.qml" line="158"/>
+        <location filename="../qml/tweetian-harmattan/MainPageCom/DirectMessage.qml" line="196"/>
+        <location filename="../qml/tweetian-symbian/MainPageCom/DirectMessage.qml" line="195"/>
         <source>%n new message(s)</source>
         <translation><numerusform>%n个新私信</numerusform></translation>
     </message>
     <message>
-        <location filename="../qml/tweetian-harmattan/MainPageCom/DirectMessage.qml" line="105"/>
-        <location filename="../qml/tweetian-symbian/MainPageCom/DirectMessage.qml" line="103"/>
+        <location filename="../qml/tweetian-harmattan/MainPageCom/DirectMessage.qml" line="126"/>
+        <location filename="../qml/tweetian-symbian/MainPageCom/DirectMessage.qml" line="124"/>
         <source>No message</source>
         <translation>没有私信</translation>
     </message>
@@ -834,21 +834,21 @@
 <context>
     <name>MapPage</name>
     <message>
-        <location filename="../qml/tweetian-harmattan/MapPage.qml" line="47"/>
-        <location filename="../qml/tweetian-symbian/MapPage.qml" line="50"/>
-        <source>View coordinate</source>
-        <translation>查看坐标</translation>
-    </message>
-    <message>
         <location filename="../qml/tweetian-harmattan/MapPage.qml" line="51"/>
         <location filename="../qml/tweetian-symbian/MapPage.qml" line="55"/>
         <source>Open in Nokia Maps</source>
         <translation>打开Nokia Maps</translation>
     </message>
     <message>
+        <location filename="../qml/tweetian-harmattan/MapPage.qml" line="47"/>
+        <location filename="../qml/tweetian-symbian/MapPage.qml" line="50"/>
+        <source>View coordinates</source>
+        <translation>查看坐标</translation>
+    </message>
+    <message>
         <location filename="../qml/tweetian-harmattan/MapPage.qml" line="183"/>
         <location filename="../qml/tweetian-symbian/MapPage.qml" line="194"/>
-        <source>Location Coordinate</source>
+        <source>Location Coordinates</source>
         <translation>位置坐标</translation>
     </message>
     <message>
@@ -866,20 +866,20 @@
     <message>
         <location filename="../qml/tweetian-harmattan/MapPage.qml" line="200"/>
         <location filename="../qml/tweetian-symbian/MapPage.qml" line="207"/>
-        <source>Degree</source>
+        <source>Degrees</source>
         <translation>度数</translation>
+    </message>
+    <message>
+        <location filename="../qml/tweetian-harmattan/MapPage.qml" line="217"/>
+        <location filename="../qml/tweetian-symbian/MapPage.qml" line="227"/>
+        <source>Coordinates copied to clipboard</source>
+        <translation>坐标已复制到剪贴板</translation>
     </message>
     <message>
         <location filename="../qml/tweetian-harmattan/MapPage.qml" line="204"/>
         <location filename="../qml/tweetian-symbian/MapPage.qml" line="212"/>
         <source>Decimal</source>
         <translation>十进制</translation>
-    </message>
-    <message>
-        <location filename="../qml/tweetian-harmattan/MapPage.qml" line="217"/>
-        <location filename="../qml/tweetian-symbian/MapPage.qml" line="227"/>
-        <source>Coordinate copied to clipboard</source>
-        <translation>坐标已复制到剪贴板</translation>
     </message>
     <message>
         <location filename="../qml/tweetian-symbian/MapPage.qml" line="34"/>
@@ -1136,7 +1136,7 @@
         <location filename="../qml/tweetian-harmattan/NewTweetPage.qml" line="484"/>
         <location filename="../qml/tweetian-symbian/NewTweetPage.qml" line="481"/>
         <source>Your tweet is more than 140 characters. Do you want to use TwitLonger to post your tweet?
-Note: The tweet content will be publicly visible even your tweet is private.</source>
+Note: The tweet content will be publicly visible even if your tweet is private.</source>
         <translation>你的推文超过140个字了。是否要使用TwitLonger 服务来发送这条推⏎注意：即使你的推文是加锁的，但是这条长推将是公开的。</translation>
     </message>
     <message>
@@ -1454,14 +1454,38 @@ Note: The tweet content will be publicly visible even your tweet is private.</so
     <message>
         <location filename="../qml/tweetian-harmattan/SettingPage.qml" line="77"/>
         <location filename="../qml/tweetian-symbian/SettingPage.qml" line="82"/>
-        <source>TwitLonger is a third party service that allow you to post long tweet having more than 140 characters.&lt;br&gt;More info about TwitLonger:&lt;br&gt;&lt;a href=&quot;http://www.twitlonger.com/about&quot;&gt;www.twitlonger.com/about&lt;/a&gt;&lt;br&gt;By enable this service, you agree to TwitLonger privacy policy:&lt;br&gt;&lt;a href=&quot;http://www.twitlonger.com/privacy&quot;&gt;www.twitlonger.com/privacy&lt;/a&gt;</source>
+        <source>TwitLonger is a third-party service that allows you to post tweets longer than 140 characters.&lt;br&gt;More info about TwitLonger:&lt;br&gt;&lt;a href=&quot;http://www.twitlonger.com/about&quot;&gt;www.twitlonger.com/about&lt;/a&gt;&lt;br&gt;By enabling this service, you agree to the TwitLonger privacy policy:&lt;br&gt;&lt;a href=&quot;http://www.twitlonger.com/privacy&quot;&gt;www.twitlonger.com/privacy&lt;/a&gt;</source>
         <translation>TwitLonger 是第三方的服务，用于发送长于140个字的推文&lt;br&gt;查看更多关于TwitLonger的信息：&lt;br&gt;&lt;a href=&quot;http://www.twitlonger.com/about&quot;&gt;www.twitlonger.com/about&lt;/a&gt;&lt;br&gt;同意TwitLonger 隐私条款后即可使用此服务&lt;br&gt;&lt;a href=&quot;http://www.twitlonger.com/privacy&quot;&gt;www.twitlonger.com/privacy&lt;/a&gt;</translation>
     </message>
     <message>
         <location filename="../qml/tweetian-harmattan/SettingPage.qml" line="84"/>
         <location filename="../qml/tweetian-symbian/SettingPage.qml" line="89"/>
-        <source>Pocket is a third party service for saving web page links so that you can read it later.&lt;br&gt;More about Pocket:&lt;br&gt;&lt;a href=&quot;http://getpocket.com/about&quot;&gt;http://getpocket.com/about&lt;/a&gt;&lt;br&gt;By signing in, you agree to Pocket privacy policy:&lt;br&gt;&lt;a href=&quot;http://getpocket.com/privacy&quot;&gt;http://getpocket.com/privacy&lt;/a&gt;</source>
-        <translation>Pocket是第三方的服务，用于保存网页链接方便你稍后阅读&lt;br&gt;查看更多关于Pocket的信息：&lt;br&gt;&lt;a href=&quot;http://getpocket.com/about&quot;&gt;http://getpocket.com/about&lt;/a&gt;&lt;br&gt;注册并同意Pocket隐私条款后即可使用服务&lt;br&gt;&lt;a href=&quot;http://getpocket.com/privacy&quot;&gt;http://getpocket.com/privacy&lt;/a&gt;</translation>
+        <source>Pocket is a third-party service for saving web page links so you can read them later.&lt;br&gt;More about Pocket:&lt;br&gt;&lt;a href=&quot;http://getpocket.com/about&quot;&gt;http://getpocket.com/about&lt;/a&gt;&lt;br&gt;By signing in, you agree to Pocket privacy policy:&lt;br&gt;&lt;a href=&quot;http://getpocket.com/privacy&quot;&gt;http://getpocket.com/privacy&lt;/a&gt;</source>
+        <translation>Pocket是第三方的服务，用于保存网页链接方便你稍后阅读&lt;br&gt;查看更多关于Pocket的信息：&lt;br&gt;&lt;a href=&quot;http://getpocket.com/about&quot;&gt;http://getpocket.com/about&lt;/a&gt;&lt;br&gt;登陆后同意Pocket隐私条款即可使用服务&lt;br&gt;&lt;a href=&quot;http://getpocket.com/privacy&quot;&gt;http://getpocket.com/privacy&lt;/a&gt;</translation>
+    </message>
+    <message>
+        <location filename="../qml/tweetian-harmattan/SettingPage.qml" line="101"/>
+        <location filename="../qml/tweetian-symbian/SettingPage.qml" line="106"/>
+        <source>Streaming enables Tweetian to deliver real-time updates of timeline, mentions and direct messages without the needs of refreshing periodically. Auto refresh and manual refresh will be disabled when streaming is connected. It is not recommended to enable streaming when you are on a weak internet connection (eg. mobile data).</source>
+        <translation>Tweetian可以使用流模式来实时更新时间线，提到和密信，而不是定时刷新。当开启流模式时，自动更新与手动更新将被禁用。不建议你在网络比较差的时候使用流模式功能。</translation>
+    </message>
+    <message>
+        <location filename="../qml/tweetian-harmattan/SettingPage.qml" line="111"/>
+        <location filename="../qml/tweetian-symbian/SettingPage.qml" line="118"/>
+        <source>This action will clear the temporary cache and database. Twitter credential and app settings will not be reset. Continue?</source>
+        <translation>这个操作将会清除临时缓存和数据库。Twitter的验证数据和程序的设置不会被重置。是否继续？</translation>
+    </message>
+    <message>
+        <location filename="../qml/tweetian-harmattan/SettingPage.qml" line="119"/>
+        <location filename="../qml/tweetian-symbian/SettingPage.qml" line="126"/>
+        <source>Cache and database cleared</source>
+        <translation>缓存和数据库已清除</translation>
+    </message>
+    <message>
+        <location filename="../qml/tweetian-harmattan/SettingPage.qml" line="127"/>
+        <location filename="../qml/tweetian-symbian/SettingPage.qml" line="136"/>
+        <source>%1 thumbnails deleted</source>
+        <translation>%1个缩略图缓存已清除</translation>
     </message>
     <message>
         <location filename="../qml/tweetian-harmattan/SettingPage.qml" line="91"/>
@@ -1477,28 +1501,10 @@ Keywords format: @user, #hashtag, source:Tweet_Button or plain words.</source>
         <translation>Mute可以让你设置一些关键词来过滤一些你不想要看到的推文出现在你得时间线上。关键词之间用空格隔开，过滤结果可以匹配单个关键词或者所有关键词。⏎ 关键词格式：@用户名、#标签、客户端（可以从Tweet_Button和推文里匹配）</translation>
     </message>
     <message>
-        <location filename="../qml/tweetian-harmattan/SettingPage.qml" line="101"/>
-        <location filename="../qml/tweetian-symbian/SettingPage.qml" line="106"/>
-        <source>Streaming enable Tweetian to deliver real time update of timeline, mentions and direct messages without the needs of refreshing periodically. Auto refresh and manual refresh will be disabled when streaming is connected. It is not recommended to enable streaming when you are on a weak internet connection (eg. mobile data).</source>
-        <translation>Tweetian可以使用流模式来实时更新时间线，提到和密信，而不是定时刷新。当开启流模式时，自动更新与手动更新将被禁用。不建议你在网络比较差的时候使用流模式功能。</translation>
-    </message>
-    <message>
-        <location filename="../qml/tweetian-harmattan/SettingPage.qml" line="111"/>
-        <location filename="../qml/tweetian-symbian/SettingPage.qml" line="118"/>
-        <source>This action will clear all temporary caches and database. Twitter credential and app settings will not be reset. Continue?</source>
-        <translation>这个操作将会清楚客户端的缓存和数据库。Twitter的验证数据跟程序的设置也将被重置。是否继续？</translation>
-    </message>
-    <message>
         <location filename="../qml/tweetian-harmattan/SettingPage.qml" line="113"/>
         <location filename="../qml/tweetian-symbian/SettingPage.qml" line="120"/>
         <source>Clear Cache &amp; Database</source>
         <translation>清除缓存和数据库</translation>
-    </message>
-    <message>
-        <location filename="../qml/tweetian-harmattan/SettingPage.qml" line="119"/>
-        <location filename="../qml/tweetian-symbian/SettingPage.qml" line="126"/>
-        <source>All cache cleared</source>
-        <translation>所有缓存已清除</translation>
     </message>
     <message>
         <location filename="../qml/tweetian-harmattan/SettingPage.qml" line="124"/>
@@ -1511,12 +1517,6 @@ Keywords format: @user, #hashtag, source:Tweet_Button or plain words.</source>
         <location filename="../qml/tweetian-symbian/SettingPage.qml" line="134"/>
         <source>Clear Thumbnails Cache</source>
         <translation>清除缩略图缓存</translation>
-    </message>
-    <message>
-        <location filename="../qml/tweetian-harmattan/SettingPage.qml" line="127"/>
-        <location filename="../qml/tweetian-symbian/SettingPage.qml" line="136"/>
-        <source>%1 thumbnails cache cleared</source>
-        <translation>%1个缩略图缓存已清除</translation>
     </message>
     <message>
         <location filename="../qml/tweetian-symbian/SettingPage.qml" line="32"/>
@@ -1745,81 +1745,55 @@ Keywords format: @user, #hashtag, source:Tweet_Button or plain words.</source>
     </message>
     <message>
         <location filename="../qml/tweetian-harmattan/TrendsPage.qml" line="104"/>
-        <location filename="../qml/tweetian-harmattan/TrendsPage.qml" line="116"/>
-        <location filename="../qml/tweetian-harmattan/TrendsPage.qml" line="268"/>
-        <location filename="../qml/tweetian-harmattan/TrendsPage.qml" line="277"/>
+        <location filename="../qml/tweetian-harmattan/TrendsPage.qml" line="248"/>
+        <location filename="../qml/tweetian-harmattan/TrendsPage.qml" line="257"/>
         <location filename="../qml/tweetian-symbian/TrendsPage.qml" line="110"/>
-        <location filename="../qml/tweetian-symbian/TrendsPage.qml" line="123"/>
-        <location filename="../qml/tweetian-symbian/TrendsPage.qml" line="266"/>
-        <location filename="../qml/tweetian-symbian/TrendsPage.qml" line="275"/>
+        <location filename="../qml/tweetian-symbian/TrendsPage.qml" line="246"/>
+        <location filename="../qml/tweetian-symbian/TrendsPage.qml" line="255"/>
         <source>Saved Searches</source>
         <translation>已保存搜索</translation>
     </message>
     <message>
-        <location filename="../qml/tweetian-harmattan/TrendsPage.qml" line="140"/>
-        <location filename="../qml/tweetian-symbian/TrendsPage.qml" line="149"/>
+        <location filename="../qml/tweetian-harmattan/TrendsPage.qml" line="136"/>
+        <location filename="../qml/tweetian-symbian/TrendsPage.qml" line="145"/>
         <source>Search for tweets or users</source>
         <translation>搜索推文或用户</translation>
     </message>
     <message>
-        <location filename="../qml/tweetian-harmattan/TrendsPage.qml" line="187"/>
-        <location filename="../qml/tweetian-symbian/TrendsPage.qml" line="187"/>
+        <location filename="../qml/tweetian-harmattan/TrendsPage.qml" line="183"/>
+        <location filename="../qml/tweetian-symbian/TrendsPage.qml" line="183"/>
         <source>Trends &amp; Search</source>
         <translation>趋势与搜索</translation>
     </message>
     <message>
-        <location filename="../qml/tweetian-harmattan/TrendsPage.qml" line="232"/>
-        <location filename="../qml/tweetian-symbian/TrendsPage.qml" line="230"/>
-        <source>The saved search %1 is removed successfully</source>
-        <translation>成功移除已保存搜索 %1</translation>
-    </message>
-    <message>
-        <location filename="../qml/tweetian-harmattan/TrendsPage.qml" line="248"/>
-        <location filename="../qml/tweetian-symbian/TrendsPage.qml" line="246"/>
+        <location filename="../qml/tweetian-harmattan/TrendsPage.qml" line="228"/>
+        <location filename="../qml/tweetian-symbian/TrendsPage.qml" line="226"/>
         <source>Trends (%1)</source>
         <translation>趋势（%1）</translation>
     </message>
     <message>
-        <location filename="../qml/tweetian-harmattan/TrendsPage.qml" line="259"/>
-        <location filename="../qml/tweetian-symbian/TrendsPage.qml" line="257"/>
+        <location filename="../qml/tweetian-harmattan/TrendsPage.qml" line="239"/>
+        <location filename="../qml/tweetian-symbian/TrendsPage.qml" line="237"/>
         <source>Unable to retrieve trends</source>
         <translation>无法检索趋势</translation>
     </message>
     <message>
-        <location filename="../qml/tweetian-harmattan/TrendsPage.qml" line="259"/>
-        <location filename="../qml/tweetian-symbian/TrendsPage.qml" line="257"/>
+        <location filename="../qml/tweetian-harmattan/TrendsPage.qml" line="239"/>
+        <location filename="../qml/tweetian-symbian/TrendsPage.qml" line="237"/>
         <source>Trends</source>
         <translation>趋势</translation>
     </message>
     <message>
-        <location filename="../qml/tweetian-harmattan/TrendsPage.qml" line="277"/>
-        <location filename="../qml/tweetian-symbian/TrendsPage.qml" line="275"/>
+        <location filename="../qml/tweetian-harmattan/TrendsPage.qml" line="257"/>
+        <location filename="../qml/tweetian-symbian/TrendsPage.qml" line="255"/>
         <source>Unabled to retrieve saved search</source>
         <translation>无法检索已保存搜索</translation>
     </message>
     <message>
-        <location filename="../qml/tweetian-harmattan/TrendsPage.qml" line="282"/>
-        <location filename="../qml/tweetian-symbian/TrendsPage.qml" line="280"/>
+        <location filename="../qml/tweetian-harmattan/TrendsPage.qml" line="262"/>
+        <location filename="../qml/tweetian-symbian/TrendsPage.qml" line="260"/>
         <source>Worldwide</source>
         <translation>全球</translation>
-    </message>
-    <message>
-        <location filename="../qml/tweetian-harmattan/TrendsPage.qml" line="302"/>
-        <location filename="../qml/tweetian-symbian/TrendsPage.qml" line="302"/>
-        <source>Do you want to remove the saved search %1?</source>
-        <translation>你是否要移除已保存搜索 %1？</translation>
-    </message>
-    <message>
-        <location filename="../qml/tweetian-harmattan/TrendsPage.qml" line="303"/>
-        <location filename="../qml/tweetian-symbian/TrendsPage.qml" line="303"/>
-        <source>Remove Saved Search</source>
-        <translation>移除已保存搜索</translation>
-    </message>
-    <message>
-        <location filename="../qml/tweetian-harmattan/TrendsPage.qml" line="333"/>
-        <location filename="../qml/tweetian-symbian/TrendsPage.qml" line="336"/>
-        <source>Remove saved search</source>
-        <translation>移除已保存搜索</translation>
     </message>
     <message>
         <location filename="../qml/tweetian-symbian/TrendsPage.qml" line="38"/>
@@ -1827,7 +1801,7 @@ Keywords format: @user, #hashtag, source:Tweet_Button or plain words.</source>
         <translation>回去</translation>
     </message>
     <message>
-        <location filename="../qml/tweetian-harmattan/TrendsPage.qml" line="144"/>
+        <location filename="../qml/tweetian-harmattan/TrendsPage.qml" line="140"/>
         <source>Search</source>
         <translation>搜索</translation>
     </message>
@@ -1906,8 +1880,8 @@ Keywords format: @user, #hashtag, source:Tweet_Button or plain words.</source>
 <context>
     <name>TweetListView</name>
     <message numerus="yes">
-        <location filename="../qml/tweetian-harmattan/MainPageCom/TweetListView.qml" line="204"/>
-        <location filename="../qml/tweetian-symbian/MainPageCom/TweetListView.qml" line="200"/>
+        <location filename="../qml/tweetian-harmattan/MainPageCom/TweetListView.qml" line="226"/>
+        <location filename="../qml/tweetian-symbian/MainPageCom/TweetListView.qml" line="221"/>
         <source>%n new mention(s)</source>
         <translation><numerusform>%n个新提及</numerusform></translation>
     </message>
@@ -2050,12 +2024,6 @@ Keywords format: @user, #hashtag, source:Tweet_Button or plain words.</source>
         <translation>无法翻译推文</translation>
     </message>
     <message>
-        <location filename="../qml/tweetian-harmattan/TweetPageJS.js" line="345"/>
-        <location filename="../qml/tweetian-symbian/TweetPageJS.js" line="345"/>
-        <source>You are not sign in to your Pocket account. Please sign in to your Pocket account first under the &quot;Account&quot; tab in the Settings.</source>
-        <translation>你还没有登录到你的Pocket帐户。请登录到你的Pocket帐户在设置下的“帐户”选项卡。</translation>
-    </message>
-    <message>
         <location filename="../qml/tweetian-harmattan/TweetPageJS.js" line="346"/>
         <location filename="../qml/tweetian-symbian/TweetPageJS.js" line="346"/>
         <source>Pocket - Not Signed In</source>
@@ -2110,6 +2078,12 @@ Keywords format: @user, #hashtag, source:Tweet_Button or plain words.</source>
         <translation>翻译已达到限制</translation>
     </message>
     <message>
+        <location filename="../qml/tweetian-harmattan/TweetPageJS.js" line="345"/>
+        <location filename="../qml/tweetian-symbian/TweetPageJS.js" line="345"/>
+        <source>You are not signed in to your Pocket account. Please sign in to your Pocket account first under the &quot;Account&quot; tab in Settings.</source>
+        <translation>你还没有登录到你的Pocket帐户。请登录到你的Pocket帐户在设置下的“帐户”选项卡。</translation>
+    </message>
+    <message>
         <location filename="../qml/tweetian-harmattan/TweetPageJS.js" line="357"/>
         <location filename="../qml/tweetian-symbian/TweetPageJS.js" line="357"/>
         <source>Error sending link to Pocket (%1)</source>
@@ -2143,8 +2117,8 @@ Keywords format: @user, #hashtag, source:Tweet_Button or plain words.</source>
 <context>
     <name>TweetSearchColumn</name>
     <message>
-        <location filename="../qml/tweetian-harmattan/SearchPageCom/TweetSearchColumn.qml" line="82"/>
-        <location filename="../qml/tweetian-symbian/SearchPageCom/TweetSearchColumn.qml" line="82"/>
+        <location filename="../qml/tweetian-harmattan/SearchPageCom/TweetSearchColumn.qml" line="84"/>
+        <location filename="../qml/tweetian-symbian/SearchPageCom/TweetSearchColumn.qml" line="84"/>
         <source>No search result</source>
         <translation>无搜索结果</translation>
     </message>
@@ -2345,20 +2319,20 @@ Keywords format: @user, #hashtag, source:Tweet_Button or plain words.</source>
     <message>
         <location filename="../qml/tweetian-harmattan/UserPage.qml" line="338"/>
         <location filename="../qml/tweetian-symbian/UserPage.qml" line="364"/>
-        <source>Do you want to report and block the user %1 ?</source>
-        <translation>你是否要举报和屏蔽用户 %1 ？</translation>
+        <source>Do you want to report and block the user %1?</source>
+        <translation>你是否要举报和屏蔽用户 %1？</translation>
     </message>
     <message>
         <location filename="../qml/tweetian-harmattan/UserPage.qml" line="347"/>
         <location filename="../qml/tweetian-symbian/UserPage.qml" line="373"/>
-        <source>Do you want to unfollow the user %1 ?</source>
-        <translation>你是否要取消关注用户 %1 ？</translation>
+        <source>Do you want to unfollow the user %1?</source>
+        <translation>你是否要取消关注用户 %1？</translation>
     </message>
     <message>
         <location filename="../qml/tweetian-harmattan/UserPage.qml" line="348"/>
         <location filename="../qml/tweetian-symbian/UserPage.qml" line="374"/>
-        <source>Do you want to follow the user %1 ?</source>
-        <translation>你是否要关注用户 %1 ？</translation>
+        <source>Do you want to follow the user %1?</source>
+        <translation>你是否要关注用户 %1？</translation>
     </message>
     <message>
         <location filename="../qml/tweetian-harmattan/UserPage.qml" line="339"/>
@@ -2407,8 +2381,8 @@ Keywords format: @user, #hashtag, source:Tweet_Button or plain words.</source>
 <context>
     <name>UserSearchColumn</name>
     <message>
-        <location filename="../qml/tweetian-harmattan/SearchPageCom/UserSearchColumn.qml" line="71"/>
-        <location filename="../qml/tweetian-symbian/SearchPageCom/UserSearchColumn.qml" line="71"/>
+        <location filename="../qml/tweetian-harmattan/SearchPageCom/UserSearchColumn.qml" line="69"/>
+        <location filename="../qml/tweetian-symbian/SearchPageCom/UserSearchColumn.qml" line="69"/>
         <source>No search result</source>
         <translation>无搜索结果</translation>
     </message>

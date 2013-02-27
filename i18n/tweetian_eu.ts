@@ -3,9 +3,9 @@
     <name>AboutPage</name>
     <message>
         <location filename="../qml/tweetian-harmattan/AboutPage.qml" line="43"/>
-        <location filename="../qml/tweetian-harmattan/AboutPage.qml" line="157"/>
+        <location filename="../qml/tweetian-harmattan/AboutPage.qml" line="156"/>
         <location filename="../qml/tweetian-symbian/AboutPage.qml" line="45"/>
-        <location filename="../qml/tweetian-symbian/AboutPage.qml" line="159"/>
+        <location filename="../qml/tweetian-symbian/AboutPage.qml" line="158"/>
         <source>About Tweetian</source>
         <translation>Tweetian-i Buruz</translation>
     </message>
@@ -22,38 +22,38 @@
         <translation>Bertsioa</translation>
     </message>
     <message>
-        <location filename="../qml/tweetian-harmattan/AboutPage.qml" line="86"/>
-        <location filename="../qml/tweetian-symbian/AboutPage.qml" line="88"/>
+        <location filename="../qml/tweetian-harmattan/AboutPage.qml" line="85"/>
+        <location filename="../qml/tweetian-symbian/AboutPage.qml" line="87"/>
         <source>Developed By</source>
         <translation>Garatzailea</translation>
     </message>
     <message>
-        <location filename="../qml/tweetian-harmattan/AboutPage.qml" line="94"/>
-        <location filename="../qml/tweetian-symbian/AboutPage.qml" line="96"/>
+        <location filename="../qml/tweetian-harmattan/AboutPage.qml" line="93"/>
+        <location filename="../qml/tweetian-symbian/AboutPage.qml" line="95"/>
         <source>Special Thanks</source>
         <translation>Bereziki eskerrak</translation>
     </message>
     <message>
-        <location filename="../qml/tweetian-harmattan/AboutPage.qml" line="108"/>
-        <location filename="../qml/tweetian-symbian/AboutPage.qml" line="110"/>
+        <location filename="../qml/tweetian-harmattan/AboutPage.qml" line="107"/>
+        <location filename="../qml/tweetian-symbian/AboutPage.qml" line="109"/>
         <source>Powered By</source>
         <translation>Darabil</translation>
     </message>
     <message>
-        <location filename="../qml/tweetian-harmattan/AboutPage.qml" line="128"/>
-        <location filename="../qml/tweetian-symbian/AboutPage.qml" line="130"/>
+        <location filename="../qml/tweetian-harmattan/AboutPage.qml" line="127"/>
+        <location filename="../qml/tweetian-symbian/AboutPage.qml" line="129"/>
         <source>Legal</source>
         <translation>Lege oharra</translation>
     </message>
     <message>
-        <location filename="../qml/tweetian-harmattan/AboutPage.qml" line="133"/>
-        <location filename="../qml/tweetian-symbian/AboutPage.qml" line="135"/>
+        <location filename="../qml/tweetian-harmattan/AboutPage.qml" line="132"/>
+        <location filename="../qml/tweetian-symbian/AboutPage.qml" line="134"/>
         <source>Twitter Privacy Policy</source>
         <translation>Twitterren Pribatutasun Politika</translation>
     </message>
     <message>
-        <location filename="../qml/tweetian-harmattan/AboutPage.qml" line="143"/>
-        <location filename="../qml/tweetian-symbian/AboutPage.qml" line="145"/>
+        <location filename="../qml/tweetian-harmattan/AboutPage.qml" line="142"/>
+        <location filename="../qml/tweetian-symbian/AboutPage.qml" line="144"/>
         <source>Twitter Terms of Service</source>
         <translation>Twitter Zerbituaren Baldintzak</translation>
     </message>
@@ -335,7 +335,7 @@
     <message>
         <location filename="../qml/tweetian-harmattan/AdvSearchPage.qml" line="215"/>
         <location filename="../qml/tweetian-symbian/AdvSearchPage.qml" line="210"/>
-        <source>Position attitude :)</source>
+        <source>Positive attitude :)</source>
         <translation>Jarrera baikorra :)</translation>
     </message>
     <message>
@@ -464,20 +464,20 @@
         <translation>MZ: %1</translation>
     </message>
     <message>
-        <location filename="../qml/tweetian-harmattan/MainPageCom/DMThreadPage.qml" line="91"/>
-        <location filename="../qml/tweetian-symbian/MainPageCom/DMThreadPage.qml" line="98"/>
+        <location filename="../qml/tweetian-harmattan/MainPageCom/DMThreadPage.qml" line="95"/>
+        <location filename="../qml/tweetian-symbian/MainPageCom/DMThreadPage.qml" line="102"/>
         <source>Direct message deleted successfully</source>
         <translation>Mezu zuzena arrakastaz ezabatua</translation>
     </message>
     <message>
-        <location filename="../qml/tweetian-harmattan/MainPageCom/DMThreadPage.qml" line="111"/>
-        <location filename="../qml/tweetian-symbian/MainPageCom/DMThreadPage.qml" line="119"/>
+        <location filename="../qml/tweetian-harmattan/MainPageCom/DMThreadPage.qml" line="115"/>
+        <location filename="../qml/tweetian-symbian/MainPageCom/DMThreadPage.qml" line="123"/>
         <source>Do you want to delete this direct message?</source>
         <translation>Mezu zuzen hau ezabatzea nahi duzu</translation>
     </message>
     <message>
-        <location filename="../qml/tweetian-harmattan/MainPageCom/DMThreadPage.qml" line="112"/>
-        <location filename="../qml/tweetian-symbian/MainPageCom/DMThreadPage.qml" line="120"/>
+        <location filename="../qml/tweetian-harmattan/MainPageCom/DMThreadPage.qml" line="116"/>
+        <location filename="../qml/tweetian-symbian/MainPageCom/DMThreadPage.qml" line="124"/>
         <source>Delete Message</source>
         <translation>Ezabatu Mezua</translation>
     </message>
@@ -500,14 +500,14 @@
 <context>
     <name>DirectMessage</name>
     <message numerus="yes">
-        <location filename="../qml/tweetian-harmattan/MainPageCom/DirectMessage.qml" line="160"/>
-        <location filename="../qml/tweetian-symbian/MainPageCom/DirectMessage.qml" line="158"/>
+        <location filename="../qml/tweetian-harmattan/MainPageCom/DirectMessage.qml" line="196"/>
+        <location filename="../qml/tweetian-symbian/MainPageCom/DirectMessage.qml" line="195"/>
         <source>%n new message(s)</source>
         <translation><numerusform>Mezu berri %n</numerusform><numerusform>%n mezu berri</numerusform></translation>
     </message>
     <message>
-        <location filename="../qml/tweetian-harmattan/MainPageCom/DirectMessage.qml" line="105"/>
-        <location filename="../qml/tweetian-symbian/MainPageCom/DirectMessage.qml" line="103"/>
+        <location filename="../qml/tweetian-harmattan/MainPageCom/DirectMessage.qml" line="126"/>
+        <location filename="../qml/tweetian-symbian/MainPageCom/DirectMessage.qml" line="124"/>
         <source>No message</source>
         <translation>Mezurik ez</translation>
     </message>
@@ -834,22 +834,22 @@
 <context>
     <name>MapPage</name>
     <message>
-        <location filename="../qml/tweetian-harmattan/MapPage.qml" line="47"/>
-        <location filename="../qml/tweetian-symbian/MapPage.qml" line="50"/>
-        <source>View coordinate</source>
-        <translation>Ikusi koordenada</translation>
-    </message>
-    <message>
         <location filename="../qml/tweetian-harmattan/MapPage.qml" line="51"/>
         <location filename="../qml/tweetian-symbian/MapPage.qml" line="55"/>
         <source>Open in Nokia Maps</source>
         <translation>Irekia Nokia Maps-en</translation>
     </message>
     <message>
+        <location filename="../qml/tweetian-harmattan/MapPage.qml" line="47"/>
+        <location filename="../qml/tweetian-symbian/MapPage.qml" line="50"/>
+        <source>View coordinates</source>
+        <translation>Ikusi koordenadak</translation>
+    </message>
+    <message>
         <location filename="../qml/tweetian-harmattan/MapPage.qml" line="183"/>
         <location filename="../qml/tweetian-symbian/MapPage.qml" line="194"/>
-        <source>Location Coordinate</source>
-        <translation>Kokapenaren koordenada</translation>
+        <source>Location Coordinates</source>
+        <translation>Kokapenaren koordenadak</translation>
     </message>
     <message>
         <location filename="../qml/tweetian-harmattan/MapPage.qml" line="185"/>
@@ -866,20 +866,20 @@
     <message>
         <location filename="../qml/tweetian-harmattan/MapPage.qml" line="200"/>
         <location filename="../qml/tweetian-symbian/MapPage.qml" line="207"/>
-        <source>Degree</source>
+        <source>Degrees</source>
         <translation>Graduak</translation>
+    </message>
+    <message>
+        <location filename="../qml/tweetian-harmattan/MapPage.qml" line="217"/>
+        <location filename="../qml/tweetian-symbian/MapPage.qml" line="227"/>
+        <source>Coordinates copied to clipboard</source>
+        <translation>Koordenadak arbelean kopiatuak</translation>
     </message>
     <message>
         <location filename="../qml/tweetian-harmattan/MapPage.qml" line="204"/>
         <location filename="../qml/tweetian-symbian/MapPage.qml" line="212"/>
         <source>Decimal</source>
         <translation>Dezimala</translation>
-    </message>
-    <message>
-        <location filename="../qml/tweetian-harmattan/MapPage.qml" line="217"/>
-        <location filename="../qml/tweetian-symbian/MapPage.qml" line="227"/>
-        <source>Coordinate copied to clipboard</source>
-        <translation>Koordenada arbelean kopiatua</translation>
     </message>
     <message>
         <location filename="../qml/tweetian-symbian/MapPage.qml" line="34"/>
@@ -1136,9 +1136,9 @@
         <location filename="../qml/tweetian-harmattan/NewTweetPage.qml" line="484"/>
         <location filename="../qml/tweetian-symbian/NewTweetPage.qml" line="481"/>
         <source>Your tweet is more than 140 characters. Do you want to use TwitLonger to post your tweet?
-Note: The tweet content will be publicly visible even your tweet is private.</source>
+Note: The tweet content will be publicly visible even if your tweet is private.</source>
         <translation>Zure Txioa 140 karaktere baino luzeagoa da. TwitLonger erabiltzea nahi duzu txioa publikatzeko?
-Oharra: Txioaren edukia publikoa izango dai nahiz eta zure txioa pribatua izan.</translation>
+Oharra: Txioaren edukia publikoa izango da, zure txioa pribatua bada ere.</translation>
     </message>
     <message>
         <location filename="../qml/tweetian-harmattan/NewTweetPage.qml" line="487"/>
@@ -1455,14 +1455,38 @@ Oharra: Txioaren edukia publikoa izango dai nahiz eta zure txioa pribatua izan.<
     <message>
         <location filename="../qml/tweetian-harmattan/SettingPage.qml" line="77"/>
         <location filename="../qml/tweetian-symbian/SettingPage.qml" line="82"/>
-        <source>TwitLonger is a third party service that allow you to post long tweet having more than 140 characters.&lt;br&gt;More info about TwitLonger:&lt;br&gt;&lt;a href=&quot;http://www.twitlonger.com/about&quot;&gt;www.twitlonger.com/about&lt;/a&gt;&lt;br&gt;By enable this service, you agree to TwitLonger privacy policy:&lt;br&gt;&lt;a href=&quot;http://www.twitlonger.com/privacy&quot;&gt;www.twitlonger.com/privacy&lt;/a&gt;</source>
-        <translation>TwitLonger beste batzuen zerbitzua da  web orrien loturak gordetzeko,karaktere baino luzeagoak diren txioak publikatzeko. &lt;br&gt;More info about TwitLonger:&lt;br&gt;&lt;a href=&quot;http://www.twitlonger.com/about&quot;&gt;www.twitlonger.com/about&lt;/a&gt;&lt;br&gt; Zerbitzu hau baimentzean, TwitLonger-en pribatutasun politika onartzen duzu: &lt;br&gt;&lt;a href=&quot;http://www.twitlonger.com/privacy&quot;&gt;www.twitlonger.com/privacy&lt;/a&gt;</translation>
+        <source>TwitLonger is a third-party service that allows you to post tweets longer than 140 characters.&lt;br&gt;More info about TwitLonger:&lt;br&gt;&lt;a href=&quot;http://www.twitlonger.com/about&quot;&gt;www.twitlonger.com/about&lt;/a&gt;&lt;br&gt;By enabling this service, you agree to the TwitLonger privacy policy:&lt;br&gt;&lt;a href=&quot;http://www.twitlonger.com/privacy&quot;&gt;www.twitlonger.com/privacy&lt;/a&gt;</source>
+        <translation>TwitLonger beste batzuen zerbitzua da 140 karaktere baino luzeagoak diren txioak argitaratzeko. &lt;br&gt;More info about TwitLonger:&lt;br&gt;&lt;a href=&quot;http://www.twitlonger.com/about&quot;&gt;www.twitlonger.com/about&lt;/a&gt;&lt;br&gt; Zerbitzu hau baimenduz, TwitLonger-en pribatutasun politika onartzen duzu: &lt;br&gt;&lt;a href=&quot;http://www.twitlonger.com/privacy&quot;&gt;www.twitlonger.com/privacy&lt;/a&gt;</translation>
     </message>
     <message>
         <location filename="../qml/tweetian-harmattan/SettingPage.qml" line="84"/>
         <location filename="../qml/tweetian-symbian/SettingPage.qml" line="89"/>
-        <source>Pocket is a third party service for saving web page links so that you can read it later.&lt;br&gt;More about Pocket:&lt;br&gt;&lt;a href=&quot;http://getpocket.com/about&quot;&gt;http://getpocket.com/about&lt;/a&gt;&lt;br&gt;By signing in, you agree to Pocket privacy policy:&lt;br&gt;&lt;a href=&quot;http://getpocket.com/privacy&quot;&gt;http://getpocket.com/privacy&lt;/a&gt;</source>
+        <source>Pocket is a third-party service for saving web page links so you can read them later.&lt;br&gt;More about Pocket:&lt;br&gt;&lt;a href=&quot;http://getpocket.com/about&quot;&gt;http://getpocket.com/about&lt;/a&gt;&lt;br&gt;By signing in, you agree to Pocket privacy policy:&lt;br&gt;&lt;a href=&quot;http://getpocket.com/privacy&quot;&gt;http://getpocket.com/privacy&lt;/a&gt;</source>
         <translation>Pocket beste batzuen zerbitzua da web orrien loturak gordetzeko, beranduago irakurri ahal izateko. &lt;br&gt;More about Pocket:&lt;br&gt;&lt;a href=&quot;http://getpocket.com/about&quot;&gt;http://getpocket.com/about&lt;/a&gt;&lt;br&gt; Izen ematean, Pocket-en pribatutasun politika onartzen duzu: &lt;br&gt;&lt;a href=&quot;http://getpocket.com/privacy&quot;&gt;http://getpocket.com/privacy&lt;/a&gt;</translation>
+    </message>
+    <message>
+        <location filename="../qml/tweetian-harmattan/SettingPage.qml" line="101"/>
+        <location filename="../qml/tweetian-symbian/SettingPage.qml" line="106"/>
+        <source>Streaming enables Tweetian to deliver real-time updates of timeline, mentions and direct messages without the needs of refreshing periodically. Auto refresh and manual refresh will be disabled when streaming is connected. It is not recommended to enable streaming when you are on a weak internet connection (eg. mobile data).</source>
+        <translation>Transmisioak, Tweetiani denbora lerroaren, aipamenen eta mezu zuzenen momentuko eguneratzea baimentzenen dio aldikako freskatzeen beharrik gabe. Auto freskatzea eta eskuzko freskatzea ezgaituta egongo dira transmisioa konektatuta badago. Ez da gomendatzen transmisioa gaitzea interneteko konexio ahul bat darabilzunean (adb. mugi. datuak).</translation>
+    </message>
+    <message>
+        <location filename="../qml/tweetian-harmattan/SettingPage.qml" line="111"/>
+        <location filename="../qml/tweetian-symbian/SettingPage.qml" line="118"/>
+        <source>This action will clear the temporary cache and database. Twitter credential and app settings will not be reset. Continue?</source>
+        <translation>Eragiketa honek aldiko katxe eta datu base guztiak garbituko ditu. Twitterreko aplikazio eta identitate ezarpenak ez dira berrezarriko. Jarraitu? </translation>
+    </message>
+    <message>
+        <location filename="../qml/tweetian-harmattan/SettingPage.qml" line="119"/>
+        <location filename="../qml/tweetian-symbian/SettingPage.qml" line="126"/>
+        <source>Cache and database cleared</source>
+        <translation>Katxea eta datu basea garbituak</translation>
+    </message>
+    <message>
+        <location filename="../qml/tweetian-harmattan/SettingPage.qml" line="127"/>
+        <location filename="../qml/tweetian-symbian/SettingPage.qml" line="136"/>
+        <source>%1 thumbnails deleted</source>
+        <translation>%1 aurrebista garbituak</translation>
     </message>
     <message>
         <location filename="../qml/tweetian-harmattan/SettingPage.qml" line="91"/>
@@ -1479,28 +1503,10 @@ Keywords format: @user, #hashtag, source:Tweet_Button or plain words.</source>
 Gakoen formatua @erabiltzailea, #traola, jatorria: Tweet_Button edo hitz lauak.</translation>
     </message>
     <message>
-        <location filename="../qml/tweetian-harmattan/SettingPage.qml" line="101"/>
-        <location filename="../qml/tweetian-symbian/SettingPage.qml" line="106"/>
-        <source>Streaming enable Tweetian to deliver real time update of timeline, mentions and direct messages without the needs of refreshing periodically. Auto refresh and manual refresh will be disabled when streaming is connected. It is not recommended to enable streaming when you are on a weak internet connection (eg. mobile data).</source>
-        <translation>Transmisioak, Tweetiani denbora lerroaren, aipamenen eta mezu zuzenen momentuko eguneratzea baimentzenen dio aldikako freskatzeen beharrik gabe. Auto freskatzea eta eskuzko freskatzea ezgaituta egongo dira transmisioa konektatuta badago. Ez da gomendatzen transmisioa gaitzea interneteko konexio ahul bat darabilzunean (adb. mugi. datuak).</translation>
-    </message>
-    <message>
-        <location filename="../qml/tweetian-harmattan/SettingPage.qml" line="111"/>
-        <location filename="../qml/tweetian-symbian/SettingPage.qml" line="118"/>
-        <source>This action will clear all temporary caches and database. Twitter credential and app settings will not be reset. Continue?</source>
-        <translation>Eragiketa honek aldiko katxe eta datu base guztiak garbituko ditu. Twitterreko aplikazio eta identitate ezarpenak ez dira berrezarriko. Jarraitu? </translation>
-    </message>
-    <message>
         <location filename="../qml/tweetian-harmattan/SettingPage.qml" line="113"/>
         <location filename="../qml/tweetian-symbian/SettingPage.qml" line="120"/>
         <source>Clear Cache &amp; Database</source>
         <translation>Garbitu katxea eta datu basea</translation>
-    </message>
-    <message>
-        <location filename="../qml/tweetian-harmattan/SettingPage.qml" line="119"/>
-        <location filename="../qml/tweetian-symbian/SettingPage.qml" line="126"/>
-        <source>All cache cleared</source>
-        <translation>Katxe guztia garbitua</translation>
     </message>
     <message>
         <location filename="../qml/tweetian-harmattan/SettingPage.qml" line="124"/>
@@ -1513,12 +1519,6 @@ Gakoen formatua @erabiltzailea, #traola, jatorria: Tweet_Button edo hitz lauak.<
         <location filename="../qml/tweetian-symbian/SettingPage.qml" line="134"/>
         <source>Clear Thumbnails Cache</source>
         <translation>Garbitu aurrebisten katxea</translation>
-    </message>
-    <message>
-        <location filename="../qml/tweetian-harmattan/SettingPage.qml" line="127"/>
-        <location filename="../qml/tweetian-symbian/SettingPage.qml" line="136"/>
-        <source>%1 thumbnails cache cleared</source>
-        <translation>%1 aurrebisten katxea garbitua</translation>
     </message>
     <message>
         <location filename="../qml/tweetian-symbian/SettingPage.qml" line="32"/>
@@ -1747,81 +1747,55 @@ Gakoen formatua @erabiltzailea, #traola, jatorria: Tweet_Button edo hitz lauak.<
     </message>
     <message>
         <location filename="../qml/tweetian-harmattan/TrendsPage.qml" line="104"/>
-        <location filename="../qml/tweetian-harmattan/TrendsPage.qml" line="116"/>
-        <location filename="../qml/tweetian-harmattan/TrendsPage.qml" line="268"/>
-        <location filename="../qml/tweetian-harmattan/TrendsPage.qml" line="277"/>
+        <location filename="../qml/tweetian-harmattan/TrendsPage.qml" line="248"/>
+        <location filename="../qml/tweetian-harmattan/TrendsPage.qml" line="257"/>
         <location filename="../qml/tweetian-symbian/TrendsPage.qml" line="110"/>
-        <location filename="../qml/tweetian-symbian/TrendsPage.qml" line="123"/>
-        <location filename="../qml/tweetian-symbian/TrendsPage.qml" line="266"/>
-        <location filename="../qml/tweetian-symbian/TrendsPage.qml" line="275"/>
+        <location filename="../qml/tweetian-symbian/TrendsPage.qml" line="246"/>
+        <location filename="../qml/tweetian-symbian/TrendsPage.qml" line="255"/>
         <source>Saved Searches</source>
         <translation>Gordetako Bilaketak</translation>
     </message>
     <message>
-        <location filename="../qml/tweetian-harmattan/TrendsPage.qml" line="140"/>
-        <location filename="../qml/tweetian-symbian/TrendsPage.qml" line="149"/>
+        <location filename="../qml/tweetian-harmattan/TrendsPage.qml" line="136"/>
+        <location filename="../qml/tweetian-symbian/TrendsPage.qml" line="145"/>
         <source>Search for tweets or users</source>
         <translation>Bilatu txioak edo erabiltzaileak</translation>
     </message>
     <message>
-        <location filename="../qml/tweetian-harmattan/TrendsPage.qml" line="187"/>
-        <location filename="../qml/tweetian-symbian/TrendsPage.qml" line="187"/>
+        <location filename="../qml/tweetian-harmattan/TrendsPage.qml" line="183"/>
+        <location filename="../qml/tweetian-symbian/TrendsPage.qml" line="183"/>
         <source>Trends &amp; Search</source>
         <translation>Joerak eta Bilaketa</translation>
     </message>
     <message>
-        <location filename="../qml/tweetian-harmattan/TrendsPage.qml" line="232"/>
-        <location filename="../qml/tweetian-symbian/TrendsPage.qml" line="230"/>
-        <source>The saved search %1 is removed successfully</source>
-        <translation>%1 gordetako bilaketa arrakastaz ezabatu da</translation>
-    </message>
-    <message>
-        <location filename="../qml/tweetian-harmattan/TrendsPage.qml" line="248"/>
-        <location filename="../qml/tweetian-symbian/TrendsPage.qml" line="246"/>
+        <location filename="../qml/tweetian-harmattan/TrendsPage.qml" line="228"/>
+        <location filename="../qml/tweetian-symbian/TrendsPage.qml" line="226"/>
         <source>Trends (%1)</source>
         <translation>Joerak (%1)</translation>
     </message>
     <message>
-        <location filename="../qml/tweetian-harmattan/TrendsPage.qml" line="259"/>
-        <location filename="../qml/tweetian-symbian/TrendsPage.qml" line="257"/>
+        <location filename="../qml/tweetian-harmattan/TrendsPage.qml" line="239"/>
+        <location filename="../qml/tweetian-symbian/TrendsPage.qml" line="237"/>
         <source>Unable to retrieve trends</source>
         <translation>Joerak atzitzea ezinezkoa</translation>
     </message>
     <message>
-        <location filename="../qml/tweetian-harmattan/TrendsPage.qml" line="259"/>
-        <location filename="../qml/tweetian-symbian/TrendsPage.qml" line="257"/>
+        <location filename="../qml/tweetian-harmattan/TrendsPage.qml" line="239"/>
+        <location filename="../qml/tweetian-symbian/TrendsPage.qml" line="237"/>
         <source>Trends</source>
         <translation>Joerak</translation>
     </message>
     <message>
-        <location filename="../qml/tweetian-harmattan/TrendsPage.qml" line="277"/>
-        <location filename="../qml/tweetian-symbian/TrendsPage.qml" line="275"/>
+        <location filename="../qml/tweetian-harmattan/TrendsPage.qml" line="257"/>
+        <location filename="../qml/tweetian-symbian/TrendsPage.qml" line="255"/>
         <source>Unabled to retrieve saved search</source>
         <translation>Gordetako bilaketa atzitzea ezinezkoa</translation>
     </message>
     <message>
-        <location filename="../qml/tweetian-harmattan/TrendsPage.qml" line="282"/>
-        <location filename="../qml/tweetian-symbian/TrendsPage.qml" line="280"/>
+        <location filename="../qml/tweetian-harmattan/TrendsPage.qml" line="262"/>
+        <location filename="../qml/tweetian-symbian/TrendsPage.qml" line="260"/>
         <source>Worldwide</source>
         <translation>Mundu osoan</translation>
-    </message>
-    <message>
-        <location filename="../qml/tweetian-harmattan/TrendsPage.qml" line="302"/>
-        <location filename="../qml/tweetian-symbian/TrendsPage.qml" line="302"/>
-        <source>Do you want to remove the saved search %1?</source>
-        <translation>%1 gordetako bilaketa ezabatu nahi duzu?</translation>
-    </message>
-    <message>
-        <location filename="../qml/tweetian-harmattan/TrendsPage.qml" line="303"/>
-        <location filename="../qml/tweetian-symbian/TrendsPage.qml" line="303"/>
-        <source>Remove Saved Search</source>
-        <translation>Ezabatu Gordetako Bilaketa</translation>
-    </message>
-    <message>
-        <location filename="../qml/tweetian-harmattan/TrendsPage.qml" line="333"/>
-        <location filename="../qml/tweetian-symbian/TrendsPage.qml" line="336"/>
-        <source>Remove saved search</source>
-        <translation>Ezabatu gordetako bilaketa</translation>
     </message>
     <message>
         <location filename="../qml/tweetian-symbian/TrendsPage.qml" line="38"/>
@@ -1829,7 +1803,7 @@ Gakoen formatua @erabiltzailea, #traola, jatorria: Tweet_Button edo hitz lauak.<
         <translation>Atzera</translation>
     </message>
     <message>
-        <location filename="../qml/tweetian-harmattan/TrendsPage.qml" line="144"/>
+        <location filename="../qml/tweetian-harmattan/TrendsPage.qml" line="140"/>
         <source>Search</source>
         <translation>Bilaketa</translation>
     </message>
@@ -1908,8 +1882,8 @@ Gakoen formatua @erabiltzailea, #traola, jatorria: Tweet_Button edo hitz lauak.<
 <context>
     <name>TweetListView</name>
     <message numerus="yes">
-        <location filename="../qml/tweetian-harmattan/MainPageCom/TweetListView.qml" line="204"/>
-        <location filename="../qml/tweetian-symbian/MainPageCom/TweetListView.qml" line="200"/>
+        <location filename="../qml/tweetian-harmattan/MainPageCom/TweetListView.qml" line="226"/>
+        <location filename="../qml/tweetian-symbian/MainPageCom/TweetListView.qml" line="221"/>
         <source>%n new mention(s)</source>
         <translation><numerusform>aipamen berri %n</numerusform><numerusform>%n aipamen berri</numerusform></translation>
     </message>
@@ -2052,12 +2026,6 @@ Gakoen formatua @erabiltzailea, #traola, jatorria: Tweet_Button edo hitz lauak.<
         <translation>Txioa itzultzea ezinezkoa</translation>
     </message>
     <message>
-        <location filename="../qml/tweetian-harmattan/TweetPageJS.js" line="345"/>
-        <location filename="../qml/tweetian-symbian/TweetPageJS.js" line="345"/>
-        <source>You are not sign in to your Pocket account. Please sign in to your Pocket account first under the &quot;Account&quot; tab in the Settings.</source>
-        <translation>Ez duzu zure Pocket kontuan saioa hasi. Mesedez hasi saioa zure Pocket kontuan lehenengo Ezarpenetako &quot;kontuen&quot; fitxan. </translation>
-    </message>
-    <message>
         <location filename="../qml/tweetian-harmattan/TweetPageJS.js" line="346"/>
         <location filename="../qml/tweetian-symbian/TweetPageJS.js" line="346"/>
         <source>Pocket - Not Signed In</source>
@@ -2112,6 +2080,12 @@ Gakoen formatua @erabiltzailea, #traola, jatorria: Tweet_Button edo hitz lauak.<
         <translation>Itzulpen mugara iritsia</translation>
     </message>
     <message>
+        <location filename="../qml/tweetian-harmattan/TweetPageJS.js" line="345"/>
+        <location filename="../qml/tweetian-symbian/TweetPageJS.js" line="345"/>
+        <source>You are not signed in to your Pocket account. Please sign in to your Pocket account first under the &quot;Account&quot; tab in Settings.</source>
+        <translation>Ez duzu zure Pocket kontuan saioa hasi. Mesedez hasi saioa zure Pocket kontuan lehenengo Ezarpenetako &quot;kontuen&quot; fitxan. </translation>
+    </message>
+    <message>
         <location filename="../qml/tweetian-harmattan/TweetPageJS.js" line="357"/>
         <location filename="../qml/tweetian-symbian/TweetPageJS.js" line="357"/>
         <source>Error sending link to Pocket (%1)</source>
@@ -2145,8 +2119,8 @@ Gakoen formatua @erabiltzailea, #traola, jatorria: Tweet_Button edo hitz lauak.<
 <context>
     <name>TweetSearchColumn</name>
     <message>
-        <location filename="../qml/tweetian-harmattan/SearchPageCom/TweetSearchColumn.qml" line="82"/>
-        <location filename="../qml/tweetian-symbian/SearchPageCom/TweetSearchColumn.qml" line="82"/>
+        <location filename="../qml/tweetian-harmattan/SearchPageCom/TweetSearchColumn.qml" line="84"/>
+        <location filename="../qml/tweetian-symbian/SearchPageCom/TweetSearchColumn.qml" line="84"/>
         <source>No search result</source>
         <translation>Ez dago bilaketa emaitzik</translation>
     </message>
@@ -2347,19 +2321,19 @@ Gakoen formatua @erabiltzailea, #traola, jatorria: Tweet_Button edo hitz lauak.<
     <message>
         <location filename="../qml/tweetian-harmattan/UserPage.qml" line="338"/>
         <location filename="../qml/tweetian-symbian/UserPage.qml" line="364"/>
-        <source>Do you want to report and block the user %1 ?</source>
+        <source>Do you want to report and block the user %1?</source>
         <translation>%1 erabiltzailea blokeatu eta salatu nahi duzu?</translation>
     </message>
     <message>
         <location filename="../qml/tweetian-harmattan/UserPage.qml" line="347"/>
         <location filename="../qml/tweetian-symbian/UserPage.qml" line="373"/>
-        <source>Do you want to unfollow the user %1 ?</source>
+        <source>Do you want to unfollow the user %1?</source>
         <translation>%1 erabiltzailea jarraitzeari utzi nahi diozu?</translation>
     </message>
     <message>
         <location filename="../qml/tweetian-harmattan/UserPage.qml" line="348"/>
         <location filename="../qml/tweetian-symbian/UserPage.qml" line="374"/>
-        <source>Do you want to follow the user %1 ?</source>
+        <source>Do you want to follow the user %1?</source>
         <translation>%1 erabiltzailea jarraitu nahi duzu?</translation>
     </message>
     <message>
@@ -2409,8 +2383,8 @@ Gakoen formatua @erabiltzailea, #traola, jatorria: Tweet_Button edo hitz lauak.<
 <context>
     <name>UserSearchColumn</name>
     <message>
-        <location filename="../qml/tweetian-harmattan/SearchPageCom/UserSearchColumn.qml" line="71"/>
-        <location filename="../qml/tweetian-symbian/SearchPageCom/UserSearchColumn.qml" line="71"/>
+        <location filename="../qml/tweetian-harmattan/SearchPageCom/UserSearchColumn.qml" line="69"/>
+        <location filename="../qml/tweetian-symbian/SearchPageCom/UserSearchColumn.qml" line="69"/>
         <source>No search result</source>
         <translation>Ez dago bilaketa emaitzik</translation>
     </message>

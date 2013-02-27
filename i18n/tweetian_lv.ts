@@ -3,9 +3,9 @@
     <name>AboutPage</name>
     <message>
         <location filename="../qml/tweetian-harmattan/AboutPage.qml" line="43"/>
-        <location filename="../qml/tweetian-harmattan/AboutPage.qml" line="157"/>
+        <location filename="../qml/tweetian-harmattan/AboutPage.qml" line="156"/>
         <location filename="../qml/tweetian-symbian/AboutPage.qml" line="45"/>
-        <location filename="../qml/tweetian-symbian/AboutPage.qml" line="159"/>
+        <location filename="../qml/tweetian-symbian/AboutPage.qml" line="158"/>
         <source>About Tweetian</source>
         <translation>Par Tweetian</translation>
     </message>
@@ -22,38 +22,38 @@
         <translation>Versija</translation>
     </message>
     <message>
-        <location filename="../qml/tweetian-harmattan/AboutPage.qml" line="86"/>
-        <location filename="../qml/tweetian-symbian/AboutPage.qml" line="88"/>
+        <location filename="../qml/tweetian-harmattan/AboutPage.qml" line="85"/>
+        <location filename="../qml/tweetian-symbian/AboutPage.qml" line="87"/>
         <source>Developed By</source>
         <translation>Izstrādātājs</translation>
     </message>
     <message>
-        <location filename="../qml/tweetian-harmattan/AboutPage.qml" line="94"/>
-        <location filename="../qml/tweetian-symbian/AboutPage.qml" line="96"/>
+        <location filename="../qml/tweetian-harmattan/AboutPage.qml" line="93"/>
+        <location filename="../qml/tweetian-symbian/AboutPage.qml" line="95"/>
         <source>Special Thanks</source>
         <translation>Īpašs paldies</translation>
     </message>
     <message>
-        <location filename="../qml/tweetian-harmattan/AboutPage.qml" line="108"/>
-        <location filename="../qml/tweetian-symbian/AboutPage.qml" line="110"/>
+        <location filename="../qml/tweetian-harmattan/AboutPage.qml" line="107"/>
+        <location filename="../qml/tweetian-symbian/AboutPage.qml" line="109"/>
         <source>Powered By</source>
-        <translation type="unfinished"/>
+        <translation>Darbina</translation>
     </message>
     <message>
-        <location filename="../qml/tweetian-harmattan/AboutPage.qml" line="128"/>
-        <location filename="../qml/tweetian-symbian/AboutPage.qml" line="130"/>
+        <location filename="../qml/tweetian-harmattan/AboutPage.qml" line="127"/>
+        <location filename="../qml/tweetian-symbian/AboutPage.qml" line="129"/>
         <source>Legal</source>
-        <translation type="unfinished"/>
+        <translation>Legāls</translation>
     </message>
     <message>
-        <location filename="../qml/tweetian-harmattan/AboutPage.qml" line="133"/>
-        <location filename="../qml/tweetian-symbian/AboutPage.qml" line="135"/>
+        <location filename="../qml/tweetian-harmattan/AboutPage.qml" line="132"/>
+        <location filename="../qml/tweetian-symbian/AboutPage.qml" line="134"/>
         <source>Twitter Privacy Policy</source>
         <translation>Twitter Konfidencialitātes politika</translation>
     </message>
     <message>
-        <location filename="../qml/tweetian-harmattan/AboutPage.qml" line="143"/>
-        <location filename="../qml/tweetian-symbian/AboutPage.qml" line="145"/>
+        <location filename="../qml/tweetian-harmattan/AboutPage.qml" line="142"/>
+        <location filename="../qml/tweetian-symbian/AboutPage.qml" line="144"/>
         <source>Twitter Terms of Service</source>
         <translation>Twitter Pakalpojuma noteikumi</translation>
     </message>
@@ -68,7 +68,7 @@
     <message>
         <location filename="../qml/tweetian-symbian/UserPageCom/AbstractUserPage.qml" line="48"/>
         <source>Back</source>
-        <translation type="unfinished"/>
+        <translation>Atpakaļ</translation>
     </message>
 </context>
 <context>
@@ -89,7 +89,7 @@
         <location filename="../qml/tweetian-harmattan/SettingsPageCom/AccountItem.qml" line="84"/>
         <location filename="../qml/tweetian-symbian/SettingsPageCom/AccountItem.qml" line="84"/>
         <source>Sign Out</source>
-        <translation>Izrakstīties</translation>
+        <translation>Atslēgties</translation>
     </message>
     <message>
         <location filename="../qml/tweetian-harmattan/SettingsPageCom/AccountItem.qml" line="84"/>
@@ -155,7 +155,7 @@
         <location filename="../qml/tweetian-harmattan/SettingsPageCom/AccountTabScript.js" line="65"/>
         <location filename="../qml/tweetian-symbian/SettingsPageCom/AccountTabScript.js" line="65"/>
         <source>Do you want to sign out from your Twitter account? All other accounts will also automatically sign out. All settings will be reset.</source>
-        <translation type="unfinished"/>
+        <translation>Vai vēlaties atslēgties no Twitter konta? Visi pārējie konti tiks atslēgti automātiski. Visi iestatījumi tiks atiestatīti.</translation>
     </message>
     <message>
         <location filename="../qml/tweetian-harmattan/SettingsPageCom/AccountTabScript.js" line="66"/>
@@ -173,31 +173,31 @@
         <location filename="../qml/tweetian-harmattan/SettingsPageCom/AccountTabScript.js" line="82"/>
         <location filename="../qml/tweetian-symbian/SettingsPageCom/AccountTabScript.js" line="82"/>
         <source>Pocket Sign Out</source>
-        <translation type="unfinished"/>
+        <translation>Atslēgties no Pocket </translation>
     </message>
     <message>
         <location filename="../qml/tweetian-harmattan/SettingsPageCom/AccountTabScript.js" line="85"/>
         <location filename="../qml/tweetian-symbian/SettingsPageCom/AccountTabScript.js" line="85"/>
         <source>Signed out from your Pocket account successfully</source>
-        <translation type="unfinished"/>
+        <translation>Atslēgšanās no Pocket konta notikusi veiksmīgi</translation>
     </message>
     <message>
         <location filename="../qml/tweetian-harmattan/SettingsPageCom/AccountTabScript.js" line="90"/>
         <location filename="../qml/tweetian-symbian/SettingsPageCom/AccountTabScript.js" line="90"/>
         <source>Do you want to sign out from your Instapaper account?</source>
-        <translation type="unfinished"/>
+        <translation>Vai vēlaties atslēgties no sava Instapaper konta?</translation>
     </message>
     <message>
         <location filename="../qml/tweetian-harmattan/SettingsPageCom/AccountTabScript.js" line="91"/>
         <location filename="../qml/tweetian-symbian/SettingsPageCom/AccountTabScript.js" line="91"/>
         <source>Instapaper Sign Out</source>
-        <translation type="unfinished"/>
+        <translation>Atslēgties no Instapaper</translation>
     </message>
     <message>
         <location filename="../qml/tweetian-harmattan/SettingsPageCom/AccountTabScript.js" line="94"/>
         <location filename="../qml/tweetian-symbian/SettingsPageCom/AccountTabScript.js" line="94"/>
         <source>Signed out from your Instapaper account successfully</source>
-        <translation type="unfinished"/>
+        <translation>Atslēgšanās no Instapaper konta notikusi veiksmīgi</translation>
     </message>
 </context>
 <context>
@@ -335,8 +335,8 @@
     <message>
         <location filename="../qml/tweetian-harmattan/AdvSearchPage.qml" line="215"/>
         <location filename="../qml/tweetian-symbian/AdvSearchPage.qml" line="210"/>
-        <source>Position attitude :)</source>
-        <translation>Pozitīva attieksme :)</translation>
+        <source>Positive attitude :)</source>
+        <translation type="unfinished"/>
     </message>
     <message>
         <location filename="../qml/tweetian-harmattan/AdvSearchPage.qml" line="220"/>
@@ -368,7 +368,7 @@
     <message>
         <location filename="../qml/tweetian-symbian/BrowseUsersPage.qml" line="50"/>
         <source>Back</source>
-        <translation type="unfinished"/>
+        <translation>Atpakaļ</translation>
     </message>
 </context>
 <context>
@@ -464,20 +464,20 @@
         <translation>PZ %1</translation>
     </message>
     <message>
-        <location filename="../qml/tweetian-harmattan/MainPageCom/DMThreadPage.qml" line="91"/>
-        <location filename="../qml/tweetian-symbian/MainPageCom/DMThreadPage.qml" line="98"/>
+        <location filename="../qml/tweetian-harmattan/MainPageCom/DMThreadPage.qml" line="95"/>
+        <location filename="../qml/tweetian-symbian/MainPageCom/DMThreadPage.qml" line="102"/>
         <source>Direct message deleted successfully</source>
         <translation>Vēstule veiksmīgi izdzēsta</translation>
     </message>
     <message>
-        <location filename="../qml/tweetian-harmattan/MainPageCom/DMThreadPage.qml" line="111"/>
-        <location filename="../qml/tweetian-symbian/MainPageCom/DMThreadPage.qml" line="119"/>
+        <location filename="../qml/tweetian-harmattan/MainPageCom/DMThreadPage.qml" line="115"/>
+        <location filename="../qml/tweetian-symbian/MainPageCom/DMThreadPage.qml" line="123"/>
         <source>Do you want to delete this direct message?</source>
         <translation>Vai vēlaties izdzēst šo vēstuli?</translation>
     </message>
     <message>
-        <location filename="../qml/tweetian-harmattan/MainPageCom/DMThreadPage.qml" line="112"/>
-        <location filename="../qml/tweetian-symbian/MainPageCom/DMThreadPage.qml" line="120"/>
+        <location filename="../qml/tweetian-harmattan/MainPageCom/DMThreadPage.qml" line="116"/>
+        <location filename="../qml/tweetian-symbian/MainPageCom/DMThreadPage.qml" line="124"/>
         <source>Delete Message</source>
         <translation>Izdzēst ziņu</translation>
     </message>
@@ -489,7 +489,7 @@
     <message>
         <location filename="../qml/tweetian-symbian/MainPageCom/DMThreadPage.qml" line="46"/>
         <source>New DM</source>
-        <translation>Jauna DM</translation>
+        <translation>Jauna PZ</translation>
     </message>
     <message>
         <location filename="../qml/tweetian-symbian/MainPageCom/DMThreadPage.qml" line="52"/>
@@ -500,14 +500,14 @@
 <context>
     <name>DirectMessage</name>
     <message numerus="yes">
-        <location filename="../qml/tweetian-harmattan/MainPageCom/DirectMessage.qml" line="160"/>
-        <location filename="../qml/tweetian-symbian/MainPageCom/DirectMessage.qml" line="158"/>
+        <location filename="../qml/tweetian-harmattan/MainPageCom/DirectMessage.qml" line="196"/>
+        <location filename="../qml/tweetian-symbian/MainPageCom/DirectMessage.qml" line="195"/>
         <source>%n new message(s)</source>
         <translation type="unfinished"><numerusform></numerusform><numerusform></numerusform><numerusform></numerusform></translation>
     </message>
     <message>
-        <location filename="../qml/tweetian-harmattan/MainPageCom/DirectMessage.qml" line="105"/>
-        <location filename="../qml/tweetian-symbian/MainPageCom/DirectMessage.qml" line="103"/>
+        <location filename="../qml/tweetian-harmattan/MainPageCom/DirectMessage.qml" line="126"/>
+        <location filename="../qml/tweetian-symbian/MainPageCom/DirectMessage.qml" line="124"/>
         <source>No message</source>
         <translation>Nav ziņu</translation>
     </message>
@@ -560,12 +560,12 @@
     <message>
         <location filename="../src/imageuploader.cpp" line="67"/>
         <source>The file %1 does not exists</source>
-        <translation type="unfinished"/>
+        <translation>Fails %1 neeksistē</translation>
     </message>
     <message>
         <location filename="../src/imageuploader.cpp" line="85"/>
         <source>Unable to open the file %1</source>
-        <translation type="unfinished"/>
+        <translation>Neizdevās atvērt failu %1</translation>
     </message>
 </context>
 <context>
@@ -589,13 +589,13 @@
         <location filename="../qml/tweetian-harmattan/ListPageCom/ListInfo.qml" line="35"/>
         <location filename="../qml/tweetian-symbian/ListPageCom/ListInfo.qml" line="35"/>
         <source>List Name</source>
-        <translation type="unfinished"/>
+        <translation>Saraksta Nosaukums</translation>
     </message>
     <message>
         <location filename="../qml/tweetian-harmattan/ListPageCom/ListInfo.qml" line="36"/>
         <location filename="../qml/tweetian-symbian/ListPageCom/ListInfo.qml" line="36"/>
         <source>List Owner</source>
-        <translation type="unfinished"/>
+        <translation>Saraksta Īpašnieks</translation>
     </message>
     <message>
         <location filename="../qml/tweetian-harmattan/ListPageCom/ListInfo.qml" line="38"/>
@@ -613,7 +613,7 @@
         <location filename="../qml/tweetian-harmattan/ListPageCom/ListInfo.qml" line="40"/>
         <location filename="../qml/tweetian-symbian/ListPageCom/ListInfo.qml" line="40"/>
         <source>Subscriber</source>
-        <translation type="unfinished"/>
+        <translation>Abonents</translation>
     </message>
     <message>
         <location filename="../qml/tweetian-harmattan/ListPageCom/ListInfo.qml" line="51"/>
@@ -667,25 +667,25 @@
         <location filename="../qml/tweetian-harmattan/ListPage.qml" line="91"/>
         <location filename="../qml/tweetian-symbian/ListPage.qml" line="92"/>
         <source>You have subscribed to the list %1 successfully</source>
-        <translation type="unfinished"/>
+        <translation>Jūs veiksmīgi sākāt abonēt %1</translation>
     </message>
     <message>
         <location filename="../qml/tweetian-harmattan/ListPage.qml" line="97"/>
         <location filename="../qml/tweetian-symbian/ListPage.qml" line="98"/>
         <source>You have unsubscribed from the list %1 successfully</source>
-        <translation type="unfinished"/>
+        <translation>Jūs atteicāties no saraksta %1 veiksmīgi</translation>
     </message>
     <message>
         <location filename="../qml/tweetian-harmattan/ListPage.qml" line="102"/>
         <location filename="../qml/tweetian-symbian/ListPage.qml" line="103"/>
         <source>You have deleted the list %1 successfully</source>
-        <translation type="unfinished"/>
+        <translation>Jūs izdzēsāt sarakstu %1 veiksmīgi</translation>
     </message>
     <message>
         <location filename="../qml/tweetian-harmattan/ListPage.qml" line="114"/>
         <location filename="../qml/tweetian-symbian/ListPage.qml" line="115"/>
         <source>Do you want to unsubscribe from the list %1?</source>
-        <translation type="unfinished"/>
+        <translation>Vai vēlaties atteikties no saraksta %1?</translation>
     </message>
     <message>
         <location filename="../qml/tweetian-harmattan/ListPage.qml" line="115"/>
@@ -808,7 +808,7 @@
     <message>
         <location filename="../qml/tweetian-symbian/MainPage.qml" line="41"/>
         <source>Exit</source>
-        <translation type="unfinished"/>
+        <translation>Iziet</translation>
     </message>
     <message>
         <location filename="../qml/tweetian-symbian/MainPage.qml" line="49"/>
@@ -834,22 +834,22 @@
 <context>
     <name>MapPage</name>
     <message>
-        <location filename="../qml/tweetian-harmattan/MapPage.qml" line="47"/>
-        <location filename="../qml/tweetian-symbian/MapPage.qml" line="50"/>
-        <source>View coordinate</source>
-        <translation>Skatīt koordinātes</translation>
-    </message>
-    <message>
         <location filename="../qml/tweetian-harmattan/MapPage.qml" line="51"/>
         <location filename="../qml/tweetian-symbian/MapPage.qml" line="55"/>
         <source>Open in Nokia Maps</source>
         <translation>Atvērt Nokia kartes</translation>
     </message>
     <message>
+        <location filename="../qml/tweetian-harmattan/MapPage.qml" line="47"/>
+        <location filename="../qml/tweetian-symbian/MapPage.qml" line="50"/>
+        <source>View coordinates</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
         <location filename="../qml/tweetian-harmattan/MapPage.qml" line="183"/>
         <location filename="../qml/tweetian-symbian/MapPage.qml" line="194"/>
-        <source>Location Coordinate</source>
-        <translation>Atrašanās vietas koordinātes</translation>
+        <source>Location Coordinates</source>
+        <translation type="unfinished"/>
     </message>
     <message>
         <location filename="../qml/tweetian-harmattan/MapPage.qml" line="185"/>
@@ -866,20 +866,20 @@
     <message>
         <location filename="../qml/tweetian-harmattan/MapPage.qml" line="200"/>
         <location filename="../qml/tweetian-symbian/MapPage.qml" line="207"/>
-        <source>Degree</source>
+        <source>Degrees</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <location filename="../qml/tweetian-harmattan/MapPage.qml" line="217"/>
+        <location filename="../qml/tweetian-symbian/MapPage.qml" line="227"/>
+        <source>Coordinates copied to clipboard</source>
         <translation type="unfinished"/>
     </message>
     <message>
         <location filename="../qml/tweetian-harmattan/MapPage.qml" line="204"/>
         <location filename="../qml/tweetian-symbian/MapPage.qml" line="212"/>
         <source>Decimal</source>
-        <translation type="unfinished"/>
-    </message>
-    <message>
-        <location filename="../qml/tweetian-harmattan/MapPage.qml" line="217"/>
-        <location filename="../qml/tweetian-symbian/MapPage.qml" line="227"/>
-        <source>Coordinate copied to clipboard</source>
-        <translation>Koordinātes iekopētas starpliktuvē</translation>
+        <translation>Decimāldaļskaitlis</translation>
     </message>
     <message>
         <location filename="../qml/tweetian-symbian/MapPage.qml" line="34"/>
@@ -977,7 +977,7 @@
     <message>
         <location filename="../qml/tweetian-harmattan/NewTweetPage.qml" line="351"/>
         <source>No music is playing currently or music player is not running</source>
-        <translation type="unfinished"/>
+        <translation>Mūzika šobrīd neskan vai mūzikas atskaņotājs nedarbojas</translation>
     </message>
     <message>
         <location filename="../qml/tweetian-harmattan/NewTweetPage.qml" line="55"/>
@@ -1053,13 +1053,13 @@
     <message>
         <location filename="../qml/tweetian-harmattan/NewTweetPage.qml" line="267"/>
         <source>Music Player: Now Playing</source>
-        <translation type="unfinished"/>
+        <translation>Mūzikas atskaņotājs šobrīd darbojas</translation>
     </message>
     <message>
         <location filename="../qml/tweetian-harmattan/NewTweetPage.qml" line="276"/>
         <location filename="../qml/tweetian-symbian/NewTweetPage.qml" line="264"/>
         <source>Uploading...</source>
-        <translation>Atjaunina</translation>
+        <translation>Augšuplādē...</translation>
     </message>
     <message>
         <location filename="../qml/tweetian-harmattan/NewTweetPage.qml" line="279"/>
@@ -1135,7 +1135,7 @@
         <location filename="../qml/tweetian-harmattan/NewTweetPage.qml" line="484"/>
         <location filename="../qml/tweetian-symbian/NewTweetPage.qml" line="481"/>
         <source>Your tweet is more than 140 characters. Do you want to use TwitLonger to post your tweet?
-Note: The tweet content will be publicly visible even your tweet is private.</source>
+Note: The tweet content will be publicly visible even if your tweet is private.</source>
         <translation type="unfinished"/>
     </message>
     <message>
@@ -1224,19 +1224,19 @@ Note: The tweet content will be publicly visible even your tweet is private.</so
         <location filename="../qml/tweetian-harmattan/SearchPage.qml" line="159"/>
         <location filename="../qml/tweetian-symbian/SearchPage.qml" line="171"/>
         <source>The search %1 is saved successfully</source>
-        <translation type="unfinished"/>
+        <translation>Meklējums %1 veiksmīgi saglabāts</translation>
     </message>
     <message>
         <location filename="../qml/tweetian-harmattan/SearchPage.qml" line="177"/>
         <location filename="../qml/tweetian-symbian/SearchPage.qml" line="189"/>
         <source>The saved search %1 is removed successfully</source>
-        <translation type="unfinished"/>
+        <translation>Saglabātais meklējums %1 ir veiksmīgi izdzēsts</translation>
     </message>
     <message>
         <location filename="../qml/tweetian-harmattan/SearchPage.qml" line="198"/>
         <location filename="../qml/tweetian-symbian/SearchPage.qml" line="211"/>
         <source>Do you want to save the search %1?</source>
-        <translation type="unfinished"/>
+        <translation>Vai vēlaties saglabāt meklējumu %1?</translation>
     </message>
     <message>
         <location filename="../qml/tweetian-harmattan/SearchPage.qml" line="206"/>
@@ -1256,12 +1256,12 @@ Note: The tweet content will be publicly visible even your tweet is private.</so
         <location filename="../qml/tweetian-harmattan/SearchPage.qml" line="100"/>
         <location filename="../qml/tweetian-symbian/SearchPage.qml" line="103"/>
         <source>Search for tweets or users</source>
-        <translation type="unfinished"/>
+        <translation>Meklēt tvītus vai lietotājus</translation>
     </message>
     <message>
         <location filename="../qml/tweetian-harmattan/SearchPage.qml" line="105"/>
         <source>Search</source>
-        <translation type="unfinished"/>
+        <translation>Meklēt</translation>
     </message>
     <message>
         <location filename="../qml/tweetian-harmattan/SearchPage.qml" line="199"/>
@@ -1278,17 +1278,17 @@ Note: The tweet content will be publicly visible even your tweet is private.</so
     <message>
         <location filename="../qml/tweetian-symbian/SearchPage.qml" line="41"/>
         <source>Back</source>
-        <translation type="unfinished"/>
+        <translation>Atpakaļ</translation>
     </message>
     <message>
         <location filename="../qml/tweetian-symbian/SearchPage.qml" line="46"/>
         <source>Remove saved search</source>
-        <translation type="unfinished"/>
+        <translation>Izdzēst saglabāto meklējumu</translation>
     </message>
     <message>
         <location filename="../qml/tweetian-symbian/SearchPage.qml" line="46"/>
         <source>Add to saved search</source>
-        <translation type="unfinished"/>
+        <translation>Pievienot saglabātajiem meklējumiem</translation>
     </message>
 </context>
 <context>
@@ -1297,48 +1297,48 @@ Note: The tweet content will be publicly visible even your tweet is private.</so
         <location filename="../qml/tweetian-harmattan/SelectImagePage.qml" line="35"/>
         <location filename="../qml/tweetian-symbian/SelectImagePage.qml" line="36"/>
         <source>Service</source>
-        <translation type="unfinished"/>
+        <translation>Serviss</translation>
     </message>
     <message>
         <location filename="../qml/tweetian-harmattan/SelectImagePage.qml" line="49"/>
         <location filename="../qml/tweetian-symbian/SelectImagePage.qml" line="52"/>
         <source>Select image</source>
-        <translation type="unfinished"/>
+        <translation>Izvēlieties attēlu</translation>
     </message>
     <message>
         <location filename="../qml/tweetian-harmattan/SelectImagePage.qml" line="57"/>
         <location filename="../qml/tweetian-symbian/SelectImagePage.qml" line="61"/>
         <source>Preview</source>
-        <translation type="unfinished"/>
+        <translation>Apskatīt</translation>
     </message>
     <message>
         <location filename="../qml/tweetian-harmattan/SelectImagePage.qml" line="76"/>
         <location filename="../qml/tweetian-symbian/SelectImagePage.qml" line="81"/>
         <source>No image</source>
-        <translation type="unfinished"/>
+        <translation>Nav attēla</translation>
     </message>
     <message>
         <location filename="../qml/tweetian-harmattan/SelectImagePage.qml" line="84"/>
         <location filename="../qml/tweetian-symbian/SelectImagePage.qml" line="92"/>
         <source>Select Image</source>
-        <translation type="unfinished"/>
+        <translation>Izvēlieties attēlu</translation>
     </message>
     <message>
         <location filename="../qml/tweetian-harmattan/SelectImagePage.qml" line="102"/>
         <location filename="../qml/tweetian-symbian/SelectImagePage.qml" line="113"/>
         <source>Error loading image from gallery</source>
-        <translation type="unfinished"/>
+        <translation>Radās kļūda ielādējot attēlu no galerijas</translation>
     </message>
     <message>
         <location filename="../qml/tweetian-harmattan/SelectImagePage.qml" line="181"/>
         <location filename="../qml/tweetian-symbian/SelectImagePage.qml" line="193"/>
         <source>Image Upload Service</source>
-        <translation type="unfinished"/>
+        <translation>Attēla augšuplādēšanas servisi</translation>
     </message>
     <message>
         <location filename="../qml/tweetian-symbian/SelectImagePage.qml" line="31"/>
         <source>Back</source>
-        <translation type="unfinished"/>
+        <translation>Atpakaļ</translation>
     </message>
 </context>
 <context>
@@ -1347,61 +1347,61 @@ Note: The tweet content will be publicly visible even your tweet is private.</so
         <location filename="../qml/tweetian-harmattan/SettingsPageCom/SettingGeneralTab.qml" line="40"/>
         <location filename="../qml/tweetian-symbian/SettingsPageCom/SettingGeneralTab.qml" line="40"/>
         <source>Theme</source>
-        <translation type="unfinished"/>
+        <translation>Tēmas</translation>
     </message>
     <message>
         <location filename="../qml/tweetian-harmattan/SettingsPageCom/SettingGeneralTab.qml" line="51"/>
         <location filename="../qml/tweetian-symbian/SettingsPageCom/SettingGeneralTab.qml" line="52"/>
         <source>Dark</source>
-        <translation type="unfinished"/>
+        <translation>Tumšs</translation>
     </message>
     <message>
         <location filename="../qml/tweetian-harmattan/SettingsPageCom/SettingGeneralTab.qml" line="57"/>
         <location filename="../qml/tweetian-symbian/SettingsPageCom/SettingGeneralTab.qml" line="59"/>
         <source>Light</source>
-        <translation type="unfinished"/>
+        <translation>Gaišs</translation>
     </message>
     <message>
         <location filename="../qml/tweetian-harmattan/SettingsPageCom/SettingGeneralTab.qml" line="66"/>
         <location filename="../qml/tweetian-symbian/SettingsPageCom/SettingGeneralTab.qml" line="68"/>
         <source>Font size</source>
-        <translation type="unfinished"/>
+        <translation>Fonta izmērs</translation>
     </message>
     <message>
         <location filename="../qml/tweetian-harmattan/SettingsPageCom/SettingGeneralTab.qml" line="77"/>
         <location filename="../qml/tweetian-symbian/SettingsPageCom/SettingGeneralTab.qml" line="80"/>
         <source>Small</source>
-        <translation type="unfinished"/>
+        <translation>Mazs</translation>
     </message>
     <message>
         <location filename="../qml/tweetian-harmattan/SettingsPageCom/SettingGeneralTab.qml" line="83"/>
         <location filename="../qml/tweetian-symbian/SettingsPageCom/SettingGeneralTab.qml" line="87"/>
         <source>Large</source>
-        <translation type="unfinished"/>
+        <translation>Liels</translation>
     </message>
     <message>
         <location filename="../qml/tweetian-harmattan/SettingsPageCom/SettingGeneralTab.qml" line="89"/>
         <location filename="../qml/tweetian-symbian/SettingsPageCom/SettingGeneralTab.qml" line="93"/>
         <source>Include #hashtags in reply</source>
-        <translation type="unfinished"/>
+        <translation>Iekļaut #atslēgvārdus atbildēs</translation>
     </message>
     <message>
         <location filename="../qml/tweetian-harmattan/SettingsPageCom/SettingGeneralTab.qml" line="96"/>
         <location filename="../qml/tweetian-symbian/SettingsPageCom/SettingGeneralTab.qml" line="100"/>
         <source>Enable TwitLonger</source>
-        <translation type="unfinished"/>
+        <translation>Aktivizēt TwitLonger</translation>
     </message>
     <message>
         <location filename="../qml/tweetian-harmattan/SettingsPageCom/SettingGeneralTab.qml" line="99"/>
         <location filename="../qml/tweetian-symbian/SettingsPageCom/SettingGeneralTab.qml" line="104"/>
         <source>About TwitLonger</source>
-        <translation type="unfinished"/>
+        <translation>Par TwitLonger</translation>
     </message>
     <message>
         <location filename="../qml/tweetian-harmattan/SettingsPageCom/SettingGeneralTab.qml" line="103"/>
         <location filename="../qml/tweetian-symbian/SettingsPageCom/SettingGeneralTab.qml" line="107"/>
         <source>Translation</source>
-        <translation type="unfinished"/>
+        <translation>Tulkojums</translation>
     </message>
     <message>
         <location filename="../qml/tweetian-harmattan/SettingsPageCom/SettingGeneralTab.qml" line="117"/>
@@ -1418,48 +1418,72 @@ Note: The tweet content will be publicly visible even your tweet is private.</so
         <location filename="../qml/tweetian-harmattan/SettingPage.qml" line="43"/>
         <location filename="../qml/tweetian-symbian/SettingPage.qml" line="48"/>
         <source>Clear cache &amp; database</source>
-        <translation type="unfinished"/>
+        <translation>Iztīrīt kešatmiņu &amp; datubāzi</translation>
     </message>
     <message>
         <location filename="../qml/tweetian-harmattan/SettingPage.qml" line="47"/>
         <location filename="../qml/tweetian-symbian/SettingPage.qml" line="53"/>
         <source>Clear thumbnails cache</source>
-        <translation type="unfinished"/>
+        <translation>Iztīrīt sīktēlu kešatmiņu</translation>
     </message>
     <message>
         <location filename="../qml/tweetian-harmattan/SettingPage.qml" line="68"/>
         <location filename="../qml/tweetian-symbian/SettingPage.qml" line="73"/>
         <source>General</source>
-        <translation type="unfinished"/>
+        <translation>Vispārējs</translation>
     </message>
     <message>
         <location filename="../qml/tweetian-harmattan/SettingPage.qml" line="69"/>
         <location filename="../qml/tweetian-symbian/SettingPage.qml" line="74"/>
         <source>Update</source>
-        <translation type="unfinished"/>
+        <translation>Atjaunināt</translation>
     </message>
     <message>
         <location filename="../qml/tweetian-harmattan/SettingPage.qml" line="70"/>
         <location filename="../qml/tweetian-symbian/SettingPage.qml" line="75"/>
         <source>Account</source>
-        <translation type="unfinished"/>
+        <translation>Konts</translation>
     </message>
     <message>
         <location filename="../qml/tweetian-harmattan/SettingPage.qml" line="71"/>
         <location filename="../qml/tweetian-symbian/SettingPage.qml" line="76"/>
         <source>Mute</source>
-        <translation type="unfinished"/>
+        <translation>Izslēgt</translation>
     </message>
     <message>
         <location filename="../qml/tweetian-harmattan/SettingPage.qml" line="77"/>
         <location filename="../qml/tweetian-symbian/SettingPage.qml" line="82"/>
-        <source>TwitLonger is a third party service that allow you to post long tweet having more than 140 characters.&lt;br&gt;More info about TwitLonger:&lt;br&gt;&lt;a href=&quot;http://www.twitlonger.com/about&quot;&gt;www.twitlonger.com/about&lt;/a&gt;&lt;br&gt;By enable this service, you agree to TwitLonger privacy policy:&lt;br&gt;&lt;a href=&quot;http://www.twitlonger.com/privacy&quot;&gt;www.twitlonger.com/privacy&lt;/a&gt;</source>
+        <source>TwitLonger is a third-party service that allows you to post tweets longer than 140 characters.&lt;br&gt;More info about TwitLonger:&lt;br&gt;&lt;a href=&quot;http://www.twitlonger.com/about&quot;&gt;www.twitlonger.com/about&lt;/a&gt;&lt;br&gt;By enabling this service, you agree to the TwitLonger privacy policy:&lt;br&gt;&lt;a href=&quot;http://www.twitlonger.com/privacy&quot;&gt;www.twitlonger.com/privacy&lt;/a&gt;</source>
         <translation type="unfinished"/>
     </message>
     <message>
         <location filename="../qml/tweetian-harmattan/SettingPage.qml" line="84"/>
         <location filename="../qml/tweetian-symbian/SettingPage.qml" line="89"/>
-        <source>Pocket is a third party service for saving web page links so that you can read it later.&lt;br&gt;More about Pocket:&lt;br&gt;&lt;a href=&quot;http://getpocket.com/about&quot;&gt;http://getpocket.com/about&lt;/a&gt;&lt;br&gt;By signing in, you agree to Pocket privacy policy:&lt;br&gt;&lt;a href=&quot;http://getpocket.com/privacy&quot;&gt;http://getpocket.com/privacy&lt;/a&gt;</source>
+        <source>Pocket is a third-party service for saving web page links so you can read them later.&lt;br&gt;More about Pocket:&lt;br&gt;&lt;a href=&quot;http://getpocket.com/about&quot;&gt;http://getpocket.com/about&lt;/a&gt;&lt;br&gt;By signing in, you agree to Pocket privacy policy:&lt;br&gt;&lt;a href=&quot;http://getpocket.com/privacy&quot;&gt;http://getpocket.com/privacy&lt;/a&gt;</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <location filename="../qml/tweetian-harmattan/SettingPage.qml" line="101"/>
+        <location filename="../qml/tweetian-symbian/SettingPage.qml" line="106"/>
+        <source>Streaming enables Tweetian to deliver real-time updates of timeline, mentions and direct messages without the needs of refreshing periodically. Auto refresh and manual refresh will be disabled when streaming is connected. It is not recommended to enable streaming when you are on a weak internet connection (eg. mobile data).</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <location filename="../qml/tweetian-harmattan/SettingPage.qml" line="111"/>
+        <location filename="../qml/tweetian-symbian/SettingPage.qml" line="118"/>
+        <source>This action will clear the temporary cache and database. Twitter credential and app settings will not be reset. Continue?</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <location filename="../qml/tweetian-harmattan/SettingPage.qml" line="119"/>
+        <location filename="../qml/tweetian-symbian/SettingPage.qml" line="126"/>
+        <source>Cache and database cleared</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <location filename="../qml/tweetian-harmattan/SettingPage.qml" line="127"/>
+        <location filename="../qml/tweetian-symbian/SettingPage.qml" line="136"/>
+        <source>%1 thumbnails deleted</source>
         <translation type="unfinished"/>
     </message>
     <message>
@@ -1476,46 +1500,22 @@ Keywords format: @user, #hashtag, source:Tweet_Button or plain words.</source>
         <translation type="unfinished"/>
     </message>
     <message>
-        <location filename="../qml/tweetian-harmattan/SettingPage.qml" line="101"/>
-        <location filename="../qml/tweetian-symbian/SettingPage.qml" line="106"/>
-        <source>Streaming enable Tweetian to deliver real time update of timeline, mentions and direct messages without the needs of refreshing periodically. Auto refresh and manual refresh will be disabled when streaming is connected. It is not recommended to enable streaming when you are on a weak internet connection (eg. mobile data).</source>
-        <translation type="unfinished"/>
-    </message>
-    <message>
-        <location filename="../qml/tweetian-harmattan/SettingPage.qml" line="111"/>
-        <location filename="../qml/tweetian-symbian/SettingPage.qml" line="118"/>
-        <source>This action will clear all temporary caches and database. Twitter credential and app settings will not be reset. Continue?</source>
-        <translation type="unfinished"/>
-    </message>
-    <message>
         <location filename="../qml/tweetian-harmattan/SettingPage.qml" line="113"/>
         <location filename="../qml/tweetian-symbian/SettingPage.qml" line="120"/>
         <source>Clear Cache &amp; Database</source>
         <translation>Dzēst kešatmiņu &amp; Datubāzi</translation>
     </message>
     <message>
-        <location filename="../qml/tweetian-harmattan/SettingPage.qml" line="119"/>
-        <location filename="../qml/tweetian-symbian/SettingPage.qml" line="126"/>
-        <source>All cache cleared</source>
-        <translation>Visa kešatmiņa dzēsta</translation>
-    </message>
-    <message>
         <location filename="../qml/tweetian-harmattan/SettingPage.qml" line="124"/>
         <location filename="../qml/tweetian-symbian/SettingPage.qml" line="133"/>
         <source>Delete all cached thumbnails?</source>
-        <translation type="unfinished"/>
+        <translation>Dzēst visus kešatmiņas sīktēlus?</translation>
     </message>
     <message>
         <location filename="../qml/tweetian-harmattan/SettingPage.qml" line="125"/>
         <location filename="../qml/tweetian-symbian/SettingPage.qml" line="134"/>
         <source>Clear Thumbnails Cache</source>
-        <translation type="unfinished"/>
-    </message>
-    <message>
-        <location filename="../qml/tweetian-harmattan/SettingPage.qml" line="127"/>
-        <location filename="../qml/tweetian-symbian/SettingPage.qml" line="136"/>
-        <source>%1 thumbnails cache cleared</source>
-        <translation type="unfinished"/>
+        <translation>Iztīrīt Sīktēlu Kešatmiņu</translation>
     </message>
     <message>
         <location filename="../qml/tweetian-symbian/SettingPage.qml" line="32"/>
@@ -1564,7 +1564,7 @@ Keywords format: @user, #hashtag, source:Tweet_Button or plain words.</source>
         <location filename="../qml/tweetian-symbian/SettingsPageCom/SettingRefreshTab.qml" line="61"/>
         <location filename="../qml/tweetian-symbian/SettingsPageCom/SettingRefreshTab.qml" line="71"/>
         <source>Off</source>
-        <translation>Izslēgt</translation>
+        <translation>Izslēgts</translation>
     </message>
     <message numerus="yes">
         <location filename="../qml/tweetian-harmattan/SettingsPageCom/SettingRefreshTab.qml" line="51"/>
@@ -1574,7 +1574,7 @@ Keywords format: @user, #hashtag, source:Tweet_Button or plain words.</source>
         <location filename="../qml/tweetian-symbian/SettingsPageCom/SettingRefreshTab.qml" line="61"/>
         <location filename="../qml/tweetian-symbian/SettingsPageCom/SettingRefreshTab.qml" line="71"/>
         <source>%n min(s)</source>
-        <translation><numerusform>&apos;%n Izslēgts</numerusform><numerusform>%n minūte</numerusform><numerusform>%n minūtes</numerusform></translation>
+        <translation><numerusform>&apos;%n Izslēgts</numerusform><numerusform>%n minūtes</numerusform><numerusform>%n minūtes</numerusform></translation>
     </message>
     <message>
         <location filename="../qml/tweetian-harmattan/SettingsPageCom/SettingRefreshTab.qml" line="51"/>
@@ -1663,7 +1663,7 @@ Keywords format: @user, #hashtag, source:Tweet_Button or plain words.</source>
         <location filename="../qml/tweetian-harmattan/SignInPage.qml" line="105"/>
         <location filename="../qml/tweetian-symbian/SignInPage.qml" line="107"/>
         <source>Error: %1. Make sure the time/date of your phone is set correctly.</source>
-        <translation type="unfinished"/>
+        <translation>Kļūda %1. Pārliecinieties vai jūsu tālruņa laiks/datums ir uzstādīts pareizi</translation>
     </message>
     <message>
         <location filename="../qml/tweetian-symbian/SignInPage.qml" line="34"/>
@@ -1734,7 +1734,7 @@ Keywords format: @user, #hashtag, source:Tweet_Button or plain words.</source>
         <location filename="../qml/tweetian-harmattan/TrendsPage.qml" line="59"/>
         <location filename="../qml/tweetian-symbian/TrendsPage.qml" line="64"/>
         <source>Advanced search</source>
-        <translation type="unfinished"/>
+        <translation>Izvērsta meklēšana</translation>
     </message>
     <message>
         <location filename="../qml/tweetian-harmattan/TrendsPage.qml" line="63"/>
@@ -1744,81 +1744,55 @@ Keywords format: @user, #hashtag, source:Tweet_Button or plain words.</source>
     </message>
     <message>
         <location filename="../qml/tweetian-harmattan/TrendsPage.qml" line="104"/>
-        <location filename="../qml/tweetian-harmattan/TrendsPage.qml" line="116"/>
-        <location filename="../qml/tweetian-harmattan/TrendsPage.qml" line="268"/>
-        <location filename="../qml/tweetian-harmattan/TrendsPage.qml" line="277"/>
+        <location filename="../qml/tweetian-harmattan/TrendsPage.qml" line="248"/>
+        <location filename="../qml/tweetian-harmattan/TrendsPage.qml" line="257"/>
         <location filename="../qml/tweetian-symbian/TrendsPage.qml" line="110"/>
-        <location filename="../qml/tweetian-symbian/TrendsPage.qml" line="123"/>
-        <location filename="../qml/tweetian-symbian/TrendsPage.qml" line="266"/>
-        <location filename="../qml/tweetian-symbian/TrendsPage.qml" line="275"/>
+        <location filename="../qml/tweetian-symbian/TrendsPage.qml" line="246"/>
+        <location filename="../qml/tweetian-symbian/TrendsPage.qml" line="255"/>
         <source>Saved Searches</source>
         <translation>Saglabātie meklējumi</translation>
     </message>
     <message>
-        <location filename="../qml/tweetian-harmattan/TrendsPage.qml" line="140"/>
-        <location filename="../qml/tweetian-symbian/TrendsPage.qml" line="149"/>
+        <location filename="../qml/tweetian-harmattan/TrendsPage.qml" line="136"/>
+        <location filename="../qml/tweetian-symbian/TrendsPage.qml" line="145"/>
         <source>Search for tweets or users</source>
-        <translation type="unfinished"/>
+        <translation>Meklēt tvītus vai lietotājus</translation>
     </message>
     <message>
-        <location filename="../qml/tweetian-harmattan/TrendsPage.qml" line="187"/>
-        <location filename="../qml/tweetian-symbian/TrendsPage.qml" line="187"/>
+        <location filename="../qml/tweetian-harmattan/TrendsPage.qml" line="183"/>
+        <location filename="../qml/tweetian-symbian/TrendsPage.qml" line="183"/>
         <source>Trends &amp; Search</source>
         <translation>Tendences &amp; Meklēt</translation>
     </message>
     <message>
-        <location filename="../qml/tweetian-harmattan/TrendsPage.qml" line="232"/>
-        <location filename="../qml/tweetian-symbian/TrendsPage.qml" line="230"/>
-        <source>The saved search %1 is removed successfully</source>
-        <translation type="unfinished"/>
-    </message>
-    <message>
-        <location filename="../qml/tweetian-harmattan/TrendsPage.qml" line="248"/>
-        <location filename="../qml/tweetian-symbian/TrendsPage.qml" line="246"/>
+        <location filename="../qml/tweetian-harmattan/TrendsPage.qml" line="228"/>
+        <location filename="../qml/tweetian-symbian/TrendsPage.qml" line="226"/>
         <source>Trends (%1)</source>
         <translation>Tendences (%1)</translation>
     </message>
     <message>
-        <location filename="../qml/tweetian-harmattan/TrendsPage.qml" line="259"/>
-        <location filename="../qml/tweetian-symbian/TrendsPage.qml" line="257"/>
+        <location filename="../qml/tweetian-harmattan/TrendsPage.qml" line="239"/>
+        <location filename="../qml/tweetian-symbian/TrendsPage.qml" line="237"/>
         <source>Unable to retrieve trends</source>
         <translation type="unfinished"/>
     </message>
     <message>
-        <location filename="../qml/tweetian-harmattan/TrendsPage.qml" line="259"/>
-        <location filename="../qml/tweetian-symbian/TrendsPage.qml" line="257"/>
+        <location filename="../qml/tweetian-harmattan/TrendsPage.qml" line="239"/>
+        <location filename="../qml/tweetian-symbian/TrendsPage.qml" line="237"/>
         <source>Trends</source>
         <translation>Tendences</translation>
     </message>
     <message>
-        <location filename="../qml/tweetian-harmattan/TrendsPage.qml" line="277"/>
-        <location filename="../qml/tweetian-symbian/TrendsPage.qml" line="275"/>
+        <location filename="../qml/tweetian-harmattan/TrendsPage.qml" line="257"/>
+        <location filename="../qml/tweetian-symbian/TrendsPage.qml" line="255"/>
         <source>Unabled to retrieve saved search</source>
         <translation type="unfinished"/>
     </message>
     <message>
-        <location filename="../qml/tweetian-harmattan/TrendsPage.qml" line="282"/>
-        <location filename="../qml/tweetian-symbian/TrendsPage.qml" line="280"/>
+        <location filename="../qml/tweetian-harmattan/TrendsPage.qml" line="262"/>
+        <location filename="../qml/tweetian-symbian/TrendsPage.qml" line="260"/>
         <source>Worldwide</source>
         <translation>Vispasaules</translation>
-    </message>
-    <message>
-        <location filename="../qml/tweetian-harmattan/TrendsPage.qml" line="302"/>
-        <location filename="../qml/tweetian-symbian/TrendsPage.qml" line="302"/>
-        <source>Do you want to remove the saved search %1?</source>
-        <translation type="unfinished"/>
-    </message>
-    <message>
-        <location filename="../qml/tweetian-harmattan/TrendsPage.qml" line="303"/>
-        <location filename="../qml/tweetian-symbian/TrendsPage.qml" line="303"/>
-        <source>Remove Saved Search</source>
-        <translation type="unfinished"/>
-    </message>
-    <message>
-        <location filename="../qml/tweetian-harmattan/TrendsPage.qml" line="333"/>
-        <location filename="../qml/tweetian-symbian/TrendsPage.qml" line="336"/>
-        <source>Remove saved search</source>
-        <translation type="unfinished"/>
     </message>
     <message>
         <location filename="../qml/tweetian-symbian/TrendsPage.qml" line="38"/>
@@ -1826,19 +1800,19 @@ Keywords format: @user, #hashtag, source:Tweet_Button or plain words.</source>
         <translation>Atpakaļ</translation>
     </message>
     <message>
-        <location filename="../qml/tweetian-harmattan/TrendsPage.qml" line="144"/>
+        <location filename="../qml/tweetian-harmattan/TrendsPage.qml" line="140"/>
         <source>Search</source>
         <translation>Meklēt</translation>
     </message>
     <message>
         <location filename="../qml/tweetian-symbian/TrendsPage.qml" line="43"/>
         <source>Nearby tweets</source>
-        <translation type="unfinished"/>
+        <translation>Tuvumā esošie tvīti</translation>
     </message>
     <message>
         <location filename="../qml/tweetian-symbian/TrendsPage.qml" line="48"/>
         <source>Suggested Users</source>
-        <translation type="unfinished"/>
+        <translation>Rekomendētie Lietotāji</translation>
     </message>
     <message>
         <location filename="../qml/tweetian-symbian/TrendsPage.qml" line="53"/>
@@ -1905,8 +1879,8 @@ Keywords format: @user, #hashtag, source:Tweet_Button or plain words.</source>
 <context>
     <name>TweetListView</name>
     <message numerus="yes">
-        <location filename="../qml/tweetian-harmattan/MainPageCom/TweetListView.qml" line="204"/>
-        <location filename="../qml/tweetian-symbian/MainPageCom/TweetListView.qml" line="200"/>
+        <location filename="../qml/tweetian-harmattan/MainPageCom/TweetListView.qml" line="226"/>
+        <location filename="../qml/tweetian-symbian/MainPageCom/TweetListView.qml" line="221"/>
         <source>%n new mention(s)</source>
         <translation type="unfinished"><numerusform></numerusform><numerusform></numerusform><numerusform></numerusform></translation>
     </message>
@@ -1965,7 +1939,7 @@ Keywords format: @user, #hashtag, source:Tweet_Button or plain words.</source>
         <location filename="../qml/tweetian-harmattan/TweetPage.qml" line="280"/>
         <location filename="../qml/tweetian-symbian/TweetPage.qml" line="302"/>
         <source>Streaming link is not available</source>
-        <translation type="unfinished"/>
+        <translation>Straumēšanas saite nav pieejama</translation>
     </message>
     <message>
         <location filename="../qml/tweetian-harmattan/TweetPage.qml" line="362"/>
@@ -1983,13 +1957,13 @@ Keywords format: @user, #hashtag, source:Tweet_Button or plain words.</source>
         <location filename="../qml/tweetian-harmattan/TweetPage.qml" line="389"/>
         <location filename="../qml/tweetian-symbian/TweetPage.qml" line="412"/>
         <source>Reply</source>
-        <translation type="unfinished"/>
+        <translation>Atbildēt</translation>
     </message>
     <message>
         <location filename="../qml/tweetian-harmattan/TweetPage.qml" line="402"/>
         <location filename="../qml/tweetian-symbian/TweetPage.qml" line="425"/>
         <source>Translated Tweet</source>
-        <translation type="unfinished"/>
+        <translation>Pārtulkotais Tvīts</translation>
     </message>
     <message>
         <location filename="../qml/tweetian-symbian/TweetPage.qml" line="63"/>
@@ -2009,12 +1983,12 @@ Keywords format: @user, #hashtag, source:Tweet_Button or plain words.</source>
     <message>
         <location filename="../qml/tweetian-symbian/TweetPage.qml" line="85"/>
         <source>Unfavourite</source>
-        <translation type="unfinished"/>
+        <translation>Dzēst Favorītu</translation>
     </message>
     <message>
         <location filename="../qml/tweetian-symbian/TweetPage.qml" line="85"/>
         <source>Favourite</source>
-        <translation type="unfinished"/>
+        <translation>Favorīts</translation>
     </message>
     <message>
         <location filename="../qml/tweetian-symbian/TweetPage.qml" line="94"/>
@@ -2034,25 +2008,19 @@ Keywords format: @user, #hashtag, source:Tweet_Button or plain words.</source>
         <location filename="../qml/tweetian-harmattan/TweetPageJS.js" line="309"/>
         <location filename="../qml/tweetian-symbian/TweetPageJS.js" line="309"/>
         <source>Tweet favourited succesfully</source>
-        <translation type="unfinished"/>
+        <translation>Tvīts pievienots favorītiem veiksmīgi</translation>
     </message>
     <message>
         <location filename="../qml/tweetian-harmattan/TweetPageJS.js" line="310"/>
         <location filename="../qml/tweetian-symbian/TweetPageJS.js" line="310"/>
         <source>Tweet unfavourited successfully</source>
-        <translation type="unfinished"/>
+        <translation>Tvīts dzēsts no favorītiem veiksmīgi</translation>
     </message>
     <message>
         <location filename="../qml/tweetian-harmattan/TweetPageJS.js" line="327"/>
         <location filename="../qml/tweetian-symbian/TweetPageJS.js" line="327"/>
         <source>Unable to translate tweet</source>
-        <translation type="unfinished"/>
-    </message>
-    <message>
-        <location filename="../qml/tweetian-harmattan/TweetPageJS.js" line="345"/>
-        <location filename="../qml/tweetian-symbian/TweetPageJS.js" line="345"/>
-        <source>You are not sign in to your Pocket account. Please sign in to your Pocket account first under the &quot;Account&quot; tab in the Settings.</source>
-        <translation type="unfinished"/>
+        <translation>Neizdevās pārtulkot tvītu</translation>
     </message>
     <message>
         <location filename="../qml/tweetian-harmattan/TweetPageJS.js" line="346"/>
@@ -2088,7 +2056,7 @@ Keywords format: @user, #hashtag, source:Tweet_Button or plain words.</source>
         <location filename="../qml/tweetian-harmattan/TweetPageJS.js" line="212"/>
         <location filename="../qml/tweetian-symbian/TweetPageJS.js" line="212"/>
         <source>Retweeters</source>
-        <translation type="unfinished"/>
+        <translation>Retvītotāji</translation>
     </message>
     <message numerus="yes">
         <location filename="../qml/tweetian-harmattan/TweetPageJS.js" line="220"/>
@@ -2106,6 +2074,12 @@ Keywords format: @user, #hashtag, source:Tweet_Button or plain words.</source>
         <location filename="../qml/tweetian-harmattan/TweetPageJS.js" line="329"/>
         <location filename="../qml/tweetian-symbian/TweetPageJS.js" line="329"/>
         <source>Translation limit reached</source>
+        <translation>Tulkojuma limits sasniegts</translation>
+    </message>
+    <message>
+        <location filename="../qml/tweetian-harmattan/TweetPageJS.js" line="345"/>
+        <location filename="../qml/tweetian-symbian/TweetPageJS.js" line="345"/>
+        <source>You are not signed in to your Pocket account. Please sign in to your Pocket account first under the &quot;Account&quot; tab in Settings.</source>
         <translation type="unfinished"/>
     </message>
     <message>
@@ -2142,10 +2116,10 @@ Keywords format: @user, #hashtag, source:Tweet_Button or plain words.</source>
 <context>
     <name>TweetSearchColumn</name>
     <message>
-        <location filename="../qml/tweetian-harmattan/SearchPageCom/TweetSearchColumn.qml" line="82"/>
-        <location filename="../qml/tweetian-symbian/SearchPageCom/TweetSearchColumn.qml" line="82"/>
+        <location filename="../qml/tweetian-harmattan/SearchPageCom/TweetSearchColumn.qml" line="84"/>
+        <location filename="../qml/tweetian-symbian/SearchPageCom/TweetSearchColumn.qml" line="84"/>
         <source>No search result</source>
-        <translation type="unfinished"/>
+        <translation>Nav rezultātu</translation>
     </message>
 </context>
 <context>
@@ -2154,12 +2128,12 @@ Keywords format: @user, #hashtag, source:Tweet_Button or plain words.</source>
         <location filename="../qml/tweetian-harmattan/UserCategoryPage.qml" line="49"/>
         <location filename="../qml/tweetian-symbian/UserCategoryPage.qml" line="49"/>
         <source>Suggested User Categories</source>
-        <translation type="unfinished"/>
+        <translation>Rekomendētās Lietotāju Kategorijas</translation>
     </message>
     <message>
         <location filename="../qml/tweetian-symbian/UserCategoryPage.qml" line="32"/>
         <source>Back</source>
-        <translation type="unfinished"/>
+        <translation>Atpakaļ</translation>
     </message>
 </context>
 <context>
@@ -2168,7 +2142,7 @@ Keywords format: @user, #hashtag, source:Tweet_Button or plain words.</source>
         <location filename="../qml/tweetian-harmattan/Delegate/UserDelegate.qml" line="80"/>
         <location filename="../qml/tweetian-symbian/Delegate/UserDelegate.qml" line="80"/>
         <source>%1 following | %2 followers</source>
-        <translation type="unfinished"/>
+        <translation>%1 seko | %2 sekotāji</translation>
     </message>
 </context>
 <context>
@@ -2339,24 +2313,24 @@ Keywords format: @user, #hashtag, source:Tweet_Button or plain words.</source>
         <location filename="../qml/tweetian-harmattan/UserPage.qml" line="328"/>
         <location filename="../qml/tweetian-symbian/UserPage.qml" line="354"/>
         <source>Reported and blocked the user %1 successfully</source>
-        <translation type="unfinished"/>
+        <translation>Ziņoja un bloķēja lietotāju %1 veiksmīgi</translation>
     </message>
     <message>
         <location filename="../qml/tweetian-harmattan/UserPage.qml" line="338"/>
         <location filename="../qml/tweetian-symbian/UserPage.qml" line="364"/>
-        <source>Do you want to report and block the user %1 ?</source>
+        <source>Do you want to report and block the user %1?</source>
         <translation type="unfinished"/>
     </message>
     <message>
         <location filename="../qml/tweetian-harmattan/UserPage.qml" line="347"/>
         <location filename="../qml/tweetian-symbian/UserPage.qml" line="373"/>
-        <source>Do you want to unfollow the user %1 ?</source>
+        <source>Do you want to unfollow the user %1?</source>
         <translation type="unfinished"/>
     </message>
     <message>
         <location filename="../qml/tweetian-harmattan/UserPage.qml" line="348"/>
         <location filename="../qml/tweetian-symbian/UserPage.qml" line="374"/>
-        <source>Do you want to follow the user %1 ?</source>
+        <source>Do you want to follow the user %1?</source>
         <translation type="unfinished"/>
     </message>
     <message>
@@ -2406,10 +2380,10 @@ Keywords format: @user, #hashtag, source:Tweet_Button or plain words.</source>
 <context>
     <name>UserSearchColumn</name>
     <message>
-        <location filename="../qml/tweetian-harmattan/SearchPageCom/UserSearchColumn.qml" line="71"/>
-        <location filename="../qml/tweetian-symbian/SearchPageCom/UserSearchColumn.qml" line="71"/>
+        <location filename="../qml/tweetian-harmattan/SearchPageCom/UserSearchColumn.qml" line="69"/>
+        <location filename="../qml/tweetian-symbian/SearchPageCom/UserSearchColumn.qml" line="69"/>
         <source>No search result</source>
-        <translation type="unfinished"/>
+        <translation>Nav meklēšanas rezultāti</translation>
     </message>
 </context>
 <context>
