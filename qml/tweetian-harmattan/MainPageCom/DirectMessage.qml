@@ -197,7 +197,7 @@ Item {
             if (newDMCount <= 0) return;
             unreadCount += newDMCount;
             var body = qsTr("%n new message(s)", "", unreadCount);
-            if (!platformWindow.active) {
+            if (platformWindow.active) {
                 if (mainPage.status !== PageStatus.Active)
                     infoBanner.showText(body)
             }
