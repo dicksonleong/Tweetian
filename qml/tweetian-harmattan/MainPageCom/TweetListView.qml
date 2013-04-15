@@ -158,8 +158,7 @@ Item {
 
     Timer {
         id: autoRefreshTimer
-        interval: type == "Timeline" ? settings.timelineRefreshFreq * 60000
-                                     : settings.mentionsRefreshFreq * 60000
+        interval: settings.autoRefreshInterval * 60000
         running: networkMonitor.online && !settings.enableStreaming
         repeat: true
         onTriggered: refresh("newer")
@@ -229,7 +228,7 @@ Item {
                     infoBanner.showText(body);
             }
             else {
-                if (settings.mentionNotification) {
+                if (settings.enableNotification) {
                     harmattanUtils.clearNotification("tweetian.mention")
                     harmattanUtils.publishNotification("tweetian.mention", "Tweetian", body, unreadCount)
                 }

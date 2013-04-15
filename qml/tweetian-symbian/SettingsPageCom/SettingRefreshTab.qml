@@ -32,8 +32,6 @@ Page {
             anchors { left: parent.left; right: parent.right }
             height: childrenRect.height
 
-            SectionHeader { text: qsTr("Streaming") }
-
             SettingSwitch {
                 id: streamingSwitch
                 text: qsTr("Enable streaming")
@@ -43,36 +41,14 @@ Page {
                 onInfoClicked: dialog.createMessageDialog(qsTr("Streaming"), infoText.streaming)
             }
 
-            SectionHeader { text: qsTr("Auto Refresh Frequency") }
-
             SettingSlider {
                 enabled: !streamingSwitch.checked
-                text: qsTr("Timeline") + ": " +
-                      (enabled ? (value === 0 ? qsTr("Off") : qsTr("%n min(s)", "", value)) : qsTr("Disabled"))
+                text: qsTr("Auto refresh interval: %1")
+                      .arg(enabled ? (value === 0 ? qsTr("Off") : qsTr("%n min(s)", "", value)) : qsTr("Disabled"))
                 maximumValue: 30
                 stepSize: 5
-                value: settings.timelineRefreshFreq
-                onReleased: settings.timelineRefreshFreq = value
-            }
-
-            SettingSlider {
-                enabled: !streamingSwitch.checked
-                text: qsTr("Mentions") + ": " +
-                      (enabled ? (value === 0 ? qsTr("Off") : qsTr("%n min(s)", "", value)) : qsTr("Disabled"))
-                maximumValue: 30
-                stepSize: 5
-                value: settings.mentionsRefreshFreq
-                onReleased: settings.mentionsRefreshFreq = value
-            }
-
-            SettingSlider {
-                enabled: !streamingSwitch.checked
-                text: qsTr("Direct messages") + ": " +
-                      (enabled ? (value === 0 ? qsTr("Off") : qsTr("%n min(s)", "", value)) : qsTr("Disabled"))
-                maximumValue: 30
-                stepSize: 5
-                value: settings.directMsgRefreshFreq
-                onReleased: settings.directMsgRefreshFreq = value
+                value: settings.autoRefreshInterval
+                onReleased: settings.autoRefreshInterval = value
             }
         }
     }

@@ -50,11 +50,8 @@ QtObject {
         translateLangName = "English"
         translateLangCode = "en"
         enableStreaming = false
-        timelineRefreshFreq = 0
-        mentionsRefreshFreq = 0
-        directMsgRefreshFreq = 0
-        mentionNotification = true
-        messageNotification = true
+        autoRefreshInterval = 0
+        enableNotification = true
         pocketUsername = ""
         pocketPassword = ""
         instapaperToken = ""
@@ -96,17 +93,10 @@ QtObject {
 
     property bool enableStreaming: false
     onEnableStreamingChanged: Database.setSetting({"enableStreaming": enableStreaming.toString()})
-    property int timelineRefreshFreq: 0
-    onTimelineRefreshFreqChanged: Database.setSetting({"timelineRefreshFreq": timelineRefreshFreq.toString()})
-    property int mentionsRefreshFreq: 0
-    onMentionsRefreshFreqChanged: Database.setSetting({"mentionsRefreshFreq": mentionsRefreshFreq.toString()})
-    property int directMsgRefreshFreq: 0
-    onDirectMsgRefreshFreqChanged: Database.setSetting({"directMsgRefreshFreq": directMsgRefreshFreq.toString()})
-
-    property bool mentionNotification: true
-    onMentionNotificationChanged: Database.setSetting({"mentionNotification": mentionNotification.toString()})
-    property bool messageNotification: true
-    onMessageNotificationChanged: Database.setSetting({"messageNotification": messageNotification.toString()})
+    property int autoRefreshInterval: 0
+    onAutoRefreshIntervalChanged: Database.setSetting({"autoRefreshInterval": autoRefreshInterval.toString()})
+    property bool enableNotification: true
+    onEnableNotificationChanged: Database.setSetting({"enableNotification": enableNotification.toString()})
 
     property string pocketUsername: ""
     onPocketUsernameChanged: Database.setSetting({"pocketUsername": pocketUsername})

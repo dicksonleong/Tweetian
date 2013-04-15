@@ -49,9 +49,7 @@ QtObject {
         translateLangName = "English"
         translateLangCode = "en"
         enableStreaming = false
-        timelineRefreshFreq = 0
-        mentionsRefreshFreq = 0
-        directMsgRefreshFreq = 0
+        autoRefreshInterval = 0
         pocketUsername = ""
         pocketPassword = ""
         instapaperToken = ""
@@ -90,12 +88,8 @@ QtObject {
 
     property bool enableStreaming: false
     onEnableStreamingChanged: Database.setSetting({"enableStreaming": enableStreaming.toString()})
-    property int timelineRefreshFreq: 0
-    onTimelineRefreshFreqChanged: Database.setSetting({"timelineRefreshFreq": timelineRefreshFreq.toString()})
-    property int mentionsRefreshFreq: 0
-    onMentionsRefreshFreqChanged: Database.setSetting({"mentionsRefreshFreq": mentionsRefreshFreq.toString()})
-    property int directMsgRefreshFreq: 0
-    onDirectMsgRefreshFreqChanged: Database.setSetting({"directMsgRefreshFreq": directMsgRefreshFreq.toString()})
+    property int autoRefreshInterval: 0
+    onAutoRefreshIntervalChanged: Database.setSetting({"autoRefreshInterval": autoRefreshInterval.toString()})
 
     property string pocketUsername: ""
     onPocketUsernameChanged: Database.setSetting({"pocketUsername": pocketUsername})

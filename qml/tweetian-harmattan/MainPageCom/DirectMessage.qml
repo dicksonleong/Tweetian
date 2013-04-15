@@ -139,7 +139,7 @@ Item {
 
     Timer {
         id: autoRefreshTimer
-        interval: settings.directMsgRefreshFreq * 60000
+        interval: settings.autoRefreshInterval * 60000
         repeat: true
         running: networkMonitor.online && !settings.enableStreaming
         onTriggered: refresh("newer")
@@ -202,7 +202,7 @@ Item {
                     infoBanner.showText(body)
             }
             else {
-                if (settings.messageNotification) {
+                if (settings.enableNotification) {
                     harmattanUtils.clearNotification("tweetian.message")
                     harmattanUtils.publishNotification("tweetian.message", "Tweetian", body, unreadCount)
                 }
