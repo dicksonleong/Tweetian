@@ -43,7 +43,7 @@ var PIC_SERVICES = [
         }
     },
     {
-        regexp: /http:\/\/instagr.am\/p\/[^\/]+\//ig,
+        regexp: /http:\/\/instagram.com\/p\/[^\/]+\//ig,
         getPicUrl: function(link) {
             var url = {
                 full: link + "media/?size=l",
