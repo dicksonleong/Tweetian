@@ -130,7 +130,6 @@
         <file>qml/tweetian-symbian/Services/Flickr.js</file>
         <file>qml/tweetian-symbian/Services/Instapaper.js</file>
         <file>qml/tweetian-symbian/Services/NokiaMaps.js</file>
-        <file>qml/tweetian-symbian/Services/NineGag.js</file>
         <file>qml/tweetian-symbian/Services/Pocket.js</file>
         <file>qml/tweetian-symbian/Services/Translation.js</file>
         <file>qml/tweetian-symbian/Services/TwitLonger.js</file>

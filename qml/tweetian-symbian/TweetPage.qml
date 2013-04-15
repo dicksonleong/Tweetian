@@ -28,7 +28,6 @@ import "Services/Instapaper.js" as Instapaper
 import "Services/TwitLonger.js" as TwitLonger
 import "Services/NokiaMaps.js" as Maps
 import "Services/Youtube.js" as YouTube
-import "Services/NineGag.js" as NineGag
 import "TweetPageJS.js" as JS
 
 Page {

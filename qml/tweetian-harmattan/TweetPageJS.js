@@ -140,15 +140,6 @@ function createPicThumb() {
         })
     }
 
-    var gagLinks = tweet.richText.match(NineGag.NINEGAG_URL_REGEXP);
-    if (gagLinks !== null) {
-        gagLinks.forEach(function(url) {
-            NineGag.getImageUrl(constant, url, function(full, thumb, link) {
-                thumbnailModel.append({type: "image", full: full, thumb: thumb, link: link})
-            })
-        })
-    }
-
     PIC_SERVICES.forEach(function(service) {
         var links = tweet.richText.match(service.regexp)
         if (links === null) return
