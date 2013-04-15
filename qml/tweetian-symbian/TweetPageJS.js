@@ -247,13 +247,6 @@ function contructReplyText() {
             replyText += mentions + " "
     })
 
-    // check for hashtag in the tweet if hashtagsInReply is enabled
-    if (settings.hashtagsInReply) {
-        var hashtagsArray = tweet.richText.match(/href="#[^"\s]+/g) || []
-        hashtagsArray.forEach(function(hashtag) {
-            replyText += hashtag.substring(6) + " "
-        })
-    }
     return replyText
 }
 

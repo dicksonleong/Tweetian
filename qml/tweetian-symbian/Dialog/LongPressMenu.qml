@@ -26,16 +26,6 @@ ContextMenu {
     property variant model
     property bool __isClosing: false
 
-    function getAllHashtags(text) {
-        if (!settings.hashtagsInReply) return ""
-        var hashtags = ""
-        var hashtagsArray = text.match(/href="#[^"\s]+/g)
-        if (hashtagsArray != null)
-            for (var i=0; i<hashtagsArray.length; i++) hashtags += hashtagsArray[i].substring(6) + " "
-
-        return hashtags
-    }
-
     platformInverted: settings.invertedTheme
 
     MenuLayout {
@@ -46,7 +36,8 @@ ContextMenu {
                 var prop = {
                     type: "Reply",
                     tweetId: model.id,
-                    placedText: "@" + model.retweetScreenName + " " + getAllHashtags(model.richText)}
+                    placedText: "@" + model.retweetScreenName + " "
+                }
                 pageStack.push(Qt.resolvedUrl("../NewTweetPage.qml"), prop)
             }
         }

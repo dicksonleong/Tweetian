@@ -45,7 +45,6 @@ QtObject {
         trendsLocationWoeid = "1"
         imageUploadService = 0
         invertedTheme = false
-        hashtagsInReply = true
         enableTwitLonger = false
         largeFontSize = false
         translateLangName = "English"
@@ -85,8 +84,6 @@ QtObject {
         theme.inverted = !invertedTheme
         Database.setSetting({"invertedTheme": invertedTheme.toString()})
     }
-    property bool hashtagsInReply: true
-    onHashtagsInReplyChanged: Database.setSetting({"hashtagsInReply": hashtagsInReply.toString()})
     property bool enableTwitLonger: false
     onEnableTwitLongerChanged: Database.setSetting({"enableTwitLonger": enableTwitLonger.toString()})
     property bool largeFontSize: false

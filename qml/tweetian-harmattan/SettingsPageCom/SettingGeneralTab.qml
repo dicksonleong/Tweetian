@@ -86,12 +86,6 @@ Page {
             }
 
             SettingSwitch {
-                text: qsTr("Include #hashtags in reply")
-                checked: settings.hashtagsInReply
-                onCheckedChanged: settings.hashtagsInReply = checked
-            }
-
-            SettingSwitch {
                 id: enableTwitLongerSwitch
                 text: qsTr("Enable TwitLonger")
                 checked: settings.enableTwitLonger
