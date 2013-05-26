@@ -31,11 +31,6 @@ Page {
             platformIconId: "toolbar-back"
             onClicked: pageStack.pop()
         }
-        ToolButton {
-            text: qsTr("Service")
-            onClicked: chooseServiceDialogComponent.createObject(selectImagePage)
-        }
-        Item { width: 80; height: 64 }
     }
 
     ContextMenu {
@@ -168,29 +163,6 @@ Page {
                     imageMenu.selectedImagePath = filePath
                     imageMenu.open()
                 }
-            }
-        }
-    }
-
-    Component {
-        id: chooseServiceDialogComponent
-
-        SelectionDialog {
-            id: chooseServiceDialog
-            property bool __isClosing: false
-            titleText: qsTr("Image Upload Service")
-            model: ListModel {
-                ListElement { name: "Twitter" }
-                ListElement { name: "TwitPic" }
-                ListElement { name: "MobyPicture" }
-                ListElement { name: "img.ly" }
-            }
-            selectedIndex: settings.imageUploadService
-            onSelectedIndexChanged: settings.imageUploadService = selectedIndex
-            Component.onCompleted: open()
-            onStatusChanged: {
-                if (status === DialogStatus.Closing) __isClosing = true
-                else if (status === DialogStatus.Closed && __isClosing) chooseServiceDialog.destroy(250)
             }
         }
     }

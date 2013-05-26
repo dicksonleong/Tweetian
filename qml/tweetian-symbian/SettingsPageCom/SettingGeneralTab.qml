@@ -31,7 +31,7 @@ Page {
             id: switchColumn
             anchors { left: parent.left; right: parent.right; top: parent.top; topMargin: constant.paddingMedium }
             height: childrenRect.height
-            spacing: constant.paddingMedium
+            spacing: constant.paddingLarge
 
             Text {
                 anchors { left: parent.left; right: parent.right; margins: constant.paddingMedium }
@@ -98,11 +98,39 @@ Page {
                 onInfoClicked: dialog.createMessageDialog(qsTr("About TwitLonger"), infoText.twitLonger)
             }
 
-            SectionHeader { text: qsTr("Translation") }
+            Item {
+                anchors { left: parent.left; right: parent.right }
+                height: chooseServiceButton.height + 2 * constant.paddingMedium
+
+                Text {
+                    anchors {
+                        left: parent.left; right: chooseServiceButton.left; margins: constant.paddingMedium
+                        verticalCenter: parent.verticalCenter
+                    }
+                    font.pixelSize: constant.fontSizeLarge
+                    color: constant.colorLight
+                    wrapMode: Text.Wrap
+                    elide: Text.ElideRight
+                    maximumLineCount: 2
+                    text: qsTr("Image upload service")
+                }
+
+                Button {
+                    id: chooseServiceButton
+                    anchors {
+                        right: parent.right; rightMargin: constant.paddingMedium
+                        verticalCenter: parent.verticalCenter
+                    }
+                    platformInverted: settings.invertedTheme
+                    width: parent.width * 0.4
+                    text: imageUploadServiceModel.get(settings.imageUploadService).name
+                    onClicked: chooseServiceDialogComponent.createObject(settingPage)
+                }
+            }
 
             Item {
                 anchors { left: parent.left; right: parent.right }
-                height: enableTwitLongerSwitch.height
+                height: chooseLangButton.height + 2 * constant.paddingMedium
 
                 Text {
                     anchors {
@@ -112,7 +140,9 @@ Page {
                     font.pixelSize: constant.fontSizeLarge
                     color: constant.colorLight
                     wrapMode: Text.Wrap
-                    text: qsTr("Translate to")
+                    elide: Text.ElideRight
+                    maximumLineCount: 2
+                    text: qsTr("Tweet translation language")
                 }
 
                 Button {
@@ -215,5 +245,33 @@ Page {
                 else if (status === DialogStatus.Closed && __isClosing) dialog.destroy()
             }
         }
+    }
+
+    Component {
+        id: chooseServiceDialogComponent
+
+        SelectionDialog {
+            id: chooseServiceDialog
+            property bool __isClosing: false
+            platformInverted: settings.invertedTheme
+            titleText: qsTr("Image Upload Service")
+            model: imageUploadServiceModel
+            selectedIndex: settings.imageUploadService
+            onAccepted: settings.imageUploadService = selectedIndex
+
+            Component.onCompleted: open()
+            onStatusChanged: {
+                if (status === DialogStatus.Closing) __isClosing = true
+                else if (status === DialogStatus.Closed && __isClosing) chooseServiceDialog.destroy()
+            }
+        }
+    }
+
+    ListModel {
+        id: imageUploadServiceModel
+        ListElement { name: "Twitter"}
+        ListElement { name: "TwitPic"}
+        ListElement { name: "MobyPicture"}
+        ListElement { name: "img.ly"}
     }
 }
