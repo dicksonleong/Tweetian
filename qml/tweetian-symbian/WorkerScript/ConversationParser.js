@@ -19,104 +19,74 @@
 Qt.include("../Utils/Parser.js")
 
 WorkerScript.onMessage = function(msg) {
+    var skipCurrentLoop = false
+    var replyId = msg.inReplyToStatusId
 
-    if (msg.timelineModel && msg.mentionsModel) {
-        var skipCurrentLoop = false
-        var replyId = msg.inReplyToStatusId
-        while (replyId && msg.ancestorModel.count < 10) {
-            skipCurrentLoop = false
-            for (var iTimeline=0; iTimeline < msg.timelineModel.count; iTimeline++) {
-                if (msg.timelineModel.get(iTimeline).id == replyId) {
-                    var timelineTweet = msg.timelineModel.get(iTimeline);
-                    var toBeInsertTimelineTweet = {
-                        id: timelineTweet.id,
-                        plainText: timelineTweet.plainText,
-                        richText: timelineTweet.richText,
-                        name: timelineTweet.name,
-                        screenName: timelineTweet.screenName,
-                        profileImageUrl: timelineTweet.profileImageUrl,
-                        inReplyToScreenName: timelineTweet.inReplyToScreenName,
-                        inReplyToStatusId: timelineTweet.inReplyToStatusId,
-                        latitude: timelineTweet.latitude,
-                        longitude: timelineTweet.longitude,
-                        mediaUrl: timelineTweet.mediaUrl,
-                        source: timelineTweet.source,
-                        createdAt: timelineTweet.createdAt,
-                        isFavourited: timelineTweet.isFavourited,
-                        isRetweet: timelineTweet.isRetweet,
-                        retweetScreenName: timelineTweet.retweetScreenName,
-                        timeDiff: timeDiff(timelineTweet.createdAt)
-                    }
-                    msg.ancestorModel.insert(0, toBeInsertTimelineTweet)
-                    replyId = msg.timelineModel.get(iTimeline).inReplyToStatusId
-                    skipCurrentLoop = true
-                    break
+    while (replyId && msg.ancestorModel.count < 10) {
+        skipCurrentLoop = false
+        for (var iTimeline=0; iTimeline < msg.timelineModel.count; iTimeline++) {
+            if (msg.timelineModel.get(iTimeline).id == replyId) {
+                var timelineTweet = msg.timelineModel.get(iTimeline);
+                var toBeInsertTimelineTweet = {
+                    id: timelineTweet.id,
+                    plainText: timelineTweet.plainText,
+                    richText: timelineTweet.richText,
+                    name: timelineTweet.name,
+                    screenName: timelineTweet.screenName,
+                    profileImageUrl: timelineTweet.profileImageUrl,
+                    inReplyToScreenName: timelineTweet.inReplyToScreenName,
+                    inReplyToStatusId: timelineTweet.inReplyToStatusId,
+                    latitude: timelineTweet.latitude,
+                    longitude: timelineTweet.longitude,
+                    mediaUrl: timelineTweet.mediaUrl,
+                    source: timelineTweet.source,
+                    createdAt: timelineTweet.createdAt,
+                    isFavourited: timelineTweet.isFavourited,
+                    isRetweet: timelineTweet.isRetweet,
+                    retweetScreenName: timelineTweet.retweetScreenName,
+                    timeDiff: timeDiff(timelineTweet.createdAt)
                 }
+                msg.ancestorModel.insert(0, toBeInsertTimelineTweet)
+                replyId = msg.timelineModel.get(iTimeline).inReplyToStatusId
+                skipCurrentLoop = true
+                break
             }
-            if (skipCurrentLoop) continue
-            for (var iMentions=0; iMentions < msg.mentionsModel.count; iMentions++) {
-                if (msg.mentionsModel.get(iMentions).id == replyId) {
-                    var mentionsTweet = msg.mentionsModel.get(iMentions);
-                    var toBeInsertMentionsTweet = {
-                        id: mentionsTweet.id,
-                        plainText: mentionsTweet.plainText,
-                        richText: mentionsTweet.richText,
-                        name: mentionsTweet.name,
-                        screenName: mentionsTweet.screenName,
-                        profileImageUrl: mentionsTweet.profileImageUrl,
-                        inReplyToScreenName: mentionsTweet.inReplyToScreenName,
-                        inReplyToStatusId: mentionsTweet.inReplyToStatusId,
-                        latitude: mentionsTweet.latitude,
-                        longitude: mentionsTweet.longitude,
-                        mediaUrl: mentionsTweet.mediaUrl,
-                        source: mentionsTweet.source,
-                        createdAt: mentionsTweet.createdAt,
-                        isFavourited: mentionsTweet.isFavourited,
-                        isRetweet: mentionsTweet.isRetweet,
-                        retweetScreenName: mentionsTweet.retweetScreenName,
-                        timeDiff: timeDiff(mentionsTweet.createdAt)
-                    }
-                    msg.ancestorModel.insert(0, toBeInsertMentionsTweet)
-                    replyId = msg.mentionsModel.get(iMentions).inReplyToStatusId
-                    skipCurrentLoop = true
-                    break
-                }
-            }
-            if (skipCurrentLoop) continue
-            replyId = undefined
         }
-    }
+        if (skipCurrentLoop) continue
 
-    else {
-        for (var i=0; i<(msg.data[0] ? msg.data[0].results.length : 0); i++) {
-            var model
-            var skipCurrentTweet = false
-            var insertIndex = -1
-            if (msg.data[0].results[i].annotations.ConversationRole === "Ancestor") {
-                // check whether the tweet is already exist in the model
-                for (var iAncestor=0; iAncestor < msg.ancestorModel.count; iAncestor++) {
-                    if (msg.ancestorModel.get(iAncestor).id == msg.data[0].results[i].value.id_str) {
-                        skipCurrentTweet = true
-                        break
-                    }
-                    else if (new Date(msg.ancestorModel.get(iAncestor).createdAt) > new Date(msg.data[0].results[i].value.created_at)) {
-                        insertIndex = iAncestor
-                        break
-                    }
+        for (var iMentions=0; iMentions < msg.mentionsModel.count; iMentions++) {
+            if (msg.mentionsModel.get(iMentions).id == replyId) {
+                var mentionsTweet = msg.mentionsModel.get(iMentions);
+                var toBeInsertMentionsTweet = {
+                    id: mentionsTweet.id,
+                    plainText: mentionsTweet.plainText,
+                    richText: mentionsTweet.richText,
+                    name: mentionsTweet.name,
+                    screenName: mentionsTweet.screenName,
+                    profileImageUrl: mentionsTweet.profileImageUrl,
+                    inReplyToScreenName: mentionsTweet.inReplyToScreenName,
+                    inReplyToStatusId: mentionsTweet.inReplyToStatusId,
+                    latitude: mentionsTweet.latitude,
+                    longitude: mentionsTweet.longitude,
+                    mediaUrl: mentionsTweet.mediaUrl,
+                    source: mentionsTweet.source,
+                    createdAt: mentionsTweet.createdAt,
+                    isFavourited: mentionsTweet.isFavourited,
+                    isRetweet: mentionsTweet.isRetweet,
+                    retweetScreenName: mentionsTweet.retweetScreenName,
+                    timeDiff: timeDiff(mentionsTweet.createdAt)
                 }
-                if (skipCurrentTweet) continue;
-                model = msg.ancestorModel
+                msg.ancestorModel.insert(0, toBeInsertMentionsTweet)
+                replyId = msg.mentionsModel.get(iMentions).inReplyToStatusId
+                skipCurrentLoop = true
+                break
             }
-            else model = msg.descendantModel
-
-            var tweet = parseTweet(msg.data[0].results[i].value);
-
-            if (insertIndex >= 0) model.insert(insertIndex, tweet)
-            else model.append(tweet)
         }
+        if (skipCurrentLoop) continue
+        replyId = undefined
     }
 
     msg.ancestorModel.sync()
     msg.descendantModel.sync()
-    WorkerScript.sendMessage({action: msg.timelineModel && msg.mentionsModel ? "callAPI" : "end"})
+    WorkerScript.sendMessage("")
 }

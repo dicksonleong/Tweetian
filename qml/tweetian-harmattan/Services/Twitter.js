@@ -60,10 +60,6 @@ var GET_TOS_URL = "https://api.twitter.com/1.1/help/tos.json"
 
 var GET_USER_STREAM_URL = "https://userstream.twitter.com/1.1/user.json"
 
-// Undocumented
-var GET_RELATED_RESULTS_URL = "https://api.twitter.com/1/related_results/show/%1.json"
-var GET_TWEET_ACTIVITY_SUMMARY_URL = "https://api.twitter.com/i/statuses/%1/activity/summary.json"
-
 // POST
 var POST_STATUS_URL = "https://api.twitter.com/1.1/statuses/update.json"
 var POST_RETWEET_URL = "https://api.twitter.com/1.1/statuses/retweet/%1.json"
@@ -314,19 +310,6 @@ function getTermsOfService(onSuccess, onFailure) {
 function getVerifyCredentials(onSuccess, onFailure) {
     var verifyCrendtialsRequest = new OAuthRequest("GET", GET_VERIFY_CREDENTIALS_URL)
     verifyCrendtialsRequest.sendRequest(onSuccess, onFailure)
-}
-
-// Undocumented!
-function getConversation(id, onSuccess, onFailure) {
-    var conversationRequest = new OAuthRequest("GET", GET_RELATED_RESULTS_URL.arg(id + ""))
-    conversationRequest.setParameters([["include_entities", true]])
-    conversationRequest.sendRequest(onSuccess, onFailure)
-}
-
-// Undocumented!
-function getTweetActivitySummary(id, onSuccess, onFailure) {
-    var tweetActivityRequest = new OAuthRequest("GET", GET_TWEET_ACTIVITY_SUMMARY_URL.arg(id + ""))
-    tweetActivityRequest.sendRequest(onSuccess, onFailure)
 }
 
 function postRequestToken(onSuccess, onFailure) {

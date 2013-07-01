@@ -46,7 +46,6 @@ Page {
         if (networkMonitor.online) {
             JS.createYoutubeThumb()
             JS.expandTwitLonger()
-            JS.getRTAndFavCount()
         }
         JS.getConversationFromTimelineAndMentions()
     }
@@ -287,61 +286,6 @@ Page {
 
             Loader { id: translatedTweetLoader; height: sourceComponent ? undefined : 0 }
 
-            Column {
-                id: rtAndFavCountColumn
-                anchors { left: parent.left; right: parent.right }
-                height: childrenRect.height
-
-                Rectangle {
-                    anchors { left: parent.left; right: parent.right }
-                    height: 1
-                    color: constant.colorDisabled
-                    visible: rtAndFavCountRepeater.count > 0
-                }
-
-                Repeater {
-                    id: rtAndFavCountRepeater
-                    model: ListModel {}
-
-                    ListItem {
-                        height: rtAndFavCountText.paintedHeight + 2 * constant.paddingLarge
-                        width: rtAndFavCountColumn.width
-                        subItemIndicator: true
-
-                        Row {
-                            anchors {
-                                left: parent.left; right: parent.right; margins: constant.paddingLarge
-                                verticalCenter: parent.verticalCenter
-                            }
-                            height: childrenRect.height
-                            spacing: constant.paddingMedium
-
-                            Image {
-                                id: rtAndFavCountIcon
-                                sourceSize { height: rtAndFavCountText.height; width: rtAndFavCountText.height }
-                                source: model.icon
-                            }
-
-                            Text {
-                                id: rtAndFavCountText
-                                font.pixelSize: constant.fontSizeMedium
-                                color: constant.colorLight
-                                text: model.text
-                            }
-                        }
-                        onClicked: {
-                            var parameters = {
-                                userIdsArray: index === 0 ? JS.retweeters : JS.favoriters,
-                                headerText: model.headerText,
-                                headerCount: model.count,
-                                headerIcon: rtAndFavCountIcon.source
-                            }
-                            pageStack.push(Qt.resolvedUrl("BrowseUsersPage.qml"), parameters)
-                        }
-                    }
-                }
-            }
-
             Loader { sourceComponent: descendantRepeater.count > 0 ? replyHeading : undefined }
 
             Column {
@@ -369,11 +313,8 @@ Page {
         onMessage: {
             backButton.enabled = true
             header.busy = false
-            if (messageObject.action === "callAPI") {
-                ancestorRepeater.model = ancestorModel
-                descendantRepeater.model = descendantModel
-                JS.getConversationFromTwitter()
-            }
+            ancestorRepeater.model = ancestorModel
+            descendantRepeater.model = descendantModel
         }
     }
 

@@ -3,7 +3,6 @@
         <file>splash/tweetian-splash-symbian.jpg</file>
         <file>qml/tweetian-symbian/AboutPage.qml</file>
         <file>qml/tweetian-symbian/AdvSearchPage.qml</file>
-        <file>qml/tweetian-symbian/BrowseUsersPage.qml</file>
         <file>qml/tweetian-symbian/Cache.qml</file>
         <file>qml/tweetian-symbian/Constant.qml</file>
         <file>qml/tweetian-symbian/ListPage.qml</file>

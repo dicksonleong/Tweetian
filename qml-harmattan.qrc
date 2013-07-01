@@ -2,7 +2,6 @@
     <qresource prefix="/">
         <file>qml/tweetian-harmattan/AboutPage.qml</file>
         <file>qml/tweetian-harmattan/AdvSearchPage.qml</file>
-        <file>qml/tweetian-harmattan/BrowseUsersPage.qml</file>
         <file>qml/tweetian-harmattan/Cache.qml</file>
         <file>qml/tweetian-harmattan/Constant.qml</file>
         <file>qml/tweetian-harmattan/ListPage.qml</file>

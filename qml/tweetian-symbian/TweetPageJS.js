@@ -178,35 +178,6 @@ function expandTwitLonger() {
     header.busy = true
 }
 
-function getRTAndFavCount() {
-    Twitter.getTweetActivitySummary(tweet.id, function(data) {
-        var rtCount = parseInt(data.retweeters_count, 10)
-        var favCount = parseInt(data.favoriters_count, 10)
-        if (rtCount > 0) {
-            var rtObj = {
-                text: qsTr("%n retweet(s)", "", rtCount),
-                headerText: qsTr("Retweeters"),
-                count: rtCount,
-                icon: settings.invertedTheme ? "Image/retweet_inverse.png" : "Image/retweet.png"
-            }
-            rtAndFavCountRepeater.model.append(rtObj)
-        }
-        if (favCount > 0) {
-            var favObj = {
-                text: qsTr("%n favourite(s)", "", favCount),
-                headerText: qsTr("Favouriters"),
-                count: favCount,
-                icon: settings.invertedTheme ? "Image/favourite_inverse.svg" : "Image/favourite.svg"
-            }
-            rtAndFavCountRepeater.model.append(favObj)
-        }
-        retweeters = data.retweeters
-        favoriters = data.favoriters
-    }, function(status, statusText) {
-        console.log("Error calling Twitter.getTweetActivitySummary():",status, statusText)
-    })
-}
-
 function getConversationFromTimelineAndMentions() {
     if (!tweet.inReplyToStatusId) return
     backButton.enabled = false
@@ -216,19 +187,6 @@ function getConversationFromTimelineAndMentions() {
         inReplyToStatusId: tweet.inReplyToStatusId
     }
     conversationParser.sendMessage(msg)
-    header.busy = true
-}
-
-function getConversationFromTwitter() {
-    if (!networkMonitor.online) return
-    Twitter.getConversation(tweet.id, function(data) {
-        if (tweetPage.status === PageStatus.Deactivating) return
-        backButton.enabled = false
-        conversationParser.sendMessage({data: data, ancestorModel: ancestorModel, descendantModel:descendantModel})
-    }, function(status, statusText) {
-        console.log("Error caliing Twitter.getConversation():", status, statusText)
-        header.busy = false
-    })
     header.busy = true
 }
 
