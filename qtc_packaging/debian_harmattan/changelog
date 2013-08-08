@@ -1,3 +1,9 @@
+tweetian (1.8.2) stable; urgency=normal
+  * Minor bugs fix and improvements
+  * Update translations
+
+ -- Dickson <dicksonleong8@gmail.com>  Fri, 09 Aug 2013 00:31:35 +0800
+
 tweetian (1.8.1) stable; urgency=normal
   * Mainly bug fix and minor improvements
 
