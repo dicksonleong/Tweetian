@@ -160,23 +160,28 @@
         <file>qml/tweetian-symbian/WorkerScript/SearchParser.js</file>
         <file>qml/tweetian-symbian/WorkerScript/TweetsParser.js</file>
         <file>qml/tweetian-symbian/WorkerScript/UserParser.js</file>
+        <file>i18n/tweetian_ar.qm</file>
         <file>i18n/tweetian_ca.qm</file>
         <file>i18n/tweetian_de.qm</file>
         <file>i18n/tweetian_el.qm</file>
         <file>i18n/tweetian_en.qm</file>
         <file>i18n/tweetian_es.qm</file>
         <file>i18n/tweetian_eu.qm</file>
+        <file>i18n/tweetian_fi.qm</file>
         <file>i18n/tweetian_fr.qm</file>
         <file>i18n/tweetian_hu.qm</file>
         <file>i18n/tweetian_it.qm</file>
         <file>i18n/tweetian_lv.qm</file>
         <file>i18n/tweetian_nl.qm</file>
+        <file>i18n/tweetian_no.qm</file>
         <file>i18n/tweetian_pl.qm</file>
         <file>i18n/tweetian_pt.qm</file>
         <file>i18n/tweetian_ro.qm</file>
         <file>i18n/tweetian_ru.qm</file>
+        <file>i18n/tweetian_sr.qm</file>
         <file>i18n/tweetian_sv.qm</file>
         <file>i18n/tweetian_tr.qm</file>
+        <file>i18n/tweetian_vi.qm</file>
         <file>i18n/tweetian_zh.qm</file>
     </qresource>
 </RCC>
