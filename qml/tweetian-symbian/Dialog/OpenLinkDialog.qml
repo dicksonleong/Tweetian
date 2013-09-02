@@ -50,7 +50,7 @@ ContextMenu {
             text: qsTr("Open link in web browser")
             platformInverted: root.platformInverted
             onClicked: {
-                Qt.openUrlExternally(link)
+                symbianUtils.openDefaultBrowser(link)
                 infoBanner.showText(qsTr("Launching web browser..."))
             }
         }

@@ -22,6 +22,7 @@
 #include <QtCore/QObject>
 
 class QDeclarativeView;
+class QUrl;
 
 class SymbianUtils : public QObject
 {
@@ -34,6 +35,9 @@ public:
 
     // Show a global notification
     Q_INVOKABLE void showNotification(const QString &title, const QString &message) const;
+
+    // Open url with the default browser
+    Q_INVOKABLE void openDefaultBrowser(const QUrl &url) const;
 
 private:
     QDeclarativeView *m_view;

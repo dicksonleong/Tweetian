@@ -38,7 +38,7 @@ CommonDialog {
             font.pixelSize: constant.fontSizeMedium
             text: root.message
             wrapMode: Text.Wrap
-            onLinkActivated: Qt.openUrlExternally(link)
+            onLinkActivated: symbianUtils.openDefaultBrowser(link)
         }
     }
 
