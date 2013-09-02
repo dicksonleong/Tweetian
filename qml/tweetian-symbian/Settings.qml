@@ -90,6 +90,8 @@ QtObject {
     onEnableStreamingChanged: Database.setSetting({"enableStreaming": enableStreaming.toString()})
     property int autoRefreshInterval: 0
     onAutoRefreshIntervalChanged: Database.setSetting({"autoRefreshInterval": autoRefreshInterval.toString()})
+    property bool enableNotification: true
+    onEnableNotificationChanged: Database.setSetting({"enableNotification": enableNotification.toString()})
 
     property string pocketUsername: ""
     onPocketUsernameChanged: Database.setSetting({"pocketUsername": pocketUsername})

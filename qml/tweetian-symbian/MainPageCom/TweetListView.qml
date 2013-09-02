@@ -216,8 +216,17 @@ Item {
             if (tweetView.stayAtCurrentPosition || tweetView.indexAt(0, tweetView.contentY) > 0)
                 unreadCount += newTweetCount;
 
-            if (type === "Mentions" && symbian.foreground && mainPage.status !== PageStatus.Active)
-                infoBanner.showText(qsTr("%n new mention(s)", "", unreadCount));
+            if (type != "Mentions") return;
+
+            var message = qsTr("%n new mention(s)", "", unreadCount);
+            if (symbian.foreground) {
+                if (mainPage.status !== PageStatus.Active)
+                    infoBanner.showText(body);
+            }
+            else {
+                if (settings.enableNotification)
+                    symbianUtils.showNotification("Tweetian", message);
+            }
         }
     }
 

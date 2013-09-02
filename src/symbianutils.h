@@ -32,6 +32,9 @@ public:
     // Minimize the app
     Q_INVOKABLE void minimizeApp() const;
 
+    // Show a global notification
+    Q_INVOKABLE void showNotification(const QString &title, const QString &message) const;
+
 private:
     QDeclarativeView *m_view;
 };

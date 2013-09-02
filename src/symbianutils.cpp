@@ -20,6 +20,11 @@
 
 #include <QtDeclarative/QDeclarativeView>
 
+#ifdef Q_OS_SYMBIAN
+#include <akndiscreetpopup.h>
+#include <avkon.hrh>
+#endif
+
 SymbianUtils::SymbianUtils(QDeclarativeView *view, QObject *parent) :
     QObject(parent), m_view(view)
 {
@@ -28,4 +33,17 @@ SymbianUtils::SymbianUtils(QDeclarativeView *view, QObject *parent) :
 void SymbianUtils::minimizeApp() const
 {
     m_view->lower();
+}
+
+void SymbianUtils::showNotification(const QString &title, const QString &message) const
+{
+#ifdef Q_OS_SYMBIAN
+    TPtrC16 sTitle(static_cast<const TUint16 *>(title.utf16()), title.length());
+    TPtrC16 sMessage(static_cast<const TUint16 *>(message.utf16()), message.length());
+    TRAP_IGNORE(CAknDiscreetPopup::ShowGlobalPopupL(sTitle, sMessage, KAknsIIDNone, KNullDesC,
+                                                    0, 0, KAknDiscreetPopupDurationLong, 0, NULL, {0x2005e90a}));
+#else
+    qWarning("SymbianUtils::showNotification() called with title=\"%s\" message=\"%s\" but not handled",
+             qPrintable(title), qPrintable(message));
+#endif
 }

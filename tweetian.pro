@@ -73,6 +73,8 @@ symbian{
 
     HEADERS += src/symbianutils.h
     SOURCES += src/symbianutils.cpp
+
+    LIBS += -lavkon
 }
 
 OTHER_FILES += qtc_packaging/debian_harmattan/* \

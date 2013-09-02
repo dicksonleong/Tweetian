@@ -194,8 +194,16 @@ Item {
         function __createNotification(newDMCount) {
             if (newDMCount <= 0) return;
             unreadCount += newDMCount;
-            if (symbian.foreground && mainPage.status !== PageStatus.Active)
-                infoBanner.showText(qsTr("%n new message(s)", "", unreadCount));
+
+            var message = qsTr("%n new message(s)", "", unreadCount);
+            if (symbian.foreground) {
+                if (mainPage.status !== PageStatus.Active)
+                    infoBanner.showText(body);
+            }
+            else {
+                if (settings.enableNotification)
+                    symbianUtils.showNotification("Tweetian", message);
+            }
         }
     }
 

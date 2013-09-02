@@ -50,6 +50,12 @@ Page {
                 value: settings.autoRefreshInterval
                 onReleased: settings.autoRefreshInterval = value
             }
+
+            SettingSwitch {
+                text: qsTr("Enable notification for mentions and DMs")
+                checked: settings.enableNotification
+                onCheckedChanged: settings.enableNotification = checked
+            }
         }
     }
 }
