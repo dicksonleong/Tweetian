@@ -37,7 +37,7 @@ CommonDialog {
 
     onButtonClicked: {
         if (index === 0) Qt.quit()
-        else if (index === 1) QMLUtils.minimizeApp()
+        else if (index === 1) symbianUtils.minimizeApp()
     }
 
     Component.onCompleted: open()

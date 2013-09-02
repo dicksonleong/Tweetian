@@ -75,15 +75,6 @@ QString QMLUtils::saveImage(QDeclarativeItem *imageObject) const
     return filePath;
 }
 
-void QMLUtils::minimizeApp() const
-{
-#ifdef Q_OS_SYMBIAN
-    m_view->lower();
-#else
-    qWarning("QMLUtils::minimizeApp(): this function only works on Symbian");
-#endif
-}
-
 QObject *QMLUtils::networkAccessManager() const
 {
     QNetworkAccessManager *manager = m_view->engine()->networkAccessManager();

@@ -34,18 +34,9 @@ simulator{
     DEPLOYMENTFOLDERS = qml_harmattan qml_symbian
 
     RESOURCES += qml-harmattan.qrc qml-symbian.qrc
-}
 
-simulator|contains(MEEGO_EDITION,harmattan){
-    include(notifications/notifications.pri)
-
-    splash.files = splash/tweetian-splash-portrait.jpg splash/tweetian-splash-landscape.jpg
-    splash.path = /opt/tweetian/splash
-
-    INSTALLS += splash
-
-    HEADERS += src/harmattanutils.h
-    SOURCES += src/harmattanutils.cpp
+    HEADERS += src/harmattanutils.h src/symbianutils.h
+    SOURCES += src/harmattanutils.cpp src/symbianutils.cpp
 }
 
 contains(MEEGO_EDITION,harmattan){
@@ -54,8 +45,13 @@ contains(MEEGO_EDITION,harmattan){
     DEFINES += Q_OS_HARMATTAN
     RESOURCES += qml-harmattan.qrc
 
-    HEADERS += src/tweetianif.h
-    SOURCES += src/tweetianif.cpp
+    include(notifications/notifications.pri)
+    splash.files = splash/tweetian-splash-portrait.jpg splash/tweetian-splash-landscape.jpg
+    splash.path = /opt/tweetian/splash
+    INSTALLS += splash
+
+    HEADERS += src/tweetianif.h src/harmattanutils.h
+    SOURCES += src/tweetianif.cpp src/harmattanutils.cpp
 }
 
 symbian{
@@ -74,6 +70,9 @@ symbian{
     # Symbian have a different syntax
     DEFINES -= APP_VERSION=\\\"$$VERSION\\\"
     DEFINES += APP_VERSION=\"$$VERSION\"
+
+    HEADERS += src/symbianutils.h
+    SOURCES += src/symbianutils.cpp
 }
 
 OTHER_FILES += qtc_packaging/debian_harmattan/* \
