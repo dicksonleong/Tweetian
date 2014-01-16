@@ -1,3 +1,8 @@
+tweetian (1.8.3) stable; urgency=normal
+  * Fix user info page
+
+ -- Dickson <dicksonleong8@gmail.com>  Fri, 17 Jan 2014 00:46:50 +0800
+
 tweetian (1.8.2) stable; urgency=normal
   * Minor bugs fix and improvements
   * Update translations
