@@ -37,3 +37,6 @@ tweetian*.sis
 tweetian*_stub.pkg
 tweetian*_template.pkg
 
+# Harmattan build files
+
+tweetian
