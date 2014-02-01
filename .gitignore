@@ -1,0 +1,42 @@
+# C++ objects and libs
+
+*.slo
+*.lo
+*.o
+*.a
+*.la
+*.lai
+*.so
+*.dll
+*.dylib
+
+# Qt-es
+
+*.pro.user
+*.pro.user.*
+moc_*.cpp
+qrc_*.cpp
+ui_*.h
+Makefile*
+*-build-*
+
+# QtCreator
+
+*.autosave
+
+# Symbian build files
+
+.make.cache
+bld.inf
+tweetian*.loc
+tweetian*.rss
+tweetian*_exe.mmp
+tweetian*_installer.pkg
+tweetian*_reg.rss
+tweetian*.sis
+tweetian*_stub.pkg
+tweetian*_template.pkg
+
+# Harmattan build files
+
+tweetian

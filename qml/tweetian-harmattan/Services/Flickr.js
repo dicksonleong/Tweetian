@@ -1,5 +1,6 @@
 /*
     Copyright (C) 2012 Dickson Leong
+    Copyright (C) 2014 Hugo van Kemenade
     This file is part of Tweetian.
 
     This program is free software: you can redistribute it and/or modify
@@ -19,13 +20,20 @@
 .pragma library
 
 var BASE_URL = "http://api.flickr.com/services/rest/"
-var FLICKR_LINK_REGEXP = /http:\/\/(flic\.kr\/p\/\w+|(www\.)?flickr\.com\/photos\/[\w\-\d@]+\/\d+)/ig
+var FLICKR_LINK_REGEXP = /http:\/\/(flic\.kr\/p\/\w+|(www\.)?flickr\.com\/photos\/[\w\-\d@]+\/\d+)|https:\/\/secure.flickr\.com\/photos\/[\w\-\d@]+\/\d+/ig
+
+var URLS = [ "http://flic.kr/p/",
+             "http://www.flickr.com/photos/",
+             "http://flickr.com/photos/",
+             "https://secure.flickr.com/photos/"
+           ]
 
 /**
  * Only the following format of Flickr link will be accepted:
  * - http://flic.kr/p/{base-58-encoded-photo-id}
  * - http://www.flickr.com/photos/{user-id}/{photo-id}
  * - http://flickr.com/photos/{user-id}/{photo-id}
+ * - https://secure.flickr.com/photos/{user-id}/{photo-id}
  */
 function getSizes(constant, link, onSuccess) {
     var parameters = {
@@ -64,12 +72,14 @@ function getSizes(constant, link, onSuccess) {
 function __getPhotoId(link) {
     var extracted = "";
 
-    if (link.indexOf("http://flic.kr/p/") === 0)
-        return __base58Decode(link.substring(17));
-    else if (link.indexOf("http://www.flickr.com/photos/") === 0)
-        extracted = link.substring(29);
-    else if (link.indexOf("http://flickr.com/photos/") === 0)
-        extracted = link.substring(25);
+    if (link.indexOf(URLS[0]) === 0)
+        return __base58Decode(link.substring(URLS[0].length));
+    else if (link.indexOf(URLS[1]) === 0)
+        extracted = link.substring(URLS[1].length);
+    else if (link.indexOf(URLS[2]) === 0)
+        extracted = link.substring(URLS[2].length);
+    else if (link.indexOf(URLS[3]) === 0)
+        extracted = link.substring(URLS[3].length);
     else
         throw new Error("Invalid Flickr link: " + link);
 
@@ -87,3 +97,5 @@ function __base58Decode( snipcode ) {
     }
     return decoded;
 }
+
+// End of file

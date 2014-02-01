@@ -92,6 +92,25 @@ var PIC_SERVICES = [
         }
     },
     {
+        regexp: /http:\/\/(m\.)?imgur.com(?!\/a\/)\/((gallery\/)?(r\/[\w\.]+\/)?)\w+/ig,
+        // "http://" (optionally "m.") then "imgur.com" then not "/a/" but either:
+        // "gallery/" or "r/lettersordots/", then some letters.
+        // eg http://imgur.com/gallery/iU1SwYe or http://imgur.com/iU1SwYe
+        // or http://m.imgur.com/gallery/iU1SwYe or http://m.imgur.com/iU1SwYe
+        // or Reddit http://imgur.com/r/funny/V1Xp2rQ or http://m.imgur.com/r/reddit.com/V1Xp2rQ
+        // but not albums: http://imgur.com/a/Jexvo or http://m.imgur.com/a/Jexvo
+        getPicUrl: function(link) {
+            link = link.replace(/\/+$/, '') // remove trailing slashes
+             // Grab the ID after last slash:
+            var imgurId = link.substring(link.lastIndexOf("/") + 1)
+            var url = {
+                full: "http://i.imgur.com/" + imgurId + ".jpg",
+                thumb: "http://i.imgur.com/" + imgurId + "s.jpg"
+            }
+            return url
+        }
+    },
+    {
         regexp: /http:\/\/twitgoo.com\/\w+/ig,
         getPicUrl: function(link) {
             var url = { full: link + "/img", thumb: link + "/thumb" }
