@@ -128,6 +128,16 @@ var PIC_SERVICES = [
         }
     },
     {
+        regexp: /http:\/\/glui\.me\/\?i=\w+/ig,
+        getPicUrl: function(link) {
+            link = link.replace(/\/+$/, '') // remove trailing slashes
+            link = link.replace(/_/g, "%20") // replace all _ with %20
+            link = link.replace("://glui.me/?i=", "://dl.dropboxusercontent.com/s/")
+            var url = { full: link, thumb: link }
+            return url
+        }
+    },
+    {
         regexp: /https?:\/\/[^"]+?\.(?:jpe?g|png|gif)(?=")/gi,
         getPicUrl: function (link) { return { full: link, thumb: link }; }
     }
