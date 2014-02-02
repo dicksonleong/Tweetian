@@ -6,17 +6,7 @@ The backend of Tweetian is mostly written in JavaScript (database handling, API 
 but I hope to move the backend to C++ for better performance & less buggy. The UI is written purely in QML
 and use a lot of components from Qt Quick Component for Symbian/MeeGo to provide native UI for each platform.
 
-Tweetian currently support Symbian^3 and MeeGo Harmattan (Qt 4.7.4 or higher).
-
-ToDo
-----
-
-* Migrate to Twitter API v1.1 (before March 2013)
-* Port to Nemo/Jolla
-* Move the whole app backend to C++
-* Harmattan: event feed integration
-* Internationalization support (You can contribute by translating Tweetian to your native language in
-[Transifex](https://www.transifex.com/projects/p/tweetian/))
+Tweetian support Symbian^3 and MeeGo Harmattan (Qt 4.7.4 and Qt 4.8.0).
 
 Build for testing
 -----------------
@@ -28,7 +18,7 @@ OAuth comsumer key/secret is provided for testing.
 Downloads
 ---------
 
-Latest stable release for Symbian/Harmattan: [Nokia Store](http://store.ovi.com/content/280255)
+Latest stable release for Symbian/Harmattan: https://github.com/dicksonleong/Tweetian/releases
 
 License
 -------
