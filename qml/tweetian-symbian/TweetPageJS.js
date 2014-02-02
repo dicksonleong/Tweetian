@@ -43,8 +43,9 @@ var PIC_SERVICES = [
         }
     },
     {
-        regexp: /http:\/\/instagram.com\/p\/[^\/]+\//ig,
+        regexp: /http:\/\/instagram\.com\/p\/[^\/]+\//ig,
         getPicUrl: function(link) {
+            link = link.replace(/\/?$/, '/') // ensure a trailing slash
             var url = {
                 full: link + "media/?size=l",
                 thumb: link + "media/?size=t"
