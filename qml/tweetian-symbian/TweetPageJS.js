@@ -139,6 +139,20 @@ var PIC_SERVICES = [
         }
     },
     {
+        regexp: /http:\/\/www\.wikipaintings\.org\/..\/(?!tag)(?!search)[\w-]+\/[\w-]+/ig,
+        getPicUrl: function(link) {
+            link = link.replace(/#.*$/,'') // strip any anchor
+            link = link.replace('http://www.', 'http://uploads.')
+            link = link.replace(/\.org\/..\//, '.org/images/')
+            link = link + ".jpg"
+            var url = {
+                full: link,
+                thumb: link + "!BlogSmall.jpg"
+            }
+            return url
+        }
+    },
+    {
         regexp: /https?:\/\/[^"]+?\.(?:jpe?g|png|gif)(?=")/gi,
         getPicUrl: function (link) { return { full: link, thumb: link }; }
     }
