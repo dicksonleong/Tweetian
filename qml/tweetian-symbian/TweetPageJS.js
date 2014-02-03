@@ -129,7 +129,7 @@ var PIC_SERVICES = [
         }
     },
     {
-        regexp: /http:\/\/glui\.me\/\?i=\w+/ig,
+        regexp: /http:\/\/glui\.me\/\?i=\w+\/[^"/]+\//ig,
         getPicUrl: function(link) {
             link = link.replace(/\/+$/, '') // remove trailing slashes
             link = link.replace(/_/g, "%20") // replace all _ with %20
