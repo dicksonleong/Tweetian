@@ -43,8 +43,9 @@ var PIC_SERVICES = [
         }
     },
     {
-        regexp: /http:\/\/instagram.com\/p\/[^\/]+\//ig,
+        regexp: /http:\/\/instagram\.com\/p\/[^"]+/ig,
         getPicUrl: function(link) {
+            link = link.replace(/\/?$/, '/') // ensure a trailing slash
             var url = {
                 full: link + "media/?size=l",
                 thumb: link + "media/?size=t"
@@ -124,6 +125,16 @@ var PIC_SERVICES = [
                 full: "https://apis.live.net/v5.0/skydrive/get_item_preview?type=normal&url=" + link,
                 thumb: "https://apis.live.net/v5.0/skydrive/get_item_preview?type=album&url=" + link
             }
+            return url
+        }
+    },
+    {
+        regexp: /http:\/\/glui\.me\/\?i=\w+\/[^"/]+\//ig,
+        getPicUrl: function(link) {
+            link = link.replace(/\/+$/, '') // remove trailing slashes
+            link = link.replace(/_/g, "%20") // replace all _ with %20
+            link = link.replace("://glui.me/?i=", "://dl.dropboxusercontent.com/s/")
+            var url = { full: link, thumb: link }
             return url
         }
     },
