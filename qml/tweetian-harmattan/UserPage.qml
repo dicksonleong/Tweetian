@@ -79,6 +79,11 @@ Page {
                 onClicked: internal.createFollowUserDialog()
             }
             MenuItem {
+                text: qsTr("Block user")
+                enabled: screenName !== settings.userScreenName
+                onClicked: internal.createReportSpamDialog()
+            }
+            MenuItem {
                 text: qsTr("Report user as spammer")
                 enabled: screenName !== settings.userScreenName
                 onClicked: internal.createReportSpamDialog()
@@ -322,6 +327,19 @@ Page {
         function followOnFailure(status, statusText) {
             infoBanner.showHttpError(status, statusText)
             loadingRect.visible = false
+        }
+
+        function reportBlockOnSuccess(data) {
+            infoBanner.showText(qsTr("Blocked %1").arg("@" + data.screen_name))
+            loadingRect.visible = false
+        }
+
+        function createBlockUserDialog() {
+            var message = qsTr("Do you want to block %1?").arg("@" + screenName)
+            dialog.createQueryDialog(qsTr("Block User"), "", message, function() {
+                Twitter.postBlockUser(screenName, reportBlockOnSuccess, reportSpamOnFailure)
+                loadingRect.visible = true
+            })
         }
 
         function reportSpamOnSuccess(data) {

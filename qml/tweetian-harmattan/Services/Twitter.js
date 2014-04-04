@@ -66,6 +66,7 @@ var POST_RETWEET_URL = "https://api.twitter.com/1.1/statuses/retweet/%1.json"
 var POST_FAVOURITE_URL = "https://api.twitter.com/1.1/favorites/create.json"
 var POST_UNFAVOURITE_URL = "https://api.twitter.com/1.1/favorites/destroy.json"
 var POST_DIRECT_MSG_URL = "https://api.twitter.com/1.1/direct_messages/new.json"
+var POST_BLOCK_USER_URL = "https://api.twitter.com/1.1/blocks/create.json"
 var POST_REPORT_SPAM_URL = "https://api.twitter.com/1.1/users/report_spam.json"
 var POST_SAVED_SEARCHES_URL = "https://api.twitter.com/1.1/saved_searches/create.json"
 var POST_REMOVE_SAVED_SEARCH_URL = "https://api.twitter.com/1.1/saved_searches/destroy/%1.json"
@@ -455,6 +456,15 @@ function postSavedSearches(query, onSuccess, onFailure) {
 function postRemoveSavedSearch(id, onSuccess, onFailure) {
     var removeSearchRequest = new OAuthRequest("POST", POST_REMOVE_SAVED_SEARCH_URL.arg(id + ""))
     removeSearchRequest.sendRequest(onSuccess, onFailure)
+}
+
+function postBlockUser(screenName, onSuccess, onFailure) {
+    var reportSpamRequest = new OAuthRequest("POST", POST_BLOCK_USER_URL)
+    var parameters = [["screen_name", screenName],
+                      ["include_entities", "false"],
+                      ["skip_status", "true"]]
+    reportSpamRequest.setParameters(parameters)
+    reportSpamRequest.sendRequest(onSuccess, onFailure)
 }
 
 function postReportSpam(screenName, onSuccess, onFailure) {
