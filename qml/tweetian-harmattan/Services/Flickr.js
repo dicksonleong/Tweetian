@@ -20,19 +20,27 @@
 .pragma library
 
 var BASE_URL = "http://api.flickr.com/services/rest/"
-var FLICKR_LINK_REGEXP = /http:\/\/(flic\.kr\/p\/\w+|(www\.)?flickr\.com\/photos\/[\w\-\d@]+\/\d+)|https:\/\/secure.flickr\.com\/photos\/[\w\-\d@]+\/\d+/ig
+var FLICKR_LINK_REGEXP = /https?:\/\/(flic\.kr\/p\/\w+|((www\.)?|(secure\.)?)flickr\.com\/photos\/[\w\-\d@]+\/\d+)/ig
 
 var URLS = [ "http://flic.kr/p/",
-             "http://www.flickr.com/photos/",
+             "https://flic.kr/p/",
              "http://flickr.com/photos/",
+             "https://flickr.com/photos/",
+             "http://www.flickr.com/photos/",
+             "https://www.flickr.com/photos/",
+             "http://secure.flickr.com/photos/",
              "https://secure.flickr.com/photos/"
            ]
 
 /**
  * Only the following format of Flickr link will be accepted:
  * - http://flic.kr/p/{base-58-encoded-photo-id}
- * - http://www.flickr.com/photos/{user-id}/{photo-id}
+ * - https://flic.kr/p/{base-58-encoded-photo-id}
  * - http://flickr.com/photos/{user-id}/{photo-id}
+ * - https://flickr.com/photos/{user-id}/{photo-id}
+ * - http://www.flickr.com/photos/{user-id}/{photo-id}
+ * - https://www.flickr.com/photos/{user-id}/{photo-id}
+ * - http://secure.flickr.com/photos/{user-id}/{photo-id}
  * - https://secure.flickr.com/photos/{user-id}/{photo-id}
  */
 function getSizes(constant, link, onSuccess) {
@@ -72,18 +80,20 @@ function getSizes(constant, link, onSuccess) {
 function __getPhotoId(link) {
     var extracted = "";
 
-    if (link.indexOf(URLS[0]) === 0)
-        return __base58Decode(link.substring(URLS[0].length));
-    else if (link.indexOf(URLS[1]) === 0)
-        extracted = link.substring(URLS[1].length);
-    else if (link.indexOf(URLS[2]) === 0)
-        extracted = link.substring(URLS[2].length);
-    else if (link.indexOf(URLS[3]) === 0)
-        extracted = link.substring(URLS[3].length);
-    else
-        throw new Error("Invalid Flickr link: " + link);
-
-    return extracted.substring(extracted.indexOf("/") + 1);
+    for (var i = 0; i < URLS.length; i++) {
+        if (link.indexOf(URLS[i]) === 0) {
+            if (i < 2) {
+            // Short URL
+                return __base58Decode(link.substring(URLS[i].length));
+            } else {
+            // Long URL
+                extracted = link.substring(URLS[i].length);
+                return extracted.substring(extracted.indexOf("/") + 1);
+            }
+        }
+    }
+    // Didn't match anything
+    throw new Error("Invalid Flickr link: " + link);
 }
 
 function __base58Decode( snipcode ) {
