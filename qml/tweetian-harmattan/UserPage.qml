@@ -81,7 +81,7 @@ Page {
             MenuItem {
                 text: qsTr("Block user")
                 enabled: screenName !== settings.userScreenName
-                onClicked: internal.createReportSpamDialog()
+                onClicked: internal.createBlockUserDialog();
             }
             MenuItem {
                 text: qsTr("Report user as spammer")
