@@ -19,7 +19,7 @@
 
 .pragma library
 
-var BASE_URL = "http://api.flickr.com/services/rest/"
+var BASE_URL = "https://api.flickr.com/services/rest/"
 var FLICKR_LINK_REGEXP = /https?:\/\/(flic\.kr\/p\/\w+|((www\.)?|(secure\.)?)flickr\.com\/photos\/[\w\-\d@]+\/\d+)/ig
 
 var URLS = [ "http://flic.kr/p/",
